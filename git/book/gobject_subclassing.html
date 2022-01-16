@@ -4,35 +4,28 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Subclassing - GUI development with Rust and GTK 4</title>
-                
-
         <!-- Custom HTML head -->
-        
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-                <link rel="icon" href="favicon.svg">
-                        <link rel="shortcut icon" href="favicon.png">
-                <link rel="stylesheet" href="css/variables.css">
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
-                <link rel="stylesheet" href="css/print.css" media="print">
-        
+        <link rel="stylesheet" href="css/print.css" media="print">
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-                <link rel="stylesheet" href="fonts/fonts.css">
-        
+        <link rel="stylesheet" href="fonts/fonts.css">
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-            </head>
+    </head>
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
@@ -82,14 +75,14 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="prerequisites.html"><strong aria-hidden="true">1.</strong> Prerequisites</a></li><li class="chapter-item expanded "><a href="hello_world.html"><strong aria-hidden="true">2.</strong> Hello World!</a></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">3.</strong> Widgets</a></li><li class="chapter-item expanded "><a href="gobject_concepts.html"><strong aria-hidden="true">4.</strong> GObject Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="gobject_memory_management.html"><strong aria-hidden="true">4.1.</strong> Memory Management</a></li><li class="chapter-item expanded "><a href="gobject_subclassing.html" class="active"><strong aria-hidden="true">4.2.</strong> Subclassing</a></li><li class="chapter-item expanded "><a href="gobject_values.html"><strong aria-hidden="true">4.3.</strong> Generic Values</a></li><li class="chapter-item expanded "><a href="gobject_properties.html"><strong aria-hidden="true">4.4.</strong> Properties</a></li><li class="chapter-item expanded "><a href="gobject_signals.html"><strong aria-hidden="true">4.5.</strong> Signals</a></li></ol></li><li class="chapter-item expanded "><a href="main_event_loop.html"><strong aria-hidden="true">5.</strong> The Main Event Loop</a></li><li class="chapter-item expanded "><a href="settings.html"><strong aria-hidden="true">6.</strong> Settings</a></li><li class="chapter-item expanded "><a href="saving_window_state.html"><strong aria-hidden="true">7.</strong> Saving Window State</a></li><li class="chapter-item expanded "><a href="lists.html"><strong aria-hidden="true">8.</strong> Lists</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> Building a Simple To-Do App</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> Interface Builder</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">10.1.</strong> GtkBuilder</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.2.</strong> Templates</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.</strong> Resources</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.</strong> Actions</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.</strong> Shortcuts</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.</strong> Media Support</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">14.1.</strong> Images</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.2.</strong> Videos</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> App with Persistent Image Selection</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">16.</strong> Accessibility</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">17.</strong> Internationalization</div></li><li class="chapter-item expanded affix "><li class="part-title">Useful Libraries</li><li class="chapter-item expanded "><div><strong aria-hidden="true">18.</strong> GtkSourceView</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">19.</strong> GStreamer</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">20.</strong> Libadwaita</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">21.</strong> Webkit2Gtk</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">22.</strong> Zbus and Ashpd</div></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.</strong> Installation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation_linux.html"><strong aria-hidden="true">1.1.</strong> Linux</a></li><li class="chapter-item expanded "><a href="installation_macos.html"><strong aria-hidden="true">1.2.</strong> macOS</a></li><li class="chapter-item expanded "><a href="installation_windows.html"><strong aria-hidden="true">1.3.</strong> Windows</a></li></ol></li><li class="chapter-item expanded "><a href="project_setup.html"><strong aria-hidden="true">2.</strong> Project Setup</a></li><li class="chapter-item expanded "><a href="hello_world.html"><strong aria-hidden="true">3.</strong> Hello World!</a></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">4.</strong> Widgets</a></li><li class="chapter-item expanded "><a href="gobject_concepts.html"><strong aria-hidden="true">5.</strong> GObject Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="gobject_memory_management.html"><strong aria-hidden="true">5.1.</strong> Memory Management</a></li><li class="chapter-item expanded "><a href="gobject_subclassing.html" class="active"><strong aria-hidden="true">5.2.</strong> Subclassing</a></li><li class="chapter-item expanded "><a href="gobject_values.html"><strong aria-hidden="true">5.3.</strong> Generic Values</a></li><li class="chapter-item expanded "><a href="gobject_properties.html"><strong aria-hidden="true">5.4.</strong> Properties</a></li><li class="chapter-item expanded "><a href="gobject_signals.html"><strong aria-hidden="true">5.5.</strong> Signals</a></li></ol></li><li class="chapter-item expanded "><a href="main_event_loop.html"><strong aria-hidden="true">6.</strong> The Main Event Loop</a></li><li class="chapter-item expanded "><a href="settings.html"><strong aria-hidden="true">7.</strong> Settings</a></li><li class="chapter-item expanded "><a href="saving_window_state.html"><strong aria-hidden="true">8.</strong> Saving Window State</a></li><li class="chapter-item expanded "><a href="list_widgets.html"><strong aria-hidden="true">9.</strong> List Widgets</a></li><li class="chapter-item expanded "><a href="interface_builder.html"><strong aria-hidden="true">10.</strong> Interface Builder</a></li><li class="chapter-item expanded "><a href="todo_app_1.html"><strong aria-hidden="true">11.</strong> Building a Simple To-Do App</a></li><li class="chapter-item expanded "><a href="actions.html"><strong aria-hidden="true">12.</strong> Actions</a></li><li class="chapter-item expanded "><a href="todo_app_2.html"><strong aria-hidden="true">13.</strong> Manipulating State of To-Do App</a></li><li class="chapter-item expanded "><a href="css.html"><strong aria-hidden="true">14.</strong> CSS</a></li><li class="chapter-item expanded "><a href="resources.html"><strong aria-hidden="true">15.</strong> Resources</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">16.</strong> Internationalization</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">17.</strong> Accessibility</div></li><li class="chapter-item expanded affix "><li class="part-title">Useful Libraries</li><li class="chapter-item expanded "><div><strong aria-hidden="true">18.</strong> Relm4</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">19.</strong> GStreamer</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">20.</strong> Adwaita</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">21.</strong> SourceView</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">22.</strong> Shumate</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">23.</strong> WebKitGTK</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">24.</strong> Zbus and Ashpd</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">25.</strong> Librsvg</div></li></ol>
+            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -106,25 +99,24 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                                            </div>
+                    </div>
 
                     <h1 class="menu-title">GUI development with Rust and GTK 4</h1>
 
                     <div class="right-buttons">
-                                                <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                                                                        <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                                                
                     </div>
                 </div>
 
-                                <div id="search-wrapper" class="hidden">
+                <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
                         <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
@@ -134,7 +126,6 @@
                         </ul>
                     </div>
                 </div>
-                
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -154,10 +145,7 @@ Let us see how this works by replacing the button in our &quot;Hello World!&quot
 It is advised to keep it in a private module, since its state and methods are only meant to be used by the GObject itself.
 It therefore corresponds to the private section of objects in languages like Java and C++.</p>
 <p><span class="filename">Filename: listings/gobject_subclassing/1/custom_button/imp.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use gtk::glib;
+<pre><code class="language-rust  no_run noplayground">use gtk::glib;
 use gtk::subclass::prelude::*;
 
 // Object holding the state
@@ -180,8 +168,7 @@ impl WidgetImpl for CustomButton {}
 
 // Trait shared by all buttons
 impl ButtonImpl for CustomButton {}
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>The description of the subclassing is in <code>ObjectSubclass</code>.</p>
 <ul>
 <li><code>NAME</code> should consist of crate-name, module-path and object-name in order to avoid name collisions. Use <a href="https://wiki.c2.com/?PascalCase">PascalCase</a> here.</li>
@@ -193,43 +180,40 @@ Since we only want to have a plain button for now, we override nothing.
 We still have to add the empty <code>impl</code> though.
 Next, we describe our custom GObject.</p>
 <p><span class="filename">Filename: listings/gobject_subclassing/1/custom_button/mod.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">mod imp;
+<pre><code class="language-rust  no_run noplayground">mod imp;
 
 use glib::Object;
 use gtk::glib;
 
 glib::wrapper! {
     pub struct CustomButton(ObjectSubclass&lt;imp::CustomButton&gt;)
-        @extends gtk::Button, gtk::Widget;
+        @extends gtk::Button, gtk::Widget,
+        @implements gtk::Accessible, gtk::Actionable, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 impl CustomButton {
     pub fn new() -&gt; Self {
-        Object::new(&amp;[]).expect(&quot;Failed to create Button&quot;)
+        Object::new(&amp;[]).expect(&quot;Failed to create `CustomButton`.&quot;)
     }
 
     pub fn with_label(label: &amp;str) -&gt; Self {
-        Object::new(&amp;[(&quot;label&quot;, &amp;label)]).expect(&quot;Failed to create Button&quot;)
+        Object::new(&amp;[(&quot;label&quot;, &amp;label)]).expect(&quot;Failed to create `CustomButton`.&quot;)
     }
 }
-
-impl Default for CustomButton {
-    fn default() -&gt; Self {
-        Self::new()
-    }
-}
-
-<span class="boring">// Please ignore this line
-</span><span class="boring">// It is only there to make mdbook happy
-</span><span class="boring">fn main() {}
-</span></code></pre></pre>
-<p><a href="http://gtk-rs.org/docs/glib/macro.glib_wrapper.html"><code>glib::wrapper!</code></a> does the most of the work of subclassing for us.
-We only have to point to the implementation struct and which ancestor GObjects we extend.
-Please note that the list of ancestor GObjects does not mention <code>glib::Object</code>.
-This is because <code>glib::Object</code> is <em>always</em> the base class in the object hierarchy and therefore already implied.</p>
+<span class="boring">
+</span><span class="boring">impl Default for CustomButton {
+</span><span class="boring">    fn default() -&gt; Self {
+</span><span class="boring">        Self::new()
+</span><span class="boring">    }
+</span><span class="boring">}
+</span></code></pre>
+<p><a href="http://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.wrapper.html"><code>glib::wrapper!</code></a> does the most of the work of subclassing for us.
+Coming from most other languages you would probably expect that you only have to mention the base class you want to inherit from.
+However, as of today, subclassing of GObjects in Rust requires to mention all ancestors and interfaces apart from <code>GObject</code> and <code>GInitiallyUnowned</code>.
+For <code>gtk::Button</code>, we can look them up in the corresponding <a href="https://docs.gtk.org/gtk4/class.Button.html#hierarchy">doc page</a> of GTK4.</p>
 <p>After these steps, nothing is stopping us anymore from replacing <code>gtk::Button</code> with our <code>CustomButton</code>.</p>
 <p><span class="filename">Filename: listings/gobject_subclassing/1/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">mod custom_button;
+<pre><code class="language-rust  no_run noplayground">mod custom_button;
 
 use custom_button::CustomButton;
 use gtk::prelude::*;
@@ -237,20 +221,18 @@ use gtk::{Application, ApplicationWindow};
 
 fn main() {
     // Create a new application
-    let app = Application::new(Some(&quot;org.gtk.example&quot;), Default::default());
+    let app = Application::builder()
+        .application_id(&quot;org.gtk-rs.example&quot;)
+        .build();
+
+    // Connect to &quot;activate&quot; signal of `app`
     app.connect_activate(build_ui);
 
     // Run the application
     app.run();
 }
 
-fn build_ui(application: &amp;Application) {
-    // Create a window
-    let window = ApplicationWindow::builder()
-        .application(application)
-        .title(&quot;My GTK App&quot;)
-        .build();
-
+fn build_ui(app: &amp;Application) {
     // Create a button
     let button = CustomButton::with_label(&quot;Press me!&quot;);
     button.set_margin_top(12);
@@ -258,24 +240,30 @@ fn build_ui(application: &amp;Application) {
     button.set_margin_start(12);
     button.set_margin_end(12);
 
-    // Connect callback
+    // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |button| {
         // Set the label to &quot;Hello World!&quot; after the button has been clicked on
         button.set_label(&quot;Hello World!&quot;);
     });
 
-    // Add button
-    window.set_child(Some(&amp;button));
+    // Create a window
+    let window = ApplicationWindow::builder()
+        .application(app)
+        .title(&quot;My GTK App&quot;)
+        .child(&amp;button)
+        .build();
+
+    // Present window
     window.present();
 }
-</code></pre></pre>
+</code></pre>
 <p>We are able to use <code>CustomButton</code> as a drop-in replacement for <code>gtk::Button</code>.
 This is cool, but also not very tempting to do in a real application.
 For the gain of zero benefits, it did involve quite a bit of boilerplate after all.</p>
 <p>So let us make it a bit more interesting!
 <code>gtk::Button</code> does not hold much state, but we can let <code>CustomButton</code> hold a number.</p>
 <p><span class="filename">Filename: listings/gobject_subclassing/2/custom_button/imp.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use gtk::glib;
+<pre><code class="language-rust  no_run noplayground">use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use std::cell::Cell;
@@ -312,15 +300,11 @@ impl ButtonImpl for CustomButton {
         button.set_label(&amp;self.number.get().to_string())
     }
 }
-
-<span class="boring">// Please ignore this line
-</span><span class="boring">// It is only there to make mdbook happy
-</span><span class="boring">fn main() {}
-</span></code></pre></pre>
+</code></pre>
 <p>We override <code>constructed</code> in <code>ObjectImpl</code> so that the label of the button initializes with <code>number</code>.
 We also override <code>clicked</code> in <code>ButtonImpl</code> so that every click increases <code>number</code> and updates the label.</p>
 <p><span class="filename">Filename: listings/gobject_subclassing/2/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">mod custom_button;
+<pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
 </span><span class="boring">use gtk::prelude::*;
@@ -328,19 +312,18 @@ We also override <code>clicked</code> in <code>ButtonImpl</code> so that every c
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    // Create a new application
-</span><span class="boring">    let app = Application::new(Some(&quot;org.gtk.example&quot;), Default::default());
+</span><span class="boring">    let app = Application::builder()
+</span><span class="boring">        .application_id(&quot;org.gtk-rs.example&quot;)
+</span><span class="boring">        .build();
+</span><span class="boring">
+</span><span class="boring">    // Connect to &quot;activate&quot; signal of `app`
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
 </span><span class="boring">    app.run();
 </span><span class="boring">}
-</span>fn build_ui(application: &amp;Application) {
-    // Create a window
-    let window = ApplicationWindow::builder()
-        .application(application)
-        .title(&quot;My GTK App&quot;)
-        .build();
-
+</span><span class="boring">
+</span>fn build_ui(app: &amp;Application) {
     // Create a button
     let button = CustomButton::new();
     button.set_margin_top(12);
@@ -348,11 +331,17 @@ We also override <code>clicked</code> in <code>ButtonImpl</code> so that every c
     button.set_margin_start(12);
     button.set_margin_end(12);
 
-    // Add button
-    window.set_child(Some(&amp;button));
+    // Create a window
+    let window = ApplicationWindow::builder()
+        .application(app)
+        .title(&quot;My GTK App&quot;)
+        .child(&amp;button)
+        .build();
+
+    // Present window
     window.present();
 }
-</code></pre></pre>
+</code></pre>
 <p>In <code>build_ui</code> we stop calling <code>connect_clicked</code>, and that was it.
 After a rebuild, the app now features our <code>CustomButton</code> with the label &quot;0&quot;.
 Every time we click on the button, the number displayed by the label increases by 1.</p>
@@ -368,49 +357,38 @@ Every time we click on the button, the number displayed by the label increases b
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="gobject_memory_management.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="gobject_memory_management.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
-                                                    <a rel="next" href="gobject_values.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="gobject_values.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="gobject_memory_management.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="gobject_memory_management.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
-                                    <a rel="next" href="gobject_values.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="gobject_values.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                            </nav>
+            </nav>
 
         </div>
 
-        
-        
-        
-                <script type="text/javascript">
+        <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
-        
-                <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
-        
     </body>
 </html>

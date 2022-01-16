@@ -1,8 +1,80 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/page_setup.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>page_setup.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/page_setup.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>page_setup.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../gtk4/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+    function checkDocsLatestStable() {
+        function popup(msg, url) { return `
+            <style scoped="scoped">
+                .popup {
+                    max-width: 16em;
+                    background-color: #fff;
+                    position: fixed;
+                    z-index: 1;
+                    margin-left: auto;
+                    bottom: 1em;
+                    right: 1em;
+                    border-radius: 5px;
+                    box-shadow: 1px 1px 4px #777;
+                }
+
+                .popup a.version {
+                    color: #e57300;
+                    padding: 0.6em 1em;
+                    display: block;
+                }
+                .popup a.version:hover {
+                    color: #b25900;
+                }
+
+                .popup a.close {
+                    color: white;
+                    background: grey;
+                    border-radius: 99px;
+                    display: inline-block;
+                    width: 19px;
+                    line-height: 19px;
+                    font-weight: bold;
+                    text-align: center;
+                    margin: 0.6em;
+                    float: right;
+                }
+                .popup a.close:hover {
+                    background: black;
+                }
+            </style>
+            <section class="popup" id="gir_docs_popup">
+                <a class="close" href="#" onclick="document.getElementById('gir_docs_popup').remove(); return false">×</a>
+                <a class="version" href="https://gtk-rs.org/gtk4-rs/stable/latest/docs">
+                    ⚠ ${msg}
+                </a>
+            </section>
+        ` };
+
+        if ("master" == "master") {
+            document.body.insertAdjacentHTML(
+                'beforeend',
+                popup("This is the development version. Go to latest stable version.", "stable/latest")
+            );
+        } else {
+            fetch('https://gtk-rs.org/gtk4-rs/LATEST_RELEASE_BRANCH')
+                .then(response => response.text())
+                .then(latest_branch => {
+                    if (latest_branch.trim() != "master") {
+                        document.body.insertAdjacentHTML(
+                            'beforeend',
+                            popup("This version is outdated. Go to latest version.", "stable/latest")
+                        );
+                    }
+                });
+        }
+    }
+</script>
+
+
+<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
+                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -526,14 +598,14 @@
 <span id="522">522</span>
 <span id="523">523</span>
 <span id="524">524</span>
-</pre><pre class="rust">
-<span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
+<span id="525">525</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
 <span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
 <span class="comment">// DO NOT EDIT</span>
 
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::PageOrientation</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::PaperSize</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Unit</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::PageOrientation</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::PaperSize</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Unit</span>;
 <span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
 <span class="kw">use</span> <span class="ident">std::ptr</span>;
@@ -554,11 +626,13 @@
     <span class="doccomment">/// from the layout margins that a word processor uses; they are typically</span>
     <span class="doccomment">/// used to determine the minimal size for the layout margins.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// To obtain a [`PageSetup`][crate::PageSetup] use [``new()``][`Self::new()`] to get the defaults,</span>
-    <span class="doccomment">/// or use [``print_run_page_setup_dialog()``][`crate::print_run_page_setup_dialog()`] to show the page setup dialog</span>
+    <span class="doccomment">/// To obtain a [`PageSetup`][crate::PageSetup] use [`new()`][Self::new()] to get the defaults,</span>
+    <span class="doccomment">/// or use [`print_run_page_setup_dialog()`][crate::print_run_page_setup_dialog()] to show the page setup dialog</span>
     <span class="doccomment">/// and receive the resulting page setup.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ## A page setup dialog</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```c</span>
     <span class="doccomment">/// static GtkPrintSettings *settings = NULL;</span>
@@ -589,7 +663,7 @@
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PageSetup</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkPageSetup</span><span class="op">&gt;</span>);
 
     <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_page_setup_get_type</span>(),
+        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_page_setup_get_type</span>(),
     }
 }
 
@@ -600,16 +674,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// a new [`PageSetup`][crate::PageSetup].</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_new&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PageSetup</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="ident">PageSetup</span> {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe</span> { <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_page_setup_new</span>()) }
     }
 
-    <span class="doccomment">/// Reads the page setup from the file `file_name`.</span>
+    <span class="doccomment">/// Reads the page setup from the file @file_name.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns a new [`PageSetup`][crate::PageSetup] object with the restored</span>
     <span class="doccomment">/// page setup, or [`None`] if an error occurred.</span>
-    <span class="doccomment">/// See [``to_file()``][`Self::to_file()`].</span>
+    <span class="doccomment">/// See [`to_file()`][Self::to_file()].</span>
     <span class="doccomment">/// ## `file_name`</span>
     <span class="doccomment">/// the filename to read the page setup from</span>
     <span class="doccomment">///</span>
@@ -618,12 +692,12 @@
     <span class="doccomment">/// the restored [`PageSetup`][crate::PageSetup]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_new_from_file&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_from_file&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">file_name</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PageSetup</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_file</span>(<span class="ident">file_name</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PageSetup</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
             <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span>
-                <span class="ident">ffi::gtk_page_setup_new_from_file</span>(<span class="ident">file_name</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>);
+                <span class="ident">ffi::gtk_page_setup_new_from_file</span>(<span class="ident">file_name</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">error</span>);
             <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
                 <span class="prelude-val">Ok</span>(<span class="ident">from_glib_full</span>(<span class="ident">ret</span>))
             } <span class="kw">else</span> {
@@ -635,7 +709,7 @@
     <span class="doccomment">/// Desrialize a page setup from an a{sv} variant.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The variant must be in the format produced by</span>
-    <span class="doccomment">/// [``to_gvariant()``][`Self::to_gvariant()`].</span>
+    <span class="doccomment">/// [`to_gvariant()`][Self::to_gvariant()].</span>
     <span class="doccomment">/// ## `variant`</span>
     <span class="doccomment">/// an a{sv} `GVariant`</span>
     <span class="doccomment">///</span>
@@ -644,7 +718,7 @@
     <span class="doccomment">/// a new [`PageSetup`][crate::PageSetup] object</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_new_from_gvariant&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_from_gvariant&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_gvariant</span>(<span class="ident">variant</span>: <span class="kw-2">&amp;</span><span class="ident">glib::Variant</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PageSetup</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_gvariant</span>(<span class="ident">variant</span>: <span class="kw-2">&amp;</span><span class="ident">glib::Variant</span>) -&gt; <span class="ident">PageSetup</span> {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe</span> {
             <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_page_setup_new_from_gvariant</span>(
@@ -653,16 +727,16 @@
         }
     }
 
-    <span class="doccomment">/// Reads the page setup from the group `group_name` in the key file</span>
-    <span class="doccomment">/// `key_file`.</span>
+    <span class="doccomment">/// Reads the page setup from the group @group_name in the key file</span>
+    <span class="doccomment">/// @key_file.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns a new [`PageSetup`][crate::PageSetup] object with the restored</span>
     <span class="doccomment">/// page setup, or [`None`] if an error occurred.</span>
     <span class="doccomment">/// ## `key_file`</span>
     <span class="doccomment">/// the `GKeyFile` to retrieve the page_setup from</span>
     <span class="doccomment">/// ## `group_name`</span>
-    <span class="doccomment">/// the name of the group in the key_file to read, or [`None`]</span>
-    <span class="doccomment">///  to use the default name “Page Setup”</span>
+    <span class="doccomment">/// the name of the group in the key_file to read</span>
+    <span class="doccomment">///    to use the default name “Page Setup”</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
@@ -672,14 +746,14 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_key_file</span>(
         <span class="ident">key_file</span>: <span class="kw-2">&amp;</span><span class="ident">glib::KeyFile</span>,
         <span class="ident">group_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PageSetup</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PageSetup</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
             <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">ffi::gtk_page_setup_new_from_key_file</span>(
                 <span class="ident">key_file</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
                 <span class="ident">group_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>,
+                <span class="kw-2">&amp;mut</span> <span class="ident">error</span>,
             );
             <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
                 <span class="prelude-val">Ok</span>(<span class="ident">from_glib_full</span>(<span class="ident">ret</span>))
@@ -689,17 +763,13 @@
         }
     }
 
-    <span class="doccomment">/// Copies a [`PageSetup`][crate::PageSetup].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a copy of `self`</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_copy&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PageSetup</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">PageSetup</span> {
         <span class="kw">unsafe</span> { <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_page_setup_copy</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// Gets the bottom margin in units of `unit`.</span>
+    <span class="doccomment">/// Gets the bottom margin in units of @unit.</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -708,11 +778,11 @@
     <span class="doccomment">/// the bottom margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_bottom_margin&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_bottom_margin&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bottom_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bottom_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_bottom_margin</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
-    <span class="doccomment">/// Gets the left margin in units of `unit`.</span>
+    <span class="doccomment">/// Gets the left margin in units of @unit.</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -721,7 +791,7 @@
     <span class="doccomment">/// the left margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_left_margin&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_left_margin&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_left_margin</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
@@ -732,15 +802,15 @@
     <span class="doccomment">/// the page orientation</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_orientation&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_orientation&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PageOrientation</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">orientation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">PageOrientation</span> {
         <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_page_setup_get_orientation</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// Returns the page height in units of `unit`.</span>
+    <span class="doccomment">/// Returns the page height in units of @unit.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that this function takes orientation</span>
     <span class="doccomment">/// and margins into consideration.</span>
-    <span class="doccomment">/// See [``paper_height()``][`Self::paper_height()`].</span>
+    <span class="doccomment">/// See [`paper_height()`][Self::paper_height()].</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -749,15 +819,15 @@
     <span class="doccomment">/// the page height.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_page_height&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_page_height&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_page_height</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
-    <span class="doccomment">/// Returns the page width in units of `unit`.</span>
+    <span class="doccomment">/// Returns the page width in units of @unit.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that this function takes orientation</span>
     <span class="doccomment">/// and margins into consideration.</span>
-    <span class="doccomment">/// See [``paper_width()``][`Self::paper_width()`].</span>
+    <span class="doccomment">/// See [`paper_width()`][Self::paper_width()].</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -766,15 +836,15 @@
     <span class="doccomment">/// the page width.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_page_width&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_page_width&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">page_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_page_width</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
-    <span class="doccomment">/// Returns the paper height in units of `unit`.</span>
+    <span class="doccomment">/// Returns the paper height in units of @unit.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that this function takes orientation,</span>
     <span class="doccomment">/// but not margins into consideration.</span>
-    <span class="doccomment">/// See [``page_height()``][`Self::page_height()`].</span>
+    <span class="doccomment">/// See [`page_height()`][Self::page_height()].</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -783,7 +853,7 @@
     <span class="doccomment">/// the paper height.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_paper_height&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_paper_height&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_paper_height</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
@@ -794,15 +864,15 @@
     <span class="doccomment">/// the paper size</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_paper_size&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_paper_size&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PaperSize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">PaperSize</span> {
         <span class="kw">unsafe</span> { <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_page_setup_get_paper_size</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// Returns the paper width in units of `unit`.</span>
+    <span class="doccomment">/// Returns the paper width in units of @unit.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that this function takes orientation,</span>
     <span class="doccomment">/// but not margins into consideration.</span>
-    <span class="doccomment">/// See [``page_width()``][`Self::page_width()`].</span>
+    <span class="doccomment">/// See [`page_width()`][Self::page_width()].</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -811,11 +881,11 @@
     <span class="doccomment">/// the paper width.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_paper_width&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_paper_width&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paper_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_paper_width</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
-    <span class="doccomment">/// Gets the right margin in units of `unit`.</span>
+    <span class="doccomment">/// Gets the right margin in units of @unit.</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -824,11 +894,11 @@
     <span class="doccomment">/// the right margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_right_margin&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_right_margin&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_right_margin</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
-    <span class="doccomment">/// Gets the top margin in units of `unit`.</span>
+    <span class="doccomment">/// Gets the top margin in units of @unit.</span>
     <span class="doccomment">/// ## `unit`</span>
     <span class="doccomment">/// the unit for the return value</span>
     <span class="doccomment">///</span>
@@ -837,13 +907,13 @@
     <span class="doccomment">/// the top margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_get_top_margin&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_top_margin&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">top_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">top_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) -&gt; <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_page_setup_get_top_margin</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">unit</span>.<span class="ident">into_glib</span>()) }
     }
 
-    <span class="doccomment">/// Reads the page setup from the file `file_name`.</span>
+    <span class="doccomment">/// Reads the page setup from the file @file_name.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See [``to_file()``][`Self::to_file()`].</span>
+    <span class="doccomment">/// See [`to_file()`][Self::to_file()].</span>
     <span class="doccomment">/// ## `file_name`</span>
     <span class="doccomment">/// the filename to read the page setup from</span>
     <span class="doccomment">///</span>
@@ -851,14 +921,15 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`true`] on success</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_load_file&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">file_name</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">file_name</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ffi::gtk_page_setup_load_file</span>(
+            <span class="kw">let</span> <span class="ident">is_ok</span> <span class="op">=</span> <span class="ident">ffi::gtk_page_setup_load_file</span>(
                 <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
                 <span class="ident">file_name</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>,
+                <span class="kw-2">&amp;mut</span> <span class="ident">error</span>,
             );
+            <span class="macro">assert_eq!</span>(<span class="ident">is_ok</span> <span class="op">==</span> <span class="ident">glib::ffi::GFALSE</span>, <span class="op">!</span><span class="ident">error</span>.<span class="ident">is_null</span>());
             <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
                 <span class="prelude-val">Ok</span>(())
             } <span class="kw">else</span> {
@@ -867,13 +938,13 @@
         }
     }
 
-    <span class="doccomment">/// Reads the page setup from the group `group_name` in the key file</span>
-    <span class="doccomment">/// `key_file`.</span>
+    <span class="doccomment">/// Reads the page setup from the group @group_name in the key file</span>
+    <span class="doccomment">/// @key_file.</span>
     <span class="doccomment">/// ## `key_file`</span>
     <span class="doccomment">/// the `GKeyFile` to retrieve the page_setup from</span>
     <span class="doccomment">/// ## `group_name`</span>
-    <span class="doccomment">/// the name of the group in the key_file to read, or [`None`]</span>
-    <span class="doccomment">///  to use the default name “Page Setup”</span>
+    <span class="doccomment">/// the name of the group in the key_file to read</span>
+    <span class="doccomment">///   to use the default name “Page Setup”</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
@@ -883,15 +954,16 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">key_file</span>: <span class="kw-2">&amp;</span><span class="ident">glib::KeyFile</span>,
         <span class="ident">group_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ffi::gtk_page_setup_load_key_file</span>(
+            <span class="kw">let</span> <span class="ident">is_ok</span> <span class="op">=</span> <span class="ident">ffi::gtk_page_setup_load_key_file</span>(
                 <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
                 <span class="ident">key_file</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
                 <span class="ident">group_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>,
+                <span class="kw-2">&amp;mut</span> <span class="ident">error</span>,
             );
+            <span class="macro">assert_eq!</span>(<span class="ident">is_ok</span> <span class="op">==</span> <span class="ident">glib::ffi::GFALSE</span>, <span class="op">!</span><span class="ident">error</span>.<span class="ident">is_null</span>());
             <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
                 <span class="prelude-val">Ok</span>(())
             } <span class="kw">else</span> {
@@ -902,9 +974,9 @@
 
     <span class="doccomment">/// Sets the bottom margin of the [`PageSetup`][crate::PageSetup].</span>
     <span class="doccomment">/// ## `margin`</span>
-    <span class="doccomment">/// the new bottom margin in units of `unit`</span>
+    <span class="doccomment">/// the new bottom margin in units of @unit</span>
     <span class="doccomment">/// ## `unit`</span>
-    <span class="doccomment">/// the units for `margin`</span>
+    <span class="doccomment">/// the units for @margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_set_bottom_margin&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_bottom_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">margin</span>: <span class="ident">f64</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) {
         <span class="kw">unsafe</span> {
@@ -914,9 +986,9 @@
 
     <span class="doccomment">/// Sets the left margin of the [`PageSetup`][crate::PageSetup].</span>
     <span class="doccomment">/// ## `margin`</span>
-    <span class="doccomment">/// the new left margin in units of `unit`</span>
+    <span class="doccomment">/// the new left margin in units of @unit</span>
     <span class="doccomment">/// ## `unit`</span>
-    <span class="doccomment">/// the units for `margin`</span>
+    <span class="doccomment">/// the units for @margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_set_left_margin&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_left_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">margin</span>: <span class="ident">f64</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) {
         <span class="kw">unsafe</span> {
@@ -937,7 +1009,7 @@
     <span class="doccomment">/// Sets the paper size of the [`PageSetup`][crate::PageSetup] without</span>
     <span class="doccomment">/// changing the margins.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See [``set_paper_size_and_default_margins()``][`Self::set_paper_size_and_default_margins()`].</span>
+    <span class="doccomment">/// See [`set_paper_size_and_default_margins()`][Self::set_paper_size_and_default_margins()].</span>
     <span class="doccomment">/// ## `size`</span>
     <span class="doccomment">/// a [`PaperSize`][crate::PaperSize]</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_set_paper_size&quot;</span>)]</span>
@@ -966,9 +1038,9 @@
 
     <span class="doccomment">/// Sets the right margin of the [`PageSetup`][crate::PageSetup].</span>
     <span class="doccomment">/// ## `margin`</span>
-    <span class="doccomment">/// the new right margin in units of `unit`</span>
+    <span class="doccomment">/// the new right margin in units of @unit</span>
     <span class="doccomment">/// ## `unit`</span>
-    <span class="doccomment">/// the units for `margin`</span>
+    <span class="doccomment">/// the units for @margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_set_right_margin&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_right_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">margin</span>: <span class="ident">f64</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) {
         <span class="kw">unsafe</span> {
@@ -978,9 +1050,9 @@
 
     <span class="doccomment">/// Sets the top margin of the [`PageSetup`][crate::PageSetup].</span>
     <span class="doccomment">/// ## `margin`</span>
-    <span class="doccomment">/// the new top margin in units of `unit`</span>
+    <span class="doccomment">/// the new top margin in units of @unit</span>
     <span class="doccomment">/// ## `unit`</span>
-    <span class="doccomment">/// the units for `margin`</span>
+    <span class="doccomment">/// the units for @margin</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_set_top_margin&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_top_margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">margin</span>: <span class="ident">f64</span>, <span class="ident">unit</span>: <span class="ident">Unit</span>) {
         <span class="kw">unsafe</span> {
@@ -988,7 +1060,7 @@
         }
     }
 
-    <span class="doccomment">/// This function saves the information from `self` to `file_name`.</span>
+    <span class="doccomment">/// This function saves the information from @self to @file_name.</span>
     <span class="doccomment">/// ## `file_name`</span>
     <span class="doccomment">/// the file to save to</span>
     <span class="doccomment">///</span>
@@ -996,14 +1068,15 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`true`] on success</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_to_file&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">file_name</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">file_name</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::Error</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">ffi::gtk_page_setup_to_file</span>(
+            <span class="kw">let</span> <span class="ident">is_ok</span> <span class="op">=</span> <span class="ident">ffi::gtk_page_setup_to_file</span>(
                 <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
                 <span class="ident">file_name</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">error</span>,
+                <span class="kw-2">&amp;mut</span> <span class="ident">error</span>,
             );
+            <span class="macro">assert_eq!</span>(<span class="ident">is_ok</span> <span class="op">==</span> <span class="ident">glib::ffi::GFALSE</span>, <span class="op">!</span><span class="ident">error</span>.<span class="ident">is_null</span>());
             <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
                 <span class="prelude-val">Ok</span>(())
             } <span class="kw">else</span> {
@@ -1016,18 +1089,18 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// a new, floating, [`glib::Variant`][crate::glib::Variant]</span>
+    <span class="doccomment">/// a new, floating, `GVariant`</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_to_gvariant&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_gvariant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::Variant</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_gvariant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Variant</span> {
         <span class="kw">unsafe</span> { <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_page_setup_to_gvariant</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// This function adds the page setup from `self` to `key_file`.</span>
+    <span class="doccomment">/// This function adds the page setup from @self to @key_file.</span>
     <span class="doccomment">/// ## `key_file`</span>
     <span class="doccomment">/// the `GKeyFile` to save the page setup to</span>
     <span class="doccomment">/// ## `group_name`</span>
-    <span class="doccomment">/// the group to add the settings to in `key_file`,</span>
-    <span class="doccomment">///  or [`None`] to use the default name “Page Setup”</span>
+    <span class="doccomment">/// the group to add the settings to in @key_file,</span>
+    <span class="doccomment">///   or [`None`] to use the default name “Page Setup”</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_page_setup_to_key_file&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_key_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key_file</span>: <span class="kw-2">&amp;</span><span class="ident">glib::KeyFile</span>, <span class="ident">group_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
@@ -1041,15 +1114,16 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">PageSetup</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span><span class="ident">::new</span>()
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
+        <span class="ident"><span class="self">Self</span>::new</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">PageSetup</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PageSetup&quot;</span>)
     }
 }
-</pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
+</code></pre></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
+</body></html>

@@ -1,8 +1,80 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/functions.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>functions.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/functions.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>functions.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../gtk4/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+    function checkDocsLatestStable() {
+        function popup(msg, url) { return `
+            <style scoped="scoped">
+                .popup {
+                    max-width: 16em;
+                    background-color: #fff;
+                    position: fixed;
+                    z-index: 1;
+                    margin-left: auto;
+                    bottom: 1em;
+                    right: 1em;
+                    border-radius: 5px;
+                    box-shadow: 1px 1px 4px #777;
+                }
+
+                .popup a.version {
+                    color: #e57300;
+                    padding: 0.6em 1em;
+                    display: block;
+                }
+                .popup a.version:hover {
+                    color: #b25900;
+                }
+
+                .popup a.close {
+                    color: white;
+                    background: grey;
+                    border-radius: 99px;
+                    display: inline-block;
+                    width: 19px;
+                    line-height: 19px;
+                    font-weight: bold;
+                    text-align: center;
+                    margin: 0.6em;
+                    float: right;
+                }
+                .popup a.close:hover {
+                    background: black;
+                }
+            </style>
+            <section class="popup" id="gir_docs_popup">
+                <a class="close" href="#" onclick="document.getElementById('gir_docs_popup').remove(); return false">×</a>
+                <a class="version" href="https://gtk-rs.org/gtk4-rs/stable/latest/docs">
+                    ⚠ ${msg}
+                </a>
+            </section>
+        ` };
+
+        if ("master" == "master") {
+            document.body.insertAdjacentHTML(
+                'beforeend',
+                popup("This is the development version. Go to latest stable version.", "stable/latest")
+            );
+        } else {
+            fetch('https://gtk-rs.org/gtk4-rs/LATEST_RELEASE_BRANCH')
+                .then(response => response.text())
+                .then(latest_branch => {
+                    if (latest_branch.trim() != "master") {
+                        document.body.insertAdjacentHTML(
+                            'beforeend',
+                            popup("This version is outdated. Go to latest version.", "stable/latest")
+                        );
+                    }
+                });
+        }
+    }
+</script>
+
+
+<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
+                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1364,28 +1436,28 @@
 <span id="1360">1360</span>
 <span id="1361">1361</span>
 <span id="1362">1362</span>
-</pre><pre class="rust">
-<span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
+<span id="1363">1363</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
 <span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
 <span class="comment">// DO NOT EDIT</span>
 
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Accessible</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::AccessibleProperty</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::AccessibleRelation</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::AccessibleRole</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::AccessibleState</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::DebugFlags</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::PageSetup</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::PrintSettings</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Accessible</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::AccessibleProperty</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::AccessibleRelation</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::AccessibleRole</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::AccessibleState</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::DebugFlags</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::PageSetup</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::PrintSettings</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>)))]</span>
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Printer</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::StyleContext</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::TextDirection</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::TreeModel</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::TreePath</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Widget</span>;
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::Window</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Printer</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::StyleContext</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TextDirection</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeModel</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreePath</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Widget</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Window</span>;
 <span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
 <span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
@@ -1402,7 +1474,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// the modifier mask for accelerators</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accelerator_get_default_mod_mask&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_get_default_mod_mask</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">gdk::ModifierType</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_get_default_mod_mask</span>() -&gt; <span class="ident">gdk::ModifierType</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_accelerator_get_default_mod_mask</span>()) }
 }
@@ -1416,12 +1488,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// a newly-allocated string representing the accelerator.</span>
+<span class="doccomment">/// a newly-allocated string representing the accelerator</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accelerator_get_label&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_get_label</span>(
     <span class="ident">accelerator_key</span>: <span class="ident">u32</span>,
     <span class="ident">accelerator_mods</span>: <span class="ident">gdk::ModifierType</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">glib::GString</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_accelerator_get_label</span>(
@@ -1436,11 +1508,10 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The string may be translated.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This function is similar to [``accelerator_get_label()``][`crate::accelerator_get_label()`],</span>
-<span class="doccomment">/// but handling keycodes.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This is only useful for system-level components, applications</span>
-<span class="doccomment">/// should use [`accelerator_parse()`][crate::accelerator_parse()] instead.</span>
+<span class="doccomment">/// This function is similar to [`accelerator_get_label()`][crate::accelerator_get_label()],</span>
+<span class="doccomment">/// but handling keycodes. This is only useful for system-level</span>
+<span class="doccomment">/// components, applications should use [`accelerator_get_label()`][crate::accelerator_get_label()]</span>
+<span class="doccomment">/// instead.</span>
 <span class="doccomment">/// ## `display`</span>
 <span class="doccomment">/// a [`gdk::Display`][crate::gdk::Display] or [`None`] to use the default display</span>
 <span class="doccomment">/// ## `accelerator_key`</span>
@@ -1452,14 +1523,14 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// a newly-allocated string representing the accelerator.</span>
+<span class="doccomment">/// a newly-allocated string representing the accelerator</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accelerator_get_label_with_keycode&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_get_label_with_keycode</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">display</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">P</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_get_label_with_keycode</span>(
+    <span class="ident">display</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">accelerator_key</span>: <span class="ident">u32</span>,
     <span class="ident">keycode</span>: <span class="ident">u32</span>,
     <span class="ident">accelerator_mods</span>: <span class="ident">gdk::ModifierType</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">glib::GString</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_accelerator_get_label_with_keycode</span>(
@@ -1472,13 +1543,13 @@
 }
 
 <span class="doccomment">/// Converts an accelerator keyval and modifier mask into a string</span>
-<span class="doccomment">/// parseable by [`accelerator_parse()`][crate::accelerator_parse()].</span>
+<span class="doccomment">/// parseable by gtk_accelerator_parse().</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// For example, if you pass in `GDK_KEY_q` and [`gdk::ModifierType::CONTROL_MASK`][crate::gdk::ModifierType::CONTROL_MASK],</span>
-<span class="doccomment">/// this function returns ``&lt;Control&gt;`q`.</span>
+<span class="doccomment">/// this function returns `&lt;Control&gt;q`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If you need to display accelerators in the user interface,</span>
-<span class="doccomment">/// see [``accelerator_get_label()``][`crate::accelerator_get_label()`].</span>
+<span class="doccomment">/// see [`accelerator_get_label()`][crate::accelerator_get_label()].</span>
 <span class="doccomment">/// ## `accelerator_key`</span>
 <span class="doccomment">/// accelerator keyval</span>
 <span class="doccomment">/// ## `accelerator_mods`</span>
@@ -1491,7 +1562,7 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_name</span>(
     <span class="ident">accelerator_key</span>: <span class="ident">u32</span>,
     <span class="ident">accelerator_mods</span>: <span class="ident">gdk::ModifierType</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">glib::GString</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_accelerator_name</span>(
@@ -1502,11 +1573,11 @@
 }
 
 <span class="doccomment">/// Converts an accelerator keyval and modifier mask</span>
-<span class="doccomment">/// into a string parseable by `gtk_accelerator_parse_with_keycode()`.</span>
+<span class="doccomment">/// into a string parseable by gtk_accelerator_parse_with_keycode().</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This is similar to [``accelerator_name()``][`crate::accelerator_name()`] but handling keycodes.</span>
+<span class="doccomment">/// This is similar to [`accelerator_name()`][crate::accelerator_name()] but handling keycodes.</span>
 <span class="doccomment">/// This is only useful for system-level components, applications</span>
-<span class="doccomment">/// should use [`accelerator_parse()`][crate::accelerator_parse()] instead.</span>
+<span class="doccomment">/// should use [`accelerator_name()`][crate::accelerator_name()] instead.</span>
 <span class="doccomment">/// ## `display`</span>
 <span class="doccomment">/// a [`gdk::Display`][crate::gdk::Display] or [`None`] to use the default display</span>
 <span class="doccomment">/// ## `accelerator_key`</span>
@@ -1520,12 +1591,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// a newly allocated accelerator name.</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accelerator_name_with_keycode&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_name_with_keycode</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">display</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">P</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_name_with_keycode</span>(
+    <span class="ident">display</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">accelerator_key</span>: <span class="ident">u32</span>,
     <span class="ident">keycode</span>: <span class="ident">u32</span>,
     <span class="ident">accelerator_mods</span>: <span class="ident">gdk::ModifierType</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">glib::GString</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_accelerator_name_with_keycode</span>(
@@ -1539,15 +1610,26 @@
 
 <span class="doccomment">/// Parses a string representing an accelerator.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The format looks like “`&lt;Control&gt;`a” or “`&lt;Shift&gt;``&lt;Alt&gt;`F1”.</span>
+<span class="doccomment">/// The format looks like “`&lt;Control&gt;a`” or “`&lt;Shift&gt;&lt;Alt&gt;F1`”.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The parser is fairly liberal and allows lower or upper case, and also</span>
-<span class="doccomment">/// abbreviations such as “`&lt;Ctl&gt;`” and “`&lt;Ctrl&gt;`”. Key names are parsed using</span>
-<span class="doccomment">/// ``keyval_from_name()``. For character keys the name is not the symbol,</span>
-<span class="doccomment">/// but the lowercase name, e.g. one would use “`&lt;Ctrl&gt;`minus” instead of</span>
-<span class="doccomment">/// “`&lt;Ctrl&gt;`-”.</span>
+<span class="doccomment">/// abbreviations such as “`&lt;Ctl&gt;`” and “`&lt;Ctrl&gt;`”.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// If the parse fails, `accelerator_key` and `accelerator_mods` will</span>
+<span class="doccomment">/// Key names are parsed using `keyval_from_name()`. For character keys</span>
+<span class="doccomment">/// the name is not the symbol, but the lowercase name, e.g. one would use</span>
+<span class="doccomment">/// “`&lt;Ctrl&gt;minus`” instead of “`&lt;Ctrl&gt;-`”.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Modifiers are enclosed in angular brackets `&lt;&gt;`, and match the</span>
+<span class="doccomment">/// [`gdk::ModifierType`][crate::gdk::ModifierType] mask:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// - `&lt;Shift&gt;` for `GDK_SHIFT_MASK`</span>
+<span class="doccomment">/// - `&lt;Ctrl&gt;` for `GDK_CONTROL_MASK`</span>
+<span class="doccomment">/// - `&lt;Alt&gt;` for `GDK_ALT_MASK`</span>
+<span class="doccomment">/// - `&lt;Meta&gt;` for `GDK_META_MASK`</span>
+<span class="doccomment">/// - `&lt;Super&gt;` for `GDK_SUPER_MASK`</span>
+<span class="doccomment">/// - `&lt;Hyper&gt;` for `GDK_HYPER_MASK`</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If the parse operation fails, @accelerator_key and @accelerator_mods will</span>
 <span class="doccomment">/// be set to 0 (zero).</span>
 <span class="doccomment">/// ## `accelerator`</span>
 <span class="doccomment">/// string representing an accelerator</span>
@@ -1556,14 +1638,13 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## `accelerator_key`</span>
-<span class="doccomment">/// return location for accelerator</span>
-<span class="doccomment">///  keyval, or [`None`]</span>
+<span class="doccomment">/// return location for accelerator keyval</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## `accelerator_mods`</span>
 <span class="doccomment">/// return location for accelerator</span>
-<span class="doccomment">///  modifier mask, [`None`]</span>
+<span class="doccomment">///   modifier mask</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accelerator_parse&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_parse</span>(<span class="ident">accelerator</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u32</span>, <span class="ident">gdk::ModifierType</span>)<span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accelerator_parse</span>(<span class="ident">accelerator</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u32</span>, <span class="ident">gdk::ModifierType</span>)<span class="op">&gt;</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">accelerator_key</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::uninit</span>();
@@ -1594,9 +1675,9 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Compatibility is defined by two things: first the version</span>
 <span class="doccomment">/// of the running library is newer than the version</span>
-<span class="doccomment">/// `required_major`.`required_micro`. Second</span>
+<span class="doccomment">/// @required_major.required_minor.@required_micro. Second</span>
 <span class="doccomment">/// the running library must be binary compatible with the</span>
-<span class="doccomment">/// version `required_major`.`required_micro`</span>
+<span class="doccomment">/// version @required_major.required_minor.@required_micro</span>
 <span class="doccomment">/// (same major version.)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function is primarily for GTK modules; the module</span>
@@ -1604,7 +1685,7 @@
 <span class="doccomment">/// into an incompatible version of GTK. However, such a</span>
 <span class="doccomment">/// check isn’t completely reliable, since the module may be</span>
 <span class="doccomment">/// linked against an old version of GTK and calling the</span>
-<span class="doccomment">/// old version of [`check_version()`][crate::check_version()], but still get loaded</span>
+<span class="doccomment">/// old version of gtk_check_version(), but still get loaded</span>
 <span class="doccomment">/// into an application using a newer version of GTK.</span>
 <span class="doccomment">/// ## `required_major`</span>
 <span class="doccomment">/// the required major version</span>
@@ -1616,15 +1697,15 @@
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`None`] if the GTK library is compatible with the</span>
-<span class="doccomment">///  given version, or a string describing the version mismatch.</span>
-<span class="doccomment">///  The returned string is owned by GTK and should not be modified</span>
-<span class="doccomment">///  or freed.</span>
+<span class="doccomment">///   given version, or a string describing the version mismatch.</span>
+<span class="doccomment">///   The returned string is owned by GTK and should not be modified</span>
+<span class="doccomment">///   or freed.</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_check_version&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_version</span>(
     <span class="ident">required_major</span>: <span class="ident">u32</span>,
     <span class="ident">required_minor</span>: <span class="ident">u32</span>,
     <span class="ident">required_micro</span>: <span class="ident">u32</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_check_version</span>(
@@ -1652,45 +1733,45 @@
 }
 
 <span class="comment">//#[doc(alias = &quot;gtk_distribute_natural_allocation&quot;)]</span>
-<span class="comment">//pub fn distribute_natural_allocation(extra_space: i32, sizes: /*Ignored*/&amp;[&amp;RequestedSize]) -&gt; i32 {</span>
+<span class="comment">//pub fn distribute_natural_allocation(extra_space: i32, sizes: /*Ignored*/&amp;[RequestedSize]) -&gt; i32 {</span>
 <span class="comment">//    unsafe { TODO: call ffi:gtk_distribute_natural_allocation() }</span>
 <span class="comment">//}</span>
 
 <span class="doccomment">/// Calls a function for all [`Printer`][crate::Printer]s.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// If `func` returns [`true`], the enumeration is stopped.</span>
+<span class="doccomment">/// If @func returns [`true`], the enumeration is stopped.</span>
 <span class="doccomment">/// ## `func`</span>
 <span class="doccomment">/// a function to call for each printer</span>
 <span class="doccomment">/// ## `wait`</span>
 <span class="doccomment">/// if [`true`], wait in a recursive mainloop until</span>
-<span class="doccomment">///  all printers are enumerated; otherwise return early</span>
+<span class="doccomment">///    all printers are enumerated; otherwise return early</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;linux&quot;</span>)))]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_enumerate_printers&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enumerate_printers</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">func</span>: <span class="ident">P</span>, <span class="ident">wait</span>: <span class="ident">bool</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enumerate_printers</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>) -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">func</span>: <span class="ident">P</span>, <span class="ident">wait</span>: <span class="ident">bool</span>) {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">let</span> <span class="ident">func_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">func</span>);
-    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">func_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-        <span class="ident">printer</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::GtkPrinter</span>,
+    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">func_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>) -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+        <span class="ident">printer</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkPrinter</span>,
         <span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">glib::ffi::gboolean</span> {
+    ) -&gt; <span class="ident">glib::ffi::gboolean</span> {
         <span class="kw">let</span> <span class="ident">printer</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">printer</span>);
-        <span class="kw">let</span> <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="ident">P</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
+        <span class="kw">let</span> <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="ident">P</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">callback</span>)(<span class="kw-2">&amp;</span><span class="ident">printer</span>);
         <span class="ident">res</span>.<span class="ident">into_glib</span>()
     }
     <span class="kw">let</span> <span class="ident">func</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">func_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Printer</span>) -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
         <span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>,
     ) {
-        <span class="kw">let</span> <span class="ident">_callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
+        <span class="kw">let</span> <span class="ident">_callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
     }
     <span class="kw">let</span> <span class="ident">destroy_call2</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">destroy_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
     <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">func_data</span>;
     <span class="kw">unsafe</span> {
         <span class="ident">ffi::gtk_enumerate_printers</span>(
             <span class="ident">func</span>,
-            <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
+            <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
             <span class="ident">destroy_call2</span>,
             <span class="ident">wait</span>.<span class="ident">into_glib</span>(),
         );
@@ -1706,7 +1787,7 @@
 <span class="doccomment">/// the binary age of the GTK library</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_binary_age&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_binary_age&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">binary_age</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">binary_age</span>() -&gt; <span class="ident">u32</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_get_binary_age</span>() }
 }
@@ -1721,27 +1802,32 @@
 <span class="doccomment">/// the GTK debug flags.</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_debug_flags&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_debug_flags&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">debug_flags</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DebugFlags</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">debug_flags</span>() -&gt; <span class="ident">DebugFlags</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_get_debug_flags</span>()) }
 }
 
-<span class="doccomment">/// Returns the [`pango::Language`][crate::pango::Language] for the default language currently in</span>
-<span class="doccomment">/// effect. (Note that this can change over the life of an</span>
-<span class="doccomment">/// application.) The default language is derived from the current</span>
-<span class="doccomment">/// locale. It determines, for example, whether GTK uses the</span>
-<span class="doccomment">/// right-to-left or left-to-right text direction.</span>
+<span class="doccomment">/// Returns the [`pango::Language`][crate::pango::Language] for the default language</span>
+<span class="doccomment">/// currently in effect.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This function is equivalent to [`pango::Language::default()`][crate::pango::Language::default()].</span>
+<span class="doccomment">/// Note that this can change over the life of an</span>
+<span class="doccomment">/// application.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The default language is derived from the current</span>
+<span class="doccomment">/// locale. It determines, for example, whether GTK uses</span>
+<span class="doccomment">/// the right-to-left or left-to-right text direction.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This function is equivalent to</span>
+<span class="doccomment">/// [`pango::Language::default()`][crate::pango::Language::default()].</span>
 <span class="doccomment">/// See that function for details.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// the default language as a [`pango::Language`][crate::pango::Language],</span>
-<span class="doccomment">///  must not be freed</span>
+<span class="doccomment">/// the default language as a</span>
+<span class="doccomment">///   [`pango::Language`][crate::pango::Language]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_default_language&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_default_language&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_language</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">pango::Language</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_language</span>() -&gt; <span class="ident">pango::Language</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> { <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_get_default_language</span>()) }
 }
@@ -1755,7 +1841,7 @@
 <span class="doccomment">/// the interface age of the GTK library</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_interface_age&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_interface_age&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interface_age</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interface_age</span>() -&gt; <span class="ident">u32</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_get_interface_age</span>() }
 }
@@ -1764,12 +1850,12 @@
 <span class="doccomment">/// reading direction for text and UI.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function depends on the current locale being set with</span>
-<span class="doccomment">/// `setlocale()` and will default to setting the [`TextDirection::Ltr`][crate::TextDirection::Ltr]</span>
+<span class="doccomment">/// setlocale() and will default to setting the [`TextDirection::Ltr`][crate::TextDirection::Ltr]</span>
 <span class="doccomment">/// direction otherwise. [`TextDirection::None`][crate::TextDirection::None] will never be returned.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// GTK sets the default text direction according to the locale</span>
-<span class="doccomment">/// during [`init()`][crate::init()], and you should normally use</span>
-<span class="doccomment">/// [`WidgetExt::direction()`][crate::prelude::WidgetExt::direction()] or [`Widget::default_direction()`][crate::Widget::default_direction()]</span>
+<span class="doccomment">/// during gtk_init(), and you should normally use</span>
+<span class="doccomment">/// gtk_widget_get_direction() or gtk_widget_get_default_direction()</span>
 <span class="doccomment">/// to obtain the current direction.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function is only needed rare cases when the locale is</span>
@@ -1777,10 +1863,19 @@
 <span class="doccomment">/// you can use it to update the default text direction as follows:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// **⚠️ The following code is in C ⚠️**</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```C</span>
-<span class="doccomment">/// setlocale (LC_ALL, new_locale);</span>
-<span class="doccomment">/// direction = gtk_get_locale_direction ();</span>
-<span class="doccomment">/// gtk_widget_set_default_direction (direction);</span>
+<span class="doccomment">/// #include &lt;locale.h&gt;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// static void</span>
+<span class="doccomment">/// update_locale (const char *new_locale)</span>
+<span class="doccomment">/// {</span>
+<span class="doccomment">///   setlocale (LC_ALL, new_locale);</span>
+<span class="doccomment">///   GtkTextDirection direction = gtk_get_locale_direction ();</span>
+<span class="doccomment">///   gtk_widget_set_default_direction (direction);</span>
+<span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
@@ -1788,7 +1883,7 @@
 <span class="doccomment">/// the [`TextDirection`][crate::TextDirection] of the current locale</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_locale_direction&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_locale_direction&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">locale_direction</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TextDirection</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">locale_direction</span>() -&gt; <span class="ident">TextDirection</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_get_locale_direction</span>()) }
 }
@@ -1807,7 +1902,7 @@
 <span class="doccomment">/// the major version number of the GTK library</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_major_version&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_major_version&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">major_version</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">major_version</span>() -&gt; <span class="ident">u32</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_get_major_version</span>() }
 }
@@ -1826,7 +1921,7 @@
 <span class="doccomment">/// the micro version number of the GTK library</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_micro_version&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_micro_version&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">micro_version</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">micro_version</span>() -&gt; <span class="ident">u32</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_get_micro_version</span>() }
 }
@@ -1845,7 +1940,7 @@
 <span class="doccomment">/// the minor version number of the GTK library</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_get_minor_version&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_minor_version&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minor_version</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minor_version</span>() -&gt; <span class="ident">u32</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_get_minor_version</span>() }
 }
@@ -1873,7 +1968,7 @@
 <span class="doccomment">/// ## `b`</span>
 <span class="doccomment">/// Return value for the blue component</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_hsv_to_rgb&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hsv_to_rgb</span>(<span class="ident">h</span>: <span class="ident">f32</span>, <span class="ident">s</span>: <span class="ident">f32</span>, <span class="ident">v</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">f32</span>, <span class="ident">f32</span>, <span class="ident">f32</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hsv_to_rgb</span>(<span class="ident">h</span>: <span class="ident">f32</span>, <span class="ident">s</span>: <span class="ident">f32</span>, <span class="ident">v</span>: <span class="ident">f32</span>) -&gt; (<span class="ident">f32</span>, <span class="ident">f32</span>, <span class="ident">f32</span>) {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::uninit</span>();
@@ -1888,12 +1983,12 @@
 }
 
 <span class="doccomment">/// Runs a page setup dialog, letting the user modify the values from</span>
-<span class="doccomment">/// `page_setup`. If the user cancels the dialog, the returned [`PageSetup`][crate::PageSetup]</span>
-<span class="doccomment">/// is identical to the passed in `page_setup`, otherwise it contains the</span>
+<span class="doccomment">/// @page_setup. If the user cancels the dialog, the returned [`PageSetup`][crate::PageSetup]</span>
+<span class="doccomment">/// is identical to the passed in @page_setup, otherwise it contains the</span>
 <span class="doccomment">/// modifications done in the dialog.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Note that this function may use a recursive mainloop to show the page</span>
-<span class="doccomment">/// setup dialog. See [`print_run_page_setup_dialog_async()`][crate::print_run_page_setup_dialog_async()] if this is</span>
+<span class="doccomment">/// setup dialog. See gtk_print_run_page_setup_dialog_async() if this is</span>
 <span class="doccomment">/// a problem.</span>
 <span class="doccomment">/// ## `parent`</span>
 <span class="doccomment">/// transient parent</span>
@@ -1906,11 +2001,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// a new [`PageSetup`][crate::PageSetup]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_print_run_page_setup_dialog&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_run_page_setup_dialog</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">P</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_run_page_setup_dialog</span>(
+    <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">page_setup</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PageSetup</span><span class="op">&gt;</span>,
     <span class="ident">settings</span>: <span class="kw-2">&amp;</span><span class="ident">PrintSettings</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PageSetup</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">PageSetup</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_print_run_page_setup_dialog</span>(
@@ -1921,52 +2016,46 @@
     }
 }
 
-<span class="doccomment">/// Runs a page setup dialog, letting the user modify the values from `page_setup`.</span>
+<span class="doccomment">/// Runs a page setup dialog, letting the user modify the values from @page_setup.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// In contrast to [`print_run_page_setup_dialog()`][crate::print_run_page_setup_dialog()], this function returns after</span>
-<span class="doccomment">/// showing the page setup dialog on platforms that support this, and calls `done_cb`</span>
+<span class="doccomment">/// In contrast to gtk_print_run_page_setup_dialog(), this function  returns after</span>
+<span class="doccomment">/// showing the page setup dialog on platforms that support this, and calls @done_cb</span>
 <span class="doccomment">/// from a signal handler for the ::response signal of the dialog.</span>
 <span class="doccomment">/// ## `parent`</span>
-<span class="doccomment">/// transient parent, or [`None`]</span>
+<span class="doccomment">/// transient parent</span>
 <span class="doccomment">/// ## `page_setup`</span>
-<span class="doccomment">/// an existing [`PageSetup`][crate::PageSetup], or [`None`]</span>
+<span class="doccomment">/// an existing [`PageSetup`][crate::PageSetup]</span>
 <span class="doccomment">/// ## `settings`</span>
 <span class="doccomment">/// a [`PrintSettings`][crate::PrintSettings]</span>
 <span class="doccomment">/// ## `done_cb`</span>
 <span class="doccomment">/// a function to call when the user saves</span>
-<span class="doccomment">///  the modified page setup</span>
+<span class="doccomment">///    the modified page setup</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_print_run_page_setup_dialog_async&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_run_page_setup_dialog_async</span><span class="op">&lt;</span>
-    <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>,
-    <span class="ident">Q</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">PageSetup</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-<span class="op">&gt;</span>(
-    <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">P</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_run_page_setup_dialog_async</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">PageSetup</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">page_setup</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PageSetup</span><span class="op">&gt;</span>,
     <span class="ident">settings</span>: <span class="kw-2">&amp;</span><span class="ident">PrintSettings</span>,
-    <span class="ident">done_cb</span>: <span class="ident">Q</span>,
+    <span class="ident">done_cb</span>: <span class="ident">P</span>,
 ) {
     <span class="macro">skip_assert_initialized!</span>();
-    <span class="kw">let</span> <span class="ident">done_cb_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">Q</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">done_cb</span>);
-    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">done_cb_func</span><span class="op">&lt;</span>
-        <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>,
-        <span class="ident">Q</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">PageSetup</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-    <span class="op">&gt;</span>(
-        <span class="ident">page_setup</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi::GtkPageSetup</span>,
+    <span class="kw">let</span> <span class="ident">done_cb_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">done_cb</span>);
+    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">done_cb_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">PageSetup</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+        <span class="ident">page_setup</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkPageSetup</span>,
         <span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>,
     ) {
         <span class="kw">let</span> <span class="ident">page_setup</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">page_setup</span>);
-        <span class="kw">let</span> <span class="ident">callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">Q</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
+        <span class="kw">let</span> <span class="ident">callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
         (<span class="kw-2">*</span><span class="ident">callback</span>)(<span class="kw-2">&amp;</span><span class="ident">page_setup</span>);
     }
-    <span class="kw">let</span> <span class="ident">done_cb</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">done_cb_func</span>::<span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">Q</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-    <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">Q</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">done_cb_data</span>;
+    <span class="kw">let</span> <span class="ident">done_cb</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">done_cb_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
+    <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">done_cb_data</span>;
     <span class="kw">unsafe</span> {
         <span class="ident">ffi::gtk_print_run_page_setup_dialog_async</span>(
             <span class="ident">parent</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
             <span class="ident">page_setup</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
             <span class="ident">settings</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
             <span class="ident">done_cb</span>,
-            <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
+            <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
         );
     }
 }
@@ -1987,8 +2076,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_activity&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_activity</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_activity</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2008,7 +2097,7 @@
     }
 }
 
-<span class="doccomment">/// Renders an arrow pointing to `angle`.</span>
+<span class="doccomment">/// Renders an arrow pointing to @angle.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Typical arrow rendering at 0, 1⁄2 π;, π; and 3⁄2 π:</span>
 <span class="doccomment">///</span>
@@ -2026,8 +2115,8 @@
 <span class="doccomment">/// ## `size`</span>
 <span class="doccomment">/// square side for render area</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_arrow&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_arrow</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_arrow</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">angle</span>: <span class="ident">f64</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
@@ -2066,8 +2155,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_background&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_background</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_background</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2109,8 +2198,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_check&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_check</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_check</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2131,7 +2220,7 @@
 }
 
 <span class="doccomment">/// Renders an expander (as used in [`TreeView`][crate::TreeView] and [`Expander`][crate::Expander]) in the area</span>
-<span class="doccomment">/// defined by `x`, `y`, `width`, `height`. The state [`StateFlags::CHECKED`][crate::StateFlags::CHECKED]</span>
+<span class="doccomment">/// defined by @x, @y, @width, @height. The state [`StateFlags::CHECKED`][crate::StateFlags::CHECKED]</span>
 <span class="doccomment">/// determines whether the expander is collapsed or expanded.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Typical expander rendering:</span>
@@ -2150,8 +2239,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_expander&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_expander</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_expander</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2171,7 +2260,7 @@
     }
 }
 
-<span class="doccomment">/// Renders a focus indicator on the rectangle determined by `x`, `y`, `width`, `height`.</span>
+<span class="doccomment">/// Renders a focus indicator on the rectangle determined by @x, @y, @width, @height.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Typical focus rendering:</span>
 <span class="doccomment">///</span>
@@ -2189,8 +2278,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_focus&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_focus</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_focus</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2210,7 +2299,7 @@
     }
 }
 
-<span class="doccomment">/// Renders a frame around the rectangle defined by `x`, `y`, `width`, `height`.</span>
+<span class="doccomment">/// Renders a frame around the rectangle defined by @x, @y, @width, @height.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Examples of frame rendering, showing the effect of `border-image`,</span>
 <span class="doccomment">/// `border-color`, `border-width`, `border-radius` and junctions:</span>
@@ -2229,8 +2318,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_frame&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_frame</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_frame</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2250,9 +2339,8 @@
     }
 }
 
-<span class="doccomment">/// Renders a handle (as in [`Paned`][crate::Paned] and</span>
-<span class="doccomment">/// [`Window`][crate::Window]’s resize grip), in the rectangle</span>
-<span class="doccomment">/// determined by `x`, `y`, `width`, `height`.</span>
+<span class="doccomment">/// Renders a handle (as in [`Paned`][crate::Paned] and [`Window`][crate::Window]’s resize grip),</span>
+<span class="doccomment">/// in the rectangle determined by @x, @y, @width, @height.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Handles rendered for the paned and grip classes:</span>
 <span class="doccomment">///</span>
@@ -2270,8 +2358,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_handle&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_handle</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_handle</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2291,9 +2379,9 @@
     }
 }
 
-<span class="doccomment">/// Renders the icon in `texture` at the specified `x` and `y` coordinates.</span>
+<span class="doccomment">/// Renders the icon in @texture at the specified @x and @y coordinates.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This function will render the icon in `texture` at exactly its size,</span>
+<span class="doccomment">/// This function will render the icon in @texture at exactly its size,</span>
 <span class="doccomment">/// regardless of scaling factors, which may not be appropriate when</span>
 <span class="doccomment">/// drawing on displays with high pixel densities.</span>
 <span class="doccomment">/// ## `context`</span>
@@ -2303,14 +2391,14 @@
 <span class="doccomment">/// ## `texture`</span>
 <span class="doccomment">/// a [`gdk::Texture`][crate::gdk::Texture] containing the icon to draw</span>
 <span class="doccomment">/// ## `x`</span>
-<span class="doccomment">/// X position for the `texture`</span>
+<span class="doccomment">/// X position for the @texture</span>
 <span class="doccomment">/// ## `y`</span>
-<span class="doccomment">/// Y position for the `texture`</span>
+<span class="doccomment">/// Y position for the @texture</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_icon&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_icon</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>, <span class="ident">Q</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Texture</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_icon</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
-    <span class="ident">texture</span>: <span class="kw-2">&amp;</span><span class="ident">Q</span>,
+    <span class="ident">texture</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Texture</span><span class="op">&gt;</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
 ) {
@@ -2326,7 +2414,7 @@
     }
 }
 
-<span class="doccomment">/// Renders `layout` on the coordinates `x`, `y`</span>
+<span class="doccomment">/// Renders @layout on the coordinates @x, @y</span>
 <span class="doccomment">/// ## `context`</span>
 <span class="doccomment">/// a [`StyleContext`][crate::StyleContext]</span>
 <span class="doccomment">/// ## `cr`</span>
@@ -2338,8 +2426,8 @@
 <span class="doccomment">/// ## `layout`</span>
 <span class="doccomment">/// the [`pango::Layout`][crate::pango::Layout] to render</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_layout&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_layout</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_layout</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2371,8 +2459,8 @@
 <span class="doccomment">/// ## `y1`</span>
 <span class="doccomment">/// Y coordinate for the end of the line</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_line&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_line</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_line</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x0</span>: <span class="ident">f64</span>,
     <span class="ident">y0</span>: <span class="ident">f64</span>,
@@ -2412,8 +2500,8 @@
 <span class="doccomment">/// ## `height`</span>
 <span class="doccomment">/// rectangle height</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_render_option&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_option</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">render_option</span>(
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
     <span class="ident">cr</span>: <span class="kw-2">&amp;</span><span class="ident">cairo::Context</span>,
     <span class="ident">x</span>: <span class="ident">f64</span>,
     <span class="ident">y</span>: <span class="ident">f64</span>,
@@ -2456,7 +2544,7 @@
 <span class="doccomment">/// ## `v`</span>
 <span class="doccomment">/// Return value for the value component</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_rgb_to_hsv&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rgb_to_hsv</span>(<span class="ident">r</span>: <span class="ident">f32</span>, <span class="ident">g</span>: <span class="ident">f32</span>, <span class="ident">b</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">f32</span>, <span class="ident">f32</span>, <span class="ident">f32</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rgb_to_hsv</span>(<span class="ident">r</span>: <span class="ident">f32</span>, <span class="ident">g</span>: <span class="ident">f32</span>, <span class="ident">b</span>: <span class="ident">f32</span>) -&gt; (<span class="ident">f32</span>, <span class="ident">f32</span>, <span class="ident">f32</span>) {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::uninit</span>();
@@ -2490,7 +2578,7 @@
 <span class="doccomment">/// ## `timestamp`</span>
 <span class="doccomment">/// timestamp from the event that triggered this call, or `GDK_CURRENT_TIME`</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_show_uri&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_uri</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">uri</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timestamp</span>: <span class="ident">u32</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_uri</span>(<span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">uri</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timestamp</span>: <span class="ident">u32</span>) {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">ffi::gtk_show_uri</span>(
@@ -2502,13 +2590,13 @@
 }
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_test_accessible_assertion_message_role&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_assertion_message_role</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span><span class="op">&gt;</span>(
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_assertion_message_role</span>(
     <span class="ident">domain</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">line</span>: <span class="ident">i32</span>,
     <span class="ident">func</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">expr</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span>,
     <span class="ident">expected_role</span>: <span class="ident">AccessibleRole</span>,
     <span class="ident">actual_role</span>: <span class="ident">AccessibleRole</span>,
 ) {
@@ -2527,22 +2615,7 @@
     }
 }
 
-<span class="comment">//#[doc(alias = &quot;gtk_test_accessible_check_property&quot;)]</span>
-<span class="comment">//pub fn test_accessible_check_property&lt;P: IsA&lt;Accessible&gt;&gt;(accessible: &amp;P, property: AccessibleProperty, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -&gt; Option&lt;glib::GString&gt; {</span>
-<span class="comment">//    unsafe { TODO: call ffi:gtk_test_accessible_check_property() }</span>
-<span class="comment">//}</span>
-
-<span class="comment">//#[doc(alias = &quot;gtk_test_accessible_check_relation&quot;)]</span>
-<span class="comment">//pub fn test_accessible_check_relation&lt;P: IsA&lt;Accessible&gt;&gt;(accessible: &amp;P, relation: AccessibleRelation, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -&gt; Option&lt;glib::GString&gt; {</span>
-<span class="comment">//    unsafe { TODO: call ffi:gtk_test_accessible_check_relation() }</span>
-<span class="comment">//}</span>
-
-<span class="comment">//#[doc(alias = &quot;gtk_test_accessible_check_state&quot;)]</span>
-<span class="comment">//pub fn test_accessible_check_state&lt;P: IsA&lt;Accessible&gt;&gt;(accessible: &amp;P, state: AccessibleState, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -&gt; Option&lt;glib::GString&gt; {</span>
-<span class="comment">//    unsafe { TODO: call ffi:gtk_test_accessible_check_state() }</span>
-<span class="comment">//}</span>
-
-<span class="doccomment">/// Checks whether the [`Accessible`][crate::Accessible] has `property` set.</span>
+<span class="doccomment">/// Checks whether the [`Accessible`][crate::Accessible] has @property set.</span>
 <span class="doccomment">/// ## `accessible`</span>
 <span class="doccomment">/// a [`Accessible`][crate::Accessible]</span>
 <span class="doccomment">/// ## `property`</span>
@@ -2550,12 +2623,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`true`] if the `property` is set in the `accessible`</span>
+<span class="doccomment">/// [`true`] if the @property is set in the @accessible</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_test_accessible_has_property&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_property</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_property</span>(
+    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span>,
     <span class="ident">property</span>: <span class="ident">AccessibleProperty</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_test_accessible_has_property</span>(
@@ -2565,7 +2638,7 @@
     }
 }
 
-<span class="doccomment">/// Checks whether the [`Accessible`][crate::Accessible] has `relation` set.</span>
+<span class="doccomment">/// Checks whether the [`Accessible`][crate::Accessible] has @relation set.</span>
 <span class="doccomment">/// ## `accessible`</span>
 <span class="doccomment">/// a [`Accessible`][crate::Accessible]</span>
 <span class="doccomment">/// ## `relation`</span>
@@ -2573,12 +2646,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`true`] if the `relation` is set in the `accessible`</span>
+<span class="doccomment">/// [`true`] if the @relation is set in the @accessible</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_test_accessible_has_relation&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_relation</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_relation</span>(
+    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span>,
     <span class="ident">relation</span>: <span class="ident">AccessibleRelation</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_test_accessible_has_relation</span>(
@@ -2588,8 +2661,8 @@
     }
 }
 
-<span class="doccomment">/// Checks whether the `property::Accessible::accessible-role` of the accessible</span>
-<span class="doccomment">/// is `role`.</span>
+<span class="doccomment">/// Checks whether the `GtkAccessible:accessible-role` of the accessible</span>
+<span class="doccomment">/// is @role.</span>
 <span class="doccomment">/// ## `accessible`</span>
 <span class="doccomment">/// a [`Accessible`][crate::Accessible]</span>
 <span class="doccomment">/// ## `role`</span>
@@ -2599,7 +2672,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`true`] if the role matches</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_test_accessible_has_role&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_role</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">role</span>: <span class="ident">AccessibleRole</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_role</span>(<span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span>, <span class="ident">role</span>: <span class="ident">AccessibleRole</span>) -&gt; <span class="ident">bool</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_test_accessible_has_role</span>(
@@ -2609,7 +2682,7 @@
     }
 }
 
-<span class="doccomment">/// Checks whether the [`Accessible`][crate::Accessible] has `state` set.</span>
+<span class="doccomment">/// Checks whether the [`Accessible`][crate::Accessible] has @state set.</span>
 <span class="doccomment">/// ## `accessible`</span>
 <span class="doccomment">/// a [`Accessible`][crate::Accessible]</span>
 <span class="doccomment">/// ## `state`</span>
@@ -2617,12 +2690,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`true`] if the `state` is set in the `accessible`</span>
+<span class="doccomment">/// [`true`] if the @state is set in the @accessible</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_test_accessible_has_state&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_state</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_accessible_has_state</span>(
+    <span class="ident">accessible</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span>,
     <span class="ident">state</span>: <span class="ident">AccessibleState</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_test_accessible_has_state</span>(
@@ -2640,7 +2713,7 @@
 <span class="doccomment">/// Force registration of all core GTK object types.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This allowes to refer to any of those object types via</span>
-<span class="doccomment">/// `g_type_from_name()` after calling this function.</span>
+<span class="doccomment">/// g_type_from_name() after calling this function.</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_test_register_all_types&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_register_all_types</span>() {
     <span class="macro">assert_initialized_main_thread!</span>();
@@ -2649,76 +2722,76 @@
     }
 }
 
-<span class="doccomment">/// Enters the main loop and waits for `widget` to be “drawn”.</span>
+<span class="doccomment">/// Enters the main loop and waits for @widget to be “drawn”.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// In this context that means it waits for the frame clock of</span>
-<span class="doccomment">/// `widget` to have run a full styling, layout and drawing cycle.</span>
+<span class="doccomment">/// @widget to have run a full styling, layout and drawing cycle.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function is intended to be used for syncing with actions that</span>
-<span class="doccomment">/// depend on `widget` relayouting or on interaction with the display</span>
+<span class="doccomment">/// depend on @widget relayouting or on interaction with the display</span>
 <span class="doccomment">/// server.</span>
 <span class="doccomment">/// ## `widget`</span>
 <span class="doccomment">/// the widget to wait for</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_test_widget_wait_for_draw&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_widget_wait_for_draw</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Widget</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">widget</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">test_widget_wait_for_draw</span>(<span class="ident">widget</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Widget</span><span class="op">&gt;</span>) {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">ffi::gtk_test_widget_wait_for_draw</span>(<span class="ident">widget</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
     }
 }
 
-<span class="doccomment">/// Creates a content provider for dragging `path` from `tree_model`.</span>
+<span class="doccomment">/// Creates a content provider for dragging @path from @tree_model.</span>
 <span class="doccomment">/// ## `tree_model`</span>
 <span class="doccomment">/// a [`TreeModel`][crate::TreeModel]</span>
 <span class="doccomment">/// ## `path`</span>
-<span class="doccomment">/// a row in `tree_model`</span>
+<span class="doccomment">/// a row in @tree_model</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// a new [`gdk::ContentProvider`][crate::gdk::ContentProvider]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_create_row_drag_content&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tree_create_row_drag_content</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="ident">tree_model</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>,
-    <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TreePath</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gdk::ContentProvider</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tree_create_row_drag_content</span>(
+    <span class="ident">tree_model</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span>,
+    <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">TreePath</span>,
+) -&gt; <span class="ident">gdk::ContentProvider</span> {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">unsafe</span> {
         <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_tree_create_row_drag_content</span>(
             <span class="ident">tree_model</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-            <span class="ident">path</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
+            <span class="ident">mut_override</span>(<span class="ident">path</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>),
         ))
     }
 }
 
-<span class="doccomment">/// Obtains a `tree_model` and `path` from value of target type</span>
+<span class="doccomment">/// Obtains a @tree_model and @path from value of target type</span>
 <span class="doccomment">/// `GTK_TYPE_TREE_ROW_DATA`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The returned path must be freed with `gtk_tree_path_free()`.</span>
+<span class="doccomment">/// The returned path must be freed with gtk_tree_path_free().</span>
 <span class="doccomment">/// ## `value`</span>
-<span class="doccomment">/// a [`glib::Value`][crate::glib::Value]</span>
+<span class="doccomment">/// a `GValue`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Returns</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`true`] if `selection_data` had target type `GTK_TYPE_TREE_ROW_DATA`</span>
+<span class="doccomment">/// [`true`] if @selection_data had target type `GTK_TYPE_TREE_ROW_DATA`</span>
 <span class="doccomment">///  is otherwise valid</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## `tree_model`</span>
 <span class="doccomment">/// a [`TreeModel`][crate::TreeModel]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## `path`</span>
-<span class="doccomment">/// row in `tree_model`</span>
+<span class="doccomment">/// row in @tree_model</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_get_row_drag_data&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tree_get_row_drag_data</span>(
     <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">glib::Value</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreePath</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreePath</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
     <span class="macro">assert_initialized_main_thread!</span>();
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tree_model</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
         <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_tree_get_row_drag_data</span>(
             <span class="ident">value</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">tree_model</span>,
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">path</span>,
+            <span class="kw-2">&amp;mut</span> <span class="ident">tree_model</span>,
+            <span class="kw-2">&amp;mut</span> <span class="ident">path</span>,
         ));
         <span class="kw">if</span> <span class="ident">ret</span> {
             <span class="prelude-val">Some</span>((<span class="ident">from_glib_none</span>(<span class="ident">tree_model</span>), <span class="ident">from_glib_full</span>(<span class="ident">path</span>)))
@@ -2727,5 +2800,6 @@
         }
     }
 }
-</pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
+</code></pre></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
+</body></html>

@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/application.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>application.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/application.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>application.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -918,852 +915,849 @@
 <span id="842">842</span>
 <span id="843">843</span>
 <span id="844">844</span>
-<span id="845">845</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ApplicationInhibitFlags</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Window</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::StaticType</span>;
-<span class="kw">use</span> <span class="ident">glib::ToValue</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::ApplicationInhibitFlags;
+<span class="kw">use </span><span class="kw">crate</span>::Window;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::StaticType;
+<span class="kw">use </span>glib::ToValue;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// [`Application`][crate::Application] is a high-level API for writing applications.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It supports many aspects of writing a GTK application in a convenient</span>
-    <span class="doccomment">/// fashion, without enforcing a one-size-fits-all model.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Currently, [`Application`][crate::Application] handles GTK initialization, application</span>
-    <span class="doccomment">/// uniqueness, session management, provides some basic scriptability and</span>
-    <span class="doccomment">/// desktop shell integration by exporting actions and menus and manages a</span>
-    <span class="doccomment">/// list of toplevel windows whose life-cycle is automatically tied to the</span>
-    <span class="doccomment">/// life-cycle of your application.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// While [`Application`][crate::Application] works fine with plain [`Window`][crate::Window]s, it is</span>
-    <span class="doccomment">/// recommended to use it together with [`ApplicationWindow`][crate::ApplicationWindow].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Automatic resources</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Application`][crate::Application] will automatically load menus from the [`Builder`][crate::Builder]</span>
-    <span class="doccomment">/// resource located at &quot;gtk/menus.ui&quot;, relative to the application&#39;s</span>
-    <span class="doccomment">/// resource base path (see `g_application_set_resource_base_path()`).</span>
-    <span class="doccomment">/// The menu with the ID &quot;menubar&quot; is taken as the application&#39;s</span>
-    <span class="doccomment">/// menubar. Additional menus (most interesting submenus) can be named</span>
-    <span class="doccomment">/// and accessed via [`GtkApplicationExt::menu_by_id()`][crate::prelude::GtkApplicationExt::menu_by_id()] which allows for</span>
-    <span class="doccomment">/// dynamic population of a part of the menu structure.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It is also possible to provide the menubar manually using</span>
-    <span class="doccomment">/// [`GtkApplicationExt::set_menubar()`][crate::prelude::GtkApplicationExt::set_menubar()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Application`][crate::Application] will also automatically setup an icon search path for</span>
-    <span class="doccomment">/// the default icon theme by appending &quot;icons&quot; to the resource base</span>
-    <span class="doccomment">/// path. This allows your application to easily store its icons as</span>
-    <span class="doccomment">/// resources. See [`IconTheme::add_resource_path()`][crate::IconTheme::add_resource_path()] for more</span>
-    <span class="doccomment">/// information.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If there is a resource located at &quot;gtk/help-overlay.ui&quot; which</span>
-    <span class="doccomment">/// defines a [`ShortcutsWindow`][crate::ShortcutsWindow] with ID &quot;help_overlay&quot; then</span>
-    <span class="doccomment">/// [`Application`][crate::Application] associates an instance of this shortcuts window with</span>
-    <span class="doccomment">/// each [`ApplicationWindow`][crate::ApplicationWindow] and sets up the keyboard accelerator</span>
-    <span class="doccomment">/// &lt;kbd&gt;Control&lt;/kbd&gt;+&lt;kbd&gt;?&lt;/kbd&gt; to open it. To create a menu item that</span>
-    <span class="doccomment">/// displays the shortcuts window, associate the item with the action</span>
-    <span class="doccomment">/// `win.show-help-overlay`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## A simple application</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/main/examples/bp/bloatpad.c)</span>
-    <span class="doccomment">/// is available in the GTK source code repository</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Application`][crate::Application] optionally registers with a session manager of the</span>
-    <span class="doccomment">/// users session (if you set the `property::gio::Application::register-session`</span>
-    <span class="doccomment">/// property) and offers various functionality related to the session</span>
-    <span class="doccomment">/// life-cycle.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// An application can block various ways to end the session with</span>
-    <span class="doccomment">/// the [`GtkApplicationExt::inhibit()`][crate::prelude::GtkApplicationExt::inhibit()] function. Typical use cases for</span>
-    <span class="doccomment">/// this kind of inhibiting are long-running, uninterruptible operations,</span>
-    <span class="doccomment">/// such as burning a CD or performing a disk backup. The session</span>
-    <span class="doccomment">/// manager may not honor the inhibitor, but it can be expected to</span>
-    <span class="doccomment">/// inform the user about the negative consequences of ending the</span>
-    <span class="doccomment">/// session while inhibitors are present.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## See Also</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [HowDoI: Using GtkApplication](https://wiki.gnome.org/HowDoI/GtkApplication),</span>
-    <span class="doccomment">/// [Getting Started with GTK: Basics](getting_started.html#basics)</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`GtkApplicationExt`][trait@crate::prelude::GtkApplicationExt], [`trait@gio::prelude::ApplicationExt`], [`trait@glib::ObjectExt`], [`trait@gio::prelude::ActionGroupExt`], [`trait@gio::prelude::ActionMapExt`]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkApplication&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Application</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkApplication</span>, <span class="ident">ffi::GtkApplicationClass</span><span class="op">&gt;</span>) @<span class="ident">extends</span> <span class="ident">gio::Application</span>, @<span class="ident">implements</span> <span class="ident">gio::ActionGroup</span>, <span class="ident">gio::ActionMap</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// [`Application`][crate::Application] is a high-level API for writing applications.
+    ///
+    /// It supports many aspects of writing a GTK application in a convenient
+    /// fashion, without enforcing a one-size-fits-all model.
+    ///
+    /// Currently, [`Application`][crate::Application] handles GTK initialization, application
+    /// uniqueness, session management, provides some basic scriptability and
+    /// desktop shell integration by exporting actions and menus and manages a
+    /// list of toplevel windows whose life-cycle is automatically tied to the
+    /// life-cycle of your application.
+    ///
+    /// While [`Application`][crate::Application] works fine with plain [`Window`][crate::Window]s, it is
+    /// recommended to use it together with [`ApplicationWindow`][crate::ApplicationWindow].
+    ///
+    /// ## Automatic resources
+    ///
+    /// [`Application`][crate::Application] will automatically load menus from the [`Builder`][crate::Builder]
+    /// resource located at &quot;gtk/menus.ui&quot;, relative to the application&#39;s
+    /// resource base path (see [`ApplicationExtManual::set_resource_base_path()`][crate::gio::prelude::ApplicationExtManual::set_resource_base_path()]).
+    /// The menu with the ID &quot;menubar&quot; is taken as the application&#39;s
+    /// menubar. Additional menus (most interesting submenus) can be named
+    /// and accessed via [`GtkApplicationExt::menu_by_id()`][crate::prelude::GtkApplicationExt::menu_by_id()] which allows for
+    /// dynamic population of a part of the menu structure.
+    ///
+    /// It is also possible to provide the menubar manually using
+    /// [`GtkApplicationExt::set_menubar()`][crate::prelude::GtkApplicationExt::set_menubar()].
+    ///
+    /// [`Application`][crate::Application] will also automatically setup an icon search path for
+    /// the default icon theme by appending &quot;icons&quot; to the resource base
+    /// path. This allows your application to easily store its icons as
+    /// resources. See [`IconTheme::add_resource_path()`][crate::IconTheme::add_resource_path()] for more
+    /// information.
+    ///
+    /// If there is a resource located at `gtk/help-overlay.ui` which
+    /// defines a [`ShortcutsWindow`][crate::ShortcutsWindow] with ID `help_overlay` then
+    /// [`Application`][crate::Application] associates an instance of this shortcuts window with
+    /// each [`ApplicationWindow`][crate::ApplicationWindow] and sets up the keyboard accelerator
+    /// &lt;kbd&gt;Control&lt;/kbd&gt;+&lt;kbd&gt;?&lt;/kbd&gt; to open it. To create a menu item that
+    /// displays the shortcuts window, associate the item with the action
+    /// `win.show-help-overlay`.
+    ///
+    /// ## A simple application
+    ///
+    /// [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/main/examples/bp/bloatpad.c)
+    /// is available in the GTK source code repository
+    ///
+    /// [`Application`][crate::Application] optionally registers with a session manager of the
+    /// users session (if you set the `property::Application::register-session`
+    /// property) and offers various functionality related to the session
+    /// life-cycle.
+    ///
+    /// An application can block various ways to end the session with
+    /// the [`GtkApplicationExt::inhibit()`][crate::prelude::GtkApplicationExt::inhibit()] function. Typical use cases for
+    /// this kind of inhibiting are long-running, uninterruptible operations,
+    /// such as burning a CD or performing a disk backup. The session
+    /// manager may not honor the inhibitor, but it can be expected to
+    /// inform the user about the negative consequences of ending the
+    /// session while inhibitors are present.
+    ///
+    /// ## See Also
+    ///
+    /// [HowDoI: Using GtkApplication](https://wiki.gnome.org/HowDoI/GtkApplication),
+    /// [Getting Started with GTK: Basics](getting_started.html#basics)
+    ///
+    /// # Implements
+    ///
+    /// [`GtkApplicationExt`][trait@crate::prelude::GtkApplicationExt], [`trait@gio::prelude::ApplicationExt`], [`trait@glib::ObjectExt`], [`trait@gio::prelude::ActionGroupExt`], [`trait@gio::prelude::ActionMapExt`]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkApplication&quot;</span>)]
+    </span><span class="kw">pub struct </span>Application(Object&lt;ffi::GtkApplication, ffi::GtkApplicationClass&gt;) @extends gio::Application, @implements gio::ActionGroup, gio::ActionMap;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_application_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_application_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Application</span> {
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Application</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+<span class="kw">impl </span>Application {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Application&gt; = <span class="prelude-val">None</span>;
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`Application`] objects.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method returns an instance of [`ApplicationBuilder`](crate::builders::ApplicationBuilder) which can be used to create [`Application`] objects.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">ApplicationBuilder</span> {
-        <span class="ident">ApplicationBuilder::default</span>()
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`Application`] objects.
+    ///
+    /// This method returns an instance of [`ApplicationBuilder`](crate::builders::ApplicationBuilder) which can be used to create [`Application`] objects.
+    </span><span class="kw">pub fn </span>builder() -&gt; ApplicationBuilder {
+        ApplicationBuilder::default()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// A [builder-pattern] type to construct [`Application`] objects.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</span>
-<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;The builder must be built to be used&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ApplicationBuilder</span> {
-    <span class="ident">menubar</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gio::MenuModel</span><span class="op">&gt;</span>,
-    <span class="ident">register_session</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">action_group</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gio::ActionGroup</span><span class="op">&gt;</span>,
-    <span class="ident">application_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">flags</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gio::ApplicationFlags</span><span class="op">&gt;</span>,
-    <span class="ident">inactivity_timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
-    <span class="ident">resource_base_path</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(Clone, Default)]
+</span><span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`Application`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+</span><span class="attribute">#[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
+</span><span class="kw">pub struct </span>ApplicationBuilder {
+    menubar: <span class="prelude-ty">Option</span>&lt;gio::MenuModel&gt;,
+    register_session: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    action_group: <span class="prelude-ty">Option</span>&lt;gio::ActionGroup&gt;,
+    application_id: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    flags: <span class="prelude-ty">Option</span>&lt;gio::ApplicationFlags&gt;,
+    inactivity_timeout: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+    resource_base_path: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">ApplicationBuilder</span> {
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Create a new [`ApplicationBuilder`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::default</span>()
+<span class="kw">impl </span>ApplicationBuilder {
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Create a new [`ApplicationBuilder`].
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::default()
     }
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Build the [`Application`].</span>
-    <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">Application</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">properties</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">ToValue</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">menubar</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">menubar</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;menubar&quot;</span>, <span class="ident">menubar</span>));
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Build the [`Application`].
+    </span><span class="attribute">#[must_use = <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Application {
+        <span class="kw">let </span><span class="kw-2">mut </span>properties: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span><span class="kw">dyn </span>ToValue)&gt; = <span class="macro">vec!</span>[];
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>menubar) = <span class="self">self</span>.menubar {
+            properties.push((<span class="string">&quot;menubar&quot;</span>, menubar));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">register_session</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">register_session</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;register-session&quot;</span>, <span class="ident">register_session</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>register_session) = <span class="self">self</span>.register_session {
+            properties.push((<span class="string">&quot;register-session&quot;</span>, register_session));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">action_group</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">action_group</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;action-group&quot;</span>, <span class="ident">action_group</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>action_group) = <span class="self">self</span>.action_group {
+            properties.push((<span class="string">&quot;action-group&quot;</span>, action_group));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">application_id</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">application_id</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;application-id&quot;</span>, <span class="ident">application_id</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>application_id) = <span class="self">self</span>.application_id {
+            properties.push((<span class="string">&quot;application-id&quot;</span>, application_id));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">flags</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">flags</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;flags&quot;</span>, <span class="ident">flags</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>flags) = <span class="self">self</span>.flags {
+            properties.push((<span class="string">&quot;flags&quot;</span>, flags));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">inactivity_timeout</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">inactivity_timeout</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;inactivity-timeout&quot;</span>, <span class="ident">inactivity_timeout</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>inactivity_timeout) = <span class="self">self</span>.inactivity_timeout {
+            properties.push((<span class="string">&quot;inactivity-timeout&quot;</span>, inactivity_timeout));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">resource_base_path</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">resource_base_path</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;resource-base-path&quot;</span>, <span class="ident">resource_base_path</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>resource_base_path) = <span class="self">self</span>.resource_base_path {
+            properties.push((<span class="string">&quot;resource-base-path&quot;</span>, resource_base_path));
         }
-        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">properties</span>)
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to create an instance of Application&quot;</span>);
+        <span class="kw">let </span>ret = glib::Object::new::&lt;Application&gt;(<span class="kw-2">&amp;</span>properties);
         {
-            <span class="ident">Application::register_startup_hook</span>(<span class="kw-2">&amp;</span><span class="ident">ret</span>);
+            Application::register_startup_hook(<span class="kw-2">&amp;</span>ret);
         }
-        <span class="ident">ret</span>
+        ret
     }
 
-    <span class="doccomment">/// The `GMenuModel` to be used for the application&#39;s menu bar.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">menubar</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">menubar</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gio::MenuModel</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">menubar</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">menubar</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The `GMenuModel` to be used for the application&#39;s menu bar.
+    </span><span class="kw">pub fn </span>menubar(<span class="kw-2">mut </span><span class="self">self</span>, menubar: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::MenuModel&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.menubar = <span class="prelude-val">Some</span>(menubar.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set this property to `TRUE` to register with the session manager.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This will make GTK track the session state (such as the</span>
-    <span class="doccomment">/// `property::gio::Application::screensaver-active` property).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_session</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">register_session</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">register_session</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">register_session</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set this property to `TRUE` to register with the session manager.
+    ///
+    /// This will make GTK track the session state (such as the
+    /// `property::Application::screensaver-active` property).
+    </span><span class="kw">pub fn </span>register_session(<span class="kw-2">mut </span><span class="self">self</span>, register_session: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.register_session = <span class="prelude-val">Some</span>(register_session);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">action_group</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">action_group</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gio::ActionGroup</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">action_group</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">action_group</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>action_group(<span class="kw-2">mut </span><span class="self">self</span>, action_group: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::ActionGroup&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.action_group = <span class="prelude-val">Some</span>(action_group.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">application_id</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">application_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">application_id</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">application_id</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>application_id(<span class="kw-2">mut </span><span class="self">self</span>, application_id: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.application_id = <span class="prelude-val">Some</span>(application_id.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flags</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">gio::ApplicationFlags</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">flags</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">flags</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>flags(<span class="kw-2">mut </span><span class="self">self</span>, flags: gio::ApplicationFlags) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.flags = <span class="prelude-val">Some</span>(flags);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inactivity_timeout</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">inactivity_timeout</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">inactivity_timeout</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inactivity_timeout</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>inactivity_timeout(<span class="kw-2">mut </span><span class="self">self</span>, inactivity_timeout: u32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.inactivity_timeout = <span class="prelude-val">Some</span>(inactivity_timeout);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resource_base_path</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resource_base_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">resource_base_path</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">resource_base_path</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>resource_base_path(<span class="kw-2">mut </span><span class="self">self</span>, resource_base_path: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.resource_base_path = <span class="prelude-val">Some</span>(resource_base_path.to_string());
+        <span class="self">self
+    </span>}
 }
 
-<span class="doccomment">/// Trait containing all [`struct@Application`] methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Implementors</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`Application`][struct@crate::Application]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">GtkApplicationExt</span>: <span class="lifetime">&#39;static</span> {
-    <span class="doccomment">/// Adds a window to `application`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This call can only happen after the `application` has started;</span>
-    <span class="doccomment">/// typically, you should add new application windows in response</span>
-    <span class="doccomment">/// to the emission of the `GApplication::activate` signal.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This call is equivalent to setting the `property::Window::application`</span>
-    <span class="doccomment">/// property of `window` to `application`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Normally, the connection between the application and the window</span>
-    <span class="doccomment">/// will remain until the window is destroyed, but you can explicitly</span>
-    <span class="doccomment">/// remove it with [`remove_window()`][Self::remove_window()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// GTK will keep the `application` running as long as it has</span>
-    <span class="doccomment">/// any windows.</span>
-    <span class="doccomment">/// ## `window`</span>
-    <span class="doccomment">/// a [`Window`][crate::Window]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_add_window&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">add_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>);
+<span class="doccomment">/// Trait containing all [`struct@Application`] methods.
+///
+/// # Implementors
+///
+/// [`Application`][struct@crate::Application]
+</span><span class="kw">pub trait </span>GtkApplicationExt: <span class="lifetime">&#39;static </span>{
+    <span class="doccomment">/// Adds a window to `application`.
+    ///
+    /// This call can only happen after the `application` has started;
+    /// typically, you should add new application windows in response
+    /// to the emission of the `GApplication::activate` signal.
+    ///
+    /// This call is equivalent to setting the `property::Window::application`
+    /// property of `window` to `application`.
+    ///
+    /// Normally, the connection between the application and the window
+    /// will remain until the window is destroyed, but you can explicitly
+    /// remove it with [`remove_window()`][Self::remove_window()].
+    ///
+    /// GTK will keep the `application` running as long as it has
+    /// any windows.
+    /// ## `window`
+    /// a [`Window`][crate::Window]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_add_window&quot;</span>)]
+    </span><span class="kw">fn </span>add_window(<span class="kw-2">&amp;</span><span class="self">self</span>, window: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;);
 
-    <span class="doccomment">/// Gets the accelerators that are currently associated with</span>
-    <span class="doccomment">/// the given action.</span>
-    <span class="doccomment">/// ## `detailed_action_name`</span>
-    <span class="doccomment">/// a detailed action name, specifying an action</span>
-    <span class="doccomment">///   and target to obtain accelerators for</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   accelerators for `detailed_action_name`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_get_accels_for_action&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_accels_for_action&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">accels_for_action</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">detailed_action_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Gets the accelerators that are currently associated with
+    /// the given action.
+    /// ## `detailed_action_name`
+    /// a detailed action name, specifying an action
+    ///   and target to obtain accelerators for
+    ///
+    /// # Returns
+    ///
+    ///
+    ///   accelerators for `detailed_action_name`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_get_accels_for_action&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_accels_for_action&quot;</span>)]
+    </span><span class="kw">fn </span>accels_for_action(<span class="kw-2">&amp;</span><span class="self">self</span>, detailed_action_name: <span class="kw-2">&amp;</span>str) -&gt; Vec&lt;glib::GString&gt;;
 
-    <span class="doccomment">/// Returns the list of actions (possibly empty) that `accel` maps to.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Each item in the list is a detailed action name in the usual form.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This might be useful to discover if an accel already exists in</span>
-    <span class="doccomment">/// order to prevent installation of a conflicting accelerator (from</span>
-    <span class="doccomment">/// an accelerator editor or a plugin system, for example). Note that</span>
-    <span class="doccomment">/// having more than one action per accelerator may not be a bad thing</span>
-    <span class="doccomment">/// and might make sense in cases where the actions never appear in the</span>
-    <span class="doccomment">/// same context.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In case there are no actions for a given accelerator, an empty array</span>
-    <span class="doccomment">/// is returned. `NULL` is never returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It is a programmer error to pass an invalid accelerator string.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If you are unsure, check it with [`accelerator_parse()`][crate::accelerator_parse()] first.</span>
-    <span class="doccomment">/// ## `accel`</span>
-    <span class="doccomment">/// an accelerator that can be parsed by [`accelerator_parse()`][crate::accelerator_parse()]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a [`None`]-terminated array of actions for `accel`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_get_actions_for_accel&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_actions_for_accel&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">actions_for_accel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">accel</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Returns the list of actions (possibly empty) that `accel` maps to.
+    ///
+    /// Each item in the list is a detailed action name in the usual form.
+    ///
+    /// This might be useful to discover if an accel already exists in
+    /// order to prevent installation of a conflicting accelerator (from
+    /// an accelerator editor or a plugin system, for example). Note that
+    /// having more than one action per accelerator may not be a bad thing
+    /// and might make sense in cases where the actions never appear in the
+    /// same context.
+    ///
+    /// In case there are no actions for a given accelerator, an empty array
+    /// is returned. `NULL` is never returned.
+    ///
+    /// It is a programmer error to pass an invalid accelerator string.
+    ///
+    /// If you are unsure, check it with [`accelerator_parse()`][crate::accelerator_parse()] first.
+    /// ## `accel`
+    /// an accelerator that can be parsed by [`accelerator_parse()`][crate::accelerator_parse()]
+    ///
+    /// # Returns
+    ///
+    /// a [`None`]-terminated array of actions for `accel`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_get_actions_for_accel&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_actions_for_accel&quot;</span>)]
+    </span><span class="kw">fn </span>actions_for_accel(<span class="kw-2">&amp;</span><span class="self">self</span>, accel: <span class="kw-2">&amp;</span>str) -&gt; Vec&lt;glib::GString&gt;;
 
-    <span class="doccomment">/// Gets the “active” window for the application.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The active window is the one that was most recently focused (within</span>
-    <span class="doccomment">/// the application).  This window may not have the focus at the moment</span>
-    <span class="doccomment">/// if another application has it — this is just the most</span>
-    <span class="doccomment">/// recently-focused window within this application.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the active window</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_get_active_window&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_active_window&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">active_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Gets the “active” window for the application.
+    ///
+    /// The active window is the one that was most recently focused (within
+    /// the application).  This window may not have the focus at the moment
+    /// if another application has it — this is just the most
+    /// recently-focused window within this application.
+    ///
+    /// # Returns
+    ///
+    /// the active window
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_get_active_window&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_active_window&quot;</span>)]
+    </span><span class="kw">fn </span>active_window(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Window&gt;;
 
-    <span class="doccomment">/// Gets a menu from automatically loaded resources.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See [the section on Automatic resources](class.Application.html#automatic-resources)</span>
-    <span class="doccomment">/// for more information.</span>
-    <span class="doccomment">/// ## `id`</span>
-    <span class="doccomment">/// the id of the menu to look up</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Gets the menu with the</span>
-    <span class="doccomment">///   given id from the automatically loaded resources</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_get_menu_by_id&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_menu_by_id&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">menu_by_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gio::Menu</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Gets a menu from automatically loaded resources.
+    ///
+    /// See [the section on Automatic resources](class.Application.html#automatic-resources)
+    /// for more information.
+    /// ## `id`
+    /// the id of the menu to look up
+    ///
+    /// # Returns
+    ///
+    /// Gets the menu with the
+    ///   given id from the automatically loaded resources
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_get_menu_by_id&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_menu_by_id&quot;</span>)]
+    </span><span class="kw">fn </span>menu_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;gio::Menu&gt;;
 
-    <span class="doccomment">/// Returns the menu model that has been set with</span>
-    <span class="doccomment">/// [`set_menubar()`][Self::set_menubar()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the menubar for windows of `application`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_get_menubar&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_menubar&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">menubar</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gio::MenuModel</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Returns the menu model that has been set with
+    /// [`set_menubar()`][Self::set_menubar()].
+    ///
+    /// # Returns
+    ///
+    /// the menubar for windows of `application`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_get_menubar&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_menubar&quot;</span>)]
+    </span><span class="kw">fn </span>menubar(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gio::MenuModel&gt;;
 
-    <span class="doccomment">/// Returns the [`ApplicationWindow`][crate::ApplicationWindow] with the given ID.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The ID of a [`ApplicationWindow`][crate::ApplicationWindow] can be retrieved with</span>
-    <span class="doccomment">/// [`ApplicationWindowExt::id()`][crate::prelude::ApplicationWindowExt::id()].</span>
-    <span class="doccomment">/// ## `id`</span>
-    <span class="doccomment">/// an identifier number</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the window for the given `id`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_get_window_by_id&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_window_by_id&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">window_by_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Returns the [`ApplicationWindow`][crate::ApplicationWindow] with the given ID.
+    ///
+    /// The ID of a [`ApplicationWindow`][crate::ApplicationWindow] can be retrieved with
+    /// [`ApplicationWindowExt::id()`][crate::prelude::ApplicationWindowExt::id()].
+    /// ## `id`
+    /// an identifier number
+    ///
+    /// # Returns
+    ///
+    /// the window for the given `id`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_get_window_by_id&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_window_by_id&quot;</span>)]
+    </span><span class="kw">fn </span>window_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: u32) -&gt; <span class="prelude-ty">Option</span>&lt;Window&gt;;
 
-    <span class="doccomment">/// Gets a list of the [`Window`][crate::Window] instances associated with `application`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The list is sorted by most recently focused window, such that the first</span>
-    <span class="doccomment">/// element is the currently focused window. (Useful for choosing a parent</span>
-    <span class="doccomment">/// for a transient window.)</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The list that is returned should not be modified in any way. It will</span>
-    <span class="doccomment">/// only remain valid until the next focus change or window creation or</span>
-    <span class="doccomment">/// deletion.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a `GList` of [`Window`][crate::Window]</span>
-    <span class="doccomment">///   instances</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_get_windows&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_windows&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">windows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Gets a list of the [`Window`][crate::Window] instances associated with `application`.
+    ///
+    /// The list is sorted by most recently focused window, such that the first
+    /// element is the currently focused window. (Useful for choosing a parent
+    /// for a transient window.)
+    ///
+    /// The list that is returned should not be modified in any way. It will
+    /// only remain valid until the next focus change or window creation or
+    /// deletion.
+    ///
+    /// # Returns
+    ///
+    /// a `GList` of [`Window`][crate::Window]
+    ///   instances
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_get_windows&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_windows&quot;</span>)]
+    </span><span class="kw">fn </span>windows(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;Window&gt;;
 
-    <span class="doccomment">/// Inform the session manager that certain types of actions should be</span>
-    <span class="doccomment">/// inhibited.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is not guaranteed to work on all platforms and for all types of</span>
-    <span class="doccomment">/// actions.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications should invoke this method when they begin an operation</span>
-    <span class="doccomment">/// that should not be interrupted, such as creating a CD or DVD. The</span>
-    <span class="doccomment">/// types of actions that may be blocked are specified by the `flags`</span>
-    <span class="doccomment">/// parameter. When the application completes the operation it should</span>
-    <span class="doccomment">/// call [`uninhibit()`][Self::uninhibit()] to remove the inhibitor. Note</span>
-    <span class="doccomment">/// that an application can have multiple inhibitors, and all of them must</span>
-    <span class="doccomment">/// be individually removed. Inhibitors are also cleared when the</span>
-    <span class="doccomment">/// application exits.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications should not expect that they will always be able to block</span>
-    <span class="doccomment">/// the action. In most cases, users will be given the option to force</span>
-    <span class="doccomment">/// the action to take place.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The `reason` message should be short and to the point.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If `window` is given, the session manager may point the user to</span>
-    <span class="doccomment">/// this window to find out more about why the action is inhibited.</span>
-    <span class="doccomment">/// ## `window`</span>
-    <span class="doccomment">/// a [`Window`][crate::Window]</span>
-    <span class="doccomment">/// ## `flags`</span>
-    <span class="doccomment">/// what types of actions should be inhibited</span>
-    <span class="doccomment">/// ## `reason`</span>
-    <span class="doccomment">/// a short, human-readable string that explains</span>
-    <span class="doccomment">///   why these operations are inhibited</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A non-zero cookie that is used to uniquely identify this</span>
-    <span class="doccomment">///   request. It should be used as an argument to [`uninhibit()`][Self::uninhibit()]</span>
-    <span class="doccomment">///   in order to remove the request. If the platform does not support</span>
-    <span class="doccomment">///   inhibiting or the request failed for some reason, 0 is returned.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_inhibit&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">inhibit</span>(
+    <span class="doccomment">/// Inform the session manager that certain types of actions should be
+    /// inhibited.
+    ///
+    /// This is not guaranteed to work on all platforms and for all types of
+    /// actions.
+    ///
+    /// Applications should invoke this method when they begin an operation
+    /// that should not be interrupted, such as creating a CD or DVD. The
+    /// types of actions that may be blocked are specified by the `flags`
+    /// parameter. When the application completes the operation it should
+    /// call [`uninhibit()`][Self::uninhibit()] to remove the inhibitor. Note
+    /// that an application can have multiple inhibitors, and all of them must
+    /// be individually removed. Inhibitors are also cleared when the
+    /// application exits.
+    ///
+    /// Applications should not expect that they will always be able to block
+    /// the action. In most cases, users will be given the option to force
+    /// the action to take place.
+    ///
+    /// The `reason` message should be short and to the point.
+    ///
+    /// If `window` is given, the session manager may point the user to
+    /// this window to find out more about why the action is inhibited.
+    /// ## `window`
+    /// a [`Window`][crate::Window]
+    /// ## `flags`
+    /// what types of actions should be inhibited
+    /// ## `reason`
+    /// a short, human-readable string that explains
+    ///   why these operations are inhibited
+    ///
+    /// # Returns
+    ///
+    /// A non-zero cookie that is used to uniquely identify this
+    ///   request. It should be used as an argument to [`uninhibit()`][Self::uninhibit()]
+    ///   in order to remove the request. If the platform does not support
+    ///   inhibiting or the request failed for some reason, 0 is returned.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_inhibit&quot;</span>)]
+    </span><span class="kw">fn </span>inhibit(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">window</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-        <span class="ident">flags</span>: <span class="ident">ApplicationInhibitFlags</span>,
-        <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">u32</span>;
+        window: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;&gt;,
+        flags: ApplicationInhibitFlags,
+        reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+    ) -&gt; u32;
 
-    <span class="doccomment">/// Lists the detailed action names which have associated accelerators.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See [`set_accels_for_action()`][Self::set_accels_for_action()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the detailed action names</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_list_action_descriptions&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">list_action_descriptions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Lists the detailed action names which have associated accelerators.
+    ///
+    /// See [`set_accels_for_action()`][Self::set_accels_for_action()].
+    ///
+    /// # Returns
+    ///
+    /// the detailed action names
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_list_action_descriptions&quot;</span>)]
+    </span><span class="kw">fn </span>list_action_descriptions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;glib::GString&gt;;
 
-    <span class="doccomment">/// Remove a window from `application`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If `window` belongs to `application` then this call is equivalent to</span>
-    <span class="doccomment">/// setting the `property::Window::application` property of `window` to</span>
-    <span class="doccomment">/// `NULL`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The application may stop running as a result of a call to this</span>
-    <span class="doccomment">/// function, if `window` was the last window of the `application`.</span>
-    <span class="doccomment">/// ## `window`</span>
-    <span class="doccomment">/// a [`Window`][crate::Window]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_remove_window&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">remove_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Remove a window from `application`.
+    ///
+    /// If `window` belongs to `application` then this call is equivalent to
+    /// setting the `property::Window::application` property of `window` to
+    /// `NULL`.
+    ///
+    /// The application may stop running as a result of a call to this
+    /// function, if `window` was the last window of the `application`.
+    /// ## `window`
+    /// a [`Window`][crate::Window]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_remove_window&quot;</span>)]
+    </span><span class="kw">fn </span>remove_window(<span class="kw-2">&amp;</span><span class="self">self</span>, window: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;);
 
-    <span class="doccomment">/// Sets zero or more keyboard accelerators that will trigger the</span>
-    <span class="doccomment">/// given action.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The first item in `accels` will be the primary accelerator, which may be</span>
-    <span class="doccomment">/// displayed in the UI.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// To remove all accelerators for an action, use an empty, zero-terminated</span>
-    <span class="doccomment">/// array for `accels`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For the `detailed_action_name`, see `g_action_parse_detailed_name()` and</span>
-    <span class="doccomment">/// `g_action_print_detailed_name()`.</span>
-    <span class="doccomment">/// ## `detailed_action_name`</span>
-    <span class="doccomment">/// a detailed action name, specifying an action</span>
-    <span class="doccomment">///   and target to associate accelerators with</span>
-    <span class="doccomment">/// ## `accels`</span>
-    <span class="doccomment">/// a list of accelerators in the format</span>
-    <span class="doccomment">///   understood by [`accelerator_parse()`][crate::accelerator_parse()]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_set_accels_for_action&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_accels_for_action</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">detailed_action_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">accels</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]);
+    <span class="doccomment">/// Sets zero or more keyboard accelerators that will trigger the
+    /// given action.
+    ///
+    /// The first item in `accels` will be the primary accelerator, which may be
+    /// displayed in the UI.
+    ///
+    /// To remove all accelerators for an action, use an empty, zero-terminated
+    /// array for `accels`.
+    ///
+    /// For the `detailed_action_name`, see `g_action_parse_detailed_name()` and
+    /// `g_action_print_detailed_name()`.
+    /// ## `detailed_action_name`
+    /// a detailed action name, specifying an action
+    ///   and target to associate accelerators with
+    /// ## `accels`
+    /// a list of accelerators in the format
+    ///   understood by [`accelerator_parse()`][crate::accelerator_parse()]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_set_accels_for_action&quot;</span>)]
+    </span><span class="kw">fn </span>set_accels_for_action(<span class="kw-2">&amp;</span><span class="self">self</span>, detailed_action_name: <span class="kw-2">&amp;</span>str, accels: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]);
 
-    <span class="doccomment">/// Sets or unsets the menubar for windows of `application`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is a menubar in the traditional sense.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This can only be done in the primary instance of the application,</span>
-    <span class="doccomment">/// after it has been registered. `GApplication::startup` is a good place</span>
-    <span class="doccomment">/// to call this.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Depending on the desktop environment, this may appear at the top of</span>
-    <span class="doccomment">/// each window, or at the top of the screen.  In some environments, if</span>
-    <span class="doccomment">/// both the application menu and the menubar are set, the application</span>
-    <span class="doccomment">/// menu will be presented as if it were the first item of the menubar.</span>
-    <span class="doccomment">/// Other environments treat the two as completely separate — for example,</span>
-    <span class="doccomment">/// the application menu may be rendered by the desktop shell while the</span>
-    <span class="doccomment">/// menubar (if set) remains in each individual window.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Use the base `GActionMap` interface to add actions, to respond to the</span>
-    <span class="doccomment">/// user selecting these menu items.</span>
-    <span class="doccomment">/// ## `menubar`</span>
-    <span class="doccomment">/// a `GMenuModel`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_set_menubar&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_menubar</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">menubar</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gio::MenuModel</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Sets or unsets the menubar for windows of `application`.
+    ///
+    /// This is a menubar in the traditional sense.
+    ///
+    /// This can only be done in the primary instance of the application,
+    /// after it has been registered. `GApplication::startup` is a good place
+    /// to call this.
+    ///
+    /// Depending on the desktop environment, this may appear at the top of
+    /// each window, or at the top of the screen.  In some environments, if
+    /// both the application menu and the menubar are set, the application
+    /// menu will be presented as if it were the first item of the menubar.
+    /// Other environments treat the two as completely separate — for example,
+    /// the application menu may be rendered by the desktop shell while the
+    /// menubar (if set) remains in each individual window.
+    ///
+    /// Use the base `GActionMap` interface to add actions, to respond to the
+    /// user selecting these menu items.
+    /// ## `menubar`
+    /// a `GMenuModel`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_set_menubar&quot;</span>)]
+    </span><span class="kw">fn </span>set_menubar(<span class="kw-2">&amp;</span><span class="self">self</span>, menubar: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::MenuModel&gt;&gt;);
 
-    <span class="doccomment">/// Removes an inhibitor that has been previously established.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See [`inhibit()`][Self::inhibit()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Inhibitors are also cleared when the application exits.</span>
-    <span class="doccomment">/// ## `cookie`</span>
-    <span class="doccomment">/// a cookie that was returned by [`inhibit()`][Self::inhibit()]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_application_uninhibit&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">uninhibit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cookie</span>: <span class="ident">u32</span>);
+    <span class="doccomment">/// Removes an inhibitor that has been previously established.
+    ///
+    /// See [`inhibit()`][Self::inhibit()].
+    ///
+    /// Inhibitors are also cleared when the application exits.
+    /// ## `cookie`
+    /// a cookie that was returned by [`inhibit()`][Self::inhibit()]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_application_uninhibit&quot;</span>)]
+    </span><span class="kw">fn </span>uninhibit(<span class="kw-2">&amp;</span><span class="self">self</span>, cookie: u32);
 
-    <span class="doccomment">/// Set this property to `TRUE` to register with the session manager.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This will make GTK track the session state (such as the</span>
-    <span class="doccomment">/// `property::gio::Application::screensaver-active` property).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;register-session&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">is_register_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// Set this property to `TRUE` to register with the session manager.
+    ///
+    /// This will make GTK track the session state (such as the
+    /// `property::Application::screensaver-active` property).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;register-session&quot;</span>)]
+    </span><span class="kw">fn </span>is_register_session(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="doccomment">/// Set this property to `TRUE` to register with the session manager.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This will make GTK track the session state (such as the</span>
-    <span class="doccomment">/// `property::gio::Application::screensaver-active` property).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;register-session&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_register_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">register_session</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// Set this property to `TRUE` to register with the session manager.
+    ///
+    /// This will make GTK track the session state (such as the
+    /// `property::Application::screensaver-active` property).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;register-session&quot;</span>)]
+    </span><span class="kw">fn </span>set_register_session(<span class="kw-2">&amp;</span><span class="self">self</span>, register_session: bool);
 
-    <span class="doccomment">/// This property is `TRUE` if GTK believes that the screensaver is</span>
-    <span class="doccomment">/// currently active.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// GTK only tracks session state (including this) when</span>
-    <span class="doccomment">/// `property::gio::Application::register-session` is set to [`true`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Tracking the screensaver state is currently only supported on</span>
-    <span class="doccomment">/// Linux.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;screensaver-active&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">is_screensaver_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// This property is `TRUE` if GTK believes that the screensaver is
+    /// currently active.
+    ///
+    /// GTK only tracks session state (including this) when
+    /// `property::Application::register-session` is set to [`true`].
+    ///
+    /// Tracking the screensaver state is currently only supported on
+    /// Linux.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;screensaver-active&quot;</span>)]
+    </span><span class="kw">fn </span>is_screensaver_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="doccomment">/// Emitted when the session manager is about to end the session.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This signal is only emitted if `property::gio::Application::register-session`</span>
-    <span class="doccomment">/// is `TRUE`. Applications can connect to this signal and call</span>
-    <span class="doccomment">/// [`inhibit()`][Self::inhibit()] with `GTK_APPLICATION_INHIBIT_LOGOUT`</span>
-    <span class="doccomment">/// to delay the end of the session until state has been saved.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;query-end&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_query_end</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="doccomment">/// Emitted when the session manager is about to end the session.
+    ///
+    /// This signal is only emitted if `property::Application::register-session`
+    /// is `TRUE`. Applications can connect to this signal and call
+    /// [`inhibit()`][Self::inhibit()] with `GTK_APPLICATION_INHIBIT_LOGOUT`
+    /// to delay the end of the session until state has been saved.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;query-end&quot;</span>)]
+    </span><span class="kw">fn </span>connect_query_end&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="doccomment">/// Emitted when a [`Window`][crate::Window] is added to `application` through</span>
-    <span class="doccomment">/// [`add_window()`][Self::add_window()].</span>
-    <span class="doccomment">/// ## `window`</span>
-    <span class="doccomment">/// the newly-added [`Window`][crate::Window]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;window-added&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_window_added</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="ident">Window</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="doccomment">/// Emitted when a [`Window`][crate::Window] is added to `application` through
+    /// [`add_window()`][Self::add_window()].
+    /// ## `window`
+    /// the newly-added [`Window`][crate::Window]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;window-added&quot;</span>)]
+    </span><span class="kw">fn </span>connect_window_added&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>Window) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="doccomment">/// Emitted when a [`Window`][crate::Window] is removed from `application`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This can happen as a side-effect of the window being destroyed</span>
-    <span class="doccomment">/// or explicitly through [`remove_window()`][Self::remove_window()].</span>
-    <span class="doccomment">/// ## `window`</span>
-    <span class="doccomment">/// the [`Window`][crate::Window] that is being removed</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;window-removed&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_window_removed</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="ident">Window</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="doccomment">/// Emitted when a [`Window`][crate::Window] is removed from `application`.
+    ///
+    /// This can happen as a side-effect of the window being destroyed
+    /// or explicitly through [`remove_window()`][Self::remove_window()].
+    /// ## `window`
+    /// the [`Window`][crate::Window] that is being removed
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;window-removed&quot;</span>)]
+    </span><span class="kw">fn </span>connect_window_removed&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>Window) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;active-window&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_active_window_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;active-window&quot;</span>)]
+    </span><span class="kw">fn </span>connect_active_window_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;menubar&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_menubar_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;menubar&quot;</span>)]
+    </span><span class="kw">fn </span>connect_menubar_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;register-session&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_register_session_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;register-session&quot;</span>)]
+    </span><span class="kw">fn </span>connect_register_session_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;screensaver-active&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_screensaver_active_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;screensaver-active&quot;</span>)]
+    </span><span class="kw">fn </span>connect_screensaver_active_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">GtkApplicationExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">add_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_application_add_window</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">window</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+<span class="kw">impl</span>&lt;O: IsA&lt;Application&gt;&gt; GtkApplicationExt <span class="kw">for </span>O {
+    <span class="kw">fn </span>add_window(<span class="kw-2">&amp;</span><span class="self">self</span>, window: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_application_add_window(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                window.as_ref().to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">accels_for_action</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">detailed_action_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">FromGlibPtrContainer::from_glib_full</span>(<span class="ident">ffi::gtk_application_get_accels_for_action</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">detailed_action_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>accels_for_action(<span class="kw-2">&amp;</span><span class="self">self</span>, detailed_action_name: <span class="kw-2">&amp;</span>str) -&gt; Vec&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            FromGlibPtrContainer::from_glib_full(ffi::gtk_application_get_accels_for_action(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                detailed_action_name.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">actions_for_accel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">accel</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">FromGlibPtrContainer::from_glib_full</span>(<span class="ident">ffi::gtk_application_get_actions_for_accel</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">accel</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>actions_for_accel(<span class="kw-2">&amp;</span><span class="self">self</span>, accel: <span class="kw-2">&amp;</span>str) -&gt; Vec&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            FromGlibPtrContainer::from_glib_full(ffi::gtk_application_get_actions_for_accel(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                accel.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">active_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_application_get_active_window</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>active_window(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Window&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_application_get_active_window(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">menu_by_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gio::Menu</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_application_get_menu_by_id</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">id</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>menu_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;gio::Menu&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_application_get_menu_by_id(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                id.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">menubar</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gio::MenuModel</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_application_get_menubar</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>menubar(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gio::MenuModel&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_application_get_menubar(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">window_by_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_application_get_window_by_id</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">id</span>,
+    <span class="kw">fn </span>window_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: u32) -&gt; <span class="prelude-ty">Option</span>&lt;Window&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_application_get_window_by_id(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                id,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">windows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">FromGlibPtrContainer::from_glib_none</span>(<span class="ident">ffi::gtk_application_get_windows</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>windows(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;Window&gt; {
+        <span class="kw">unsafe </span>{
+            FromGlibPtrContainer::from_glib_none(ffi::gtk_application_get_windows(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">inhibit</span>(
+    <span class="kw">fn </span>inhibit(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">window</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-        <span class="ident">flags</span>: <span class="ident">ApplicationInhibitFlags</span>,
-        <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">u32</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_application_inhibit</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">window</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">flags</span>.<span class="ident">into_glib</span>(),
-                <span class="ident">reason</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+        window: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;&gt;,
+        flags: ApplicationInhibitFlags,
+        reason: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+    ) -&gt; u32 {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_application_inhibit(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                window.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
+                flags.into_glib(),
+                reason.to_glib_none().<span class="number">0</span>,
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">list_action_descriptions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">FromGlibPtrContainer::from_glib_full</span>(<span class="ident">ffi::gtk_application_list_action_descriptions</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>list_action_descriptions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            FromGlibPtrContainer::from_glib_full(ffi::gtk_application_list_action_descriptions(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">remove_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_application_remove_window</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">window</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>remove_window(<span class="kw-2">&amp;</span><span class="self">self</span>, window: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_application_remove_window(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                window.as_ref().to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_accels_for_action</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">detailed_action_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">accels</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>]) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_application_set_accels_for_action</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">detailed_action_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">accels</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>set_accels_for_action(<span class="kw-2">&amp;</span><span class="self">self</span>, detailed_action_name: <span class="kw-2">&amp;</span>str, accels: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_application_set_accels_for_action(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                detailed_action_name.to_glib_none().<span class="number">0</span>,
+                accels.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_menubar</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">menubar</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gio::MenuModel</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_application_set_menubar</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">menubar</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>set_menubar(<span class="kw-2">&amp;</span><span class="self">self</span>, menubar: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::MenuModel&gt;&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_application_set_menubar(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                menubar.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">uninhibit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cookie</span>: <span class="ident">u32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_application_uninhibit</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">cookie</span>);
+    <span class="kw">fn </span>uninhibit(<span class="kw-2">&amp;</span><span class="self">self</span>, cookie: u32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_application_uninhibit(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, cookie);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">is_register_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;register-session&quot;</span>)
+    <span class="kw">fn </span>is_register_session(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;register-session&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">set_register_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">register_session</span>: <span class="ident">bool</span>) {
-        <span class="ident">glib::ObjectExt::set_property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;register-session&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">register_session</span>)
+    <span class="kw">fn </span>set_register_session(<span class="kw-2">&amp;</span><span class="self">self</span>, register_session: bool) {
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;register-session&quot;</span>, <span class="kw-2">&amp;</span>register_session)
     }
 
-    <span class="kw">fn</span> <span class="ident">is_screensaver_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;screensaver-active&quot;</span>)
+    <span class="kw">fn </span>is_screensaver_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;screensaver-active&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_query_end</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">query_end_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkApplication</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_query_end&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>query_end_trampoline&lt;P: IsA&lt;Application&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkApplication,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Application::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Application::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;query-end\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">query_end_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;query-end\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    query_end_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_window_added</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="ident">Window</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">window_added_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="kw-2">&amp;</span><span class="ident">Window</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkApplication</span>,
-            <span class="ident">window</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkWindow</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_window_added&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>Window) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>window_added_trampoline&lt;
+            P: IsA&lt;Application&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P, <span class="kw-2">&amp;</span>Window) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkApplication,
+            window: <span class="kw-2">*mut </span>ffi::GtkWindow,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(
-                <span class="ident">Application::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>(),
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">window</span>),
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(
+                Application::from_glib_borrow(this).unsafe_cast_ref(),
+                <span class="kw-2">&amp;</span>from_glib_borrow(window),
             )
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;window-added\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">window_added_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;window-added\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    window_added_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_window_removed</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="ident">Window</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">window_removed_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="kw-2">&amp;</span><span class="ident">Window</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkApplication</span>,
-            <span class="ident">window</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkWindow</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_window_removed&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>Window) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>window_removed_trampoline&lt;
+            P: IsA&lt;Application&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P, <span class="kw-2">&amp;</span>Window) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkApplication,
+            window: <span class="kw-2">*mut </span>ffi::GtkWindow,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(
-                <span class="ident">Application::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>(),
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">window</span>),
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(
+                Application::from_glib_borrow(this).unsafe_cast_ref(),
+                <span class="kw-2">&amp;</span>from_glib_borrow(window),
             )
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;window-removed\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">window_removed_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;window-removed\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    window_removed_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
-            )
-        }
-    }
-
-    <span class="kw">fn</span> <span class="ident">connect_active_window_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_active_window_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkApplication</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
-        ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Application::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
-        }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::active-window\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_active_window_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
-                )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_menubar_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_menubar_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkApplication</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_active_window_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_active_window_trampoline&lt;
+            P: IsA&lt;Application&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkApplication,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Application::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Application::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::menubar\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_menubar_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::active-window\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_active_window_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_register_session_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_register_session_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkApplication</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_menubar_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_menubar_trampoline&lt;P: IsA&lt;Application&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkApplication,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Application::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Application::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::register-session\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_register_session_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::menubar\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_menubar_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_screensaver_active_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_screensaver_active_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Application</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkApplication</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_register_session_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_register_session_trampoline&lt;
+            P: IsA&lt;Application&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkApplication,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Application::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Application::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::screensaver-active\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_screensaver_active_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::register-session\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_register_session_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    <span class="kw">fn </span>connect_screensaver_active_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_screensaver_active_trampoline&lt;
+            P: IsA&lt;Application&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkApplication,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Application::from_glib_borrow(this).unsafe_cast_ref())
+        }
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::screensaver-active\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_screensaver_active_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
+                )),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Application</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Application&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Application {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;Application&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

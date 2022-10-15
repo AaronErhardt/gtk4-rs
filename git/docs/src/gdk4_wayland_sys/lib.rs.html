@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4-wayland/sys/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4-wayland/sys/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../gdk4_wayland_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gdk4_wayland_sys/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../gdk4_wayland_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gdk4_wayland_sys/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -336,268 +333,267 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>, <span class="ident">non_upper_case_globals</span>, <span class="ident">non_snake_case</span>)]</span>
-<span class="attribute">#![<span class="ident">allow</span>(
-    <span class="ident">clippy::approx_constant</span>,
-    <span class="ident">clippy::type_complexity</span>,
-    <span class="ident">clippy::unreadable_literal</span>,
-    <span class="ident">clippy::upper_case_acronyms</span>
-)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
+</span><span class="attribute">#![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
+#![allow(
+    clippy::approx_constant,
+    clippy::type_complexity,
+    clippy::unreadable_literal,
+    clippy::upper_case_acronyms
+)]
+#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
 
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
-<span class="kw">use</span> <span class="ident">libc</span>::{
-    <span class="ident">c_char</span>, <span class="ident">c_double</span>, <span class="ident">c_float</span>, <span class="ident">c_int</span>, <span class="ident">c_long</span>, <span class="ident">c_short</span>, <span class="ident">c_uchar</span>, <span class="ident">c_uint</span>, <span class="ident">c_ulong</span>, <span class="ident">c_ushort</span>, <span class="ident">c_void</span>,
-    <span class="ident">intptr_t</span>, <span class="ident">size_t</span>, <span class="ident">ssize_t</span>, <span class="ident">uintptr_t</span>, <span class="ident">FILE</span>,
+#[allow(unused_imports)]
+</span><span class="kw">use </span>libc::{
+    c_char, c_double, c_float, c_int, c_long, c_short, c_uchar, c_uint, c_ulong, c_ushort, c_void,
+    intptr_t, size_t, ssize_t, uintptr_t, FILE,
 };
 
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
-<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">gboolean</span>, <span class="ident">gconstpointer</span>, <span class="ident">gpointer</span>, <span class="ident">GType</span>};
+<span class="attribute">#[allow(unused_imports)]
+</span><span class="kw">use </span>glib::{gboolean, gconstpointer, gpointer, GType};
 
-<span class="comment">// Callbacks</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GdkWaylandToplevelExported</span> <span class="op">=</span>
-    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*mut</span> <span class="ident">GdkWaylandToplevel</span>, <span class="kw-2">*const</span> <span class="ident">c_char</span>, <span class="ident">gpointer</span>)<span class="op">&gt;</span>;
+<span class="comment">// Callbacks
+</span><span class="kw">pub type </span>GdkWaylandToplevelExported =
+    <span class="prelude-ty">Option</span>&lt;<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(<span class="kw-2">*mut </span>GdkWaylandToplevel, <span class="kw-2">*const </span>c_char, gpointer)&gt;;
 
-<span class="comment">// Records</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">_GdkWaylandDeviceClass</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="comment">// Records
+</span><span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>_GdkWaylandDeviceClass {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GdkWaylandDeviceClass</span> <span class="op">=</span> <span class="kw-2">*mut</span> <span class="ident">_GdkWaylandDeviceClass</span>;
+<span class="kw">pub type </span>GdkWaylandDeviceClass = <span class="kw-2">*mut </span>_GdkWaylandDeviceClass;
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">_GdkWaylandDisplayClass</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>_GdkWaylandDisplayClass {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GdkWaylandDisplayClass</span> <span class="op">=</span> <span class="kw-2">*mut</span> <span class="ident">_GdkWaylandDisplayClass</span>;
+<span class="kw">pub type </span>GdkWaylandDisplayClass = <span class="kw-2">*mut </span>_GdkWaylandDisplayClass;
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">_GdkWaylandGLContextClass</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>_GdkWaylandGLContextClass {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GdkWaylandGLContextClass</span> <span class="op">=</span> <span class="kw-2">*mut</span> <span class="ident">_GdkWaylandGLContextClass</span>;
+<span class="kw">pub type </span>GdkWaylandGLContextClass = <span class="kw-2">*mut </span>_GdkWaylandGLContextClass;
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">_GdkWaylandMonitorClass</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>_GdkWaylandMonitorClass {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GdkWaylandMonitorClass</span> <span class="op">=</span> <span class="kw-2">*mut</span> <span class="ident">_GdkWaylandMonitorClass</span>;
+<span class="kw">pub type </span>GdkWaylandMonitorClass = <span class="kw-2">*mut </span>_GdkWaylandMonitorClass;
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">_GdkWaylandSeatClass</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>_GdkWaylandSeatClass {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GdkWaylandSeatClass</span> <span class="op">=</span> <span class="kw-2">*mut</span> <span class="ident">_GdkWaylandSeatClass</span>;
+<span class="kw">pub type </span>GdkWaylandSeatClass = <span class="kw-2">*mut </span>_GdkWaylandSeatClass;
 
-<span class="comment">// Classes</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandDevice</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="comment">// Classes
+</span><span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandDevice {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandDevice</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandDevice @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandDevice {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandDevice @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandDisplay</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandDisplay {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandDisplay</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandDisplay @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandDisplay {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandDisplay @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandGLContext</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandGLContext {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandGLContext</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandGLContext @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandGLContext {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandGLContext @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandMonitor</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandMonitor {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandMonitor</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandMonitor @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandMonitor {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandMonitor @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandPopup</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandPopup {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandPopup</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandPopup @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandPopup {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandPopup @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandSeat</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandSeat {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandSeat</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandSeat @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandSeat {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandSeat @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandSurface</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandSurface {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandSurface</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandSurface @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandSurface {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandSurface @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GdkWaylandToplevel</span> {
-    <span class="ident">_data</span>: [<span class="ident">u8</span>; <span class="number">0</span>],
-    <span class="ident">_marker</span>: <span class="ident">core::marker::PhantomData</span><span class="op">&lt;</span>(<span class="kw-2">*mut</span> <span class="ident">u8</span>, <span class="ident">core::marker::PhantomPinned</span>)<span class="op">&gt;</span>,
+<span class="attribute">#[repr(C)]
+</span><span class="kw">pub struct </span>GdkWaylandToplevel {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">GdkWaylandToplevel</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandToplevel @ {:p}&quot;</span>, <span class="self">self</span>))
-            .<span class="ident">finish</span>()
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GdkWaylandToplevel {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GdkWaylandToplevel @ {:p}&quot;</span>, <span class="self">self</span>))
+            .finish()
     }
 }
 
-<span class="attribute">#[<span class="ident">link</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;gtk-4&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+<span class="attribute">#[link(name = <span class="string">&quot;gtk-4&quot;</span>)]
+</span><span class="kw">extern </span><span class="string">&quot;C&quot; </span>{
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandDevice</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_device_get_type</span>() -&gt; <span class="ident">GType</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_device_get_node_path</span>(<span class="ident">device</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDevice</span>) -&gt; <span class="kw-2">*const</span> <span class="ident">c_char</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_device_get_wl_keyboard</span>(<span class="ident">device</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDevice</span>) -&gt; <span class="ident">gpointer</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_device_get_wl_pointer</span>(<span class="ident">device</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDevice</span>) -&gt; <span class="ident">gpointer</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_device_get_wl_seat</span>(<span class="ident">device</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDevice</span>) -&gt; <span class="ident">gpointer</span>;
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>)))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_device_get_xkb_keymap</span>(<span class="ident">device</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDevice</span>) -&gt; <span class="ident">gpointer</span>;
+    <span class="comment">//=========================================================================
+    // GdkWaylandDevice
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_device_get_type() -&gt; GType;
+    <span class="kw">pub fn </span>gdk_wayland_device_get_node_path(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; <span class="kw-2">*const </span>c_char;
+    <span class="kw">pub fn </span>gdk_wayland_device_get_wl_keyboard(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
+    <span class="kw">pub fn </span>gdk_wayland_device_get_wl_pointer(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
+    <span class="kw">pub fn </span>gdk_wayland_device_get_wl_seat(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gdk_wayland_device_get_xkb_keymap(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandDisplay</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_get_type</span>() -&gt; <span class="ident">GType</span>;
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>)))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_get_egl_display</span>(<span class="ident">display</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDisplay</span>) -&gt; <span class="ident">gpointer</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_get_startup_notification_id</span>(
-        <span class="ident">display</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDisplay</span>,
-    ) -&gt; <span class="kw-2">*const</span> <span class="ident">c_char</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_get_wl_compositor</span>(<span class="ident">display</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDisplay</span>) -&gt; <span class="ident">gpointer</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_get_wl_display</span>(<span class="ident">display</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDisplay</span>) -&gt; <span class="ident">gpointer</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_query_registry</span>(
-        <span class="ident">display</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDisplay</span>,
-        <span class="ident">global</span>: <span class="kw-2">*const</span> <span class="ident">c_char</span>,
-    ) -&gt; <span class="ident">gboolean</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_set_cursor_theme</span>(
-        <span class="ident">display</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDisplay</span>,
-        <span class="ident">name</span>: <span class="kw-2">*const</span> <span class="ident">c_char</span>,
-        <span class="ident">size</span>: <span class="ident">c_int</span>,
+    <span class="comment">//=========================================================================
+    // GdkWaylandDisplay
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_display_get_type() -&gt; GType;
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gdk_wayland_display_get_egl_display(display: <span class="kw-2">*mut </span>GdkWaylandDisplay) -&gt; gpointer;
+    <span class="kw">pub fn </span>gdk_wayland_display_get_startup_notification_id(
+        display: <span class="kw-2">*mut </span>GdkWaylandDisplay,
+    ) -&gt; <span class="kw-2">*const </span>c_char;
+    <span class="kw">pub fn </span>gdk_wayland_display_get_wl_compositor(display: <span class="kw-2">*mut </span>GdkWaylandDisplay) -&gt; gpointer;
+    <span class="kw">pub fn </span>gdk_wayland_display_get_wl_display(display: <span class="kw-2">*mut </span>GdkWaylandDisplay) -&gt; gpointer;
+    <span class="kw">pub fn </span>gdk_wayland_display_query_registry(
+        display: <span class="kw-2">*mut </span>GdkWaylandDisplay,
+        global: <span class="kw-2">*const </span>c_char,
+    ) -&gt; gboolean;
+    <span class="kw">pub fn </span>gdk_wayland_display_set_cursor_theme(
+        display: <span class="kw-2">*mut </span>GdkWaylandDisplay,
+        name: <span class="kw-2">*const </span>c_char,
+        size: c_int,
     );
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_display_set_startup_notification_id</span>(
-        <span class="ident">display</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandDisplay</span>,
-        <span class="ident">startup_id</span>: <span class="kw-2">*const</span> <span class="ident">c_char</span>,
+    <span class="kw">pub fn </span>gdk_wayland_display_set_startup_notification_id(
+        display: <span class="kw-2">*mut </span>GdkWaylandDisplay,
+        startup_id: <span class="kw-2">*const </span>c_char,
     );
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandGLContext</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_gl_context_get_type</span>() -&gt; <span class="ident">GType</span>;
+    <span class="comment">//=========================================================================
+    // GdkWaylandGLContext
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_gl_context_get_type() -&gt; GType;
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandMonitor</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_monitor_get_type</span>() -&gt; <span class="ident">GType</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_monitor_get_wl_output</span>(<span class="ident">monitor</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandMonitor</span>) -&gt; <span class="ident">gpointer</span>;
+    <span class="comment">//=========================================================================
+    // GdkWaylandMonitor
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_monitor_get_type() -&gt; GType;
+    <span class="kw">pub fn </span>gdk_wayland_monitor_get_wl_output(monitor: <span class="kw-2">*mut </span>GdkWaylandMonitor) -&gt; gpointer;
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandPopup</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_popup_get_type</span>() -&gt; <span class="ident">GType</span>;
+    <span class="comment">//=========================================================================
+    // GdkWaylandPopup
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_popup_get_type() -&gt; GType;
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandSeat</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_seat_get_type</span>() -&gt; <span class="ident">GType</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_seat_get_wl_seat</span>(<span class="ident">seat</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandSeat</span>) -&gt; <span class="ident">gpointer</span>;
+    <span class="comment">//=========================================================================
+    // GdkWaylandSeat
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_seat_get_type() -&gt; GType;
+    <span class="kw">pub fn </span>gdk_wayland_seat_get_wl_seat(seat: <span class="kw-2">*mut </span>GdkWaylandSeat) -&gt; gpointer;
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandSurface</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_surface_get_type</span>() -&gt; <span class="ident">GType</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_surface_get_wl_surface</span>(<span class="ident">surface</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandSurface</span>) -&gt; <span class="ident">gpointer</span>;
+    <span class="comment">//=========================================================================
+    // GdkWaylandSurface
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_surface_get_type() -&gt; GType;
+    <span class="kw">pub fn </span>gdk_wayland_surface_get_wl_surface(surface: <span class="kw-2">*mut </span>GdkWaylandSurface) -&gt; gpointer;
 
-    <span class="comment">//=========================================================================</span>
-    <span class="comment">// GdkWaylandToplevel</span>
-    <span class="comment">//=========================================================================</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_toplevel_get_type</span>() -&gt; <span class="ident">GType</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_toplevel_export_handle</span>(
-        <span class="ident">toplevel</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandToplevel</span>,
-        <span class="ident">callback</span>: <span class="ident">GdkWaylandToplevelExported</span>,
-        <span class="ident">user_data</span>: <span class="ident">gpointer</span>,
-        <span class="ident">destroy_func</span>: <span class="ident">glib::GDestroyNotify</span>,
-    ) -&gt; <span class="ident">gboolean</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_toplevel_set_application_id</span>(
-        <span class="ident">toplevel</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandToplevel</span>,
-        <span class="ident">application_id</span>: <span class="kw-2">*const</span> <span class="ident">c_char</span>,
+    <span class="comment">//=========================================================================
+    // GdkWaylandToplevel
+    //=========================================================================
+    </span><span class="kw">pub fn </span>gdk_wayland_toplevel_get_type() -&gt; GType;
+    <span class="kw">pub fn </span>gdk_wayland_toplevel_export_handle(
+        toplevel: <span class="kw-2">*mut </span>GdkWaylandToplevel,
+        callback: GdkWaylandToplevelExported,
+        user_data: gpointer,
+        destroy_func: glib::GDestroyNotify,
+    ) -&gt; gboolean;
+    <span class="kw">pub fn </span>gdk_wayland_toplevel_set_application_id(
+        toplevel: <span class="kw-2">*mut </span>GdkWaylandToplevel,
+        application_id: <span class="kw-2">*const </span>c_char,
     );
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_toplevel_set_transient_for_exported</span>(
-        <span class="ident">toplevel</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandToplevel</span>,
-        <span class="ident">parent_handle_str</span>: <span class="kw-2">*const</span> <span class="ident">c_char</span>,
-    ) -&gt; <span class="ident">gboolean</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gdk_wayland_toplevel_unexport_handle</span>(<span class="ident">toplevel</span>: <span class="kw-2">*mut</span> <span class="ident">GdkWaylandToplevel</span>);
+    <span class="kw">pub fn </span>gdk_wayland_toplevel_set_transient_for_exported(
+        toplevel: <span class="kw-2">*mut </span>GdkWaylandToplevel,
+        parent_handle_str: <span class="kw-2">*const </span>c_char,
+    ) -&gt; gboolean;
+    <span class="kw">pub fn </span>gdk_wayland_toplevel_unexport_handle(toplevel: <span class="kw-2">*mut </span>GdkWaylandToplevel);
 
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gdk4_wayland_sys" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gdk4_wayland_sys" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

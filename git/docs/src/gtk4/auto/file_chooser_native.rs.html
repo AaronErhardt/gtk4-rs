@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/file_chooser_native.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser_native.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/file_chooser_native.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>file_chooser_native.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -558,494 +555,489 @@
 <span id="482">482</span>
 <span id="483">483</span>
 <span id="484">484</span>
-<span id="485">485</span>
-<span id="486">486</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::FileChooser</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::FileChooserAction</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::FileFilter</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::NativeDialog</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Window</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::object::ObjectType</span> <span class="kw">as</span> <span class="ident">ObjectType_</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::StaticType</span>;
-<span class="kw">use</span> <span class="ident">glib::ToValue</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::FileChooser;
+<span class="kw">use </span><span class="kw">crate</span>::FileChooserAction;
+<span class="kw">use </span><span class="kw">crate</span>::FileFilter;
+<span class="kw">use </span><span class="kw">crate</span>::NativeDialog;
+<span class="kw">use </span><span class="kw">crate</span>::Window;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::object::ObjectType <span class="kw">as </span>ObjectType_;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::StaticType;
+<span class="kw">use </span>glib::ToValue;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// [`FileChooserNative`][crate::FileChooserNative] is an abstraction of a dialog suitable</span>
-    <span class="doccomment">/// for use with “File Open” or “File Save as” commands.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// By default, this just uses a [`FileChooserDialog`][crate::FileChooserDialog] to implement</span>
-    <span class="doccomment">/// the actual dialog. However, on some platforms, such as Windows and</span>
-    <span class="doccomment">/// macOS, the native platform file chooser is used instead. When the</span>
-    <span class="doccomment">/// application is running in a sandboxed environment without direct</span>
-    <span class="doccomment">/// filesystem access (such as Flatpak), [`FileChooserNative`][crate::FileChooserNative] may call</span>
-    <span class="doccomment">/// the proper APIs (portals) to let the user choose a file and make it</span>
-    <span class="doccomment">/// available to the application.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// While the API of [`FileChooserNative`][crate::FileChooserNative] closely mirrors [`FileChooserDialog`][crate::FileChooserDialog],</span>
-    <span class="doccomment">/// the main difference is that there is no access to any [`Window`][crate::Window] or [`Widget`][crate::Widget]</span>
-    <span class="doccomment">/// for the dialog. This is required, as there may not be one in the case of a</span>
-    <span class="doccomment">/// platform native dialog.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Showing, hiding and running the dialog is handled by the</span>
-    <span class="doccomment">/// [`NativeDialog`][crate::NativeDialog] functions.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that unlike [`FileChooserDialog`][crate::FileChooserDialog], [`FileChooserNative`][crate::FileChooserNative] objects</span>
-    <span class="doccomment">/// are not toplevel widgets, and GTK does not keep them alive. It is your</span>
-    <span class="doccomment">/// responsibility to keep a reference until you are done with the</span>
-    <span class="doccomment">/// object.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Typical usage</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In the simplest of cases, you can the following code to use</span>
-    <span class="doccomment">/// [`FileChooserNative`][crate::FileChooserNative] to select a file for opening:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// static void</span>
-    <span class="doccomment">/// on_response (GtkNativeDialog *native,</span>
-    <span class="doccomment">///              int              response)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   if (response == GTK_RESPONSE_ACCEPT)</span>
-    <span class="doccomment">///     {</span>
-    <span class="doccomment">///       GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);</span>
-    <span class="doccomment">///       GFile *file = gtk_file_chooser_get_file (chooser);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///       open_file (file);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///       g_object_unref (file);</span>
-    <span class="doccomment">///     }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   g_object_unref (native);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // ...</span>
-    <span class="doccomment">///   GtkFileChooserNative *native;</span>
-    <span class="doccomment">///   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   native = gtk_file_chooser_native_new (&quot;Open File&quot;,</span>
-    <span class="doccomment">///                                         parent_window,</span>
-    <span class="doccomment">///                                         action,</span>
-    <span class="doccomment">///                                         &quot;_Open&quot;,</span>
-    <span class="doccomment">///                                         &quot;_Cancel&quot;);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   g_signal_connect (native, &quot;response&quot;, G_CALLBACK (on_response), NULL);</span>
-    <span class="doccomment">///   gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// To use a [`FileChooserNative`][crate::FileChooserNative] for saving, you can use this:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// static void</span>
-    <span class="doccomment">/// on_response (GtkNativeDialog *native,</span>
-    <span class="doccomment">///              int              response)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   if (response == GTK_RESPONSE_ACCEPT)</span>
-    <span class="doccomment">///     {</span>
-    <span class="doccomment">///       GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);</span>
-    <span class="doccomment">///       GFile *file = gtk_file_chooser_get_file (chooser);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///       save_to_file (file);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///       g_object_unref (file);</span>
-    <span class="doccomment">///     }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   g_object_unref (native);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // ...</span>
-    <span class="doccomment">///   GtkFileChooserNative *native;</span>
-    <span class="doccomment">///   GtkFileChooser *chooser;</span>
-    <span class="doccomment">///   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   native = gtk_file_chooser_native_new (&quot;Save File&quot;,</span>
-    <span class="doccomment">///                                         parent_window,</span>
-    <span class="doccomment">///                                         action,</span>
-    <span class="doccomment">///                                         &quot;_Save&quot;,</span>
-    <span class="doccomment">///                                         &quot;_Cancel&quot;);</span>
-    <span class="doccomment">///   chooser = GTK_FILE_CHOOSER (native);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   if (user_edited_a_new_document)</span>
-    <span class="doccomment">///     gtk_file_chooser_set_current_name (chooser, _(&quot;Untitled document&quot;));</span>
-    <span class="doccomment">///   else</span>
-    <span class="doccomment">///     gtk_file_chooser_set_file (chooser, existing_file, NULL);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   g_signal_connect (native, &quot;response&quot;, G_CALLBACK (on_response), NULL);</span>
-    <span class="doccomment">///   gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For more information on how to best set up a file dialog,</span>
-    <span class="doccomment">/// see the [`FileChooserDialog`][crate::FileChooserDialog] documentation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Response Codes</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`FileChooserNative`][crate::FileChooserNative] inherits from [`NativeDialog`][crate::NativeDialog],</span>
-    <span class="doccomment">/// which means it will return [`ResponseType::Accept`][crate::ResponseType::Accept] if the user accepted,</span>
-    <span class="doccomment">/// and [`ResponseType::Cancel`][crate::ResponseType::Cancel] if he pressed cancel. It can also return</span>
-    <span class="doccomment">/// [`ResponseType::DeleteEvent`][crate::ResponseType::DeleteEvent] if the window was unexpectedly closed.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Differences from [`FileChooserDialog`][crate::FileChooserDialog]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// There are a few things in the [`FileChooser`][crate::FileChooser] interface that</span>
-    <span class="doccomment">/// are not possible to use with [`FileChooserNative`][crate::FileChooserNative], as such use would</span>
-    <span class="doccomment">/// prohibit the use of a native dialog.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// No operations that change the dialog work while the dialog is visible.</span>
-    <span class="doccomment">/// Set all the properties that are required before showing the dialog.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Win32 details</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// On windows the `IFileDialog` implementation (added in Windows Vista) is</span>
-    <span class="doccomment">/// used. It supports many of the features that [`FileChooser`][crate::FileChooser] has, but</span>
-    <span class="doccomment">/// there are some things it does not handle:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * Any [`FileFilter`][crate::FileFilter] added using a mimetype</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If any of these features are used the regular [`FileChooserDialog`][crate::FileChooserDialog]</span>
-    <span class="doccomment">/// will be used in place of the native one.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Portal details</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// When the `org.freedesktop.portal.FileChooser` portal is available on</span>
-    <span class="doccomment">/// the session bus, it is used to bring up an out-of-process file chooser.</span>
-    <span class="doccomment">/// Depending on the kind of session the application is running in, this may</span>
-    <span class="doccomment">/// or may not be a GTK file chooser.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## macOS details</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// On macOS the `NSSavePanel` and `NSOpenPanel` classes are used to provide</span>
-    <span class="doccomment">/// native file chooser dialogs. Some features provided by [`FileChooser`][crate::FileChooser]</span>
-    <span class="doccomment">/// are not supported:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * Shortcut folders.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`NativeDialogExt`][trait@crate::prelude::NativeDialogExt], [`trait@glib::ObjectExt`], [`FileChooserExt`][trait@crate::prelude::FileChooserExt], [`NativeDialogExtManual`][trait@crate::prelude::NativeDialogExtManual], [`FileChooserExtManual`][trait@crate::prelude::FileChooserExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkFileChooserNative&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserNative</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkFileChooserNative</span>, <span class="ident">ffi::GtkFileChooserNativeClass</span><span class="op">&gt;</span>) @<span class="ident">extends</span> <span class="ident">NativeDialog</span>, @<span class="ident">implements</span> <span class="ident">FileChooser</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// [`FileChooserNative`][crate::FileChooserNative] is an abstraction of a dialog suitable
+    /// for use with “File Open” or “File Save as” commands.
+    ///
+    /// By default, this just uses a [`FileChooserDialog`][crate::FileChooserDialog] to implement
+    /// the actual dialog. However, on some platforms, such as Windows and
+    /// macOS, the native platform file chooser is used instead. When the
+    /// application is running in a sandboxed environment without direct
+    /// filesystem access (such as Flatpak), [`FileChooserNative`][crate::FileChooserNative] may call
+    /// the proper APIs (portals) to let the user choose a file and make it
+    /// available to the application.
+    ///
+    /// While the API of [`FileChooserNative`][crate::FileChooserNative] closely mirrors [`FileChooserDialog`][crate::FileChooserDialog],
+    /// the main difference is that there is no access to any [`Window`][crate::Window] or [`Widget`][crate::Widget]
+    /// for the dialog. This is required, as there may not be one in the case of a
+    /// platform native dialog.
+    ///
+    /// Showing, hiding and running the dialog is handled by the
+    /// [`NativeDialog`][crate::NativeDialog] functions.
+    ///
+    /// Note that unlike [`FileChooserDialog`][crate::FileChooserDialog], [`FileChooserNative`][crate::FileChooserNative] objects
+    /// are not toplevel widgets, and GTK does not keep them alive. It is your
+    /// responsibility to keep a reference until you are done with the
+    /// object.
+    ///
+    /// ## Typical usage
+    ///
+    /// In the simplest of cases, you can the following code to use
+    /// [`FileChooserNative`][crate::FileChooserNative] to select a file for opening:
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// static void
+    /// on_response (GtkNativeDialog *native,
+    ///              int              response)
+    /// {
+    ///   if (response == GTK_RESPONSE_ACCEPT)
+    ///     {
+    ///       GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
+    ///       GFile *file = gtk_file_chooser_get_file (chooser);
+    ///
+    ///       open_file (file);
+    ///
+    ///       g_object_unref (file);
+    ///     }
+    ///
+    ///   g_object_unref (native);
+    /// }
+    ///
+    ///   // ...
+    ///   GtkFileChooserNative *native;
+    ///   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
+    ///
+    ///   native = gtk_file_chooser_native_new (&quot;Open File&quot;,
+    ///                                         parent_window,
+    ///                                         action,
+    ///                                         &quot;_Open&quot;,
+    ///                                         &quot;_Cancel&quot;);
+    ///
+    ///   g_signal_connect (native, &quot;response&quot;, G_CALLBACK (on_response), NULL);
+    ///   gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));
+    /// ```
+    ///
+    /// To use a [`FileChooserNative`][crate::FileChooserNative] for saving, you can use this:
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// static void
+    /// on_response (GtkNativeDialog *native,
+    ///              int              response)
+    /// {
+    ///   if (response == GTK_RESPONSE_ACCEPT)
+    ///     {
+    ///       GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
+    ///       GFile *file = gtk_file_chooser_get_file (chooser);
+    ///
+    ///       save_to_file (file);
+    ///
+    ///       g_object_unref (file);
+    ///     }
+    ///
+    ///   g_object_unref (native);
+    /// }
+    ///
+    ///   // ...
+    ///   GtkFileChooserNative *native;
+    ///   GtkFileChooser *chooser;
+    ///   GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
+    ///
+    ///   native = gtk_file_chooser_native_new (&quot;Save File&quot;,
+    ///                                         parent_window,
+    ///                                         action,
+    ///                                         &quot;_Save&quot;,
+    ///                                         &quot;_Cancel&quot;);
+    ///   chooser = GTK_FILE_CHOOSER (native);
+    ///
+    ///   if (user_edited_a_new_document)
+    ///     gtk_file_chooser_set_current_name (chooser, _(&quot;Untitled document&quot;));
+    ///   else
+    ///     gtk_file_chooser_set_file (chooser, existing_file, NULL);
+    ///
+    ///   g_signal_connect (native, &quot;response&quot;, G_CALLBACK (on_response), NULL);
+    ///   gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));
+    /// ```
+    ///
+    /// For more information on how to best set up a file dialog,
+    /// see the [`FileChooserDialog`][crate::FileChooserDialog] documentation.
+    ///
+    /// ## Response Codes
+    ///
+    /// [`FileChooserNative`][crate::FileChooserNative] inherits from [`NativeDialog`][crate::NativeDialog],
+    /// which means it will return [`ResponseType::Accept`][crate::ResponseType::Accept] if the user accepted,
+    /// and [`ResponseType::Cancel`][crate::ResponseType::Cancel] if he pressed cancel. It can also return
+    /// [`ResponseType::DeleteEvent`][crate::ResponseType::DeleteEvent] if the window was unexpectedly closed.
+    ///
+    /// ## Differences from [`FileChooserDialog`][crate::FileChooserDialog]
+    ///
+    /// There are a few things in the [`FileChooser`][crate::FileChooser] interface that
+    /// are not possible to use with [`FileChooserNative`][crate::FileChooserNative], as such use would
+    /// prohibit the use of a native dialog.
+    ///
+    /// No operations that change the dialog work while the dialog is visible.
+    /// Set all the properties that are required before showing the dialog.
+    ///
+    /// ## Win32 details
+    ///
+    /// On windows the `IFileDialog` implementation (added in Windows Vista) is
+    /// used. It supports many of the features that [`FileChooser`][crate::FileChooser] has, but
+    /// there are some things it does not handle:
+    ///
+    /// * Any [`FileFilter`][crate::FileFilter] added using a mimetype
+    ///
+    /// If any of these features are used the regular [`FileChooserDialog`][crate::FileChooserDialog]
+    /// will be used in place of the native one.
+    ///
+    /// ## Portal details
+    ///
+    /// When the `org.freedesktop.portal.FileChooser` portal is available on
+    /// the session bus, it is used to bring up an out-of-process file chooser.
+    /// Depending on the kind of session the application is running in, this may
+    /// or may not be a GTK file chooser.
+    ///
+    /// ## macOS details
+    ///
+    /// On macOS the `NSSavePanel` and `NSOpenPanel` classes are used to provide
+    /// native file chooser dialogs. Some features provided by [`FileChooser`][crate::FileChooser]
+    /// are not supported:
+    ///
+    /// * Shortcut folders.
+    ///
+    /// # Implements
+    ///
+    /// [`NativeDialogExt`][trait@crate::prelude::NativeDialogExt], [`trait@glib::ObjectExt`], [`FileChooserExt`][trait@crate::prelude::FileChooserExt], [`NativeDialogExtManual`][trait@crate::prelude::NativeDialogExtManual], [`FileChooserExtManual`][trait@crate::prelude::FileChooserExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkFileChooserNative&quot;</span>)]
+    </span><span class="kw">pub struct </span>FileChooserNative(Object&lt;ffi::GtkFileChooserNative, ffi::GtkFileChooserNativeClass&gt;) @extends NativeDialog, @implements FileChooser;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_file_chooser_native_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_file_chooser_native_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FileChooserNative</span> {
-    <span class="doccomment">/// Creates a new [`FileChooserNative`][crate::FileChooserNative].</span>
-    <span class="doccomment">/// ## `title`</span>
-    <span class="doccomment">/// Title of the native</span>
-    <span class="doccomment">/// ## `parent`</span>
-    <span class="doccomment">/// Transient parent of the native</span>
-    <span class="doccomment">/// ## `action`</span>
-    <span class="doccomment">/// Open or save mode for the dialog</span>
-    <span class="doccomment">/// ## `accept_label`</span>
-    <span class="doccomment">/// text to go in the accept button, or [`None`] for the default</span>
-    <span class="doccomment">/// ## `cancel_label`</span>
-    <span class="doccomment">/// text to go in the cancel button, or [`None`] for the default</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a new [`FileChooserNative`][crate::FileChooserNative]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_file_chooser_native_new&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-        <span class="ident">action</span>: <span class="ident">FileChooserAction</span>,
-        <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">cancel_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">FileChooserNative</span> {
+<span class="kw">impl </span>FileChooserNative {
+    <span class="doccomment">/// Creates a new [`FileChooserNative`][crate::FileChooserNative].
+    /// ## `title`
+    /// Title of the native
+    /// ## `parent`
+    /// Transient parent of the native
+    /// ## `action`
+    /// Open or save mode for the dialog
+    /// ## `accept_label`
+    /// text to go in the accept button, or [`None`] for the default
+    /// ## `cancel_label`
+    /// text to go in the cancel button, or [`None`] for the default
+    ///
+    /// # Returns
+    ///
+    /// a new [`FileChooserNative`][crate::FileChooserNative]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_file_chooser_native_new&quot;</span>)]
+    </span><span class="kw">pub fn </span>new(
+        title: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+        parent: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;&gt;,
+        action: FileChooserAction,
+        accept_label: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+        cancel_label: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
+    ) -&gt; FileChooserNative {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_file_chooser_native_new</span>(
-                <span class="ident">title</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">parent</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">action</span>.<span class="ident">into_glib</span>(),
-                <span class="ident">accept_label</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cancel_label</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_file_chooser_native_new(
+                title.to_glib_none().<span class="number">0</span>,
+                parent.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
+                action.into_glib(),
+                accept_label.to_glib_none().<span class="number">0</span>,
+                cancel_label.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`FileChooserNative`] objects.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method returns an instance of [`FileChooserNativeBuilder`](crate::builders::FileChooserNativeBuilder) which can be used to create [`FileChooserNative`] objects.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">FileChooserNativeBuilder</span> {
-        <span class="ident">FileChooserNativeBuilder::default</span>()
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`FileChooserNative`] objects.
+    ///
+    /// This method returns an instance of [`FileChooserNativeBuilder`](crate::builders::FileChooserNativeBuilder) which can be used to create [`FileChooserNative`] objects.
+    </span><span class="kw">pub fn </span>builder() -&gt; FileChooserNativeBuilder {
+        FileChooserNativeBuilder::default()
     }
 
-    <span class="doccomment">/// Retrieves the custom label text for the accept button.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The custom label</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_file_chooser_native_get_accept_label&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_accept_label&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_file_chooser_native_get_accept_label</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Retrieves the custom label text for the accept button.
+    ///
+    /// # Returns
+    ///
+    /// The custom label
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_file_chooser_native_get_accept_label&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_accept_label&quot;</span>)]
+    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_file_chooser_native_get_accept_label(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Retrieves the custom label text for the cancel button.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The custom label</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_file_chooser_native_get_cancel_label&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_cancel_label&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cancel_label</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_file_chooser_native_get_cancel_label</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Retrieves the custom label text for the cancel button.
+    ///
+    /// # Returns
+    ///
+    /// The custom label
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_file_chooser_native_get_cancel_label&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_cancel_label&quot;</span>)]
+    </span><span class="kw">pub fn </span>cancel_label(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_file_chooser_native_get_cancel_label(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Sets the custom label text for the accept button.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If characters in @label are preceded by an underscore, they are</span>
-    <span class="doccomment">/// underlined. If you need a literal underscore character in a label,</span>
-    <span class="doccomment">/// use “__” (two underscores). The first underlined character represents</span>
-    <span class="doccomment">/// a keyboard accelerator called a mnemonic.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Pressing Alt and that key should activate the button.</span>
-    <span class="doccomment">/// ## `accept_label`</span>
-    <span class="doccomment">/// custom label</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_file_chooser_native_set_accept_label&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_accept_label</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_file_chooser_native_set_accept_label</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">accept_label</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Sets the custom label text for the accept button.
+    ///
+    /// If characters in @label are preceded by an underscore, they are
+    /// underlined. If you need a literal underscore character in a label,
+    /// use “__” (two underscores). The first underlined character represents
+    /// a keyboard accelerator called a mnemonic.
+    ///
+    /// Pressing Alt and that key should activate the button.
+    /// ## `accept_label`
+    /// custom label
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_file_chooser_native_set_accept_label&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_accept_label(<span class="kw-2">&amp;</span><span class="self">self</span>, accept_label: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_file_chooser_native_set_accept_label(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                accept_label.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="doccomment">/// Sets the custom label text for the cancel button.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If characters in @label are preceded by an underscore, they are</span>
-    <span class="doccomment">/// underlined. If you need a literal underscore character in a label,</span>
-    <span class="doccomment">/// use “__” (two underscores). The first underlined character represents</span>
-    <span class="doccomment">/// a keyboard accelerator called a mnemonic.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Pressing Alt and that key should activate the button.</span>
-    <span class="doccomment">/// ## `cancel_label`</span>
-    <span class="doccomment">/// custom label</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_file_chooser_native_set_cancel_label&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cancel_label</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cancel_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_file_chooser_native_set_cancel_label</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cancel_label</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Sets the custom label text for the cancel button.
+    ///
+    /// If characters in @label are preceded by an underscore, they are
+    /// underlined. If you need a literal underscore character in a label,
+    /// use “__” (two underscores). The first underlined character represents
+    /// a keyboard accelerator called a mnemonic.
+    ///
+    /// Pressing Alt and that key should activate the button.
+    /// ## `cancel_label`
+    /// custom label
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_file_chooser_native_set_cancel_label&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_cancel_label(<span class="kw-2">&amp;</span><span class="self">self</span>, cancel_label: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_file_chooser_native_set_cancel_label(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                cancel_label.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;accept-label&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_accept_label_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_accept_label_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FileChooserNative</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkFileChooserNative</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;accept-label&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_accept_label_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_accept_label_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FileChooserNative) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkFileChooserNative,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::accept-label\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_accept_label_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::accept-label\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_accept_label_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;cancel-label&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_cancel_label_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_cancel_label_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FileChooserNative</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkFileChooserNative</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;cancel-label&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_cancel_label_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_cancel_label_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FileChooserNative) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkFileChooserNative,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::cancel-label\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_cancel_label_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::cancel-label\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_cancel_label_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">FileChooserNative</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident">glib::object::Object::new</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[])
-            .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t construct FileChooserNative object with default parameters&quot;</span>)
+<span class="kw">impl </span>Default <span class="kw">for </span>FileChooserNative {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        glib::object::Object::new::&lt;<span class="self">Self</span>&gt;(<span class="kw-2">&amp;</span>[])
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// A [builder-pattern] type to construct [`FileChooserNative`] objects.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</span>
-<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;The builder must be built to be used&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileChooserNativeBuilder</span> {
-    <span class="ident">accept_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">cancel_label</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">modal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">title</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">transient_for</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>,
-    <span class="ident">visible</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">action</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FileChooserAction</span><span class="op">&gt;</span>,
-    <span class="ident">create_folders</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">filter</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FileFilter</span><span class="op">&gt;</span>,
-    <span class="ident">select_multiple</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(Clone, Default)]
+</span><span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`FileChooserNative`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+</span><span class="attribute">#[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
+</span><span class="kw">pub struct </span>FileChooserNativeBuilder {
+    accept_label: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    cancel_label: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    modal: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    title: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    transient_for: <span class="prelude-ty">Option</span>&lt;Window&gt;,
+    visible: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    action: <span class="prelude-ty">Option</span>&lt;FileChooserAction&gt;,
+    create_folders: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    filter: <span class="prelude-ty">Option</span>&lt;FileFilter&gt;,
+    select_multiple: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">FileChooserNativeBuilder</span> {
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Create a new [`FileChooserNativeBuilder`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::default</span>()
+<span class="kw">impl </span>FileChooserNativeBuilder {
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Create a new [`FileChooserNativeBuilder`].
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::default()
     }
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Build the [`FileChooserNative`].</span>
-    <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">FileChooserNative</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">properties</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">ToValue</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">accept_label</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">accept_label</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;accept-label&quot;</span>, <span class="ident">accept_label</span>));
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Build the [`FileChooserNative`].
+    </span><span class="attribute">#[must_use = <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; FileChooserNative {
+        <span class="kw">let </span><span class="kw-2">mut </span>properties: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span><span class="kw">dyn </span>ToValue)&gt; = <span class="macro">vec!</span>[];
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>accept_label) = <span class="self">self</span>.accept_label {
+            properties.push((<span class="string">&quot;accept-label&quot;</span>, accept_label));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">cancel_label</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">cancel_label</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;cancel-label&quot;</span>, <span class="ident">cancel_label</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>cancel_label) = <span class="self">self</span>.cancel_label {
+            properties.push((<span class="string">&quot;cancel-label&quot;</span>, cancel_label));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">modal</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">modal</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;modal&quot;</span>, <span class="ident">modal</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>modal) = <span class="self">self</span>.modal {
+            properties.push((<span class="string">&quot;modal&quot;</span>, modal));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">title</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">title</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;title&quot;</span>, <span class="ident">title</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>title) = <span class="self">self</span>.title {
+            properties.push((<span class="string">&quot;title&quot;</span>, title));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">transient_for</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">transient_for</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;transient-for&quot;</span>, <span class="ident">transient_for</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>transient_for) = <span class="self">self</span>.transient_for {
+            properties.push((<span class="string">&quot;transient-for&quot;</span>, transient_for));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">visible</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">visible</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;visible&quot;</span>, <span class="ident">visible</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>visible) = <span class="self">self</span>.visible {
+            properties.push((<span class="string">&quot;visible&quot;</span>, visible));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">action</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">action</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;action&quot;</span>, <span class="ident">action</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>action) = <span class="self">self</span>.action {
+            properties.push((<span class="string">&quot;action&quot;</span>, action));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">create_folders</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_folders</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;create-folders&quot;</span>, <span class="ident">create_folders</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>create_folders) = <span class="self">self</span>.create_folders {
+            properties.push((<span class="string">&quot;create-folders&quot;</span>, create_folders));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">filter</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">filter</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;filter&quot;</span>, <span class="ident">filter</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>filter) = <span class="self">self</span>.filter {
+            properties.push((<span class="string">&quot;filter&quot;</span>, filter));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">select_multiple</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">select_multiple</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;select-multiple&quot;</span>, <span class="ident">select_multiple</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>select_multiple) = <span class="self">self</span>.select_multiple {
+            properties.push((<span class="string">&quot;select-multiple&quot;</span>, select_multiple));
         }
-        <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">FileChooserNative</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">properties</span>)
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to create an instance of FileChooserNative&quot;</span>)
+        glib::Object::new::&lt;FileChooserNative&gt;(<span class="kw-2">&amp;</span>properties)
     }
 
-    <span class="doccomment">/// The text used for the label on the accept button in the dialog, or</span>
-    <span class="doccomment">/// [`None`] to use the default text.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accept_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">accept_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accept_label</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The text used for the label on the accept button in the dialog, or
+    /// [`None`] to use the default text.
+    </span><span class="kw">pub fn </span>accept_label(<span class="kw-2">mut </span><span class="self">self</span>, accept_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.accept_label = <span class="prelude-val">Some</span>(accept_label.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The text used for the label on the cancel button in the dialog, or</span>
-    <span class="doccomment">/// [`None`] to use the default text.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cancel_label</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cancel_label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">cancel_label</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cancel_label</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The text used for the label on the cancel button in the dialog, or
+    /// [`None`] to use the default text.
+    </span><span class="kw">pub fn </span>cancel_label(<span class="kw-2">mut </span><span class="self">self</span>, cancel_label: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.cancel_label = <span class="prelude-val">Some</span>(cancel_label.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the window should be modal with respect to its transient parent.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modal</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">modal</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">modal</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the window should be modal with respect to its transient parent.
+    </span><span class="kw">pub fn </span>modal(<span class="kw-2">mut </span><span class="self">self</span>, modal: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.modal = <span class="prelude-val">Some</span>(modal);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The title of the dialog window</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">title</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The title of the dialog window
+    </span><span class="kw">pub fn </span>title(<span class="kw-2">mut </span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.title = <span class="prelude-val">Some</span>(title.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The transient parent of the dialog, or [`None`] for none.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transient_for</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">transient_for</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Window</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">transient_for</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">transient_for</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The transient parent of the dialog, or [`None`] for none.
+    </span><span class="kw">pub fn </span>transient_for(<span class="kw-2">mut </span><span class="self">self</span>, transient_for: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Window&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.transient_for = <span class="prelude-val">Some</span>(transient_for.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the window is currently visible.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">visible</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">visible</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">visible</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">visible</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the window is currently visible.
+    </span><span class="kw">pub fn </span>visible(<span class="kw-2">mut </span><span class="self">self</span>, visible: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.visible = <span class="prelude-val">Some</span>(visible);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The type of operation that the file chooser is performing.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">action</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">action</span>: <span class="ident">FileChooserAction</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">action</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">action</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The type of operation that the file chooser is performing.
+    </span><span class="kw">pub fn </span>action(<span class="kw-2">mut </span><span class="self">self</span>, action: FileChooserAction) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.action = <span class="prelude-val">Some</span>(action);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether a file chooser not in [`FileChooserAction::Open`][crate::FileChooserAction::Open] mode</span>
-    <span class="doccomment">/// will offer the user to create new folders.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_folders</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">create_folders</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">create_folders</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">create_folders</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether a file chooser not in [`FileChooserAction::Open`][crate::FileChooserAction::Open] mode
+    /// will offer the user to create new folders.
+    </span><span class="kw">pub fn </span>create_folders(<span class="kw-2">mut </span><span class="self">self</span>, create_folders: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.create_folders = <span class="prelude-val">Some</span>(create_folders);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The current filter for selecting files that are displayed.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filter</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">filter</span>: <span class="kw-2">&amp;</span><span class="ident">FileFilter</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">filter</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">filter</span>.<span class="ident">clone</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The current filter for selecting files that are displayed.
+    </span><span class="kw">pub fn </span>filter(<span class="kw-2">mut </span><span class="self">self</span>, filter: <span class="kw-2">&amp;</span>FileFilter) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.filter = <span class="prelude-val">Some</span>(filter.clone());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to allow multiple files to be selected.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">select_multiple</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">select_multiple</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">select_multiple</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">select_multiple</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to allow multiple files to be selected.
+    </span><span class="kw">pub fn </span>select_multiple(<span class="kw-2">mut </span><span class="self">self</span>, select_multiple: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.select_multiple = <span class="prelude-val">Some</span>(select_multiple);
+        <span class="self">self
+    </span>}
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">FileChooserNative</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;FileChooserNative&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>FileChooserNative {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;FileChooserNative&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

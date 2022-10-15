@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/toplevel.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>toplevel.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/toplevel.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>toplevel.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gdk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gdk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -851,783 +848,782 @@
 <span id="775">775</span>
 <span id="776">776</span>
 <span id="777">777</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Device</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Event</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::FullscreenMode</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Surface</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::SurfaceEdge</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Texture</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>)))]</span>
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TitlebarGesture</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ToplevelLayout</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ToplevelState</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::StaticType</span>;
-<span class="kw">use</span> <span class="ident">glib::ToValue</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::Device;
+<span class="kw">use </span><span class="kw">crate</span>::Event;
+<span class="kw">use </span><span class="kw">crate</span>::FullscreenMode;
+<span class="kw">use </span><span class="kw">crate</span>::Surface;
+<span class="kw">use </span><span class="kw">crate</span>::SurfaceEdge;
+<span class="kw">use </span><span class="kw">crate</span>::Texture;
+<span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+</span><span class="kw">use </span><span class="kw">crate</span>::TitlebarGesture;
+<span class="kw">use </span><span class="kw">crate</span>::ToplevelLayout;
+<span class="kw">use </span><span class="kw">crate</span>::ToplevelState;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::StaticType;
+<span class="kw">use </span>glib::ToValue;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// A [`Toplevel`][crate::Toplevel] is a freestanding toplevel surface.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The [`Toplevel`][crate::Toplevel] interface provides useful APIs for interacting with</span>
-    <span class="doccomment">/// the windowing system, such as controlling maximization and size of the</span>
-    <span class="doccomment">/// surface, setting icons and transient parents for dialogs.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`ToplevelExt`][trait@crate::prelude::ToplevelExt], [`SurfaceExt`][trait@crate::prelude::SurfaceExt], [`ToplevelExtManual`][trait@crate::prelude::ToplevelExtManual], [`SurfaceExtManual`][trait@crate::prelude::SurfaceExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GdkToplevel&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Toplevel</span>(<span class="ident">Interface</span><span class="op">&lt;</span><span class="ident">ffi::GdkToplevel</span>, <span class="ident">ffi::GdkToplevelInterface</span><span class="op">&gt;</span>) @<span class="ident">requires</span> <span class="ident">Surface</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// A [`Toplevel`][crate::Toplevel] is a freestanding toplevel surface.
+    ///
+    /// The [`Toplevel`][crate::Toplevel] interface provides useful APIs for interacting with
+    /// the windowing system, such as controlling maximization and size of the
+    /// surface, setting icons and transient parents for dialogs.
+    ///
+    /// # Implements
+    ///
+    /// [`ToplevelExt`][trait@crate::prelude::ToplevelExt], [`SurfaceExt`][trait@crate::prelude::SurfaceExt], [`ToplevelExtManual`][trait@crate::prelude::ToplevelExtManual], [`SurfaceExtManual`][trait@crate::prelude::SurfaceExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GdkToplevel&quot;</span>)]
+    </span><span class="kw">pub struct </span>Toplevel(Interface&lt;ffi::GdkToplevel, ffi::GdkToplevelInterface&gt;) @requires Surface;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gdk_toplevel_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gdk_toplevel_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Toplevel</span> {
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Toplevel</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+<span class="kw">impl </span>Toplevel {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Toplevel&gt; = <span class="prelude-val">None</span>;
 }
 
-<span class="doccomment">/// Trait containing all [`struct@Toplevel`] methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Implementors</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`Toplevel`][struct@crate::Toplevel]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ToplevelExt</span>: <span class="lifetime">&#39;static</span> {
-    <span class="doccomment">/// Begins an interactive move operation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// You might use this function to implement draggable titlebars.</span>
-    <span class="doccomment">/// ## `device`</span>
-    <span class="doccomment">/// the device used for the operation</span>
-    <span class="doccomment">/// ## `button`</span>
-    <span class="doccomment">/// the button being used to drag, or 0 for a keyboard-initiated drag</span>
-    <span class="doccomment">/// ## `x`</span>
-    <span class="doccomment">/// surface X coordinate of mouse click that began the drag</span>
-    <span class="doccomment">/// ## `y`</span>
-    <span class="doccomment">/// surface Y coordinate of mouse click that began the drag</span>
-    <span class="doccomment">/// ## `timestamp`</span>
-    <span class="doccomment">/// timestamp of mouse click that began the drag (use</span>
-    <span class="doccomment">///   [`EventExt::time()`][crate::prelude::EventExt::time()])</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_begin_move&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">begin_move</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">device</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Device</span><span class="op">&gt;</span>, <span class="ident">button</span>: <span class="ident">i32</span>, <span class="ident">x</span>: <span class="ident">f64</span>, <span class="ident">y</span>: <span class="ident">f64</span>, <span class="ident">timestamp</span>: <span class="ident">u32</span>);
+<span class="doccomment">/// Trait containing all [`struct@Toplevel`] methods.
+///
+/// # Implementors
+///
+/// [`Toplevel`][struct@crate::Toplevel]
+</span><span class="kw">pub trait </span>ToplevelExt: <span class="lifetime">&#39;static </span>{
+    <span class="doccomment">/// Begins an interactive move operation.
+    ///
+    /// You might use this function to implement draggable titlebars.
+    /// ## `device`
+    /// the device used for the operation
+    /// ## `button`
+    /// the button being used to drag, or 0 for a keyboard-initiated drag
+    /// ## `x`
+    /// surface X coordinate of mouse click that began the drag
+    /// ## `y`
+    /// surface Y coordinate of mouse click that began the drag
+    /// ## `timestamp`
+    /// timestamp of mouse click that began the drag (use
+    ///   [`Event::time()`][crate::Event::time()])
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_begin_move&quot;</span>)]
+    </span><span class="kw">fn </span>begin_move(<span class="kw-2">&amp;</span><span class="self">self</span>, device: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;, button: i32, x: f64, y: f64, timestamp: u32);
 
-    <span class="doccomment">/// Begins an interactive resize operation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// You might use this function to implement a “window resize grip.”</span>
-    <span class="doccomment">/// ## `edge`</span>
-    <span class="doccomment">/// the edge or corner from which the drag is started</span>
-    <span class="doccomment">/// ## `device`</span>
-    <span class="doccomment">/// the device used for the operation</span>
-    <span class="doccomment">/// ## `button`</span>
-    <span class="doccomment">/// the button being used to drag, or 0 for a keyboard-initiated drag</span>
-    <span class="doccomment">/// ## `x`</span>
-    <span class="doccomment">/// surface X coordinate of mouse click that began the drag</span>
-    <span class="doccomment">/// ## `y`</span>
-    <span class="doccomment">/// surface Y coordinate of mouse click that began the drag</span>
-    <span class="doccomment">/// ## `timestamp`</span>
-    <span class="doccomment">/// timestamp of mouse click that began the drag (use</span>
-    <span class="doccomment">///   [`EventExt::time()`][crate::prelude::EventExt::time()])</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_begin_resize&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">begin_resize</span>(
+    <span class="doccomment">/// Begins an interactive resize operation.
+    ///
+    /// You might use this function to implement a “window resize grip.”
+    /// ## `edge`
+    /// the edge or corner from which the drag is started
+    /// ## `device`
+    /// the device used for the operation
+    /// ## `button`
+    /// the button being used to drag, or 0 for a keyboard-initiated drag
+    /// ## `x`
+    /// surface X coordinate of mouse click that began the drag
+    /// ## `y`
+    /// surface Y coordinate of mouse click that began the drag
+    /// ## `timestamp`
+    /// timestamp of mouse click that began the drag (use
+    ///   [`Event::time()`][crate::Event::time()])
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_begin_resize&quot;</span>)]
+    </span><span class="kw">fn </span>begin_resize(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">edge</span>: <span class="ident">SurfaceEdge</span>,
-        <span class="ident">device</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Device</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-        <span class="ident">button</span>: <span class="ident">i32</span>,
-        <span class="ident">x</span>: <span class="ident">f64</span>,
-        <span class="ident">y</span>: <span class="ident">f64</span>,
-        <span class="ident">timestamp</span>: <span class="ident">u32</span>,
+        edge: SurfaceEdge,
+        device: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;&gt;,
+        button: i32,
+        x: f64,
+        y: f64,
+        timestamp: u32,
     );
 
-    <span class="doccomment">/// Sets keyboard focus to @surface.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In most cases, `Gtk::Window::present_with_time()` should be</span>
-    <span class="doccomment">/// used on a `Gtk::Window`, rather than calling this function.</span>
-    <span class="doccomment">/// ## `timestamp`</span>
-    <span class="doccomment">/// timestamp of the event triggering the surface focus</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_focus&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">focus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">timestamp</span>: <span class="ident">u32</span>);
+    <span class="doccomment">/// Sets keyboard focus to @surface.
+    ///
+    /// In most cases, `Gtk::Window::present_with_time()` should be
+    /// used on a `Gtk::Window`, rather than calling this function.
+    /// ## `timestamp`
+    /// timestamp of the event triggering the surface focus
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_focus&quot;</span>)]
+    </span><span class="kw">fn </span>focus(<span class="kw-2">&amp;</span><span class="self">self</span>, timestamp: u32);
 
-    <span class="doccomment">/// Gets the bitwise or of the currently active surface state flags,</span>
-    <span class="doccomment">/// from the [`ToplevelState`][crate::ToplevelState] enumeration.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// surface state bitfield</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_get_state&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_state&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ToplevelState</span>;
+    <span class="doccomment">/// Gets the bitwise or of the currently active surface state flags,
+    /// from the [`ToplevelState`][crate::ToplevelState] enumeration.
+    ///
+    /// # Returns
+    ///
+    /// surface state bitfield
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_get_state&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_state&quot;</span>)]
+    </span><span class="kw">fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ToplevelState;
 
-    <span class="doccomment">/// Requests that the @self inhibit the system shortcuts.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is asking the desktop environment/windowing system to let all</span>
-    <span class="doccomment">/// keyboard events reach the surface, as long as it is focused, instead</span>
-    <span class="doccomment">/// of triggering system actions.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If granted, the rerouting remains active until the default shortcuts</span>
-    <span class="doccomment">/// processing is restored with [`restore_system_shortcuts()`][Self::restore_system_shortcuts()],</span>
-    <span class="doccomment">/// or the request is revoked by the desktop environment, windowing system</span>
-    <span class="doccomment">/// or the user.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A typical use case for this API is remote desktop or virtual machine</span>
-    <span class="doccomment">/// viewers which need to inhibit the default system keyboard shortcuts</span>
-    <span class="doccomment">/// so that the remote session or virtual host gets those instead of the</span>
-    <span class="doccomment">/// local environment.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The windowing system or desktop environment may ask the user to grant</span>
-    <span class="doccomment">/// or deny the request or even choose to ignore the request entirely.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The caller can be notified whenever the request is granted or revoked</span>
-    <span class="doccomment">/// by listening to the `property::Toplevel::shortcuts-inhibited` property.</span>
-    <span class="doccomment">/// ## `event`</span>
-    <span class="doccomment">/// the [`Event`][crate::Event] that is triggering the inhibit</span>
-    <span class="doccomment">///   request, or [`None`] if none is available</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_inhibit_system_shortcuts&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">inhibit_system_shortcuts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">event</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Requests that the @self inhibit the system shortcuts.
+    ///
+    /// This is asking the desktop environment/windowing system to let all
+    /// keyboard events reach the surface, as long as it is focused, instead
+    /// of triggering system actions.
+    ///
+    /// If granted, the rerouting remains active until the default shortcuts
+    /// processing is restored with [`restore_system_shortcuts()`][Self::restore_system_shortcuts()],
+    /// or the request is revoked by the desktop environment, windowing system
+    /// or the user.
+    ///
+    /// A typical use case for this API is remote desktop or virtual machine
+    /// viewers which need to inhibit the default system keyboard shortcuts
+    /// so that the remote session or virtual host gets those instead of the
+    /// local environment.
+    ///
+    /// The windowing system or desktop environment may ask the user to grant
+    /// or deny the request or even choose to ignore the request entirely.
+    ///
+    /// The caller can be notified whenever the request is granted or revoked
+    /// by listening to the `property::Toplevel::shortcuts-inhibited` property.
+    /// ## `event`
+    /// the [`Event`][crate::Event] that is triggering the inhibit
+    ///   request, or [`None`] if none is available
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_inhibit_system_shortcuts&quot;</span>)]
+    </span><span class="kw">fn </span>inhibit_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="prelude-ty">Option</span>&lt;<span class="kw">impl </span>AsRef&lt;Event&gt;&gt;);
 
-    <span class="doccomment">/// Asks to lower the @self below other windows.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The windowing system may choose to ignore the request.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the surface was lowered</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_lower&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">lower</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// Asks to lower the @self below other windows.
+    ///
+    /// The windowing system may choose to ignore the request.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the surface was lowered
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_lower&quot;</span>)]
+    </span><span class="kw">fn </span>lower(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="doccomment">/// Asks to minimize the @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The windowing system may choose to ignore the request.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the surface was minimized</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_minimize&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">minimize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// Asks to minimize the @self.
+    ///
+    /// The windowing system may choose to ignore the request.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the surface was minimized
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_minimize&quot;</span>)]
+    </span><span class="kw">fn </span>minimize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="doccomment">/// Present @self after having processed the [`ToplevelLayout`][crate::ToplevelLayout] rules.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the toplevel was previously not showing, it will be showed,</span>
-    <span class="doccomment">/// otherwise it will change layout according to @layout.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// GDK may emit the `signal::Toplevel::compute-size` signal to let</span>
-    <span class="doccomment">/// the user of this toplevel compute the preferred size of the toplevel</span>
-    <span class="doccomment">/// surface.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Presenting is asynchronous and the specified layout parameters are not</span>
-    <span class="doccomment">/// guaranteed to be respected.</span>
-    <span class="doccomment">/// ## `layout`</span>
-    <span class="doccomment">/// the [`ToplevelLayout`][crate::ToplevelLayout] object used to layout</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_present&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">present</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">layout</span>: <span class="kw-2">&amp;</span><span class="ident">ToplevelLayout</span>);
+    <span class="doccomment">/// Present @self after having processed the [`ToplevelLayout`][crate::ToplevelLayout] rules.
+    ///
+    /// If the toplevel was previously not showing, it will be showed,
+    /// otherwise it will change layout according to @layout.
+    ///
+    /// GDK may emit the `signal::Toplevel::compute-size` signal to let
+    /// the user of this toplevel compute the preferred size of the toplevel
+    /// surface.
+    ///
+    /// Presenting is asynchronous and the specified layout parameters are not
+    /// guaranteed to be respected.
+    /// ## `layout`
+    /// the [`ToplevelLayout`][crate::ToplevelLayout] object used to layout
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_present&quot;</span>)]
+    </span><span class="kw">fn </span>present(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span>ToplevelLayout);
 
-    <span class="doccomment">/// Restore default system keyboard shortcuts which were previously</span>
-    <span class="doccomment">/// inhibited.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This undoes the effect of [`inhibit_system_shortcuts()`][Self::inhibit_system_shortcuts()].</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_restore_system_shortcuts&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">restore_system_shortcuts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Restore default system keyboard shortcuts which were previously
+    /// inhibited.
+    ///
+    /// This undoes the effect of [`inhibit_system_shortcuts()`][Self::inhibit_system_shortcuts()].
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_restore_system_shortcuts&quot;</span>)]
+    </span><span class="kw">fn </span>restore_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Sets the toplevel to be decorated.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Setting @decorated to [`false`] hints the desktop environment</span>
-    <span class="doccomment">/// that the surface has its own, client-side decorations and</span>
-    <span class="doccomment">/// does not need to have window decorations added.</span>
-    <span class="doccomment">/// ## `decorated`</span>
-    <span class="doccomment">/// [`true`] to request decorations</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_set_decorated&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_decorated</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">decorated</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// Sets the toplevel to be decorated.
+    ///
+    /// Setting @decorated to [`false`] hints the desktop environment
+    /// that the surface has its own, client-side decorations and
+    /// does not need to have window decorations added.
+    /// ## `decorated`
+    /// [`true`] to request decorations
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_decorated&quot;</span>)]
+    </span><span class="kw">fn </span>set_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>, decorated: bool);
 
-    <span class="doccomment">/// Sets the toplevel to be deletable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Setting @deletable to [`true`] hints the desktop environment</span>
-    <span class="doccomment">/// that it should offer the user a way to close the surface.</span>
-    <span class="doccomment">/// ## `deletable`</span>
-    <span class="doccomment">/// [`true`] to request a delete button</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_set_deletable&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_deletable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">deletable</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// Sets the toplevel to be deletable.
+    ///
+    /// Setting @deletable to [`true`] hints the desktop environment
+    /// that it should offer the user a way to close the surface.
+    /// ## `deletable`
+    /// [`true`] to request a delete button
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_deletable&quot;</span>)]
+    </span><span class="kw">fn </span>set_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>, deletable: bool);
 
-    <span class="doccomment">/// Sets a list of icons for the surface.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// One of these will be used to represent the surface in iconic form.</span>
-    <span class="doccomment">/// The icon may be shown in window lists or task bars. Which icon</span>
-    <span class="doccomment">/// size is shown depends on the window manager. The window manager</span>
-    <span class="doccomment">/// can scale the icon but setting several size icons can give better</span>
-    <span class="doccomment">/// image quality.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that some platforms don&#39;t support surface icons.</span>
-    <span class="doccomment">/// ## `surfaces`</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   A list of textures to use as icon, of different sizes</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_set_icon_list&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_icon_list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">surfaces</span>: <span class="kw-2">&amp;</span>[<span class="ident">Texture</span>]);
+    <span class="doccomment">/// Sets a list of icons for the surface.
+    ///
+    /// One of these will be used to represent the surface in iconic form.
+    /// The icon may be shown in window lists or task bars. Which icon
+    /// size is shown depends on the window manager. The window manager
+    /// can scale the icon but setting several size icons can give better
+    /// image quality.
+    ///
+    /// Note that some platforms don&#39;t support surface icons.
+    /// ## `surfaces`
+    ///
+    ///   A list of textures to use as icon, of different sizes
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_icon_list&quot;</span>)]
+    </span><span class="kw">fn </span>set_icon_list(<span class="kw-2">&amp;</span><span class="self">self</span>, surfaces: <span class="kw-2">&amp;</span>[Texture]);
 
-    <span class="doccomment">/// Sets the toplevel to be modal.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The application can use this hint to tell the</span>
-    <span class="doccomment">/// window manager that a certain surface has modal</span>
-    <span class="doccomment">/// behaviour. The window manager can use this information</span>
-    <span class="doccomment">/// to handle modal surfaces in a special way.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// You should only use this on surfaces for which you have</span>
-    <span class="doccomment">/// previously called [`set_transient_for()`][Self::set_transient_for()].</span>
-    <span class="doccomment">/// ## `modal`</span>
-    <span class="doccomment">/// [`true`] if the surface is modal, [`false`] otherwise.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_set_modal&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// Sets the toplevel to be modal.
+    ///
+    /// The application can use this hint to tell the
+    /// window manager that a certain surface has modal
+    /// behaviour. The window manager can use this information
+    /// to handle modal surfaces in a special way.
+    ///
+    /// You should only use this on surfaces for which you have
+    /// previously called [`set_transient_for()`][Self::set_transient_for()].
+    /// ## `modal`
+    /// [`true`] if the surface is modal, [`false`] otherwise.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_modal&quot;</span>)]
+    </span><span class="kw">fn </span>set_modal(<span class="kw-2">&amp;</span><span class="self">self</span>, modal: bool);
 
-    <span class="doccomment">/// Sets the startup notification ID.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// When using GTK, typically you should use</span>
-    <span class="doccomment">/// `Gtk::Window::set_startup_id()` instead of this</span>
-    <span class="doccomment">/// low-level function.</span>
-    <span class="doccomment">/// ## `startup_id`</span>
-    <span class="doccomment">/// a string with startup-notification identifier</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_set_startup_id&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_startup_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">startup_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>);
+    <span class="doccomment">/// Sets the startup notification ID.
+    ///
+    /// When using GTK, typically you should use
+    /// `Gtk::Window::set_startup_id()` instead of this
+    /// low-level function.
+    /// ## `startup_id`
+    /// a string with startup-notification identifier
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_startup_id&quot;</span>)]
+    </span><span class="kw">fn </span>set_startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>, startup_id: <span class="kw-2">&amp;</span>str);
 
-    <span class="doccomment">/// Sets the title of a toplevel surface.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The title maybe be displayed in the titlebar,</span>
-    <span class="doccomment">/// in lists of windows, etc.</span>
-    <span class="doccomment">/// ## `title`</span>
-    <span class="doccomment">/// title of @surface</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_set_title&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>);
+    <span class="doccomment">/// Sets the title of a toplevel surface.
+    ///
+    /// The title maybe be displayed in the titlebar,
+    /// in lists of windows, etc.
+    /// ## `title`
+    /// title of @surface
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_title&quot;</span>)]
+    </span><span class="kw">fn </span>set_title(<span class="kw-2">&amp;</span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str);
 
-    <span class="doccomment">/// Sets a transient-for parent.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Indicates to the window manager that @surface is a transient</span>
-    <span class="doccomment">/// dialog associated with the application surface @parent. This</span>
-    <span class="doccomment">/// allows the window manager to do things like center @surface</span>
-    <span class="doccomment">/// on @parent and keep @surface above @parent.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See `Gtk::Window::set_transient_for()` if you’re using</span>
-    <span class="doccomment">/// `Gtk::Window` or `Gtk::Dialog`.</span>
-    <span class="doccomment">/// ## `parent`</span>
-    <span class="doccomment">/// another toplevel [`Surface`][crate::Surface]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_set_transient_for&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_transient_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">parent</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Surface</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Sets a transient-for parent.
+    ///
+    /// Indicates to the window manager that @surface is a transient
+    /// dialog associated with the application surface @parent. This
+    /// allows the window manager to do things like center @surface
+    /// on @parent and keep @surface above @parent.
+    ///
+    /// See `Gtk::Window::set_transient_for()` if you’re using
+    /// `Gtk::Window` or `Gtk::Dialog`.
+    /// ## `parent`
+    /// another toplevel [`Surface`][crate::Surface]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_transient_for&quot;</span>)]
+    </span><span class="kw">fn </span>set_transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Surface&gt;);
 
-    <span class="doccomment">/// Asks the windowing system to show the window menu.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The window menu is the menu shown when right-clicking the titlebar</span>
-    <span class="doccomment">/// on traditional windows managed by the window manager. This is useful</span>
-    <span class="doccomment">/// for windows using client-side decorations, activating it with a</span>
-    <span class="doccomment">/// right-click on the window decorations.</span>
-    <span class="doccomment">/// ## `event`</span>
-    <span class="doccomment">/// a [`Event`][crate::Event] to show the menu for</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the window menu was shown and [`false`] otherwise.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_show_window_menu&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">show_window_menu</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">event</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// Asks the windowing system to show the window menu.
+    ///
+    /// The window menu is the menu shown when right-clicking the titlebar
+    /// on traditional windows managed by the window manager. This is useful
+    /// for windows using client-side decorations, activating it with a
+    /// right-click on the window decorations.
+    /// ## `event`
+    /// a [`Event`][crate::Event] to show the menu for
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the window menu was shown and [`false`] otherwise.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_show_window_menu&quot;</span>)]
+    </span><span class="kw">fn </span>show_window_menu(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;Event&gt;) -&gt; bool;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_supports_edge_constraints&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">supports_edge_constraints</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;gdk_toplevel_supports_edge_constraints&quot;</span>)]
+    </span><span class="kw">fn </span>supports_edge_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>)))]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_toplevel_titlebar_gesture&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">titlebar_gesture</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">gesture</span>: <span class="ident">TitlebarGesture</span>) -&gt; <span class="ident">bool</span>;
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gdk_toplevel_titlebar_gesture&quot;</span>)]
+    </span><span class="kw">fn </span>titlebar_gesture(<span class="kw-2">&amp;</span><span class="self">self</span>, gesture: TitlebarGesture) -&gt; bool;
 
-    <span class="kw">fn</span> <span class="ident">is_decorated</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="kw">fn </span>is_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="kw">fn</span> <span class="ident">is_deletable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="kw">fn </span>is_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;fullscreen-mode&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">fullscreen_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">FullscreenMode</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
+    </span><span class="kw">fn </span>fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; FullscreenMode;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;fullscreen-mode&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_fullscreen_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fullscreen_mode</span>: <span class="ident">FullscreenMode</span>);
+    <span class="attribute">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
+    </span><span class="kw">fn </span>set_fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>, fullscreen_mode: FullscreenMode);
 
-    <span class="comment">//#[doc(alias = &quot;icon-list&quot;)]</span>
-    <span class="comment">//fn icon_list(&amp;self) -&gt; /*Unimplemented*/Fundamental: Pointer;</span>
+    <span class="comment">//#[doc(alias = &quot;icon-list&quot;)]
+    //fn icon_list(&amp;self) -&gt; /*Unimplemented*/Basic: Pointer;
 
-    <span class="kw">fn</span> <span class="ident">is_modal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    </span><span class="kw">fn </span>is_modal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;shortcuts-inhibited&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">is_shortcuts_inhibited</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;shortcuts-inhibited&quot;</span>)]
+    </span><span class="kw">fn </span>is_shortcuts_inhibited(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;startup-id&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">startup_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;startup-id&quot;</span>)]
+    </span><span class="kw">fn </span>startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt;;
 
-    <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span>;
+    <span class="kw">fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt;;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;transient-for&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">transient_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Surface</span><span class="op">&gt;</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;transient-for&quot;</span>)]
+    </span><span class="kw">fn </span>transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Surface&gt;;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;decorated&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_decorated_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;decorated&quot;</span>)]
+    </span><span class="kw">fn </span>connect_decorated_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;deletable&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_deletable_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;deletable&quot;</span>)]
+    </span><span class="kw">fn </span>connect_deletable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;fullscreen-mode&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_fullscreen_mode_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
+    </span><span class="kw">fn </span>connect_fullscreen_mode_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;icon-list&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_icon_list_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;icon-list&quot;</span>)]
+    </span><span class="kw">fn </span>connect_icon_list_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;modal&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_modal_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;modal&quot;</span>)]
+    </span><span class="kw">fn </span>connect_modal_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;shortcuts-inhibited&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_shortcuts_inhibited_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;shortcuts-inhibited&quot;</span>)]
+    </span><span class="kw">fn </span>connect_shortcuts_inhibited_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;startup-id&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_startup_id_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;startup-id&quot;</span>)]
+    </span><span class="kw">fn </span>connect_startup_id_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;state&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_state_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;state&quot;</span>)]
+    </span><span class="kw">fn </span>connect_state_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;title&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_title_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;title&quot;</span>)]
+    </span><span class="kw">fn </span>connect_title_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;transient-for&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_transient_for_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;transient-for&quot;</span>)]
+    </span><span class="kw">fn </span>connect_transient_for_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ToplevelExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">begin_move</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">device</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Device</span><span class="op">&gt;</span>, <span class="ident">button</span>: <span class="ident">i32</span>, <span class="ident">x</span>: <span class="ident">f64</span>, <span class="ident">y</span>: <span class="ident">f64</span>, <span class="ident">timestamp</span>: <span class="ident">u32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_begin_move</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">device</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">button</span>,
-                <span class="ident">x</span>,
-                <span class="ident">y</span>,
-                <span class="ident">timestamp</span>,
+<span class="kw">impl</span>&lt;O: IsA&lt;Toplevel&gt;&gt; ToplevelExt <span class="kw">for </span>O {
+    <span class="kw">fn </span>begin_move(<span class="kw-2">&amp;</span><span class="self">self</span>, device: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;, button: i32, x: f64, y: f64, timestamp: u32) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_begin_move(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                device.as_ref().to_glib_none().<span class="number">0</span>,
+                button,
+                x,
+                y,
+                timestamp,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">begin_resize</span>(
+    <span class="kw">fn </span>begin_resize(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">edge</span>: <span class="ident">SurfaceEdge</span>,
-        <span class="ident">device</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Device</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-        <span class="ident">button</span>: <span class="ident">i32</span>,
-        <span class="ident">x</span>: <span class="ident">f64</span>,
-        <span class="ident">y</span>: <span class="ident">f64</span>,
-        <span class="ident">timestamp</span>: <span class="ident">u32</span>,
+        edge: SurfaceEdge,
+        device: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;&gt;,
+        button: i32,
+        x: f64,
+        y: f64,
+        timestamp: u32,
     ) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_begin_resize</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">edge</span>.<span class="ident">into_glib</span>(),
-                <span class="ident">device</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">button</span>,
-                <span class="ident">x</span>,
-                <span class="ident">y</span>,
-                <span class="ident">timestamp</span>,
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_begin_resize(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                edge.into_glib(),
+                device.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
+                button,
+                x,
+                y,
+                timestamp,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">focus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">timestamp</span>: <span class="ident">u32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_focus</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">timestamp</span>);
+    <span class="kw">fn </span>focus(<span class="kw-2">&amp;</span><span class="self">self</span>, timestamp: u32) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_focus(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, timestamp);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ToplevelState</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gdk_toplevel_get_state</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+    <span class="kw">fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ToplevelState {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_get_state(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="kw">fn</span> <span class="ident">inhibit_system_shortcuts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">event</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_inhibit_system_shortcuts</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">event</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>inhibit_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="prelude-ty">Option</span>&lt;<span class="kw">impl </span>AsRef&lt;Event&gt;&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_inhibit_system_shortcuts(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                event.as_ref().map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">lower</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gdk_toplevel_lower</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+    <span class="kw">fn </span>lower(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_lower(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="kw">fn</span> <span class="ident">minimize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gdk_toplevel_minimize</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+    <span class="kw">fn </span>minimize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_minimize(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="kw">fn</span> <span class="ident">present</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">layout</span>: <span class="kw-2">&amp;</span><span class="ident">ToplevelLayout</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_present</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">layout</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>present(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span>ToplevelLayout) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_present(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, layout.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">restore_system_shortcuts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_restore_system_shortcuts</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>restore_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_restore_system_shortcuts(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_decorated</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">decorated</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_set_decorated</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">decorated</span>.<span class="ident">into_glib</span>());
+    <span class="kw">fn </span>set_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>, decorated: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_decorated(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, decorated.into_glib());
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_deletable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">deletable</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_set_deletable</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">deletable</span>.<span class="ident">into_glib</span>());
+    <span class="kw">fn </span>set_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>, deletable: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_deletable(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, deletable.into_glib());
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_icon_list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">surfaces</span>: <span class="kw-2">&amp;</span>[<span class="ident">Texture</span>]) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_set_icon_list</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">surfaces</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>set_icon_list(<span class="kw-2">&amp;</span><span class="self">self</span>, surfaces: <span class="kw-2">&amp;</span>[Texture]) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_icon_list(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                surfaces.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_modal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">modal</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_set_modal</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">modal</span>.<span class="ident">into_glib</span>());
+    <span class="kw">fn </span>set_modal(<span class="kw-2">&amp;</span><span class="self">self</span>, modal: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_modal(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, modal.into_glib());
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_startup_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">startup_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_set_startup_id</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">startup_id</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>set_startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>, startup_id: <span class="kw-2">&amp;</span>str) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_startup_id(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                startup_id.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_set_title</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">title</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>set_title(<span class="kw-2">&amp;</span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_title(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, title.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_transient_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">parent</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Surface</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_toplevel_set_transient_for</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">parent</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>set_transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Surface&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_transient_for(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                parent.as_ref().to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">show_window_menu</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">event</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gdk_toplevel_show_window_menu</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">event</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>show_window_menu(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;Event&gt;) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gdk_toplevel_show_window_menu(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                event.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">supports_edge_constraints</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gdk_toplevel_supports_edge_constraints</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>supports_edge_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gdk_toplevel_supports_edge_constraints(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_4&quot;</span>)))]</span>
-    <span class="kw">fn</span> <span class="ident">titlebar_gesture</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">gesture</span>: <span class="ident">TitlebarGesture</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gdk_toplevel_titlebar_gesture</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">gesture</span>.<span class="ident">into_glib</span>(),
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="kw">fn </span>titlebar_gesture(<span class="kw-2">&amp;</span><span class="self">self</span>, gesture: TitlebarGesture) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gdk_toplevel_titlebar_gesture(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                gesture.into_glib(),
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">is_decorated</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;decorated&quot;</span>)
+    <span class="kw">fn </span>is_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;decorated&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">is_deletable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;deletable&quot;</span>)
+    <span class="kw">fn </span>is_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;deletable&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">fullscreen_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">FullscreenMode</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;fullscreen-mode&quot;</span>)
+    <span class="kw">fn </span>fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; FullscreenMode {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;fullscreen-mode&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">set_fullscreen_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fullscreen_mode</span>: <span class="ident">FullscreenMode</span>) {
-        <span class="ident">glib::ObjectExt::set_property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;fullscreen-mode&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">fullscreen_mode</span>)
+    <span class="kw">fn </span>set_fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>, fullscreen_mode: FullscreenMode) {
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;fullscreen-mode&quot;</span>, <span class="kw-2">&amp;</span>fullscreen_mode)
     }
 
-    <span class="comment">//fn icon_list(&amp;self) -&gt; /*Unimplemented*/Fundamental: Pointer {</span>
-    <span class="comment">//    glib::ObjectExt::property(self.as_ref(), &quot;icon-list&quot;)</span>
-    <span class="comment">//}</span>
+    <span class="comment">//fn icon_list(&amp;self) -&gt; /*Unimplemented*/Basic: Pointer {
+    //    glib::ObjectExt::property(self.as_ref(), &quot;icon-list&quot;)
+    //}
 
-    <span class="kw">fn</span> <span class="ident">is_modal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;modal&quot;</span>)
+    </span><span class="kw">fn </span>is_modal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;modal&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">is_shortcuts_inhibited</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;shortcuts-inhibited&quot;</span>)
+    <span class="kw">fn </span>is_shortcuts_inhibited(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;shortcuts-inhibited&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">startup_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;startup-id&quot;</span>)
+    <span class="kw">fn </span>startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;startup-id&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;title&quot;</span>)
+    <span class="kw">fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;title&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">transient_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Surface</span><span class="op">&gt;</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;transient-for&quot;</span>)
+    <span class="kw">fn </span>transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Surface&gt; {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;transient-for&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_decorated_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_decorated_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_decorated_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_decorated_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::decorated\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_decorated_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::decorated\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_decorated_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_deletable_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_deletable_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_deletable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_deletable_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::deletable\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_deletable_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::deletable\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_deletable_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_fullscreen_mode_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_fullscreen_mode_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_fullscreen_mode_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_fullscreen_mode_trampoline&lt;
+            P: IsA&lt;Toplevel&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::fullscreen-mode\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_fullscreen_mode_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::fullscreen-mode\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_fullscreen_mode_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_icon_list_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_icon_list_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_icon_list_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_icon_list_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::icon-list\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_icon_list_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::icon-list\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_icon_list_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_modal_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_modal_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_modal_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_modal_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::modal\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_modal_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::modal\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_modal_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_shortcuts_inhibited_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_shortcuts_inhibited_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_shortcuts_inhibited_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_shortcuts_inhibited_trampoline&lt;
+            P: IsA&lt;Toplevel&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::shortcuts-inhibited\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_shortcuts_inhibited_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::shortcuts-inhibited\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_shortcuts_inhibited_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_startup_id_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_startup_id_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_startup_id_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_startup_id_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::startup-id\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_startup_id_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::startup-id\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_startup_id_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_state_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_state_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_state_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_state_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::state\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_state_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::state\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_state_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_title_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_title_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_title_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_title_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::title\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_title_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::title\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_title_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_transient_for_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_transient_for_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Toplevel</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkToplevel</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_transient_for_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_transient_for_trampoline&lt;
+            P: IsA&lt;Toplevel&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Toplevel::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::transient-for\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_transient_for_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::transient-for\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_transient_for_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Toplevel</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Toplevel&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Toplevel {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;Toplevel&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gdk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gdk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

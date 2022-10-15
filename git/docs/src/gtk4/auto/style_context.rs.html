@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/style_context.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>style_context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/style_context.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>style_context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -626,558 +623,557 @@
 <span id="550">550</span>
 <span id="551">551</span>
 <span id="552">552</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Border</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::StateFlags</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::StyleContextPrintFlags</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::StyleProvider</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::Border;
+<span class="kw">use </span><span class="kw">crate</span>::StateFlags;
+<span class="kw">use </span><span class="kw">crate</span>::StyleContextPrintFlags;
+<span class="kw">use </span><span class="kw">crate</span>::StyleProvider;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// [`StyleContext`][crate::StyleContext] stores styling information affecting a widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In order to construct the final style information, [`StyleContext`][crate::StyleContext]</span>
-    <span class="doccomment">/// queries information from all attached `GtkStyleProviders`. Style</span>
-    <span class="doccomment">/// providers can be either attached explicitly to the context through</span>
-    <span class="doccomment">/// [`StyleContextExt::add_provider()`][crate::prelude::StyleContextExt::add_provider()], or to the display through</span>
-    <span class="doccomment">/// [`add_provider_for_display()`][Self::add_provider_for_display()]. The resulting</span>
-    <span class="doccomment">/// style is a combination of all providers’ information in priority order.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For GTK widgets, any [`StyleContext`][crate::StyleContext] returned by</span>
-    <span class="doccomment">/// [`WidgetExt::style_context()`][crate::prelude::WidgetExt::style_context()] will already have a [`gdk::Display`][crate::gdk::Display]</span>
-    <span class="doccomment">/// and RTL/LTR information set. The style context will also be updated</span>
-    <span class="doccomment">/// automatically if any of these settings change on the widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Style Classes</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Widgets can add style classes to their context, which can be used to associate</span>
-    <span class="doccomment">/// different styles by class. The documentation for individual widgets lists</span>
-    <span class="doccomment">/// which style classes it uses itself, and which style classes may be added by</span>
-    <span class="doccomment">/// applications to affect their appearance.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Custom styling in UI libraries and applications</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If you are developing a library with custom widgets that render differently</span>
-    <span class="doccomment">/// than standard components, you may need to add a [`StyleProvider`][crate::StyleProvider] yourself</span>
-    <span class="doccomment">/// with the `GTK_STYLE_PROVIDER_PRIORITY_FALLBACK` priority, either a</span>
-    <span class="doccomment">/// [`CssProvider`][crate::CssProvider] or a custom object implementing the [`StyleProvider`][crate::StyleProvider]</span>
-    <span class="doccomment">/// interface. This way themes may still attempt to style your UI elements in</span>
-    <span class="doccomment">/// a different way if needed so.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If you are using custom styling on an applications, you probably want then</span>
-    <span class="doccomment">/// to make your style information prevail to the theme’s, so you must use</span>
-    <span class="doccomment">/// a [`StyleProvider`][crate::StyleProvider] with the `GTK_STYLE_PROVIDER_PRIORITY_APPLICATION`</span>
-    <span class="doccomment">/// priority, keep in mind that the user settings in</span>
-    <span class="doccomment">/// `XDG_CONFIG_HOME/gtk-4.0/gtk.css` will</span>
-    <span class="doccomment">/// still take precedence over your changes, as it uses the</span>
-    <span class="doccomment">/// `GTK_STYLE_PROVIDER_PRIORITY_USER` priority.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`StyleContextExt`][trait@crate::prelude::StyleContextExt], [`trait@glib::ObjectExt`]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkStyleContext&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StyleContext</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkStyleContext</span>, <span class="ident">ffi::GtkStyleContextClass</span><span class="op">&gt;</span>);
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// [`StyleContext`][crate::StyleContext] stores styling information affecting a widget.
+    ///
+    /// In order to construct the final style information, [`StyleContext`][crate::StyleContext]
+    /// queries information from all attached `GtkStyleProviders`. Style
+    /// providers can be either attached explicitly to the context through
+    /// [`StyleContextExt::add_provider()`][crate::prelude::StyleContextExt::add_provider()], or to the display through
+    /// [`add_provider_for_display()`][Self::add_provider_for_display()]. The resulting
+    /// style is a combination of all providers’ information in priority order.
+    ///
+    /// For GTK widgets, any [`StyleContext`][crate::StyleContext] returned by
+    /// [`WidgetExt::style_context()`][crate::prelude::WidgetExt::style_context()] will already have a [`gdk::Display`][crate::gdk::Display]
+    /// and RTL/LTR information set. The style context will also be updated
+    /// automatically if any of these settings change on the widget.
+    ///
+    /// # Style Classes
+    ///
+    /// Widgets can add style classes to their context, which can be used to associate
+    /// different styles by class. The documentation for individual widgets lists
+    /// which style classes it uses itself, and which style classes may be added by
+    /// applications to affect their appearance.
+    ///
+    /// # Custom styling in UI libraries and applications
+    ///
+    /// If you are developing a library with custom widgets that render differently
+    /// than standard components, you may need to add a [`StyleProvider`][crate::StyleProvider] yourself
+    /// with the `GTK_STYLE_PROVIDER_PRIORITY_FALLBACK` priority, either a
+    /// [`CssProvider`][crate::CssProvider] or a custom object implementing the [`StyleProvider`][crate::StyleProvider]
+    /// interface. This way themes may still attempt to style your UI elements in
+    /// a different way if needed so.
+    ///
+    /// If you are using custom styling on an applications, you probably want then
+    /// to make your style information prevail to the theme’s, so you must use
+    /// a [`StyleProvider`][crate::StyleProvider] with the `GTK_STYLE_PROVIDER_PRIORITY_APPLICATION`
+    /// priority, keep in mind that the user settings in
+    /// `XDG_CONFIG_HOME/gtk-4.0/gtk.css` will
+    /// still take precedence over your changes, as it uses the
+    /// `GTK_STYLE_PROVIDER_PRIORITY_USER` priority.
+    ///
+    /// # Implements
+    ///
+    /// [`StyleContextExt`][trait@crate::prelude::StyleContextExt], [`trait@glib::ObjectExt`]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkStyleContext&quot;</span>)]
+    </span><span class="kw">pub struct </span>StyleContext(Object&lt;ffi::GtkStyleContext, ffi::GtkStyleContextClass&gt;);
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_style_context_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_style_context_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">StyleContext</span> {
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">StyleContext</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+<span class="kw">impl </span>StyleContext {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>StyleContext&gt; = <span class="prelude-val">None</span>;
 
-    <span class="doccomment">/// Adds a global style provider to @display, which will be used</span>
-    <span class="doccomment">/// in style construction for all `GtkStyleContexts` under @display.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// GTK uses this to make styling information from [`Settings`][crate::Settings]</span>
-    <span class="doccomment">/// available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note: If both priorities are the same, A [`StyleProvider`][crate::StyleProvider]</span>
-    <span class="doccomment">/// added through [`StyleContextExt::add_provider()`][crate::prelude::StyleContextExt::add_provider()] takes</span>
-    <span class="doccomment">/// precedence over another added through this function.</span>
-    <span class="doccomment">/// ## `display`</span>
-    <span class="doccomment">/// a [`gdk::Display`][crate::gdk::Display]</span>
-    <span class="doccomment">/// ## `provider`</span>
-    <span class="doccomment">/// a [`StyleProvider`][crate::StyleProvider]</span>
-    <span class="doccomment">/// ## `priority`</span>
-    <span class="doccomment">/// the priority of the style provider. The lower</span>
-    <span class="doccomment">///   it is, the earlier it will be used in the style construction.</span>
-    <span class="doccomment">///   Typically this will be in the range between</span>
-    <span class="doccomment">///   `GTK_STYLE_PROVIDER_PRIORITY_FALLBACK` and</span>
-    <span class="doccomment">///   `GTK_STYLE_PROVIDER_PRIORITY_USER`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_add_provider_for_display&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_provider_for_display</span>(
-        <span class="ident">display</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span>,
-        <span class="ident">provider</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleProvider</span><span class="op">&gt;</span>,
-        <span class="ident">priority</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// Adds a global style provider to @display, which will be used
+    /// in style construction for all `GtkStyleContexts` under @display.
+    ///
+    /// GTK uses this to make styling information from [`Settings`][crate::Settings]
+    /// available.
+    ///
+    /// Note: If both priorities are the same, A [`StyleProvider`][crate::StyleProvider]
+    /// added through [`StyleContextExt::add_provider()`][crate::prelude::StyleContextExt::add_provider()] takes
+    /// precedence over another added through this function.
+    /// ## `display`
+    /// a [`gdk::Display`][crate::gdk::Display]
+    /// ## `provider`
+    /// a [`StyleProvider`][crate::StyleProvider]
+    /// ## `priority`
+    /// the priority of the style provider. The lower
+    ///   it is, the earlier it will be used in the style construction.
+    ///   Typically this will be in the range between
+    ///   `GTK_STYLE_PROVIDER_PRIORITY_FALLBACK` and
+    ///   `GTK_STYLE_PROVIDER_PRIORITY_USER`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_add_provider_for_display&quot;</span>)]
+    </span><span class="kw">pub fn </span>add_provider_for_display(
+        display: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gdk::Display&gt;,
+        provider: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleProvider&gt;,
+        priority: u32,
     ) {
         <span class="macro">skip_assert_initialized!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_add_provider_for_display</span>(
-                <span class="ident">display</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">provider</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">priority</span>,
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_add_provider_for_display(
+                display.as_ref().to_glib_none().<span class="number">0</span>,
+                provider.as_ref().to_glib_none().<span class="number">0</span>,
+                priority,
             );
         }
     }
 
-    <span class="doccomment">/// Removes @provider from the global style providers list in @display.</span>
-    <span class="doccomment">/// ## `display`</span>
-    <span class="doccomment">/// a [`gdk::Display`][crate::gdk::Display]</span>
-    <span class="doccomment">/// ## `provider`</span>
-    <span class="doccomment">/// a [`StyleProvider`][crate::StyleProvider]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_remove_provider_for_display&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_provider_for_display</span>(
-        <span class="ident">display</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span>,
-        <span class="ident">provider</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleProvider</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Removes @provider from the global style providers list in @display.
+    /// ## `display`
+    /// a [`gdk::Display`][crate::gdk::Display]
+    /// ## `provider`
+    /// a [`StyleProvider`][crate::StyleProvider]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_remove_provider_for_display&quot;</span>)]
+    </span><span class="kw">pub fn </span>remove_provider_for_display(
+        display: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gdk::Display&gt;,
+        provider: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleProvider&gt;,
     ) {
         <span class="macro">skip_assert_initialized!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_remove_provider_for_display</span>(
-                <span class="ident">display</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">provider</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_remove_provider_for_display(
+                display.as_ref().to_glib_none().<span class="number">0</span>,
+                provider.as_ref().to_glib_none().<span class="number">0</span>,
             );
         }
     }
 }
 
-<span class="doccomment">/// Trait containing all [`struct@StyleContext`] methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Implementors</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`StyleContext`][struct@crate::StyleContext]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">StyleContextExt</span>: <span class="lifetime">&#39;static</span> {
-    <span class="doccomment">/// Adds a style class to @self, so later uses of the</span>
-    <span class="doccomment">/// style context will make use of this new class for styling.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In the CSS file format, a [`Entry`][crate::Entry] defining a “search”</span>
-    <span class="doccomment">/// class, would be matched by:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```css</span>
-    <span class="doccomment">/// entry.search { ... }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// While any widget defining a “search” class would be</span>
-    <span class="doccomment">/// matched by:</span>
-    <span class="doccomment">/// ```css</span>
-    <span class="doccomment">/// .search { ... }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// ## `class_name`</span>
-    <span class="doccomment">/// class name to use in styling</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_add_class&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">add_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">class_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>);
+<span class="doccomment">/// Trait containing all [`struct@StyleContext`] methods.
+///
+/// # Implementors
+///
+/// [`StyleContext`][struct@crate::StyleContext]
+</span><span class="kw">pub trait </span>StyleContextExt: <span class="lifetime">&#39;static </span>{
+    <span class="doccomment">/// Adds a style class to @self, so later uses of the
+    /// style context will make use of this new class for styling.
+    ///
+    /// In the CSS file format, a [`Entry`][crate::Entry] defining a “search”
+    /// class, would be matched by:
+    ///
+    /// ```css
+    /// entry.search { ... }
+    /// ```
+    ///
+    /// While any widget defining a “search” class would be
+    /// matched by:
+    /// ```css
+    /// .search { ... }
+    /// ```
+    /// ## `class_name`
+    /// class name to use in styling
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_add_class&quot;</span>)]
+    </span><span class="kw">fn </span>add_class(<span class="kw-2">&amp;</span><span class="self">self</span>, class_name: <span class="kw-2">&amp;</span>str);
 
-    <span class="doccomment">/// Adds a style provider to @self, to be used in style construction.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that a style provider added by this function only affects</span>
-    <span class="doccomment">/// the style of the widget to which @self belongs. If you want</span>
-    <span class="doccomment">/// to affect the style of all widgets, use</span>
-    <span class="doccomment">/// [`StyleContext::add_provider_for_display()`][crate::StyleContext::add_provider_for_display()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note: If both priorities are the same, a [`StyleProvider`][crate::StyleProvider]</span>
-    <span class="doccomment">/// added through this function takes precedence over another added</span>
-    <span class="doccomment">/// through [`StyleContext::add_provider_for_display()`][crate::StyleContext::add_provider_for_display()].</span>
-    <span class="doccomment">/// ## `provider`</span>
-    <span class="doccomment">/// a [`StyleProvider`][crate::StyleProvider]</span>
-    <span class="doccomment">/// ## `priority`</span>
-    <span class="doccomment">/// the priority of the style provider. The lower</span>
-    <span class="doccomment">///   it is, the earlier it will be used in the style construction.</span>
-    <span class="doccomment">///   Typically this will be in the range between</span>
-    <span class="doccomment">///   `GTK_STYLE_PROVIDER_PRIORITY_FALLBACK` and</span>
-    <span class="doccomment">///   `GTK_STYLE_PROVIDER_PRIORITY_USER`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_add_provider&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">add_provider</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">provider</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleProvider</span><span class="op">&gt;</span>, <span class="ident">priority</span>: <span class="ident">u32</span>);
+    <span class="doccomment">/// Adds a style provider to @self, to be used in style construction.
+    ///
+    /// Note that a style provider added by this function only affects
+    /// the style of the widget to which @self belongs. If you want
+    /// to affect the style of all widgets, use
+    /// [`StyleContext::add_provider_for_display()`][crate::StyleContext::add_provider_for_display()].
+    ///
+    /// Note: If both priorities are the same, a [`StyleProvider`][crate::StyleProvider]
+    /// added through this function takes precedence over another added
+    /// through [`StyleContext::add_provider_for_display()`][crate::StyleContext::add_provider_for_display()].
+    /// ## `provider`
+    /// a [`StyleProvider`][crate::StyleProvider]
+    /// ## `priority`
+    /// the priority of the style provider. The lower
+    ///   it is, the earlier it will be used in the style construction.
+    ///   Typically this will be in the range between
+    ///   `GTK_STYLE_PROVIDER_PRIORITY_FALLBACK` and
+    ///   `GTK_STYLE_PROVIDER_PRIORITY_USER`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_add_provider&quot;</span>)]
+    </span><span class="kw">fn </span>add_provider(<span class="kw-2">&amp;</span><span class="self">self</span>, provider: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleProvider&gt;, priority: u32);
 
-    <span class="doccomment">/// Gets the border for a given state as a [`Border`][crate::Border].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `border`</span>
-    <span class="doccomment">/// return value for the border settings</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_get_border&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_border&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">border</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Border</span>;
+    <span class="doccomment">/// Gets the border for a given state as a [`Border`][crate::Border].
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `border`
+    /// return value for the border settings
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_get_border&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_border&quot;</span>)]
+    </span><span class="kw">fn </span>border(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Border;
 
-    <span class="doccomment">/// Gets the foreground color for a given state.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `color`</span>
-    <span class="doccomment">/// return value for the foreground color</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_get_color&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_color&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">gdk::RGBA</span>;
+    <span class="doccomment">/// Gets the foreground color for a given state.
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `color`
+    /// return value for the foreground color
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_get_color&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_color&quot;</span>)]
+    </span><span class="kw">fn </span>color(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gdk::RGBA;
 
-    <span class="doccomment">/// Returns the [`gdk::Display`][crate::gdk::Display] to which @self is attached.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a [`gdk::Display`][crate::gdk::Display].</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_get_display&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_display&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">display</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">gdk::Display</span>;
+    <span class="doccomment">/// Returns the [`gdk::Display`][crate::gdk::Display] to which @self is attached.
+    ///
+    /// # Returns
+    ///
+    /// a [`gdk::Display`][crate::gdk::Display].
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_get_display&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_display&quot;</span>)]
+    </span><span class="kw">fn </span>display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gdk::Display;
 
-    <span class="doccomment">/// Gets the margin for a given state as a [`Border`][crate::Border].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `margin`</span>
-    <span class="doccomment">/// return value for the margin settings</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_get_margin&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_margin&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Border</span>;
+    <span class="doccomment">/// Gets the margin for a given state as a [`Border`][crate::Border].
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `margin`
+    /// return value for the margin settings
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_get_margin&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_margin&quot;</span>)]
+    </span><span class="kw">fn </span>margin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Border;
 
-    <span class="doccomment">/// Gets the padding for a given state as a [`Border`][crate::Border].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `padding`</span>
-    <span class="doccomment">/// return value for the padding settings</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_get_padding&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_padding&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">padding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Border</span>;
+    <span class="doccomment">/// Gets the padding for a given state as a [`Border`][crate::Border].
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `padding`
+    /// return value for the padding settings
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_get_padding&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_padding&quot;</span>)]
+    </span><span class="kw">fn </span>padding(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Border;
 
-    <span class="doccomment">/// Returns the scale used for assets.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the scale</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_get_scale&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_scale&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+    <span class="doccomment">/// Returns the scale used for assets.
+    ///
+    /// # Returns
+    ///
+    /// the scale
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_get_scale&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_scale&quot;</span>)]
+    </span><span class="kw">fn </span>scale(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// Returns the state used for style matching.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method should only be used to retrieve the [`StateFlags`][crate::StateFlags]</span>
-    <span class="doccomment">/// to pass to [`StyleContext`][crate::StyleContext] methods, like</span>
-    <span class="doccomment">/// [`padding()`][Self::padding()].</span>
-    <span class="doccomment">/// If you need to retrieve the current state of a [`Widget`][crate::Widget], use</span>
-    <span class="doccomment">/// [`WidgetExt::state_flags()`][crate::prelude::WidgetExt::state_flags()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the state flags</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_get_state&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_state&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">StateFlags</span>;
+    <span class="doccomment">/// Returns the state used for style matching.
+    ///
+    /// This method should only be used to retrieve the [`StateFlags`][crate::StateFlags]
+    /// to pass to [`StyleContext`][crate::StyleContext] methods, like
+    /// [`padding()`][Self::padding()].
+    /// If you need to retrieve the current state of a [`Widget`][crate::Widget], use
+    /// [`WidgetExt::state_flags()`][crate::prelude::WidgetExt::state_flags()].
+    ///
+    /// # Returns
+    ///
+    /// the state flags
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_get_state&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_state&quot;</span>)]
+    </span><span class="kw">fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StateFlags;
 
-    <span class="doccomment">/// Returns [`true`] if @self currently has defined the</span>
-    <span class="doccomment">/// given class name.</span>
-    <span class="doccomment">/// ## `class_name`</span>
-    <span class="doccomment">/// a class name</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if @self has @class_name defined</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_has_class&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">has_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">class_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// Returns [`true`] if @self currently has defined the
+    /// given class name.
+    /// ## `class_name`
+    /// a class name
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if @self has @class_name defined
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_has_class&quot;</span>)]
+    </span><span class="kw">fn </span>has_class(<span class="kw-2">&amp;</span><span class="self">self</span>, class_name: <span class="kw-2">&amp;</span>str) -&gt; bool;
 
-    <span class="doccomment">/// Looks up and resolves a color name in the @self color map.</span>
-    <span class="doccomment">/// ## `color_name`</span>
-    <span class="doccomment">/// color name to lookup</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if @color_name was found and resolved, [`false`] otherwise</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `color`</span>
-    <span class="doccomment">/// Return location for the looked up color</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_lookup_color&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">lookup_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gdk::RGBA</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Looks up and resolves a color name in the @self color map.
+    /// ## `color_name`
+    /// color name to lookup
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if @color_name was found and resolved, [`false`] otherwise
+    ///
+    /// ## `color`
+    /// Return location for the looked up color
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_lookup_color&quot;</span>)]
+    </span><span class="kw">fn </span>lookup_color(<span class="kw-2">&amp;</span><span class="self">self</span>, color_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::RGBA&gt;;
 
-    <span class="doccomment">/// Removes @class_name from @self.</span>
-    <span class="doccomment">/// ## `class_name`</span>
-    <span class="doccomment">/// class name to remove</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_remove_class&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">remove_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">class_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>);
+    <span class="doccomment">/// Removes @class_name from @self.
+    /// ## `class_name`
+    /// class name to remove
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_remove_class&quot;</span>)]
+    </span><span class="kw">fn </span>remove_class(<span class="kw-2">&amp;</span><span class="self">self</span>, class_name: <span class="kw-2">&amp;</span>str);
 
-    <span class="doccomment">/// Removes @provider from the style providers list in @self.</span>
-    <span class="doccomment">/// ## `provider`</span>
-    <span class="doccomment">/// a [`StyleProvider`][crate::StyleProvider]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_remove_provider&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">remove_provider</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">provider</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleProvider</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Removes @provider from the style providers list in @self.
+    /// ## `provider`
+    /// a [`StyleProvider`][crate::StyleProvider]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_remove_provider&quot;</span>)]
+    </span><span class="kw">fn </span>remove_provider(<span class="kw-2">&amp;</span><span class="self">self</span>, provider: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleProvider&gt;);
 
-    <span class="doccomment">/// Restores @self state to a previous stage.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See [`save()`][Self::save()].</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_restore&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">restore</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Restores @self state to a previous stage.
+    ///
+    /// See [`save()`][Self::save()].
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_restore&quot;</span>)]
+    </span><span class="kw">fn </span>restore(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Saves the @self state.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This allows temporary modifications done through</span>
-    <span class="doccomment">/// [`add_class()`][Self::add_class()],</span>
-    <span class="doccomment">/// [`remove_class()`][Self::remove_class()],</span>
-    <span class="doccomment">/// [`set_state()`][Self::set_state()] to be quickly</span>
-    <span class="doccomment">/// reverted in one go through [`restore()`][Self::restore()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The matching call to [`restore()`][Self::restore()]</span>
-    <span class="doccomment">/// must be done before GTK returns to the main loop.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_save&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Saves the @self state.
+    ///
+    /// This allows temporary modifications done through
+    /// [`add_class()`][Self::add_class()],
+    /// [`remove_class()`][Self::remove_class()],
+    /// [`set_state()`][Self::set_state()] to be quickly
+    /// reverted in one go through [`restore()`][Self::restore()].
+    ///
+    /// The matching call to [`restore()`][Self::restore()]
+    /// must be done before GTK returns to the main loop.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_save&quot;</span>)]
+    </span><span class="kw">fn </span>save(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Attaches @self to the given display.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The display is used to add style information from “global”</span>
-    <span class="doccomment">/// style providers, such as the display&#39;s [`Settings`][crate::Settings] instance.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If you are using a [`StyleContext`][crate::StyleContext] returned from</span>
-    <span class="doccomment">/// [`WidgetExt::style_context()`][crate::prelude::WidgetExt::style_context()], you do not need to</span>
-    <span class="doccomment">/// call this yourself.</span>
-    <span class="doccomment">/// ## `display`</span>
-    <span class="doccomment">/// a [`gdk::Display`][crate::gdk::Display]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_set_display&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_display</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">display</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Attaches @self to the given display.
+    ///
+    /// The display is used to add style information from “global”
+    /// style providers, such as the display&#39;s [`Settings`][crate::Settings] instance.
+    ///
+    /// If you are using a [`StyleContext`][crate::StyleContext] returned from
+    /// [`WidgetExt::style_context()`][crate::prelude::WidgetExt::style_context()], you do not need to
+    /// call this yourself.
+    /// ## `display`
+    /// a [`gdk::Display`][crate::gdk::Display]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_set_display&quot;</span>)]
+    </span><span class="kw">fn </span>set_display(<span class="kw-2">&amp;</span><span class="self">self</span>, display: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gdk::Display&gt;);
 
-    <span class="doccomment">/// Sets the scale to use when getting image assets for the style.</span>
-    <span class="doccomment">/// ## `scale`</span>
-    <span class="doccomment">/// scale</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_set_scale&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">i32</span>);
+    <span class="doccomment">/// Sets the scale to use when getting image assets for the style.
+    /// ## `scale`
+    /// scale
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_set_scale&quot;</span>)]
+    </span><span class="kw">fn </span>set_scale(<span class="kw-2">&amp;</span><span class="self">self</span>, scale: i32);
 
-    <span class="doccomment">/// Sets the state to be used for style matching.</span>
-    <span class="doccomment">/// ## `flags`</span>
-    <span class="doccomment">/// state to represent</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_set_state&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">StateFlags</span>);
+    <span class="doccomment">/// Sets the state to be used for style matching.
+    /// ## `flags`
+    /// state to represent
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_set_state&quot;</span>)]
+    </span><span class="kw">fn </span>set_state(<span class="kw-2">&amp;</span><span class="self">self</span>, flags: StateFlags);
 
-    <span class="doccomment">/// Converts the style context into a string representation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The string representation always includes information about</span>
-    <span class="doccomment">/// the name, state, id, visibility and style classes of the CSS</span>
-    <span class="doccomment">/// node that is backing @self. Depending on the flags, more</span>
-    <span class="doccomment">/// information may be included.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is intended for testing and debugging of the</span>
-    <span class="doccomment">/// CSS implementation in GTK. There are no guarantees about</span>
-    <span class="doccomment">/// the format of the returned string, it may change.</span>
-    <span class="doccomment">/// ## `flags`</span>
-    <span class="doccomment">/// Flags that determine what to print</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a newly allocated string representing @self</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_style_context_to_string&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">StyleContextPrintFlags</span>) -&gt; <span class="ident">glib::GString</span>;
+    <span class="doccomment">/// Converts the style context into a string representation.
+    ///
+    /// The string representation always includes information about
+    /// the name, state, id, visibility and style classes of the CSS
+    /// node that is backing @self. Depending on the flags, more
+    /// information may be included.
+    ///
+    /// This function is intended for testing and debugging of the
+    /// CSS implementation in GTK. There are no guarantees about
+    /// the format of the returned string, it may change.
+    /// ## `flags`
+    /// Flags that determine what to print
+    ///
+    /// # Returns
+    ///
+    /// a newly allocated string representing @self
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_style_context_to_string&quot;</span>)]
+    </span><span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>, flags: StyleContextPrintFlags) -&gt; glib::GString;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;display&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_display_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;display&quot;</span>)]
+    </span><span class="kw">fn </span>connect_display_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">StyleContextExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">add_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">class_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_add_class</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">class_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+<span class="kw">impl</span>&lt;O: IsA&lt;StyleContext&gt;&gt; StyleContextExt <span class="kw">for </span>O {
+    <span class="kw">fn </span>add_class(<span class="kw-2">&amp;</span><span class="self">self</span>, class_name: <span class="kw-2">&amp;</span>str) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_add_class(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                class_name.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">add_provider</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">provider</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleProvider</span><span class="op">&gt;</span>, <span class="ident">priority</span>: <span class="ident">u32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_add_provider</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">provider</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">priority</span>,
+    <span class="kw">fn </span>add_provider(<span class="kw-2">&amp;</span><span class="self">self</span>, provider: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleProvider&gt;, priority: u32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_add_provider(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                provider.as_ref().to_glib_none().<span class="number">0</span>,
+                priority,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">border</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Border</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">border</span> <span class="op">=</span> <span class="ident">Border::uninitialized</span>();
-            <span class="ident">ffi::gtk_style_context_get_border</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">border</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>border(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Border {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>border = Border::uninitialized();
+            ffi::gtk_style_context_get_border(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                border.to_glib_none_mut().<span class="number">0</span>,
             );
-            <span class="ident">border</span>
+            border
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">gdk::RGBA</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">gdk::RGBA::uninitialized</span>();
-            <span class="ident">ffi::gtk_style_context_get_color</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">color</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>color(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gdk::RGBA {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>color = gdk::RGBA::uninitialized();
+            ffi::gtk_style_context_get_color(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                color.to_glib_none_mut().<span class="number">0</span>,
             );
-            <span class="ident">color</span>
+            color
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">display</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">gdk::Display</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_style_context_get_display</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gdk::Display {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_style_context_get_display(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Border</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">margin</span> <span class="op">=</span> <span class="ident">Border::uninitialized</span>();
-            <span class="ident">ffi::gtk_style_context_get_margin</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">margin</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>margin(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Border {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>margin = Border::uninitialized();
+            ffi::gtk_style_context_get_margin(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                margin.to_glib_none_mut().<span class="number">0</span>,
             );
-            <span class="ident">margin</span>
+            margin
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">padding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Border</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">padding</span> <span class="op">=</span> <span class="ident">Border::uninitialized</span>();
-            <span class="ident">ffi::gtk_style_context_get_padding</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">padding</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>padding(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Border {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>padding = Border::uninitialized();
+            ffi::gtk_style_context_get_padding(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                padding.to_glib_none_mut().<span class="number">0</span>,
             );
-            <span class="ident">padding</span>
+            padding
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_style_context_get_scale</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="kw">fn </span>scale(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gtk_style_context_get_scale(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="kw">fn</span> <span class="ident">state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">StateFlags</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_style_context_get_state</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StateFlags {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_style_context_get_state(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">has_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">class_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_style_context_has_class</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">class_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>has_class(<span class="kw-2">&amp;</span><span class="self">self</span>, class_name: <span class="kw-2">&amp;</span>str) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_style_context_has_class(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                class_name.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">lookup_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gdk::RGBA</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">gdk::RGBA::uninitialized</span>();
-            <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_style_context_lookup_color</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">color_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">color</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>lookup_color(<span class="kw-2">&amp;</span><span class="self">self</span>, color_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::RGBA&gt; {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>color = gdk::RGBA::uninitialized();
+            <span class="kw">let </span>ret = from_glib(ffi::gtk_style_context_lookup_color(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                color_name.to_glib_none().<span class="number">0</span>,
+                color.to_glib_none_mut().<span class="number">0</span>,
             ));
-            <span class="kw">if</span> <span class="ident">ret</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">color</span>)
-            } <span class="kw">else</span> {
-                <span class="prelude-val">None</span>
-            }
+            <span class="kw">if </span>ret {
+                <span class="prelude-val">Some</span>(color)
+            } <span class="kw">else </span>{
+                <span class="prelude-val">None
+            </span>}
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">remove_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">class_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_remove_class</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">class_name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>remove_class(<span class="kw-2">&amp;</span><span class="self">self</span>, class_name: <span class="kw-2">&amp;</span>str) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_remove_class(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                class_name.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">remove_provider</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">provider</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleProvider</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_remove_provider</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">provider</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>remove_provider(<span class="kw-2">&amp;</span><span class="self">self</span>, provider: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleProvider&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_remove_provider(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                provider.as_ref().to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">restore</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_restore</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>restore(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_restore(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_save</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>save(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_save(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_display</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">display</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gdk::Display</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_set_display</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">display</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>set_display(<span class="kw-2">&amp;</span><span class="self">self</span>, display: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gdk::Display&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_set_display(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                display.as_ref().to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_set_scale</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">scale</span>);
+    <span class="kw">fn </span>set_scale(<span class="kw-2">&amp;</span><span class="self">self</span>, scale: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_set_scale(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, scale);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">StateFlags</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_style_context_set_state</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">flags</span>.<span class="ident">into_glib</span>());
+    <span class="kw">fn </span>set_state(<span class="kw-2">&amp;</span><span class="self">self</span>, flags: StateFlags) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_style_context_set_state(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, flags.into_glib());
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">flags</span>: <span class="ident">StyleContextPrintFlags</span>) -&gt; <span class="ident">glib::GString</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_style_context_to_string</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">flags</span>.<span class="ident">into_glib</span>(),
+    <span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>, flags: StyleContextPrintFlags) -&gt; glib::GString {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_style_context_to_string(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                flags.into_glib(),
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_display_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_display_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">StyleContext</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkStyleContext</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_display_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_display_trampoline&lt;
+            P: IsA&lt;StyleContext&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkStyleContext,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">StyleContext::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(StyleContext::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::display\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_display_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::display\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_display_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">StyleContext</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;StyleContext&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>StyleContext {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;StyleContext&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

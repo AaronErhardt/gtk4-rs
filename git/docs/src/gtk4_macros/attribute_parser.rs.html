@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4-macros/src/attribute_parser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>attribute_parser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4-macros/src/attribute_parser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>attribute_parser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../gtk4_macros/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../gtk4_macros/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -335,267 +332,470 @@
 <span id="259">259</span>
 <span id="260">260</span>
 <span id="261">261</span>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-<span class="kw">use</span> <span class="ident">anyhow</span>::{<span class="ident">bail</span>, <span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">proc_macro2::Span</span>;
-<span class="kw">use</span> <span class="ident">syn::parse::Error</span>;
-<span class="kw">use</span> <span class="ident">syn::spanned::Spanned</span>;
-<span class="kw">use</span> <span class="ident">syn</span>::{
-    <span class="ident">Attribute</span>, <span class="ident">DeriveInput</span>, <span class="ident">Field</span>, <span class="ident">Fields</span>, <span class="ident">Ident</span>, <span class="ident">Lit</span>, <span class="ident">Meta</span>, <span class="ident">MetaList</span>, <span class="ident">MetaNameValue</span>, <span class="ident">NestedMeta</span>,
-    <span class="ident">Type</span>,
+</span><span class="kw">use </span>anyhow::{bail, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span>proc_macro2::Span;
+<span class="kw">use </span>syn::parse::Error;
+<span class="kw">use </span>syn::spanned::Spanned;
+<span class="kw">use </span>syn::{
+    Attribute, DeriveInput, Field, Fields, Ident, Lit, Meta, MetaList, MetaNameValue, NestedMeta,
+    Type,
 };
 
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TemplateSource</span> {
-    <span class="ident">File</span>(<span class="ident">String</span>),
-    <span class="ident">Resource</span>(<span class="ident">String</span>),
-    <span class="ident">String</span>(<span class="ident">String</span>),
+<span class="kw">pub struct </span>Template {
+    <span class="kw">pub </span>source: TemplateSource,
+    <span class="kw">pub </span>allow_template_child_without_attribute: bool,
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_template_source</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">DeriveInput</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TemplateSource</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">meta</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">find_attribute_meta</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>.<span class="ident">attrs</span>, <span class="string">&quot;template&quot;</span>)<span class="question-mark">?</span> {
-        <span class="prelude-val">Some</span>(<span class="ident">meta</span>) =&gt; <span class="ident">meta</span>,
-        <span class="kw">_</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;Missing &#39;template&#39; attribute&quot;</span>),
+<span class="kw">pub enum </span>TemplateSource {
+    File(String),
+    Resource(String),
+    String(String),
+}
+
+<span class="kw">pub fn </span>parse_template_source(input: <span class="kw-2">&amp;</span>DeriveInput) -&gt; <span class="prelude-ty">Result</span>&lt;Template&gt; {
+    <span class="kw">let </span>meta = <span class="kw">match </span>find_attribute_meta(<span class="kw-2">&amp;</span>input.attrs, <span class="string">&quot;template&quot;</span>)<span class="question-mark">? </span>{
+        <span class="prelude-val">Some</span>(meta) =&gt; meta,
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Missing &#39;template&#39; attribute&quot;</span>),
     };
 
-    <span class="kw">let</span> <span class="ident">meta</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">meta</span>.<span class="ident">nested</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">n</span> {
-        <span class="ident">NestedMeta::Meta</span>(<span class="ident">m</span>) =&gt; {
-            <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">path</span>();
-            <span class="ident">p</span>.<span class="ident">is_ident</span>(<span class="string">&quot;file&quot;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">is_ident</span>(<span class="string">&quot;resource&quot;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">is_ident</span>(<span class="string">&quot;string&quot;</span>)
+    <span class="kw">let </span><span class="kw-2">mut </span>allow_template_child_without_attribute = <span class="bool-val">false</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>source = <span class="prelude-val">None</span>;
+
+    <span class="kw">for </span>n <span class="kw">in </span>meta.nested.iter() {
+        <span class="kw">if let </span>NestedMeta::Meta(m) = n {
+            <span class="kw">let </span>p = m.path();
+            <span class="kw">if </span>p.is_ident(<span class="string">&quot;file&quot;</span>) || p.is_ident(<span class="string">&quot;resource&quot;</span>) || p.is_ident(<span class="string">&quot;string&quot;</span>) {
+                <span class="kw">if </span>source.is_some() {
+                    <span class="macro">bail!</span>(Error::new_spanned(
+                        p,
+                        <span class="string">&quot;Specify only one of &#39;file&#39;, &#39;resource&#39;, or &#39;string&#39;&quot;
+                    </span>));
+                }
+                source.replace(n);
+            }
+            <span class="kw">if </span>p.is_ident(<span class="string">&quot;allow_template_child_without_attribute&quot;</span>) {
+                <span class="kw">if </span>!<span class="macro">matches!</span>(m, Meta::Path(<span class="kw">_</span>)) {
+                    <span class="macro">bail!</span>(Error::new_spanned(m, <span class="string">&quot;Wrong meta&quot;</span>));
+                }
+                <span class="kw">if </span>allow_template_child_without_attribute {
+                    <span class="macro">bail!</span>(Error::new_spanned(
+                        p,
+                        <span class="string">&quot;Duplicate &#39;allow_template_child_without_attribute&#39;&quot;
+                    </span>));
+                }
+                allow_template_child_without_attribute = <span class="bool-val">true</span>;
+            }
+        } <span class="kw">else </span>{
+            <span class="macro">bail!</span>(Error::new_spanned(n, <span class="string">&quot;wrong meta type&quot;</span>));
         }
-        <span class="kw">_</span> =&gt; <span class="bool-val">false</span>,
-    }) {
-        <span class="prelude-val">Some</span>(<span class="ident">meta</span>) =&gt; <span class="ident">meta</span>,
-        <span class="kw">_</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;Invalid meta, specify one of &#39;file&#39;, &#39;resource&#39;, or &#39;string&#39;&quot;</span>),
+    }
+    <span class="kw">let </span>source = <span class="kw">match </span>source {
+        <span class="prelude-val">Some</span>(source) =&gt; source,
+        <span class="prelude-val">None </span>=&gt; <span class="macro">bail!</span>(Error::new_spanned(
+            <span class="kw-2">&amp;</span>meta,
+            <span class="string">&quot;Invalid meta, specify one of &#39;file&#39;, &#39;resource&#39;, or &#39;string&#39;&quot;
+        </span>)),
     };
 
-    <span class="kw">let</span> (<span class="ident">ident</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">parse_attribute</span>(<span class="ident">meta</span>)<span class="question-mark">?</span>;
+    <span class="kw">let </span>(ident, v) = parse_attribute(source)<span class="question-mark">?</span>;
 
-    <span class="kw">match</span> <span class="ident">ident</span>.<span class="ident">as_ref</span>() {
-        <span class="string">&quot;file&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">TemplateSource::File</span>(<span class="ident">v</span>)),
-        <span class="string">&quot;resource&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">TemplateSource::Resource</span>(<span class="ident">v</span>)),
-        <span class="string">&quot;string&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">TemplateSource::String</span>(<span class="ident">v</span>)),
-        <span class="ident">s</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unknown enum meta {}&quot;</span>, <span class="ident">s</span>),
+    <span class="kw">let </span>source = <span class="kw">match </span>ident.as_ref() {
+        <span class="string">&quot;file&quot; </span>=&gt; TemplateSource::File(v),
+        <span class="string">&quot;resource&quot; </span>=&gt; TemplateSource::Resource(v),
+        <span class="string">&quot;string&quot; </span>=&gt; TemplateSource::String(v),
+        s =&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unknown enum meta {}&quot;</span>, s),
+    };
+    <span class="prelude-val">Ok</span>(Template {
+        source,
+        allow_template_child_without_attribute,
+    })
+}
+
+<span class="comment">// find the #[@attr_name] attribute in @attrs
+</span><span class="kw">fn </span>find_attribute_meta(attrs: <span class="kw-2">&amp;</span>[Attribute], attr_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;MetaList&gt;&gt; {
+    <span class="kw">let </span>meta = <span class="kw">match </span>attrs.iter().find(|a| a.path.is_ident(attr_name)) {
+        <span class="prelude-val">Some</span>(a) =&gt; a.parse_meta(),
+        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+    };
+    <span class="kw">match </span>meta<span class="question-mark">? </span>{
+        Meta::List(n) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(n)),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
     }
 }
 
-<span class="comment">// find the #[@attr_name] attribute in @attrs</span>
-<span class="kw">fn</span> <span class="ident">find_attribute_meta</span>(<span class="ident">attrs</span>: <span class="kw-2">&amp;</span>[<span class="ident">Attribute</span>], <span class="ident">attr_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MetaList</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">meta</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">attrs</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">a</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="ident">attr_name</span>)) {
-        <span class="prelude-val">Some</span>(<span class="ident">a</span>) =&gt; <span class="ident">a</span>.<span class="ident">parse_meta</span>(),
-        <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+<span class="comment">// parse a single meta like: ident = &quot;value&quot;
+</span><span class="kw">fn </span>parse_attribute(meta: <span class="kw-2">&amp;</span>NestedMeta) -&gt; <span class="prelude-ty">Result</span>&lt;(String, String)&gt; {
+    <span class="kw">let </span>meta = <span class="kw">match </span><span class="kw-2">&amp;</span>meta {
+        NestedMeta::Meta(m) =&gt; m,
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
     };
-    <span class="kw">match</span> <span class="ident">meta</span><span class="question-mark">?</span> {
-        <span class="ident">Meta::List</span>(<span class="ident">n</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">n</span>)),
-        <span class="kw">_</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
+    <span class="kw">let </span>meta = <span class="kw">match </span>meta {
+        Meta::NameValue(n) =&gt; n,
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
+    };
+    <span class="kw">let </span>value = <span class="kw">match </span><span class="kw-2">&amp;</span>meta.lit {
+        Lit::Str(s) =&gt; s.value(),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
+    };
+
+    <span class="kw">let </span>ident = <span class="kw">match </span>meta.path.get_ident() {
+        <span class="prelude-val">None </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;missing ident&quot;</span>),
+        <span class="prelude-val">Some</span>(ident) =&gt; ident,
+    };
+
+    <span class="prelude-val">Ok</span>((ident.to_string(), value))
+}
+
+<span class="kw">pub enum </span>FieldAttributeArg {
+    Id(String, Span),
+    Internal(bool),
+}
+
+<span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub enum </span>FieldAttributeType {
+    TemplateChild,
+}
+
+<span class="kw">pub struct </span>FieldAttribute {
+    <span class="kw">pub </span>ty: FieldAttributeType,
+    <span class="kw">pub </span>args: Vec&lt;FieldAttributeArg&gt;,
+    <span class="kw">pub </span>path_span: Span,
+    <span class="kw">pub </span>span: Span,
+}
+
+<span class="kw">pub struct </span>AttributedField {
+    <span class="kw">pub </span>ident: Ident,
+    <span class="kw">pub </span>ty: Type,
+    <span class="kw">pub </span>attr: FieldAttribute,
+}
+
+<span class="kw">impl </span>AttributedField {
+    <span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="kw">let </span><span class="kw-2">mut </span>name = <span class="prelude-val">None</span>;
+        <span class="kw">for </span>arg <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.attr.args {
+            <span class="kw">if let </span>FieldAttributeArg::Id(value, <span class="kw">_</span>) = arg {
+                name = <span class="prelude-val">Some</span>(value)
+            }
+        }
+        name.cloned().unwrap_or_else(|| <span class="self">self</span>.ident.to_string())
+    }
+
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;xml_validation&quot;</span>)]
+    </span><span class="kw">pub fn </span>id_span(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Span {
+        <span class="kw">for </span>arg <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.attr.args {
+            <span class="kw">if let </span>FieldAttributeArg::Id(<span class="kw">_</span>, span) = arg {
+                <span class="kw">return </span><span class="kw-2">*</span>span;
+            }
+        }
+        <span class="self">self</span>.ident.span()
     }
 }
 
-<span class="comment">// parse a single meta like: ident = &quot;value&quot;</span>
-<span class="kw">fn</span> <span class="ident">parse_attribute</span>(<span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="ident">NestedMeta</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">meta</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">meta</span> {
-        <span class="ident">NestedMeta::Meta</span>(<span class="ident">m</span>) =&gt; <span class="ident">m</span>,
-        <span class="kw">_</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
-    };
-    <span class="kw">let</span> <span class="ident">meta</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">meta</span> {
-        <span class="ident">Meta::NameValue</span>(<span class="ident">n</span>) =&gt; <span class="ident">n</span>,
-        <span class="kw">_</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
-    };
-    <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">meta</span>.<span class="ident">lit</span> {
-        <span class="ident">Lit::Str</span>(<span class="ident">s</span>) =&gt; <span class="ident">s</span>.<span class="ident">value</span>(),
-        <span class="kw">_</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;wrong meta type&quot;</span>),
-    };
-
-    <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">meta</span>.<span class="ident">path</span>.<span class="ident">get_ident</span>() {
-        <span class="prelude-val">None</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;missing ident&quot;</span>),
-        <span class="prelude-val">Some</span>(<span class="ident">ident</span>) =&gt; <span class="ident">ident</span>,
-    };
-
-    <span class="prelude-val">Ok</span>((<span class="ident">ident</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>))
-}
-
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FieldAttributeArg</span> {
-    <span class="ident">Id</span>(<span class="ident">String</span>),
-    <span class="ident">Internal</span>(<span class="ident">bool</span>),
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FieldAttributeType</span> {
-    <span class="ident">TemplateChild</span>,
-}
-
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FieldAttribute</span> {
-    <span class="kw">pub</span> <span class="ident">ty</span>: <span class="ident">FieldAttributeType</span>,
-    <span class="kw">pub</span> <span class="ident">args</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FieldAttributeArg</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">path_span</span>: <span class="ident">Span</span>,
-    <span class="kw">pub</span> <span class="ident">span</span>: <span class="ident">Span</span>,
-}
-
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AttributedField</span> {
-    <span class="kw">pub</span> <span class="ident">ident</span>: <span class="ident">Ident</span>,
-    <span class="kw">pub</span> <span class="ident">ty</span>: <span class="ident">Type</span>,
-    <span class="kw">pub</span> <span class="ident">attr</span>: <span class="ident">FieldAttribute</span>,
-}
-
-<span class="kw">fn</span> <span class="ident">parse_field_attr_value_str</span>(<span class="ident">name_value</span>: <span class="kw-2">&amp;</span><span class="ident">MetaNameValue</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">name_value</span>.<span class="ident">lit</span> {
-        <span class="ident">Lit::Str</span>(<span class="ident">s</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">s</span>.<span class="ident">value</span>()),
-        <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-            <span class="ident">name_value</span>.<span class="ident">lit</span>.<span class="ident">span</span>(),
+<span class="kw">fn </span>parse_field_attr_value_str(name_value: <span class="kw-2">&amp;</span>MetaNameValue) -&gt; <span class="prelude-ty">Result</span>&lt;String, Error&gt; {
+    <span class="kw">match </span><span class="kw-2">&amp;</span>name_value.lit {
+        Lit::Str(s) =&gt; <span class="prelude-val">Ok</span>(s.value()),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
+            name_value.lit.span(),
             <span class="string">&quot;invalid value type: Expected str literal&quot;</span>,
         )),
     }
 }
 
-<span class="kw">fn</span> <span class="ident">parse_field_attr_value_bool</span>(<span class="ident">internal_value</span>: <span class="kw-2">&amp;</span><span class="ident">MetaNameValue</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">internal_value</span>.<span class="ident">lit</span> {
-        <span class="ident">Lit::Bool</span>(<span class="ident">s</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">s</span>.<span class="ident">value</span>()),
-        <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-            <span class="ident">internal_value</span>.<span class="ident">lit</span>.<span class="ident">span</span>(),
+<span class="kw">fn </span>parse_field_attr_value_bool(internal_value: <span class="kw-2">&amp;</span>MetaNameValue) -&gt; <span class="prelude-ty">Result</span>&lt;bool, Error&gt; {
+    <span class="kw">match </span><span class="kw-2">&amp;</span>internal_value.lit {
+        Lit::Bool(s) =&gt; <span class="prelude-val">Ok</span>(s.value()),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::new(
+            internal_value.lit.span(),
             <span class="string">&quot;invalid value type: Expected bool&quot;</span>,
         )),
     }
 }
 
-<span class="kw">fn</span> <span class="ident">parse_field_attr_meta</span>(
-    <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">FieldAttributeType</span>,
-    <span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="ident">NestedMeta</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FieldAttributeArg</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">meta</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">meta</span> {
-        <span class="ident">NestedMeta::Meta</span>(<span class="ident">m</span>) =&gt; <span class="ident">m</span>,
-        <span class="kw">_</span> =&gt; {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-                <span class="ident">meta</span>.<span class="ident">span</span>(),
+<span class="kw">fn </span>parse_field_attr_meta(
+    ty: <span class="kw-2">&amp;</span>FieldAttributeType,
+    meta: <span class="kw-2">&amp;</span>NestedMeta,
+) -&gt; <span class="prelude-ty">Result</span>&lt;FieldAttributeArg, Error&gt; {
+    <span class="kw">let </span>meta = <span class="kw">match </span><span class="kw-2">&amp;</span>meta {
+        NestedMeta::Meta(m) =&gt; m,
+        <span class="kw">_ </span>=&gt; {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+                meta.span(),
                 <span class="string">&quot;invalid type - expected a name-value pair like id = \&quot;widget\&quot;&quot;</span>,
             ))
         }
     };
-    <span class="kw">let</span> <span class="ident">name_value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">meta</span> {
-        <span class="ident">Meta::NameValue</span>(<span class="ident">n</span>) =&gt; <span class="ident">n</span>,
-        <span class="kw">_</span> =&gt; {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-                <span class="ident">meta</span>.<span class="ident">span</span>(),
+    <span class="kw">let </span>name_value = <span class="kw">match </span>meta {
+        Meta::NameValue(n) =&gt; n,
+        <span class="kw">_ </span>=&gt; {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+                meta.span(),
                 <span class="string">&quot;invalid type - expected a name-value pair like id = \&quot;widget\&quot;&quot;</span>,
             ))
         }
     };
-    <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">name_value</span>.<span class="ident">path</span>;
-    <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">path</span>
-        .<span class="ident">get_ident</span>()
-        .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Error::new</span>(<span class="ident">path</span>.<span class="ident">span</span>(), <span class="string">&quot;invalid name type - expected identifier&quot;</span>))<span class="question-mark">?</span>;
+    <span class="kw">let </span>path = <span class="kw-2">&amp;</span>name_value.path;
+    <span class="kw">let </span>ident = path
+        .get_ident()
+        .ok_or_else(|| Error::new(path.span(), <span class="string">&quot;invalid name type - expected identifier&quot;</span>))<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> <span class="ident">ident_str</span> <span class="op">=</span> <span class="ident">ident</span>.<span class="ident">to_string</span>();
-    <span class="kw">let</span> <span class="ident">unknown_err</span> <span class="op">=</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-        <span class="ident">ident</span>.<span class="ident">span</span>(),
-        <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown attribute argument: `{}`&quot;</span>, <span class="ident">ident_str</span>),
+    <span class="kw">let </span>ident_str = ident.to_string();
+    <span class="kw">let </span>unknown_err = <span class="prelude-val">Err</span>(Error::new(
+        ident.span(),
+        <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;unknown attribute argument: `{}`&quot;</span>, ident_str),
     ));
-    <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">ty</span> {
-        <span class="ident">FieldAttributeType::TemplateChild</span> =&gt; <span class="kw">match</span> <span class="ident">ident_str</span>.<span class="ident">as_str</span>() {
-            <span class="string">&quot;id&quot;</span> =&gt; <span class="ident">FieldAttributeArg::Id</span>(<span class="ident">parse_field_attr_value_str</span>(<span class="ident">name_value</span>)<span class="question-mark">?</span>),
-            <span class="string">&quot;internal&quot;</span> =&gt; <span class="ident">FieldAttributeArg::Internal</span>(<span class="ident">parse_field_attr_value_bool</span>(<span class="ident">name_value</span>)<span class="question-mark">?</span>),
-            <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="ident">unknown_err</span>,
+    <span class="kw">let </span>value = <span class="kw">match </span>ty {
+        FieldAttributeType::TemplateChild =&gt; <span class="kw">match </span>ident_str.as_str() {
+            <span class="string">&quot;id&quot; </span>=&gt; FieldAttributeArg::Id(
+                parse_field_attr_value_str(name_value)<span class="question-mark">?</span>,
+                name_value.lit.span(),
+            ),
+            <span class="string">&quot;internal&quot; </span>=&gt; FieldAttributeArg::Internal(parse_field_attr_value_bool(name_value)<span class="question-mark">?</span>),
+            <span class="kw">_ </span>=&gt; <span class="kw">return </span>unknown_err,
         },
     };
 
-    <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
+    <span class="prelude-val">Ok</span>(value)
 }
 
-<span class="kw">fn</span> <span class="ident">parse_field_attr_args</span>(
-    <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">FieldAttributeType</span>,
-    <span class="ident">attr</span>: <span class="kw-2">&amp;</span><span class="ident">Attribute</span>,
-) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">FieldAttributeArg</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">field_attribute_args</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-    <span class="kw">match</span> <span class="ident">attr</span>.<span class="ident">parse_meta</span>()<span class="question-mark">?</span> {
-        <span class="ident">Meta::List</span>(<span class="ident">list</span>) =&gt; {
-            <span class="kw">for</span> <span class="ident">meta</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">list</span>.<span class="ident">nested</span> {
-                <span class="kw">let</span> <span class="ident">new_arg</span> <span class="op">=</span> <span class="ident">parse_field_attr_meta</span>(<span class="ident">ty</span>, <span class="ident">meta</span>)<span class="question-mark">?</span>;
-                <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">field_attribute_args</span> {
-                    <span class="comment">// Comparison of enum variants, not data</span>
-                    <span class="kw">if</span> <span class="ident">std::mem::discriminant</span>(<span class="ident">arg</span>) <span class="op">==</span> <span class="ident">std::mem::discriminant</span>(<span class="kw-2">&amp;</span><span class="ident">new_arg</span>) {
-                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-                            <span class="ident">meta</span>.<span class="ident">span</span>(),
+<span class="kw">fn </span>parse_field_attr_args(
+    ty: <span class="kw-2">&amp;</span>FieldAttributeType,
+    attr: <span class="kw-2">&amp;</span>Attribute,
+) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;FieldAttributeArg&gt;, Error&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>field_attribute_args = Vec::new();
+    <span class="kw">match </span>attr.parse_meta()<span class="question-mark">? </span>{
+        Meta::List(list) =&gt; {
+            <span class="kw">for </span>meta <span class="kw">in </span><span class="kw-2">&amp;</span>list.nested {
+                <span class="kw">let </span>new_arg = parse_field_attr_meta(ty, meta)<span class="question-mark">?</span>;
+                <span class="kw">for </span>arg <span class="kw">in </span><span class="kw-2">&amp;</span>field_attribute_args {
+                    <span class="comment">// Comparison of enum variants, not data
+                    </span><span class="kw">if </span>std::mem::discriminant(arg) == std::mem::discriminant(<span class="kw-2">&amp;</span>new_arg) {
+                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+                            meta.span(),
                             <span class="string">&quot;two instances of the same attribute \
                             argument, each argument must be specified only once&quot;</span>,
                         ));
                     }
                 }
-                <span class="ident">field_attribute_args</span>.<span class="ident">push</span>(<span class="ident">new_arg</span>);
+                field_attribute_args.push(new_arg);
             }
         }
-        <span class="ident">Meta::Path</span>(<span class="kw">_</span>) =&gt; (),
-        <span class="ident">meta</span> =&gt; {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-                <span class="ident">meta</span>.<span class="ident">span</span>(),
+        Meta::Path(<span class="kw">_</span>) =&gt; (),
+        meta =&gt; {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+                meta.span(),
                 <span class="string">&quot;invalid attribute argument type, expected `name = value` list or nothing&quot;</span>,
             ))
         }
     }
 
-    <span class="prelude-val">Ok</span>(<span class="ident">field_attribute_args</span>)
+    <span class="prelude-val">Ok</span>(field_attribute_args)
 }
 
-<span class="kw">fn</span> <span class="ident">parse_field</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">AttributedField</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">field_attrs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attrs</span>;
-    <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ident</span> {
-        <span class="prelude-val">Some</span>(<span class="ident">ident</span>) =&gt; <span class="ident">ident</span>,
-        <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(<span class="ident">field</span>.<span class="ident">span</span>(), <span class="string">&quot;expected identifier&quot;</span>)),
+<span class="kw">fn </span>parse_field(field: <span class="kw-2">&amp;</span>Field) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;AttributedField&gt;, Error&gt; {
+    <span class="kw">let </span>field_attrs = <span class="kw-2">&amp;</span>field.attrs;
+    <span class="kw">let </span>ident = <span class="kw">match </span><span class="kw-2">&amp;</span>field.ident {
+        <span class="prelude-val">Some</span>(ident) =&gt; ident,
+        <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(field.span(), <span class="string">&quot;expected identifier&quot;</span>)),
     };
 
-    <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ty</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">attr</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+    <span class="kw">let </span>ty = <span class="kw-2">&amp;</span>field.ty;
+    <span class="kw">let </span><span class="kw-2">mut </span>attr = <span class="prelude-val">None</span>;
 
-    <span class="kw">for</span> <span class="ident">field_attr</span> <span class="kw">in</span> <span class="ident">field_attrs</span> {
-        <span class="kw">let</span> <span class="ident">span</span> <span class="op">=</span> <span class="ident">field_attr</span>.<span class="ident">span</span>();
-        <span class="kw">let</span> <span class="ident">path_span</span> <span class="op">=</span> <span class="ident">field_attr</span>.<span class="ident">path</span>.<span class="ident">span</span>();
-        <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">field_attr</span>.<span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;template_child&quot;</span>) {
-            <span class="prelude-val">Some</span>(<span class="ident">FieldAttributeType::TemplateChild</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        };
+    <span class="kw">for </span>field_attr <span class="kw">in </span>field_attrs {
+        <span class="kw">let </span>span = field_attr.span();
+        <span class="kw">let </span>path_span = field_attr.path.span();
+        <span class="kw">let </span>ty = <span class="kw">if </span>field_attr.path.is_ident(<span class="string">&quot;template_child&quot;</span>) {
+            <span class="prelude-val">Some</span>(FieldAttributeType::TemplateChild)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>};
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ty</span>) <span class="op">=</span> <span class="ident">ty</span> {
-            <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">parse_field_attr_args</span>(<span class="kw-2">&amp;</span><span class="ident">ty</span>, <span class="ident">field_attr</span>)<span class="question-mark">?</span>;
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(ty) = ty {
+            <span class="kw">let </span>args = parse_field_attr_args(<span class="kw-2">&amp;</span>ty, field_attr)<span class="question-mark">?</span>;
 
-            <span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">is_none</span>() {
-                <span class="ident">attr</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">FieldAttribute</span> {
-                    <span class="ident">ty</span>,
-                    <span class="ident">args</span>,
-                    <span class="ident">path_span</span>,
-                    <span class="ident">span</span>,
+            <span class="kw">if </span>attr.is_none() {
+                attr = <span class="prelude-val">Some</span>(FieldAttribute {
+                    ty,
+                    args,
+                    path_span,
+                    span,
                 })
-            } <span class="kw">else</span> {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>(
-                    <span class="ident">span</span>,
+            } <span class="kw">else </span>{
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
+                    span,
                     <span class="string">&quot;multiple attributes on the same field are not supported&quot;</span>,
                 ));
             }
         }
     }
 
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="ident">attr</span> {
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">AttributedField</span> {
-            <span class="ident">ident</span>: <span class="ident">ident</span>.<span class="ident">clone</span>(),
-            <span class="ident">ty</span>: <span class="ident">ty</span>.<span class="ident">clone</span>(),
-            <span class="ident">attr</span>,
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(attr) = attr {
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(AttributedField {
+            ident: ident.clone(),
+            ty: ty.clone(),
+            attr,
         }))
-    } <span class="kw">else</span> {
+    } <span class="kw">else </span>{
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_fields</span>(<span class="ident">fields</span>: <span class="kw-2">&amp;</span><span class="ident">Fields</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">AttributedField</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">attributed_fields</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+<span class="kw">fn </span>path_is_template_child(path: <span class="kw-2">&amp;</span>syn::Path) -&gt; bool {
+    <span class="kw">if </span>path.leading_colon.is_none()
+        &amp;&amp; path.segments.len() == <span class="number">1
+        </span>&amp;&amp; <span class="macro">matches!</span>(
+            <span class="kw-2">&amp;</span>path.segments[<span class="number">0</span>].arguments,
+            syn::PathArguments::AngleBracketed(<span class="kw">_</span>)
+        )
+        &amp;&amp; path.segments[<span class="number">0</span>].ident == <span class="string">&quot;TemplateChild&quot;
+    </span>{
+        <span class="kw">return </span><span class="bool-val">true</span>;
+    }
+    <span class="kw">if </span>path.segments.len() == <span class="number">2
+        </span>&amp;&amp; (path.segments[<span class="number">0</span>].ident == <span class="string">&quot;gtk&quot; </span>|| path.segments[<span class="number">0</span>].ident == <span class="string">&quot;gtk4&quot;</span>)
+        &amp;&amp; <span class="macro">matches!</span>(
+            <span class="kw-2">&amp;</span>path.segments[<span class="number">1</span>].arguments,
+            syn::PathArguments::AngleBracketed(<span class="kw">_</span>)
+        )
+        &amp;&amp; path.segments[<span class="number">1</span>].ident == <span class="string">&quot;TemplateChild&quot;
+    </span>{
+        <span class="kw">return </span><span class="bool-val">true</span>;
+    }
+    <span class="bool-val">false
+</span>}
 
-    <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="ident">fields</span> {
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">is_empty</span>() {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attributed_field</span>) <span class="op">=</span> <span class="ident">parse_field</span>(<span class="ident">field</span>)<span class="question-mark">?</span> {
-                <span class="ident">attributed_fields</span>.<span class="ident">push</span>(<span class="ident">attributed_field</span>)
+<span class="kw">pub fn </span>parse_fields(
+    fields: <span class="kw-2">&amp;</span>Fields,
+    allow_missing_attribute: bool,
+) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AttributedField&gt;, Error&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>attributed_fields = Vec::new();
+
+    <span class="kw">for </span>field <span class="kw">in </span>fields {
+        <span class="kw">let </span><span class="kw-2">mut </span>has_attr = <span class="bool-val">false</span>;
+        <span class="kw">if </span>!field.attrs.is_empty() {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(attributed_field) = parse_field(field)<span class="question-mark">? </span>{
+                attributed_fields.push(attributed_field);
+                has_attr = <span class="bool-val">true</span>;
+            }
+        }
+        <span class="kw">if </span>!has_attr &amp;&amp; !allow_missing_attribute {
+            <span class="kw">if let </span>syn::Type::Path(syn::TypePath { path, .. }) = <span class="kw-2">&amp;</span>field.ty {
+                <span class="kw">if </span>path_is_template_child(path) {
+                    <span class="macro">proc_macro_error::emit_error!</span>(
+                        field,
+                        <span class="string">&quot;field `{}` with type `TemplateChild` possibly missing #[template_child] attribute. Use a meta attribute on the struct to suppress this error: &#39;#[template(string|file|resource = \&quot;...\&quot;, allow_template_child_without_attribute)]&#39;&quot;</span>,
+                        field.ident.as_ref().unwrap().to_string(),
+                    );
+                }
             }
         }
     }
 
-    <span class="prelude-val">Ok</span>(<span class="ident">attributed_fields</span>)
+    <span class="prelude-val">Ok</span>(attributed_fields)
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4_macros" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4_macros" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

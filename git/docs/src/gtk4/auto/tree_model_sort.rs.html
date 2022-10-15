@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/tree_model_sort.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>tree_model_sort.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/tree_model_sort.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>tree_model_sort.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -408,340 +405,339 @@
 <span id="332">332</span>
 <span id="333">333</span>
 <span id="334">334</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeDragSource</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeIter</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeModel</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreePath</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeSortable</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::TreeDragSource;
+<span class="kw">use </span><span class="kw">crate</span>::TreeIter;
+<span class="kw">use </span><span class="kw">crate</span>::TreeModel;
+<span class="kw">use </span><span class="kw">crate</span>::TreePath;
+<span class="kw">use </span><span class="kw">crate</span>::TreeSortable;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::fmt;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// A GtkTreeModel which makes an underlying tree model sortable</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The [`TreeModelSort`][crate::TreeModelSort] is a model which implements the [`TreeSortable`][crate::TreeSortable]</span>
-    <span class="doccomment">/// interface.  It does not hold any data itself, but rather is created with</span>
-    <span class="doccomment">/// a child model and proxies its data.  It has identical column types to</span>
-    <span class="doccomment">/// this child model, and the changes in the child are propagated.  The</span>
-    <span class="doccomment">/// primary purpose of this model is to provide a way to sort a different</span>
-    <span class="doccomment">/// model without modifying it. Note that the sort function used by</span>
-    <span class="doccomment">/// [`TreeModelSort`][crate::TreeModelSort] is not guaranteed to be stable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The use of this is best demonstrated through an example.  In the</span>
-    <span class="doccomment">/// following sample code we create two [`TreeView`][crate::TreeView] widgets each with a</span>
-    <span class="doccomment">/// view of the same data.  As the model is wrapped here by a</span>
-    <span class="doccomment">/// [`TreeModelSort`][crate::TreeModelSort], the two [`TreeView`][crate::TreeView]s can each sort their</span>
-    <span class="doccomment">/// view of the data without affecting the other.  By contrast, if we</span>
-    <span class="doccomment">/// simply put the same model in each widget, then sorting the first would</span>
-    <span class="doccomment">/// sort the second.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Using a [`TreeModelSort`][crate::TreeModelSort]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in C ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```C</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   GtkTreeView *tree_view1;</span>
-    <span class="doccomment">///   GtkTreeView *tree_view2;</span>
-    <span class="doccomment">///   GtkTreeModel *sort_model1;</span>
-    <span class="doccomment">///   GtkTreeModel *sort_model2;</span>
-    <span class="doccomment">///   GtkTreeModel *child_model;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // get the child model</span>
-    <span class="doccomment">///   child_model = get_my_model ();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Create the first tree</span>
-    <span class="doccomment">///   sort_model1 = gtk_tree_model_sort_new_with_model (child_model);</span>
-    <span class="doccomment">///   tree_view1 = gtk_tree_view_new_with_model (sort_model1);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Create the second tree</span>
-    <span class="doccomment">///   sort_model2 = gtk_tree_model_sort_new_with_model (child_model);</span>
-    <span class="doccomment">///   tree_view2 = gtk_tree_view_new_with_model (sort_model2);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Now we can sort the two models independently</span>
-    <span class="doccomment">///   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model1),</span>
-    <span class="doccomment">///                                         COLUMN_1, GTK_SORT_ASCENDING);</span>
-    <span class="doccomment">///   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model2),</span>
-    <span class="doccomment">///                                         COLUMN_1, GTK_SORT_DESCENDING);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// To demonstrate how to access the underlying child model from the sort</span>
-    <span class="doccomment">/// model, the next example will be a callback for the [`TreeSelection`][crate::TreeSelection]</span>
-    <span class="doccomment">/// `GtkTreeSelection::changed` signal.  In this callback, we get a string</span>
-    <span class="doccomment">/// from COLUMN_1 of the model.  We then modify the string, find the same</span>
-    <span class="doccomment">/// selected row on the child model, and change the row there.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Accessing the child model of in a selection changed callback</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in C ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```C</span>
-    <span class="doccomment">/// void</span>
-    <span class="doccomment">/// selection_changed (GtkTreeSelection *selection, gpointer data)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   GtkTreeModel *sort_model = NULL;</span>
-    <span class="doccomment">///   GtkTreeModel *child_model;</span>
-    <span class="doccomment">///   GtkTreeIter sort_iter;</span>
-    <span class="doccomment">///   GtkTreeIter child_iter;</span>
-    <span class="doccomment">///   char *some_data = NULL;</span>
-    <span class="doccomment">///   char *modified_data;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Get the current selected row and the model.</span>
-    <span class="doccomment">///   if (! gtk_tree_selection_get_selected (selection,</span>
-    <span class="doccomment">///                                          &amp;sort_model,</span>
-    <span class="doccomment">///                                          &amp;sort_iter))</span>
-    <span class="doccomment">///     return;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Look up the current value on the selected row and get</span>
-    <span class="doccomment">///   // a new value to change it to.</span>
-    <span class="doccomment">///   gtk_tree_model_get (GTK_TREE_MODEL (sort_model), &amp;sort_iter,</span>
-    <span class="doccomment">///                       COLUMN_1, &amp;some_data,</span>
-    <span class="doccomment">///                       -1);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   modified_data = change_the_data (some_data);</span>
-    <span class="doccomment">///   g_free (some_data);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Get an iterator on the child model, instead of the sort model.</span>
-    <span class="doccomment">///   gtk_tree_model_sort_convert_iter_to_child_iter (GTK_TREE_MODEL_SORT (sort_model),</span>
-    <span class="doccomment">///                                                   &amp;child_iter,</span>
-    <span class="doccomment">///                                                   &amp;sort_iter);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Get the child model and change the value of the row. In this</span>
-    <span class="doccomment">///   // example, the child model is a GtkListStore. It could be any other</span>
-    <span class="doccomment">///   // type of model, though.</span>
-    <span class="doccomment">///   child_model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (sort_model));</span>
-    <span class="doccomment">///   gtk_list_store_set (GTK_LIST_STORE (child_model), &amp;child_iter,</span>
-    <span class="doccomment">///                       COLUMN_1, &amp;modified_data,</span>
-    <span class="doccomment">///                       -1);</span>
-    <span class="doccomment">///   g_free (modified_data);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`TreeModelSortExt`][trait@crate::prelude::TreeModelSortExt], [`trait@glib::ObjectExt`], [`TreeDragSourceExt`][trait@crate::prelude::TreeDragSourceExt], [`TreeModelExt`][trait@crate::prelude::TreeModelExt], [`TreeSortableExt`][trait@crate::prelude::TreeSortableExt], [`TreeModelExtManual`][trait@crate::prelude::TreeModelExtManual], [`TreeSortableExtManual`][trait@crate::prelude::TreeSortableExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkTreeModelSort&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TreeModelSort</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkTreeModelSort</span>, <span class="ident">ffi::GtkTreeModelSortClass</span><span class="op">&gt;</span>) @<span class="ident">implements</span> <span class="ident">TreeDragSource</span>, <span class="ident">TreeModel</span>, <span class="ident">TreeSortable</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// A GtkTreeModel which makes an underlying tree model sortable
+    ///
+    /// The [`TreeModelSort`][crate::TreeModelSort] is a model which implements the [`TreeSortable`][crate::TreeSortable]
+    /// interface.  It does not hold any data itself, but rather is created with
+    /// a child model and proxies its data.  It has identical column types to
+    /// this child model, and the changes in the child are propagated.  The
+    /// primary purpose of this model is to provide a way to sort a different
+    /// model without modifying it. Note that the sort function used by
+    /// [`TreeModelSort`][crate::TreeModelSort] is not guaranteed to be stable.
+    ///
+    /// The use of this is best demonstrated through an example.  In the
+    /// following sample code we create two [`TreeView`][crate::TreeView] widgets each with a
+    /// view of the same data.  As the model is wrapped here by a
+    /// [`TreeModelSort`][crate::TreeModelSort], the two [`TreeView`][crate::TreeView]s can each sort their
+    /// view of the data without affecting the other.  By contrast, if we
+    /// simply put the same model in each widget, then sorting the first would
+    /// sort the second.
+    ///
+    /// ## Using a [`TreeModelSort`][crate::TreeModelSort]
+    ///
+    ///
+    ///
+    /// **⚠️ The following code is in C ⚠️**
+    ///
+    /// ```C
+    /// {
+    ///   GtkTreeView *tree_view1;
+    ///   GtkTreeView *tree_view2;
+    ///   GtkTreeModel *sort_model1;
+    ///   GtkTreeModel *sort_model2;
+    ///   GtkTreeModel *child_model;
+    ///
+    ///   // get the child model
+    ///   child_model = get_my_model ();
+    ///
+    ///   // Create the first tree
+    ///   sort_model1 = gtk_tree_model_sort_new_with_model (child_model);
+    ///   tree_view1 = gtk_tree_view_new_with_model (sort_model1);
+    ///
+    ///   // Create the second tree
+    ///   sort_model2 = gtk_tree_model_sort_new_with_model (child_model);
+    ///   tree_view2 = gtk_tree_view_new_with_model (sort_model2);
+    ///
+    ///   // Now we can sort the two models independently
+    ///   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model1),
+    ///                                         COLUMN_1, GTK_SORT_ASCENDING);
+    ///   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model2),
+    ///                                         COLUMN_1, GTK_SORT_DESCENDING);
+    /// }
+    /// ```
+    ///
+    /// To demonstrate how to access the underlying child model from the sort
+    /// model, the next example will be a callback for the [`TreeSelection`][crate::TreeSelection]
+    /// `GtkTreeSelection::changed` signal.  In this callback, we get a string
+    /// from COLUMN_1 of the model.  We then modify the string, find the same
+    /// selected row on the child model, and change the row there.
+    ///
+    /// ## Accessing the child model of in a selection changed callback
+    ///
+    ///
+    ///
+    /// **⚠️ The following code is in C ⚠️**
+    ///
+    /// ```C
+    /// void
+    /// selection_changed (GtkTreeSelection *selection, gpointer data)
+    /// {
+    ///   GtkTreeModel *sort_model = NULL;
+    ///   GtkTreeModel *child_model;
+    ///   GtkTreeIter sort_iter;
+    ///   GtkTreeIter child_iter;
+    ///   char *some_data = NULL;
+    ///   char *modified_data;
+    ///
+    ///   // Get the current selected row and the model.
+    ///   if (! gtk_tree_selection_get_selected (selection,
+    ///                                          &amp;sort_model,
+    ///                                          &amp;sort_iter))
+    ///     return;
+    ///
+    ///   // Look up the current value on the selected row and get
+    ///   // a new value to change it to.
+    ///   gtk_tree_model_get (GTK_TREE_MODEL (sort_model), &amp;sort_iter,
+    ///                       COLUMN_1, &amp;some_data,
+    ///                       -1);
+    ///
+    ///   modified_data = change_the_data (some_data);
+    ///   g_free (some_data);
+    ///
+    ///   // Get an iterator on the child model, instead of the sort model.
+    ///   gtk_tree_model_sort_convert_iter_to_child_iter (GTK_TREE_MODEL_SORT (sort_model),
+    ///                                                   &amp;child_iter,
+    ///                                                   &amp;sort_iter);
+    ///
+    ///   // Get the child model and change the value of the row. In this
+    ///   // example, the child model is a GtkListStore. It could be any other
+    ///   // type of model, though.
+    ///   child_model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (sort_model));
+    ///   gtk_list_store_set (GTK_LIST_STORE (child_model), &amp;child_iter,
+    ///                       COLUMN_1, &amp;modified_data,
+    ///                       -1);
+    ///   g_free (modified_data);
+    /// }
+    /// ```
+    ///
+    /// # Implements
+    ///
+    /// [`TreeModelSortExt`][trait@crate::prelude::TreeModelSortExt], [`trait@glib::ObjectExt`], [`TreeDragSourceExt`][trait@crate::prelude::TreeDragSourceExt], [`TreeModelExt`][trait@crate::prelude::TreeModelExt], [`TreeSortableExt`][trait@crate::prelude::TreeSortableExt], [`TreeModelExtManual`][trait@crate::prelude::TreeModelExtManual], [`TreeSortableExtManual`][trait@crate::prelude::TreeSortableExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkTreeModelSort&quot;</span>)]
+    </span><span class="kw">pub struct </span>TreeModelSort(Object&lt;ffi::GtkTreeModelSort, ffi::GtkTreeModelSortClass&gt;) @implements TreeDragSource, TreeModel, TreeSortable;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_tree_model_sort_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_tree_model_sort_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TreeModelSort</span> {
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">TreeModelSort</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+<span class="kw">impl </span>TreeModelSort {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>TreeModelSort&gt; = <span class="prelude-val">None</span>;
 
-    <span class="doccomment">/// Creates a new [`TreeModelSort`][crate::TreeModelSort], with @child_model as the child model.</span>
-    <span class="doccomment">/// ## `child_model`</span>
-    <span class="doccomment">/// A [`TreeModel`][crate::TreeModel]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A new [`TreeModelSort`][crate::TreeModelSort].</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_new_with_model&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_with_model&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_model</span>(<span class="ident">child_model</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span>) -&gt; <span class="ident">TreeModelSort</span> {
+    <span class="doccomment">/// Creates a new [`TreeModelSort`][crate::TreeModelSort], with @child_model as the child model.
+    /// ## `child_model`
+    /// A [`TreeModel`][crate::TreeModel]
+    ///
+    /// # Returns
+    ///
+    /// A new [`TreeModelSort`][crate::TreeModelSort].
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_new_with_model&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;new_with_model&quot;</span>)]
+    </span><span class="kw">pub fn </span>with_model(child_model: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;TreeModel&gt;) -&gt; TreeModelSort {
         <span class="macro">skip_assert_initialized!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_tree_model_sort_new_with_model</span>(
-                <span class="ident">child_model</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_tree_model_sort_new_with_model(
+                child_model.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 }
 
-<span class="doccomment">/// Trait containing all [`struct@TreeModelSort`] methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Implementors</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`TreeModelSort`][struct@crate::TreeModelSort]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TreeModelSortExt</span>: <span class="lifetime">&#39;static</span> {
-    <span class="doccomment">/// This function should almost never be called.  It clears the @self</span>
-    <span class="doccomment">/// of any cached iterators that haven’t been reffed with</span>
-    <span class="doccomment">/// gtk_tree_model_ref_node().  This might be useful if the child model being</span>
-    <span class="doccomment">/// sorted is static (and doesn’t change often) and there has been a lot of</span>
-    <span class="doccomment">/// unreffed access to nodes.  As a side effect of this function, all unreffed</span>
-    <span class="doccomment">/// iters will be invalid.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_clear_cache&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">clear_cache</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+<span class="doccomment">/// Trait containing all [`struct@TreeModelSort`] methods.
+///
+/// # Implementors
+///
+/// [`TreeModelSort`][struct@crate::TreeModelSort]
+</span><span class="kw">pub trait </span>TreeModelSortExt: <span class="lifetime">&#39;static </span>{
+    <span class="doccomment">/// This function should almost never be called.  It clears the @self
+    /// of any cached iterators that haven’t been reffed with
+    /// gtk_tree_model_ref_node().  This might be useful if the child model being
+    /// sorted is static (and doesn’t change often) and there has been a lot of
+    /// unreffed access to nodes.  As a side effect of this function, all unreffed
+    /// iters will be invalid.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_clear_cache&quot;</span>)]
+    </span><span class="kw">fn </span>clear_cache(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Sets @sort_iter to point to the row in @self that corresponds to</span>
-    <span class="doccomment">/// the row pointed at by @child_iter.  If @sort_iter was not set, [`false`]</span>
-    <span class="doccomment">/// is returned.  Note: a boolean is only returned since 2.14.</span>
-    <span class="doccomment">/// ## `child_iter`</span>
-    <span class="doccomment">/// A valid [`TreeIter`][crate::TreeIter] pointing to a row on the child model</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`], if @sort_iter was set, i.e. if @sort_iter is a</span>
-    <span class="doccomment">/// valid iterator pointer to a visible row in the child model.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `sort_iter`</span>
-    <span class="doccomment">/// An uninitialized [`TreeIter`][crate::TreeIter]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_convert_child_iter_to_iter&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">convert_child_iter_to_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">child_iter</span>: <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreeIter</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Sets @sort_iter to point to the row in @self that corresponds to
+    /// the row pointed at by @child_iter.  If @sort_iter was not set, [`false`]
+    /// is returned.  Note: a boolean is only returned since 2.14.
+    /// ## `child_iter`
+    /// A valid [`TreeIter`][crate::TreeIter] pointing to a row on the child model
+    ///
+    /// # Returns
+    ///
+    /// [`true`], if @sort_iter was set, i.e. if @sort_iter is a
+    /// valid iterator pointer to a visible row in the child model.
+    ///
+    /// ## `sort_iter`
+    /// An uninitialized [`TreeIter`][crate::TreeIter]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_convert_child_iter_to_iter&quot;</span>)]
+    </span><span class="kw">fn </span>convert_child_iter_to_iter(<span class="kw-2">&amp;</span><span class="self">self</span>, child_iter: <span class="kw-2">&amp;</span>TreeIter) -&gt; <span class="prelude-ty">Option</span>&lt;TreeIter&gt;;
 
-    <span class="doccomment">/// Converts @child_path to a path relative to @self.  That is,</span>
-    <span class="doccomment">/// @child_path points to a path in the child model.  The returned path will</span>
-    <span class="doccomment">/// point to the same row in the sorted model.  If @child_path isn’t a valid</span>
-    <span class="doccomment">/// path on the child model, then [`None`] is returned.</span>
-    <span class="doccomment">/// ## `child_path`</span>
-    <span class="doccomment">/// A [`TreePath`][crate::TreePath] to convert</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly allocated [`TreePath`][crate::TreePath]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_convert_child_path_to_path&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">convert_child_path_to_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">child_path</span>: <span class="kw-2">&amp;</span><span class="ident">TreePath</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreePath</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Converts @child_path to a path relative to @self.  That is,
+    /// @child_path points to a path in the child model.  The returned path will
+    /// point to the same row in the sorted model.  If @child_path isn’t a valid
+    /// path on the child model, then [`None`] is returned.
+    /// ## `child_path`
+    /// A [`TreePath`][crate::TreePath] to convert
+    ///
+    /// # Returns
+    ///
+    /// A newly allocated [`TreePath`][crate::TreePath]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_convert_child_path_to_path&quot;</span>)]
+    </span><span class="kw">fn </span>convert_child_path_to_path(<span class="kw-2">&amp;</span><span class="self">self</span>, child_path: <span class="kw-2">&amp;</span>TreePath) -&gt; <span class="prelude-ty">Option</span>&lt;TreePath&gt;;
 
-    <span class="doccomment">/// Sets @child_iter to point to the row pointed to by @sorted_iter.</span>
-    <span class="doccomment">/// ## `sorted_iter`</span>
-    <span class="doccomment">/// A valid [`TreeIter`][crate::TreeIter] pointing to a row on @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `child_iter`</span>
-    <span class="doccomment">/// An uninitialized [`TreeIter`][crate::TreeIter]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_convert_iter_to_child_iter&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">convert_iter_to_child_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sorted_iter</span>: <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">TreeIter</span>;
+    <span class="doccomment">/// Sets @child_iter to point to the row pointed to by @sorted_iter.
+    /// ## `sorted_iter`
+    /// A valid [`TreeIter`][crate::TreeIter] pointing to a row on @self.
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `child_iter`
+    /// An uninitialized [`TreeIter`][crate::TreeIter]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_convert_iter_to_child_iter&quot;</span>)]
+    </span><span class="kw">fn </span>convert_iter_to_child_iter(<span class="kw-2">&amp;</span><span class="self">self</span>, sorted_iter: <span class="kw-2">&amp;</span>TreeIter) -&gt; TreeIter;
 
-    <span class="doccomment">/// Converts @sorted_path to a path on the child model of @self.</span>
-    <span class="doccomment">/// That is, @sorted_path points to a location in @self.  The</span>
-    <span class="doccomment">/// returned path will point to the same location in the model not being</span>
-    <span class="doccomment">/// sorted.  If @sorted_path does not point to a location in the child model,</span>
-    <span class="doccomment">/// [`None`] is returned.</span>
-    <span class="doccomment">/// ## `sorted_path`</span>
-    <span class="doccomment">/// A [`TreePath`][crate::TreePath] to convert</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly allocated [`TreePath`][crate::TreePath]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_convert_path_to_child_path&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">convert_path_to_child_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sorted_path</span>: <span class="kw-2">&amp;</span><span class="ident">TreePath</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreePath</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Converts @sorted_path to a path on the child model of @self.
+    /// That is, @sorted_path points to a location in @self.  The
+    /// returned path will point to the same location in the model not being
+    /// sorted.  If @sorted_path does not point to a location in the child model,
+    /// [`None`] is returned.
+    /// ## `sorted_path`
+    /// A [`TreePath`][crate::TreePath] to convert
+    ///
+    /// # Returns
+    ///
+    /// A newly allocated [`TreePath`][crate::TreePath]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_convert_path_to_child_path&quot;</span>)]
+    </span><span class="kw">fn </span>convert_path_to_child_path(<span class="kw-2">&amp;</span><span class="self">self</span>, sorted_path: <span class="kw-2">&amp;</span>TreePath) -&gt; <span class="prelude-ty">Option</span>&lt;TreePath&gt;;
 
-    <span class="doccomment">/// Returns the model the [`TreeModelSort`][crate::TreeModelSort] is sorting.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the &quot;child model&quot; being sorted</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_get_model&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_model&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">model</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TreeModel</span>;
+    <span class="doccomment">/// Returns the model the [`TreeModelSort`][crate::TreeModelSort] is sorting.
+    ///
+    /// # Returns
+    ///
+    /// the &quot;child model&quot; being sorted
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_get_model&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_model&quot;</span>)]
+    </span><span class="kw">fn </span>model(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TreeModel;
 
-    <span class="doccomment">/// &gt; This function is slow. Only use it for debugging and/or testing</span>
-    <span class="doccomment">/// &gt; purposes.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Checks if the given iter is a valid iter for this [`TreeModelSort`][crate::TreeModelSort].</span>
-    <span class="doccomment">/// ## `iter`</span>
-    <span class="doccomment">/// A [`TreeIter`][crate::TreeIter]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the iter is valid, [`false`] if the iter is invalid.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_iter_is_valid&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">iter_is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">iter</span>: <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// &gt; This function is slow. Only use it for debugging and/or testing
+    /// &gt; purposes.
+    ///
+    /// Checks if the given iter is a valid iter for this [`TreeModelSort`][crate::TreeModelSort].
+    /// ## `iter`
+    /// A [`TreeIter`][crate::TreeIter]
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the iter is valid, [`false`] if the iter is invalid.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_iter_is_valid&quot;</span>)]
+    </span><span class="kw">fn </span>iter_is_valid(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter) -&gt; bool;
 
-    <span class="doccomment">/// This resets the default sort function to be in the “unsorted” state.  That</span>
-    <span class="doccomment">/// is, it is in the same order as the child model. It will re-sort the model</span>
-    <span class="doccomment">/// to be in the same order as the child model only if the [`TreeModelSort`][crate::TreeModelSort]</span>
-    <span class="doccomment">/// is in “unsorted” state.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_tree_model_sort_reset_default_sort_func&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">reset_default_sort_func</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// This resets the default sort function to be in the “unsorted” state.  That
+    /// is, it is in the same order as the child model. It will re-sort the model
+    /// to be in the same order as the child model only if the [`TreeModelSort`][crate::TreeModelSort]
+    /// is in “unsorted” state.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_tree_model_sort_reset_default_sort_func&quot;</span>)]
+    </span><span class="kw">fn </span>reset_default_sort_func(<span class="kw-2">&amp;</span><span class="self">self</span>);
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">TreeModelSort</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">TreeModelSortExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">clear_cache</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_tree_model_sort_clear_cache</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+<span class="kw">impl</span>&lt;O: IsA&lt;TreeModelSort&gt;&gt; TreeModelSortExt <span class="kw">for </span>O {
+    <span class="kw">fn </span>clear_cache(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_tree_model_sort_clear_cache(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">convert_child_iter_to_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">child_iter</span>: <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreeIter</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sort_iter</span> <span class="op">=</span> <span class="ident">TreeIter::uninitialized</span>();
-            <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_tree_model_sort_convert_child_iter_to_iter</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">sort_iter</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
-                <span class="ident">mut_override</span>(<span class="ident">child_iter</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>),
+    <span class="kw">fn </span>convert_child_iter_to_iter(<span class="kw-2">&amp;</span><span class="self">self</span>, child_iter: <span class="kw-2">&amp;</span>TreeIter) -&gt; <span class="prelude-ty">Option</span>&lt;TreeIter&gt; {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>sort_iter = TreeIter::uninitialized();
+            <span class="kw">let </span>ret = from_glib(ffi::gtk_tree_model_sort_convert_child_iter_to_iter(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                sort_iter.to_glib_none_mut().<span class="number">0</span>,
+                mut_override(child_iter.to_glib_none().<span class="number">0</span>),
             ));
-            <span class="kw">if</span> <span class="ident">ret</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">sort_iter</span>)
-            } <span class="kw">else</span> {
-                <span class="prelude-val">None</span>
-            }
+            <span class="kw">if </span>ret {
+                <span class="prelude-val">Some</span>(sort_iter)
+            } <span class="kw">else </span>{
+                <span class="prelude-val">None
+            </span>}
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">convert_child_path_to_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">child_path</span>: <span class="kw-2">&amp;</span><span class="ident">TreePath</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreePath</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_tree_model_sort_convert_child_path_to_path</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">mut_override</span>(<span class="ident">child_path</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>),
+    <span class="kw">fn </span>convert_child_path_to_path(<span class="kw-2">&amp;</span><span class="self">self</span>, child_path: <span class="kw-2">&amp;</span>TreePath) -&gt; <span class="prelude-ty">Option</span>&lt;TreePath&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_tree_model_sort_convert_child_path_to_path(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                mut_override(child_path.to_glib_none().<span class="number">0</span>),
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">convert_iter_to_child_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sorted_iter</span>: <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">TreeIter</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">child_iter</span> <span class="op">=</span> <span class="ident">TreeIter::uninitialized</span>();
-            <span class="ident">ffi::gtk_tree_model_sort_convert_iter_to_child_iter</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">child_iter</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
-                <span class="ident">mut_override</span>(<span class="ident">sorted_iter</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>),
+    <span class="kw">fn </span>convert_iter_to_child_iter(<span class="kw-2">&amp;</span><span class="self">self</span>, sorted_iter: <span class="kw-2">&amp;</span>TreeIter) -&gt; TreeIter {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>child_iter = TreeIter::uninitialized();
+            ffi::gtk_tree_model_sort_convert_iter_to_child_iter(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                child_iter.to_glib_none_mut().<span class="number">0</span>,
+                mut_override(sorted_iter.to_glib_none().<span class="number">0</span>),
             );
-            <span class="ident">child_iter</span>
+            child_iter
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">convert_path_to_child_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sorted_path</span>: <span class="kw-2">&amp;</span><span class="ident">TreePath</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreePath</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_tree_model_sort_convert_path_to_child_path</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">mut_override</span>(<span class="ident">sorted_path</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>),
+    <span class="kw">fn </span>convert_path_to_child_path(<span class="kw-2">&amp;</span><span class="self">self</span>, sorted_path: <span class="kw-2">&amp;</span>TreePath) -&gt; <span class="prelude-ty">Option</span>&lt;TreePath&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_tree_model_sort_convert_path_to_child_path(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                mut_override(sorted_path.to_glib_none().<span class="number">0</span>),
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">model</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TreeModel</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_tree_model_sort_get_model</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>model(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TreeModel {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_tree_model_sort_get_model(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">iter_is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">iter</span>: <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_tree_model_sort_iter_is_valid</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">mut_override</span>(<span class="ident">iter</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>),
+    <span class="kw">fn </span>iter_is_valid(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_tree_model_sort_iter_is_valid(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                mut_override(iter.to_glib_none().<span class="number">0</span>),
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">reset_default_sort_func</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_tree_model_sort_reset_default_sort_func</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>reset_default_sort_func(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_tree_model_sort_reset_default_sort_func(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">TreeModelSort</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;TreeModelSort&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>TreeModelSort {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;TreeModelSort&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

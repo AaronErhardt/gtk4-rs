@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4-macros/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4-macros/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../gtk4_macros/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../gtk4_macros/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -332,264 +329,429 @@
 <span id="256">256</span>
 <span id="257">257</span>
 <span id="258">258</span>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-<span class="doccomment">//! # GTK 4 Macros</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The crate aims to provide useful macros to use with the GTK 4 Rust bindings.</span>
+</span><span class="doccomment">//! # GTK 4 Macros
+//!
+//! The crate aims to provide useful macros to use with the GTK 4 Rust bindings.
 
-<span class="kw">mod</span> <span class="ident">attribute_parser</span>;
-<span class="kw">mod</span> <span class="ident">composite_template_derive</span>;
-<span class="kw">mod</span> <span class="ident">template_callbacks_attribute</span>;
-<span class="kw">mod</span> <span class="ident">util</span>;
+</span><span class="kw">mod </span>attribute_parser;
+<span class="kw">mod </span>composite_template_derive;
+<span class="kw">mod </span>template_callbacks_attribute;
+<span class="kw">mod </span>util;
 
-<span class="kw">use</span> <span class="ident">proc_macro::TokenStream</span>;
-<span class="kw">use</span> <span class="ident">proc_macro_error::proc_macro_error</span>;
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">parse_macro_input</span>, <span class="ident">DeriveInput</span>};
+<span class="kw">use </span>proc_macro::TokenStream;
+<span class="kw">use </span>proc_macro_error::proc_macro_error;
+<span class="kw">use </span>syn::{parse_macro_input, DeriveInput};
 
-<span class="doccomment">/// Derive macro for using a composite template in a widget.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The `template` attribute specifies where the template should be loaded</span>
-<span class="doccomment">/// from;  it can be a `file`, a `resource`, or a `string`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The `template_child` attribute is used to mark all internal widgets</span>
-<span class="doccomment">/// we need to have programmatic access to. It can take two parameters:</span>
-<span class="doccomment">/// - `id` which defaults to the item name if not defined</span>
-<span class="doccomment">/// - `internal_child` whether the child should be accessible as an “internal-child”, defaults to `false`</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Example</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Specify that `MyWidget` is using a composite template and load the</span>
-<span class="doccomment">/// template file the `composite_template.ui` file.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Then, in the [`ObjectSubclass`] implementation you will need to call</span>
-<span class="doccomment">/// [`bind_template`] in the [`class_init`] function, and [`init_template`] in</span>
-<span class="doccomment">/// [`instance_init`] function.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`ObjectSubclass`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/subclass/types/trait.ObjectSubclass.html</span>
-<span class="doccomment">/// [`bind_template`]: https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/trait.CompositeTemplate.html#tymethod.bind_template</span>
-<span class="doccomment">/// [`class_init`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/subclass/types/trait.ObjectSubclass.html#method.class_init</span>
-<span class="doccomment">/// [`init_template`]: https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.InitializingWidgetExt.html#tymethod.init_template</span>
-<span class="doccomment">/// [`instance_init`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/subclass/types/trait.ObjectSubclass.html#method.instance_init</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```no_run</span>
-<span class="doccomment">/// # fn main() {}</span>
-<span class="doccomment">/// use gtk::prelude::*;</span>
-<span class="doccomment">/// use gtk::glib;</span>
-<span class="doccomment">/// use gtk::CompositeTemplate;</span>
-<span class="doccomment">/// use gtk::subclass::prelude::*;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// mod imp {</span>
-<span class="doccomment">///     use super::*;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     #[derive(Debug, Default, CompositeTemplate)]</span>
-<span class="doccomment">///     #[template(file = &quot;test/template.ui&quot;)]</span>
-<span class="doccomment">///     pub struct MyWidget {</span>
-<span class="doccomment">///         #[template_child]</span>
-<span class="doccomment">///         pub label: TemplateChild&lt;gtk::Label&gt;,</span>
-<span class="doccomment">///         #[template_child(id = &quot;my_button_id&quot;)]</span>
-<span class="doccomment">///         pub button: TemplateChild&lt;gtk::Button&gt;,</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     #[glib::object_subclass]</span>
-<span class="doccomment">///     impl ObjectSubclass for MyWidget {</span>
-<span class="doccomment">///         const NAME: &amp;&#39;static str = &quot;MyWidget&quot;;</span>
-<span class="doccomment">///         type Type = super::MyWidget;</span>
-<span class="doccomment">///         type ParentType = gtk::Box;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///         fn class_init(klass: &amp;mut Self::Class) {</span>
-<span class="doccomment">///             Self::bind_template(klass);</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///         fn instance_init(obj: &amp;glib::subclass::InitializingObject&lt;Self&gt;) {</span>
-<span class="doccomment">///             obj.init_template();</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     impl ObjectImpl for MyWidget {}</span>
-<span class="doccomment">///     impl WidgetImpl for MyWidget {}</span>
-<span class="doccomment">///     impl BoxImpl for MyWidget {}</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// glib::wrapper! {</span>
-<span class="doccomment">///     pub struct MyWidget(ObjectSubclass&lt;imp::MyWidget&gt;) @extends gtk::Widget, gtk::Box;</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// impl MyWidget {</span>
-<span class="doccomment">///     pub fn new() -&gt; Self {</span>
-<span class="doccomment">///         glib::Object::new(&amp;[]).expect(&quot;Failed to create an instance of MyWidget&quot;)</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">CompositeTemplate</span>, <span class="ident">attributes</span>(<span class="ident">template</span>, <span class="ident">template_child</span>))]</span>
-<span class="attribute">#[<span class="ident">proc_macro_error</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">composite_template_derive</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) -&gt; <span class="ident">TokenStream</span> {
-    <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">parse_macro_input!</span>(<span class="ident">input</span> <span class="kw">as</span> <span class="ident">DeriveInput</span>);
-    <span class="kw">let</span> <span class="ident">gen</span> <span class="op">=</span> <span class="ident">composite_template_derive::impl_composite_template</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>);
-    <span class="ident">gen</span>.<span class="ident">into</span>()
+<span class="doccomment">/// Derive macro for using a composite template in a widget.
+///
+/// The `template` attribute specifies where the template should be loaded
+/// from;  it can be a `file`, a `resource`, or a `string`.
+///
+/// The `template_child` attribute is used to mark all internal widgets
+/// we need to have programmatic access to. It can take two parameters:
+/// - `id` which defaults to the item name if not defined
+/// - `internal_child` whether the child should be accessible as an “internal-child”, defaults to `false`
+///
+/// # Example
+///
+/// Specify that `MyWidget` is using a composite template and load the
+/// template file the `composite_template.ui` file.
+///
+/// Then, in the [`ObjectSubclass`] implementation you will need to call
+/// [`bind_template`] in the [`class_init`] function, and [`init_template`] in
+/// [`instance_init`] function.
+///
+/// [`ObjectSubclass`]: ../glib/subclass/types/trait.ObjectSubclass.html
+/// [`bind_template`]: ../gtk4/subclass/widget/trait.CompositeTemplate.html#tymethod.bind_template
+/// [`class_init`]: ../glib/subclass/types/trait.ObjectSubclass.html#method.class_init
+/// [`init_template`]: ../gtk4/prelude/trait.InitializingWidgetExt.html#tymethod.init_template
+/// [`instance_init`]: ../glib/subclass/types/trait.ObjectSubclass.html#method.instance_init
+///
+/// ```no_run
+/// # fn main() {}
+/// use gtk::prelude::*;
+/// use gtk::glib;
+/// use gtk::CompositeTemplate;
+/// use gtk::subclass::prelude::*;
+///
+/// mod imp {
+///     use super::*;
+///
+///     #[derive(Debug, Default, CompositeTemplate)]
+///     #[template(file = &quot;test/template.ui&quot;)]
+///     pub struct MyWidget {
+///         #[template_child]
+///         pub label: TemplateChild&lt;gtk::Label&gt;,
+///         #[template_child(id = &quot;my_button_id&quot;)]
+///         pub button: TemplateChild&lt;gtk::Button&gt;,
+///     }
+///
+///     #[glib::object_subclass]
+///     impl ObjectSubclass for MyWidget {
+///         const NAME: &amp;&#39;static str = &quot;MyWidget&quot;;
+///         type Type = super::MyWidget;
+///         type ParentType = gtk::Box;
+///
+///         fn class_init(klass: &amp;mut Self::Class) {
+///             klass.bind_template();
+///         }
+///
+///         fn instance_init(obj: &amp;glib::subclass::InitializingObject&lt;Self&gt;) {
+///             obj.init_template();
+///         }
+///     }
+///
+///     impl ObjectImpl for MyWidget {}
+///     impl WidgetImpl for MyWidget {}
+///     impl BoxImpl for MyWidget {}
+/// }
+///
+/// glib::wrapper! {
+///     pub struct MyWidget(ObjectSubclass&lt;imp::MyWidget&gt;) @extends gtk::Widget, gtk::Box;
+/// }
+///
+/// impl MyWidget {
+///     pub fn new() -&gt; Self {
+///         glib::Object::new(&amp;[])
+///     }
+/// }
+/// ```
+</span><span class="attribute">#[proc_macro_derive(CompositeTemplate, attributes(template, template_child))]
+#[proc_macro_error]
+</span><span class="kw">pub fn </span>composite_template_derive(input: TokenStream) -&gt; TokenStream {
+    <span class="kw">let </span>input = <span class="macro">parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
+    <span class="kw">let </span>gen = composite_template_derive::impl_composite_template(<span class="kw-2">&amp;</span>input);
+    gen.into()
 }
 
-<span class="doccomment">/// Attribute macro for creating template callbacks from Rust methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Widgets with [`CompositeTemplate`] can then make use of these callbacks from within their</span>
-<span class="doccomment">/// template XML definition. The attribute must be applied to an `impl` statement of a struct.</span>
-<span class="doccomment">/// Functions marked as callbacks within the `impl` will be stored in a static array. Then, in the</span>
-<span class="doccomment">/// [`ObjectSubclass`] implementation you will need to call [`bind_template_callbacks`] in the</span>
-<span class="doccomment">/// [`class_init`] function.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Template callbacks can be specified on both a widget&#39;s public `impl` or on its private `impl`.</span>
-<span class="doccomment">/// Template callbacks from other types can also be used. Care must be taken to call</span>
-<span class="doccomment">/// `bind_template_callbacks` on each type in order to use its callbacks.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// These callbacks can be bound using the `&lt;signal&gt;` or `&lt;closure&gt;` tags in the template file.</span>
-<span class="doccomment">/// Note that the arguments and return type will only be checked at run time when the method is</span>
-<span class="doccomment">/// invoked.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Methods can optionally take `&amp;self` as a first parameter. In this case, the attribute</span>
-<span class="doccomment">/// `swapped=&quot;true&quot;` will usually have to be set on the `&lt;signal&gt;` or `&lt;closure&gt;` tag in order to</span>
-<span class="doccomment">/// invoke the function correctly.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The following options are supported on the attribute:</span>
-<span class="doccomment">/// - `functions` makes all callbacks use the `function` attribute by default. (see below)</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The `template_callback` attribute is used to mark methods that will be exposed to the template</span>
-<span class="doccomment">/// scope. It can take the following options:</span>
-<span class="doccomment">/// - `name` renames the callback. Defaults to the function name if not defined.</span>
-<span class="doccomment">/// - `function` ignores the first value when calling the callback and disallows `self`.  Useful</span>
-<span class="doccomment">/// for callbacks called from `&lt;closure&gt;` tags.</span>
-<span class="doccomment">/// - `function = false` reverts the effects of `functions` used on the `impl`, so the callback</span>
-<span class="doccomment">/// gets the first value and can take `self` again. Mainly useful for callbacks that are invoked</span>
-<span class="doccomment">/// with `swapped=&quot;true&quot;`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The `rest` attribute can be placed on the last argument of a template callback. This attribute</span>
-<span class="doccomment">/// must be used on an argument of type `&amp;[glib::Value]` and will pass in the remaining arguments.</span>
-<span class="doccomment">/// The first and last values will be omitted from the slice if this callback is a `function`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Arguments and return types in template callbacks have some special restrictions, similar to the</span>
-<span class="doccomment">/// restrictions on [`glib::closure`]. Each argument&#39;s type must implement [`glib::ToValue`]. The</span>
-<span class="doccomment">/// last argument can also be `&amp;[glib::Value]` annotated with `#[rest]` as described above. The</span>
-<span class="doccomment">/// return type of a callback, if present, must implement [`glib::FromValue`]. Type-checking of</span>
-<span class="doccomment">/// inputs and outputs is done at run-time; if the argument types or return type do not match the</span>
-<span class="doccomment">/// type of the signal or closure then the callback will panic. To implement your own type checking</span>
-<span class="doccomment">/// or to use dynamic typing, an argument&#39;s type can be left as a [`&amp;glib::Value`].</span>
-<span class="doccomment">/// This can also be used if you need custom unboxing, such as if the target type does not</span>
-<span class="doccomment">/// implement `FromValue`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`glib::closure`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.closure.html</span>
-<span class="doccomment">/// [`glib::wrapper`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.wrapper.html</span>
-<span class="doccomment">/// [`ObjectSubclass`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/subclass/types/trait.ObjectSubclass.html</span>
-<span class="doccomment">/// [`class_init`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/subclass/types/trait.ObjectSubclass.html#method.class_init</span>
-<span class="doccomment">/// [`bind_template_callbacks`]: https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacks.html#tymethod.bind_template_callbacks</span>
-<span class="doccomment">/// [`glib::FromValue`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/value/trait.FromValue.html</span>
-<span class="doccomment">/// [`glib::ToValue`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/value/trait.ToValue.html</span>
-<span class="doccomment">/// [`&amp;glib::Value`]: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/value/struct.Value.html</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Example</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```no_run</span>
-<span class="doccomment">/// # fn main() {}</span>
-<span class="doccomment">/// use gtk::prelude::*;</span>
-<span class="doccomment">/// use gtk::glib;</span>
-<span class="doccomment">/// use gtk::CompositeTemplate;</span>
-<span class="doccomment">/// use gtk::subclass::prelude::*;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// mod imp {</span>
-<span class="doccomment">///     use super::*;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     #[derive(Debug, Default, CompositeTemplate)]</span>
-<span class="doccomment">///     #[template(file = &quot;test/template_callbacks.ui&quot;)]</span>
-<span class="doccomment">///     pub struct MyWidget {</span>
-<span class="doccomment">///         #[template_child]</span>
-<span class="doccomment">///         pub label: TemplateChild&lt;gtk::Label&gt;,</span>
-<span class="doccomment">///         #[template_child(id = &quot;my_button_id&quot;)]</span>
-<span class="doccomment">///         pub button: TemplateChild&lt;gtk::Button&gt;,</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     #[glib::object_subclass]</span>
-<span class="doccomment">///     impl ObjectSubclass for MyWidget {</span>
-<span class="doccomment">///         const NAME: &amp;&#39;static str = &quot;MyWidget&quot;;</span>
-<span class="doccomment">///         type Type = super::MyWidget;</span>
-<span class="doccomment">///         type ParentType = gtk::Box;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///         fn class_init(klass: &amp;mut Self::Class) {</span>
-<span class="doccomment">///             Self::bind_template(klass);</span>
-<span class="doccomment">///             // Bind the private callbacks</span>
-<span class="doccomment">///             Self::bind_template_callbacks(klass);</span>
-<span class="doccomment">///             // Bind the public callbacks</span>
-<span class="doccomment">///             Self::Type::bind_template_callbacks(klass);</span>
-<span class="doccomment">///             // Bind callbacks from another struct</span>
-<span class="doccomment">///             super::Utility::bind_template_callbacks(klass);</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///         fn instance_init(obj: &amp;glib::subclass::InitializingObject&lt;Self&gt;) {</span>
-<span class="doccomment">///             obj.init_template();</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     #[gtk::template_callbacks]</span>
-<span class="doccomment">///     impl MyWidget {</span>
-<span class="doccomment">///         #[template_callback]</span>
-<span class="doccomment">///         fn button_clicked(&amp;self, button: &amp;gtk::Button) {</span>
-<span class="doccomment">///             button.set_label(&quot;I was clicked!&quot;);</span>
-<span class="doccomment">///             self.label.set_label(&quot;The button was clicked!&quot;);</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///         #[template_callback(function, name = &quot;strlen&quot;)]</span>
-<span class="doccomment">///         fn string_length(s: &amp;str) -&gt; u64 {</span>
-<span class="doccomment">///             s.len() as u64</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     impl ObjectImpl for MyWidget {}</span>
-<span class="doccomment">///     impl WidgetImpl for MyWidget {}</span>
-<span class="doccomment">///     impl BoxImpl for MyWidget {}</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// glib::wrapper! {</span>
-<span class="doccomment">///     pub struct MyWidget(ObjectSubclass&lt;imp::MyWidget&gt;) @extends gtk::Widget, gtk::Box;</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// #[gtk::template_callbacks]</span>
-<span class="doccomment">/// impl MyWidget {</span>
-<span class="doccomment">///     pub fn new() -&gt; Self {</span>
-<span class="doccomment">///         glib::Object::new(&amp;[]).expect(&quot;Failed to create an instance of MyWidget&quot;)</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///     #[template_callback]</span>
-<span class="doccomment">///     pub fn print_both_labels(&amp;self) {</span>
-<span class="doccomment">///         let self_ = imp::MyWidget::from_instance(self);</span>
-<span class="doccomment">///         println!(&quot;{} {}&quot;, self_.label.label(), self_.button.label().unwrap().as_str());</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// pub struct Utility {}</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// #[gtk::template_callbacks(functions)]</span>
-<span class="doccomment">/// impl Utility {</span>
-<span class="doccomment">///     #[template_callback]</span>
-<span class="doccomment">///     fn concat_strs(#[rest] values: &amp;[glib::Value]) -&gt; String {</span>
-<span class="doccomment">///         let mut res = String::new();</span>
-<span class="doccomment">///         for (index, value) in values.iter().enumerate() {</span>
-<span class="doccomment">///             res.push_str(value.get::&lt;&amp;str&gt;().unwrap_or_else(|e| {</span>
-<span class="doccomment">///                 panic!(&quot;Expected string value for argument {}: {}&quot;, index, e);</span>
-<span class="doccomment">///             }));</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///         res</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///     #[template_callback(function = false)]</span>
-<span class="doccomment">///     fn reset_label(label: &amp;gtk::Label) {</span>
-<span class="doccomment">///         label.set_label(&quot;&quot;);</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">proc_macro_attribute</span>]</span>
-<span class="attribute">#[<span class="ident">proc_macro_error</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">template_callbacks</span>(<span class="ident">attr</span>: <span class="ident">TokenStream</span>, <span class="ident">item</span>: <span class="ident">TokenStream</span>) -&gt; <span class="ident">TokenStream</span> {
-    <span class="kw">use</span> <span class="ident">proc_macro_error::abort_call_site</span>;
-    <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="macro">parse_macro_input!</span>(<span class="ident">attr</span> <span class="kw">as</span> <span class="ident">template_callbacks_attribute::Args</span>);
-    <span class="kw">match</span> <span class="ident">syn::parse</span>::<span class="op">&lt;</span><span class="ident">syn::ItemImpl</span><span class="op">&gt;</span>(<span class="ident">item</span>) {
-        <span class="prelude-val">Ok</span>(<span class="ident">input</span>) =&gt; <span class="ident">template_callbacks_attribute::impl_template_callbacks</span>(<span class="ident">input</span>, <span class="ident">args</span>).<span class="ident">into</span>(),
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">abort_call_site!</span>(<span class="ident">template_callbacks_attribute::WRONG_PLACE_MSG</span>),
+<span class="doccomment">/// Attribute macro for creating template callbacks from Rust methods.
+///
+/// Widgets with [`CompositeTemplate`] can then make use of these callbacks from within their
+/// template XML definition. The attribute must be applied to an `impl` statement of a struct.
+/// Functions marked as callbacks within the `impl` will be stored in a static array. Then, in the
+/// [`ObjectSubclass`] implementation you will need to call [`bind_template_callbacks`] and/or
+/// [`bind_template_instance_callbacks`] in the [`class_init`] function.
+///
+/// Template callbacks can be specified on both a widget&#39;s public wrapper `impl` or on its private
+/// subclass `impl`, or from external types. If callbacks are specified on the public wrapper, then
+/// `bind_template_instance_callbacks` must be called in `class_init`. If callbacks are specified
+/// on the private subclass, then `bind_template_callbacks` must be called in `class_init`. To use
+/// the callbacks from an external type, call [`T::bind_template_callbacks`] in `class_init`, where
+/// `T` is the other type. See the example below for usage of all three.
+///
+/// These callbacks can be bound using the `&lt;signal&gt;` or `&lt;closure&gt;` tags in the template file.
+/// Note that the arguments and return type will only be checked at run time when the method is
+/// invoked.
+///
+/// Template callbacks can optionally take `self` or `&amp;self` as a first parameter. In this case,
+/// the attribute `swapped=&quot;true&quot;` will usually have to be set on the `&lt;signal&gt;` or `&lt;closure&gt;` tag
+/// in order to invoke the function correctly. Note that by-value `self` will only work with
+/// template callbacks on the wrapper type.
+///
+/// Template callbacks that have no return value can also be `async`, in which case the callback
+/// will be spawned as new future on the default main context using
+/// [`glib::MainContext::spawn_local`]. Invoking the callback multiple times will spawn an
+/// additional future each time it is invoked. This means that multiple futures for an async
+/// callback can be active at any given time, so care must be taken to avoid any kind of data
+/// races. Async callbacks may prefer communicating back to the caller or widget over channels
+/// instead of mutating internal widget state, or may want to make use of a locking flag to ensure
+/// only one future can be active at once. Widgets may also want to show a visual indicator such as
+/// a [`Spinner`] while the future is active to communicate to the user that a background task is
+/// running.
+///
+/// The following options are supported on the attribute:
+/// - `functions` makes all callbacks use the `function` attribute by default. (see below)
+///
+/// The `template_callback` attribute is used to mark methods that will be exposed to the template
+/// scope. It can take the following options:
+/// - `name` renames the callback. Defaults to the function name if not defined.
+/// - `function` ignores the first value when calling the callback and disallows `self`.  Useful
+/// for callbacks called from `&lt;closure&gt;` tags.
+/// - `function = false` reverts the effects of `functions` used on the `impl`, so the callback
+/// gets the first value and can take `self` again. Mainly useful for callbacks that are invoked
+/// with `swapped=&quot;true&quot;`.
+///
+/// The `rest` attribute can be placed on the last argument of a template callback. This attribute
+/// must be used on an argument of type `&amp;[glib::Value]` and will pass in the remaining arguments.
+/// The first and last values will be omitted from the slice if this callback is a `function`.
+///
+/// Arguments and return types in template callbacks have some special restrictions, similar to the
+/// restrictions on [`glib::closure`]. Each argument&#39;s type must implement [`glib::ToValue`]. The
+/// last argument can also be `&amp;[glib::Value]` annotated with `#[rest]` as described above. The
+/// return type of a callback, if present, must implement [`glib::FromValue`]. Type-checking of
+/// inputs and outputs is done at run-time; if the argument types or return type do not match the
+/// type of the signal or closure then the callback will panic. To implement your own type checking
+/// or to use dynamic typing, an argument&#39;s type can be left as a [`&amp;glib::Value`].
+/// This can also be used if you need custom unboxing, such as if the target type does not
+/// implement `FromValue`.
+///
+/// [`glib::closure`]: ../glib/macro.closure.html
+/// [`glib::wrapper`]: ../glib/macro.wrapper.html
+/// [`ObjectSubclass`]: ../glib/subclass/types/trait.ObjectSubclass.html
+/// [`class_init`]: ../glib/subclass/types/trait.ObjectSubclass.html#method.class_init
+/// [`bind_template_callbacks`]: ../gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks
+/// [`bind_template_instance_callbacks`]: ../gtk4/subclass/widget/trait.CompositeTemplateInstanceCallbacksClass.html#tymethod.bind_template_instance_callbacks
+/// [`T::bind_template_callbacks`]: ../gtk4/subclass/widget/trait.CompositeTemplateCallbacks.html#method.bind_template_callbacks
+/// [`glib::FromValue`]: ../glib/value/trait.FromValue.html
+/// [`glib::ToValue`]: ../glib/value/trait.ToValue.html
+/// [`&amp;glib::Value`]: ../glib/value/struct.Value.html
+/// [`glib::MainContext::spawn_local`]: ../glib/struct.MainContext.html#method.spawn_local
+/// [`Spinner`]: ../gtk4/struct.Spinner.html
+///
+/// # Example
+///
+/// ```no_run
+/// # fn main() {}
+/// use gtk::prelude::*;
+/// use gtk::glib;
+/// use gtk::CompositeTemplate;
+/// use gtk::subclass::prelude::*;
+///
+/// mod imp {
+///     use super::*;
+///
+///     #[derive(Debug, Default, CompositeTemplate)]
+///     #[template(file = &quot;test/template_callbacks.ui&quot;)]
+///     pub struct MyWidget {
+///         #[template_child]
+///         pub label: TemplateChild&lt;gtk::Label&gt;,
+///         #[template_child(id = &quot;my_button_id&quot;)]
+///         pub button: TemplateChild&lt;gtk::Button&gt;,
+///     }
+///
+///     #[glib::object_subclass]
+///     impl ObjectSubclass for MyWidget {
+///         const NAME: &amp;&#39;static str = &quot;MyWidget&quot;;
+///         type Type = super::MyWidget;
+///         type ParentType = gtk::Box;
+///
+///         fn class_init(klass: &amp;mut Self::Class) {
+///             klass.bind_template();
+///             // Bind the private callbacks
+///             klass.bind_template_callbacks();
+///             // Bind the public callbacks
+///             klass.bind_template_instance_callbacks();
+///             // Bind callbacks from another struct
+///             super::Utility::bind_template_callbacks(klass);
+///         }
+///
+///         fn instance_init(obj: &amp;glib::subclass::InitializingObject&lt;Self&gt;) {
+///             obj.init_template();
+///         }
+///     }
+///
+///     #[gtk::template_callbacks]
+///     impl MyWidget {
+///         #[template_callback]
+///         fn button_clicked(&amp;self, button: &amp;gtk::Button) {
+///             button.set_label(&quot;I was clicked!&quot;);
+///             self.label.set_label(&quot;The button was clicked!&quot;);
+///         }
+///         #[template_callback(function, name = &quot;strlen&quot;)]
+///         fn string_length(s: &amp;str) -&gt; u64 {
+///             s.len() as u64
+///         }
+///     }
+///
+///     impl ObjectImpl for MyWidget {}
+///     impl WidgetImpl for MyWidget {}
+///     impl BoxImpl for MyWidget {}
+/// }
+///
+/// glib::wrapper! {
+///     pub struct MyWidget(ObjectSubclass&lt;imp::MyWidget&gt;) @extends gtk::Widget, gtk::Box;
+/// }
+///
+/// #[gtk::template_callbacks]
+/// impl MyWidget {
+///     pub fn new() -&gt; Self {
+///         glib::Object::new(&amp;[])
+///     }
+///     #[template_callback]
+///     pub fn print_both_labels(&amp;self) {
+///         let imp = self.imp();
+///         println!(&quot;{} {}&quot;, imp.label.label(), imp.button.label().unwrap().as_str());
+///     }
+/// }
+///
+/// pub struct Utility {}
+///
+/// #[gtk::template_callbacks(functions)]
+/// impl Utility {
+///     #[template_callback]
+///     fn concat_strs(#[rest] values: &amp;[glib::Value]) -&gt; String {
+///         let mut res = String::new();
+///         for (index, value) in values.iter().enumerate() {
+///             res.push_str(value.get::&lt;&amp;str&gt;().unwrap_or_else(|e| {
+///                 panic!(&quot;Expected string value for argument {}: {}&quot;, index, e);
+///             }));
+///         }
+///         res
+///     }
+///     #[template_callback(function = false)]
+///     fn reset_label(label: &amp;gtk::Label) {
+///         label.set_label(&quot;&quot;);
+///     }
+/// }
+/// ```
+</span><span class="attribute">#[proc_macro_attribute]
+#[proc_macro_error]
+</span><span class="kw">pub fn </span>template_callbacks(attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+    <span class="kw">use </span>proc_macro_error::abort_call_site;
+    <span class="kw">let </span>args = <span class="macro">parse_macro_input!</span>(attr <span class="kw">as </span>template_callbacks_attribute::Args);
+    <span class="kw">match </span>syn::parse::&lt;syn::ItemImpl&gt;(item) {
+        <span class="prelude-val">Ok</span>(input) =&gt; template_callbacks_attribute::impl_template_callbacks(input, args).into(),
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">abort_call_site!</span>(template_callbacks_attribute::WRONG_PLACE_MSG),
+    }
+}
+
+<span class="doccomment">/// Attribute macro for declaring GTK tests.
+///
+/// Wraps the standard Rust [`test`] attribute with setup logic for GTK. All tests that call
+/// into GTK must use this attribute. This attribute can also be used on asynchronous functions;
+/// the asynchronous test will be run on the main thread context.
+///
+/// # Technical Details
+///
+/// GTK is a single-threaded library, so Rust&#39;s normal multi-threaded test behavior cannot be used.
+/// The `#[gtk::test]` attribute creates a main thread for GTK and runs all tests on that thread.
+/// This has the side effect of making all tests run serially, not in parallel.
+///
+/// [`test`]: &lt;https://doc.rust-lang.org/std/prelude/v1/macro.test.html&gt;
+///
+/// # Example
+///
+/// ```no_run
+/// use gtk::prelude::*;
+///
+/// #[gtk::test]
+/// fn test_button() {
+///     let button = gtk::Button::new();
+///     button.activate();
+/// }
+/// ```
+</span><span class="attribute">#[proc_macro_attribute]
+#[proc_macro_error]
+</span><span class="kw">pub fn </span>test(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+    <span class="kw">use </span>proc_macro_error::abort_call_site;
+    <span class="kw">use </span>quote::quote;
+
+    <span class="kw">match </span>syn::parse::&lt;syn::ItemFn&gt;(item) {
+        <span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>input) =&gt; {
+            <span class="kw">let </span>crate_ident = util::crate_ident_new();
+            <span class="kw">let </span>block = <span class="kw-2">&amp;</span>input.block;
+            <span class="kw">let </span>block = <span class="kw">if </span>input.sig.asyncness.is_some() {
+                <span class="macro">quote! </span>{
+                    #crate_ident::glib::MainContext::default().block_on(<span class="kw">async move </span>{
+                        #block
+                    })
+                }
+            } <span class="kw">else </span>{
+                <span class="macro">quote! </span>{ #block }
+            };
+            input.sig.asyncness.take();
+
+            <span class="kw">let </span>attrs = <span class="kw-2">&amp;</span>input.attrs;
+            <span class="kw">let </span>vis = <span class="kw-2">&amp;</span>input.vis;
+            <span class="kw">let </span>sig = <span class="kw-2">&amp;</span>input.sig;
+            <span class="kw">let </span>test = <span class="macro">quote! </span>{
+                #(#attrs)*
+                <span class="attribute">#[::std::prelude::v1::test]
+                </span>#vis #sig {
+                    #crate_ident::test_synced(<span class="kw">move </span>|| {
+                        #block
+                    })
+                }
+            };
+            test.into()
+        }
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">abort_call_site!</span>(<span class="string">&quot;This macro should be used on a function definition&quot;</span>),
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4_macros" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4_macros" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

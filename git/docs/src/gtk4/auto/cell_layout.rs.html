@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/cell_layout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell_layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/cell_layout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cell_layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -451,383 +448,382 @@
 <span id="375">375</span>
 <span id="376">376</span>
 <span id="377">377</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::CellArea</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::CellRenderer</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeIter</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeModel</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::CellArea;
+<span class="kw">use </span><span class="kw">crate</span>::CellRenderer;
+<span class="kw">use </span><span class="kw">crate</span>::TreeIter;
+<span class="kw">use </span><span class="kw">crate</span>::TreeModel;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// An interface for packing cells</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`CellLayout`][crate::CellLayout] is an interface to be implemented by all objects which</span>
-    <span class="doccomment">/// want to provide a [`TreeViewColumn`][crate::TreeViewColumn] like API for packing cells,</span>
-    <span class="doccomment">/// setting attributes and data funcs.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// One of the notable features provided by implementations of</span>
-    <span class="doccomment">/// [`CellLayout`][crate::CellLayout] are attributes. Attributes let you set the properties</span>
-    <span class="doccomment">/// in flexible ways. They can just be set to constant values like regular</span>
-    <span class="doccomment">/// properties. But they can also be mapped to a column of the underlying</span>
-    <span class="doccomment">/// tree model with gtk_cell_layout_set_attributes(), which means that the value</span>
-    <span class="doccomment">/// of the attribute can change from cell to cell as they are rendered by</span>
-    <span class="doccomment">/// the cell renderer. Finally, it is possible to specify a function with</span>
-    <span class="doccomment">/// gtk_cell_layout_set_cell_data_func() that is called to determine the</span>
-    <span class="doccomment">/// value of the attribute for each cell that is rendered.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # GtkCellLayouts as GtkBuildable</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Implementations of GtkCellLayout which also implement the GtkBuildable</span>
-    <span class="doccomment">/// interface ([`CellView`][crate::CellView], [`IconView`][crate::IconView], [`ComboBox`][crate::ComboBox],</span>
-    <span class="doccomment">/// [`EntryCompletion`][crate::EntryCompletion], [`TreeViewColumn`][crate::TreeViewColumn]) accept [`CellRenderer`][crate::CellRenderer] objects</span>
-    <span class="doccomment">/// as `&lt;child&gt;` elements in UI definitions. They support a custom `&lt;attributes&gt;`</span>
-    <span class="doccomment">/// element for their children, which can contain multiple `&lt;attribute&gt;`</span>
-    <span class="doccomment">/// elements. Each `&lt;attribute&gt;` element has a name attribute which specifies</span>
-    <span class="doccomment">/// a property of the cell renderer; the content of the element is the</span>
-    <span class="doccomment">/// attribute value.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is an example of a UI definition fragment specifying attributes:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```xml</span>
-    <span class="doccomment">/// &lt;object class=&quot;GtkCellView&quot;&gt;</span>
-    <span class="doccomment">///   &lt;child&gt;</span>
-    <span class="doccomment">///     &lt;object class=&quot;GtkCellRendererText&quot;/&gt;</span>
-    <span class="doccomment">///     &lt;attributes&gt;</span>
-    <span class="doccomment">///       &lt;attribute name=&quot;text&quot;&gt;0&lt;/attribute&gt;</span>
-    <span class="doccomment">///     &lt;/attributes&gt;</span>
-    <span class="doccomment">///   &lt;/child&gt;</span>
-    <span class="doccomment">/// &lt;/object&gt;</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Furthermore for implementations of [`CellLayout`][crate::CellLayout] that use a [`CellArea`][crate::CellArea]</span>
-    <span class="doccomment">/// to lay out cells (all [`CellLayout`][crate::CellLayout]s in GTK use a [`CellArea`][crate::CellArea])</span>
-    <span class="doccomment">/// [cell properties](class.CellArea.html#cell-properties) can also be defined</span>
-    <span class="doccomment">/// in the format by specifying the custom `&lt;cell-packing&gt;` attribute which can</span>
-    <span class="doccomment">/// contain multiple `&lt;property&gt;` elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Here is a UI definition fragment specifying cell properties:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```xml</span>
-    <span class="doccomment">/// &lt;object class=&quot;GtkTreeViewColumn&quot;&gt;</span>
-    <span class="doccomment">///   &lt;child&gt;</span>
-    <span class="doccomment">///     &lt;object class=&quot;GtkCellRendererText&quot;/&gt;</span>
-    <span class="doccomment">///     &lt;cell-packing&gt;</span>
-    <span class="doccomment">///       &lt;property name=&quot;align&quot;&gt;True&lt;/property&gt;</span>
-    <span class="doccomment">///       &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;</span>
-    <span class="doccomment">///     &lt;/cell-packing&gt;</span>
-    <span class="doccomment">///   &lt;/child&gt;</span>
-    <span class="doccomment">/// &lt;/object&gt;</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Subclassing GtkCellLayout implementations</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// When subclassing a widget that implements [`CellLayout`][crate::CellLayout] like</span>
-    <span class="doccomment">/// [`IconView`][crate::IconView] or [`ComboBox`][crate::ComboBox], there are some considerations related</span>
-    <span class="doccomment">/// to the fact that these widgets internally use a [`CellArea`][crate::CellArea].</span>
-    <span class="doccomment">/// The cell area is exposed as a construct-only property by these</span>
-    <span class="doccomment">/// widgets. This means that it is possible to e.g. do</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// GtkWIdget *combo =</span>
-    <span class="doccomment">///   g_object_new (GTK_TYPE_COMBO_BOX, &quot;cell-area&quot;, my_cell_area, NULL);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// to use a custom cell area with a combo box. But construct properties</span>
-    <span class="doccomment">/// are only initialized after instance `init()`</span>
-    <span class="doccomment">/// functions have run, which means that using functions which rely on</span>
-    <span class="doccomment">/// the existence of the cell area in your subclass `init()` function will</span>
-    <span class="doccomment">/// cause the default cell area to be instantiated. In this case, a provided</span>
-    <span class="doccomment">/// construct property value will be ignored (with a warning, to alert</span>
-    <span class="doccomment">/// you to the problem).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// static void</span>
-    <span class="doccomment">/// my_combo_box_init (MyComboBox *b)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   GtkCellRenderer *cell;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   cell = gtk_cell_renderer_pixbuf_new ();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // The following call causes the default cell area for combo boxes,</span>
-    <span class="doccomment">///   // a GtkCellAreaBox, to be instantiated</span>
-    <span class="doccomment">///   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (b), cell, FALSE);</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// GtkWidget *</span>
-    <span class="doccomment">/// my_combo_box_new (GtkCellArea *area)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   // This call is going to cause a warning about area being ignored</span>
-    <span class="doccomment">///   return g_object_new (MY_TYPE_COMBO_BOX, &quot;cell-area&quot;, area, NULL);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If supporting alternative cell areas with your derived widget is</span>
-    <span class="doccomment">/// not important, then this does not have to concern you. If you want</span>
-    <span class="doccomment">/// to support alternative cell areas, you can do so by moving the</span>
-    <span class="doccomment">/// problematic calls out of `init()` and into a `constructor()`</span>
-    <span class="doccomment">/// for your class.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`CellLayoutExt`][trait@crate::prelude::CellLayoutExt], [`CellLayoutExtManual`][trait@crate::prelude::CellLayoutExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkCellLayout&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellLayout</span>(<span class="ident">Interface</span><span class="op">&lt;</span><span class="ident">ffi::GtkCellLayout</span>, <span class="ident">ffi::GtkCellLayoutIface</span><span class="op">&gt;</span>);
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// An interface for packing cells
+    ///
+    /// [`CellLayout`][crate::CellLayout] is an interface to be implemented by all objects which
+    /// want to provide a [`TreeViewColumn`][crate::TreeViewColumn] like API for packing cells,
+    /// setting attributes and data funcs.
+    ///
+    /// One of the notable features provided by implementations of
+    /// [`CellLayout`][crate::CellLayout] are attributes. Attributes let you set the properties
+    /// in flexible ways. They can just be set to constant values like regular
+    /// properties. But they can also be mapped to a column of the underlying
+    /// tree model with gtk_cell_layout_set_attributes(), which means that the value
+    /// of the attribute can change from cell to cell as they are rendered by
+    /// the cell renderer. Finally, it is possible to specify a function with
+    /// gtk_cell_layout_set_cell_data_func() that is called to determine the
+    /// value of the attribute for each cell that is rendered.
+    ///
+    /// # GtkCellLayouts as GtkBuildable
+    ///
+    /// Implementations of GtkCellLayout which also implement the GtkBuildable
+    /// interface ([`CellView`][crate::CellView], [`IconView`][crate::IconView], [`ComboBox`][crate::ComboBox],
+    /// [`EntryCompletion`][crate::EntryCompletion], [`TreeViewColumn`][crate::TreeViewColumn]) accept [`CellRenderer`][crate::CellRenderer] objects
+    /// as `&lt;child&gt;` elements in UI definitions. They support a custom `&lt;attributes&gt;`
+    /// element for their children, which can contain multiple `&lt;attribute&gt;`
+    /// elements. Each `&lt;attribute&gt;` element has a name attribute which specifies
+    /// a property of the cell renderer; the content of the element is the
+    /// attribute value.
+    ///
+    /// This is an example of a UI definition fragment specifying attributes:
+    ///
+    /// ```xml
+    /// &lt;object class=&quot;GtkCellView&quot;&gt;
+    ///   &lt;child&gt;
+    ///     &lt;object class=&quot;GtkCellRendererText&quot;/&gt;
+    ///     &lt;attributes&gt;
+    ///       &lt;attribute name=&quot;text&quot;&gt;0&lt;/attribute&gt;
+    ///     &lt;/attributes&gt;
+    ///   &lt;/child&gt;
+    /// &lt;/object&gt;
+    /// ```
+    ///
+    /// Furthermore for implementations of [`CellLayout`][crate::CellLayout] that use a [`CellArea`][crate::CellArea]
+    /// to lay out cells (all [`CellLayout`][crate::CellLayout]s in GTK use a [`CellArea`][crate::CellArea])
+    /// [cell properties](class.CellArea.html#cell-properties) can also be defined
+    /// in the format by specifying the custom `&lt;cell-packing&gt;` attribute which can
+    /// contain multiple `&lt;property&gt;` elements.
+    ///
+    /// Here is a UI definition fragment specifying cell properties:
+    ///
+    /// ```xml
+    /// &lt;object class=&quot;GtkTreeViewColumn&quot;&gt;
+    ///   &lt;child&gt;
+    ///     &lt;object class=&quot;GtkCellRendererText&quot;/&gt;
+    ///     &lt;cell-packing&gt;
+    ///       &lt;property name=&quot;align&quot;&gt;True&lt;/property&gt;
+    ///       &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+    ///     &lt;/cell-packing&gt;
+    ///   &lt;/child&gt;
+    /// &lt;/object&gt;
+    /// ```
+    ///
+    /// # Subclassing GtkCellLayout implementations
+    ///
+    /// When subclassing a widget that implements [`CellLayout`][crate::CellLayout] like
+    /// [`IconView`][crate::IconView] or [`ComboBox`][crate::ComboBox], there are some considerations related
+    /// to the fact that these widgets internally use a [`CellArea`][crate::CellArea].
+    /// The cell area is exposed as a construct-only property by these
+    /// widgets. This means that it is possible to e.g. do
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// GtkWIdget *combo =
+    ///   g_object_new (GTK_TYPE_COMBO_BOX, &quot;cell-area&quot;, my_cell_area, NULL);
+    /// ```
+    ///
+    /// to use a custom cell area with a combo box. But construct properties
+    /// are only initialized after instance `init()`
+    /// functions have run, which means that using functions which rely on
+    /// the existence of the cell area in your subclass `init()` function will
+    /// cause the default cell area to be instantiated. In this case, a provided
+    /// construct property value will be ignored (with a warning, to alert
+    /// you to the problem).
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// static void
+    /// my_combo_box_init (MyComboBox *b)
+    /// {
+    ///   GtkCellRenderer *cell;
+    ///
+    ///   cell = gtk_cell_renderer_pixbuf_new ();
+    ///
+    ///   // The following call causes the default cell area for combo boxes,
+    ///   // a GtkCellAreaBox, to be instantiated
+    ///   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (b), cell, FALSE);
+    ///   ...
+    /// }
+    ///
+    /// GtkWidget *
+    /// my_combo_box_new (GtkCellArea *area)
+    /// {
+    ///   // This call is going to cause a warning about area being ignored
+    ///   return g_object_new (MY_TYPE_COMBO_BOX, &quot;cell-area&quot;, area, NULL);
+    /// }
+    /// ```
+    ///
+    /// If supporting alternative cell areas with your derived widget is
+    /// not important, then this does not have to concern you. If you want
+    /// to support alternative cell areas, you can do so by moving the
+    /// problematic calls out of `init()` and into a `constructor()`
+    /// for your class.
+    ///
+    /// # Implements
+    ///
+    /// [`CellLayoutExt`][trait@crate::prelude::CellLayoutExt], [`CellLayoutExtManual`][trait@crate::prelude::CellLayoutExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkCellLayout&quot;</span>)]
+    </span><span class="kw">pub struct </span>CellLayout(Interface&lt;ffi::GtkCellLayout, ffi::GtkCellLayoutIface&gt;);
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_cell_layout_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_cell_layout_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">CellLayout</span> {
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CellLayout</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+<span class="kw">impl </span>CellLayout {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>CellLayout&gt; = <span class="prelude-val">None</span>;
 }
 
-<span class="doccomment">/// Trait containing all [`struct@CellLayout`] methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Implementors</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`CellAreaBox`][struct@crate::CellAreaBox], [`CellArea`][struct@crate::CellArea], [`CellLayout`][struct@crate::CellLayout], [`CellView`][struct@crate::CellView], [`ComboBoxText`][struct@crate::ComboBoxText], [`ComboBox`][struct@crate::ComboBox], [`EntryCompletion`][struct@crate::EntryCompletion], [`IconView`][struct@crate::IconView], [`TreeViewColumn`][struct@crate::TreeViewColumn]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CellLayoutExt</span>: <span class="lifetime">&#39;static</span> {
-    <span class="doccomment">/// Adds an attribute mapping to the list in @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The @column is the column of the model to get a value from, and the</span>
-    <span class="doccomment">/// @attribute is the property on @cell to be set from that value. So for</span>
-    <span class="doccomment">/// example if column 2 of the model contains strings, you could have the</span>
-    <span class="doccomment">/// “text” attribute of a [`CellRendererText`][crate::CellRendererText] get its values from column 2.</span>
-    <span class="doccomment">/// In this context &quot;attribute&quot; and &quot;property&quot; are used interchangeably.</span>
-    <span class="doccomment">/// ## `cell`</span>
-    <span class="doccomment">/// a [`CellRenderer`][crate::CellRenderer]</span>
-    <span class="doccomment">/// ## `attribute`</span>
-    <span class="doccomment">/// a property on the renderer</span>
-    <span class="doccomment">/// ## `column`</span>
-    <span class="doccomment">/// the column position on the model to get the attribute from</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_add_attribute&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">add_attribute</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">attribute</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">column</span>: <span class="ident">i32</span>);
+<span class="doccomment">/// Trait containing all [`struct@CellLayout`] methods.
+///
+/// # Implementors
+///
+/// [`CellAreaBox`][struct@crate::CellAreaBox], [`CellArea`][struct@crate::CellArea], [`CellLayout`][struct@crate::CellLayout], [`CellView`][struct@crate::CellView], [`ComboBoxText`][struct@crate::ComboBoxText], [`ComboBox`][struct@crate::ComboBox], [`EntryCompletion`][struct@crate::EntryCompletion], [`IconView`][struct@crate::IconView], [`TreeViewColumn`][struct@crate::TreeViewColumn]
+</span><span class="kw">pub trait </span>CellLayoutExt: <span class="lifetime">&#39;static </span>{
+    <span class="doccomment">/// Adds an attribute mapping to the list in @self.
+    ///
+    /// The @column is the column of the model to get a value from, and the
+    /// @attribute is the property on @cell to be set from that value. So for
+    /// example if column 2 of the model contains strings, you could have the
+    /// “text” attribute of a [`CellRendererText`][crate::CellRendererText] get its values from column 2.
+    /// In this context &quot;attribute&quot; and &quot;property&quot; are used interchangeably.
+    /// ## `cell`
+    /// a [`CellRenderer`][crate::CellRenderer]
+    /// ## `attribute`
+    /// a property on the renderer
+    /// ## `column`
+    /// the column position on the model to get the attribute from
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_add_attribute&quot;</span>)]
+    </span><span class="kw">fn </span>add_attribute(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, attribute: <span class="kw-2">&amp;</span>str, column: i32);
 
-    <span class="doccomment">/// Unsets all the mappings on all renderers on @self and</span>
-    <span class="doccomment">/// removes all renderers from @self.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_clear&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Unsets all the mappings on all renderers on @self and
+    /// removes all renderers from @self.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_clear&quot;</span>)]
+    </span><span class="kw">fn </span>clear(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Clears all existing attributes previously set with</span>
-    <span class="doccomment">/// gtk_cell_layout_set_attributes().</span>
-    <span class="doccomment">/// ## `cell`</span>
-    <span class="doccomment">/// a [`CellRenderer`][crate::CellRenderer] to clear the attribute mapping on</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_clear_attributes&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">clear_attributes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>);
+    <span class="doccomment">/// Clears all existing attributes previously set with
+    /// gtk_cell_layout_set_attributes().
+    /// ## `cell`
+    /// a [`CellRenderer`][crate::CellRenderer] to clear the attribute mapping on
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_clear_attributes&quot;</span>)]
+    </span><span class="kw">fn </span>clear_attributes(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;);
 
-    <span class="doccomment">/// Returns the underlying [`CellArea`][crate::CellArea] which might be @self</span>
-    <span class="doccomment">/// if called on a [`CellArea`][crate::CellArea] or might be [`None`] if no [`CellArea`][crate::CellArea]</span>
-    <span class="doccomment">/// is used by @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the cell area used by @self</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_get_area&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_area&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">area</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CellArea</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Returns the underlying [`CellArea`][crate::CellArea] which might be @self
+    /// if called on a [`CellArea`][crate::CellArea] or might be [`None`] if no [`CellArea`][crate::CellArea]
+    /// is used by @self.
+    ///
+    /// # Returns
+    ///
+    /// the cell area used by @self
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_get_area&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_area&quot;</span>)]
+    </span><span class="kw">fn </span>area(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;CellArea&gt;;
 
-    <span class="doccomment">/// Returns the cell renderers which have been added to @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   a list of cell renderers. The list, but not the renderers has</span>
-    <span class="doccomment">///   been newly allocated and should be freed with g_list_free()</span>
-    <span class="doccomment">///   when no longer needed.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_get_cells&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_cells&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">cells</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Returns the cell renderers which have been added to @self.
+    ///
+    /// # Returns
+    ///
+    ///
+    ///   a list of cell renderers. The list, but not the renderers has
+    ///   been newly allocated and should be freed with g_list_free()
+    ///   when no longer needed.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_get_cells&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_cells&quot;</span>)]
+    </span><span class="kw">fn </span>cells(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;CellRenderer&gt;;
 
-    <span class="doccomment">/// Adds the @cell to the end of @self. If @expand is [`false`], then the</span>
-    <span class="doccomment">/// @cell is allocated no more space than it needs. Any unused space is</span>
-    <span class="doccomment">/// divided evenly between cells for which @expand is [`true`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that reusing the same cell renderer is not supported.</span>
-    <span class="doccomment">/// ## `cell`</span>
-    <span class="doccomment">/// a [`CellRenderer`][crate::CellRenderer]</span>
-    <span class="doccomment">/// ## `expand`</span>
-    <span class="doccomment">/// [`true`] if @cell is to be given extra space allocated to @self</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_pack_end&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">pack_end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">expand</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// Adds the @cell to the end of @self. If @expand is [`false`], then the
+    /// @cell is allocated no more space than it needs. Any unused space is
+    /// divided evenly between cells for which @expand is [`true`].
+    ///
+    /// Note that reusing the same cell renderer is not supported.
+    /// ## `cell`
+    /// a [`CellRenderer`][crate::CellRenderer]
+    /// ## `expand`
+    /// [`true`] if @cell is to be given extra space allocated to @self
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_pack_end&quot;</span>)]
+    </span><span class="kw">fn </span>pack_end(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, expand: bool);
 
-    <span class="doccomment">/// Packs the @cell into the beginning of @self. If @expand is [`false`],</span>
-    <span class="doccomment">/// then the @cell is allocated no more space than it needs. Any unused space</span>
-    <span class="doccomment">/// is divided evenly between cells for which @expand is [`true`].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that reusing the same cell renderer is not supported.</span>
-    <span class="doccomment">/// ## `cell`</span>
-    <span class="doccomment">/// a [`CellRenderer`][crate::CellRenderer]</span>
-    <span class="doccomment">/// ## `expand`</span>
-    <span class="doccomment">/// [`true`] if @cell is to be given extra space allocated to @self</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_pack_start&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">pack_start</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">expand</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// Packs the @cell into the beginning of @self. If @expand is [`false`],
+    /// then the @cell is allocated no more space than it needs. Any unused space
+    /// is divided evenly between cells for which @expand is [`true`].
+    ///
+    /// Note that reusing the same cell renderer is not supported.
+    /// ## `cell`
+    /// a [`CellRenderer`][crate::CellRenderer]
+    /// ## `expand`
+    /// [`true`] if @cell is to be given extra space allocated to @self
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_pack_start&quot;</span>)]
+    </span><span class="kw">fn </span>pack_start(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, expand: bool);
 
-    <span class="doccomment">/// Re-inserts @cell at @position.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that @cell has already to be packed into @self</span>
-    <span class="doccomment">/// for this to function properly.</span>
-    <span class="doccomment">/// ## `cell`</span>
-    <span class="doccomment">/// a [`CellRenderer`][crate::CellRenderer] to reorder</span>
-    <span class="doccomment">/// ## `position`</span>
-    <span class="doccomment">/// new position to insert @cell at</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_reorder&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">reorder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">position</span>: <span class="ident">i32</span>);
+    <span class="doccomment">/// Re-inserts @cell at @position.
+    ///
+    /// Note that @cell has already to be packed into @self
+    /// for this to function properly.
+    /// ## `cell`
+    /// a [`CellRenderer`][crate::CellRenderer] to reorder
+    /// ## `position`
+    /// new position to insert @cell at
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_reorder&quot;</span>)]
+    </span><span class="kw">fn </span>reorder(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, position: i32);
 
-    <span class="doccomment">/// Sets the [`CellLayout`][crate::CellLayout]DataFunc to use for @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is used instead of the standard attributes mapping</span>
-    <span class="doccomment">/// for setting the column value, and should set the value of @self’s</span>
-    <span class="doccomment">/// cell renderer(s) as appropriate.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// @func may be [`None`] to remove a previously set function.</span>
-    <span class="doccomment">/// ## `cell`</span>
-    <span class="doccomment">/// a [`CellRenderer`][crate::CellRenderer]</span>
-    <span class="doccomment">/// ## `func`</span>
-    <span class="doccomment">/// the [`CellLayout`][crate::CellLayout]DataFunc to use</span>
-    <span class="doccomment">/// ## `func_data`</span>
-    <span class="doccomment">/// user data for @func</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_cell_layout_set_cell_data_func&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_cell_data_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">CellLayout</span>, <span class="kw-2">&amp;</span><span class="ident">CellRenderer</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="doccomment">/// Sets the [`CellLayout`][crate::CellLayout]DataFunc to use for @self.
+    ///
+    /// This function is used instead of the standard attributes mapping
+    /// for setting the column value, and should set the value of @self’s
+    /// cell renderer(s) as appropriate.
+    ///
+    /// @func may be [`None`] to remove a previously set function.
+    /// ## `cell`
+    /// a [`CellRenderer`][crate::CellRenderer]
+    /// ## `func`
+    /// the [`CellLayout`][crate::CellLayout]DataFunc to use
+    /// ## `func_data`
+    /// user data for @func
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_cell_layout_set_cell_data_func&quot;</span>)]
+    </span><span class="kw">fn </span>set_cell_data_func&lt;P: Fn(<span class="kw-2">&amp;</span>CellLayout, <span class="kw-2">&amp;</span>CellRenderer, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>,
-        <span class="ident">func</span>: <span class="ident">P</span>,
+        cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;,
+        func: P,
     );
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellLayout</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">CellLayoutExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">add_attribute</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">attribute</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">column</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_cell_layout_add_attribute</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cell</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">attribute</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">column</span>,
+<span class="kw">impl</span>&lt;O: IsA&lt;CellLayout&gt;&gt; CellLayoutExt <span class="kw">for </span>O {
+    <span class="kw">fn </span>add_attribute(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, attribute: <span class="kw-2">&amp;</span>str, column: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_cell_layout_add_attribute(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                cell.as_ref().to_glib_none().<span class="number">0</span>,
+                attribute.to_glib_none().<span class="number">0</span>,
+                column,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_cell_layout_clear</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>clear(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_cell_layout_clear(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">clear_attributes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_cell_layout_clear_attributes</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cell</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>clear_attributes(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_cell_layout_clear_attributes(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                cell.as_ref().to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">area</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CellArea</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_cell_layout_get_area</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>area(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;CellArea&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_cell_layout_get_area(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">cells</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">FromGlibPtrContainer::from_glib_container</span>(<span class="ident">ffi::gtk_cell_layout_get_cells</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>cells(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;CellRenderer&gt; {
+        <span class="kw">unsafe </span>{
+            FromGlibPtrContainer::from_glib_container(ffi::gtk_cell_layout_get_cells(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">pack_end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">expand</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_cell_layout_pack_end</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cell</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">expand</span>.<span class="ident">into_glib</span>(),
+    <span class="kw">fn </span>pack_end(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, expand: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_cell_layout_pack_end(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                cell.as_ref().to_glib_none().<span class="number">0</span>,
+                expand.into_glib(),
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">pack_start</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">expand</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_cell_layout_pack_start</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cell</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">expand</span>.<span class="ident">into_glib</span>(),
+    <span class="kw">fn </span>pack_start(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, expand: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_cell_layout_pack_start(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                cell.as_ref().to_glib_none().<span class="number">0</span>,
+                expand.into_glib(),
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">reorder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>, <span class="ident">position</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_cell_layout_reorder</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cell</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">position</span>,
+    <span class="kw">fn </span>reorder(<span class="kw-2">&amp;</span><span class="self">self</span>, cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;, position: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_cell_layout_reorder(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                cell.as_ref().to_glib_none().<span class="number">0</span>,
+                position,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_cell_data_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">CellLayout</span>, <span class="kw-2">&amp;</span><span class="ident">CellRenderer</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="kw">fn </span>set_cell_data_func&lt;P: Fn(<span class="kw-2">&amp;</span>CellLayout, <span class="kw-2">&amp;</span>CellRenderer, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">cell</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellRenderer</span><span class="op">&gt;</span>,
-        <span class="ident">func</span>: <span class="ident">P</span>,
+        cell: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellRenderer&gt;,
+        func: P,
     ) {
-        <span class="kw">let</span> <span class="ident">func_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">func</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">func_func</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">CellLayout</span>, <span class="kw-2">&amp;</span><span class="ident">CellRenderer</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">cell_layout</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkCellLayout</span>,
-            <span class="ident">cell</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkCellRenderer</span>,
-            <span class="ident">tree_model</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkTreeModel</span>,
-            <span class="ident">iter</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkTreeIter</span>,
-            <span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>,
+        <span class="kw">let </span>func_data: Box_&lt;P&gt; = Box_::new(func);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>func_func&lt;
+            P: Fn(<span class="kw-2">&amp;</span>CellLayout, <span class="kw-2">&amp;</span>CellRenderer, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            cell_layout: <span class="kw-2">*mut </span>ffi::GtkCellLayout,
+            cell: <span class="kw-2">*mut </span>ffi::GtkCellRenderer,
+            tree_model: <span class="kw-2">*mut </span>ffi::GtkTreeModel,
+            iter: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
+            data: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">cell_layout</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">cell_layout</span>);
-            <span class="kw">let</span> <span class="ident">cell</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">cell</span>);
-            <span class="kw">let</span> <span class="ident">tree_model</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">tree_model</span>);
-            <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">iter</span>);
-            <span class="kw">let</span> <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="ident">P</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
-            (<span class="kw-2">*</span><span class="ident">callback</span>)(<span class="kw-2">&amp;</span><span class="ident">cell_layout</span>, <span class="kw-2">&amp;</span><span class="ident">cell</span>, <span class="kw-2">&amp;</span><span class="ident">tree_model</span>, <span class="kw-2">&amp;</span><span class="ident">iter</span>);
+            <span class="kw">let </span>cell_layout = from_glib_borrow(cell_layout);
+            <span class="kw">let </span>cell = from_glib_borrow(cell);
+            <span class="kw">let </span>tree_model = from_glib_borrow(tree_model);
+            <span class="kw">let </span>iter = from_glib_borrow(iter);
+            <span class="kw">let </span>callback: <span class="kw-2">&amp;</span>P = <span class="kw-2">&amp;*</span>(data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+            (<span class="kw-2">*</span>callback)(<span class="kw-2">&amp;</span>cell_layout, <span class="kw-2">&amp;</span>cell, <span class="kw-2">&amp;</span>tree_model, <span class="kw-2">&amp;</span>iter);
         }
-        <span class="kw">let</span> <span class="ident">func</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">func_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy_func</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">CellLayout</span>, <span class="kw-2">&amp;</span><span class="ident">CellRenderer</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>,
+        <span class="kw">let </span>func = <span class="prelude-val">Some</span>(func_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>destroy_func&lt;
+            P: Fn(<span class="kw-2">&amp;</span>CellLayout, <span class="kw-2">&amp;</span>CellRenderer, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            data: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">_callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
+            <span class="kw">let </span>_callback: Box_&lt;P&gt; = Box_::from_raw(data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
         }
-        <span class="kw">let</span> <span class="ident">destroy_call4</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">destroy_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">func_data</span>;
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_cell_layout_set_cell_data_func</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">cell</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">func</span>,
-                <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="ident">destroy_call4</span>,
+        <span class="kw">let </span>destroy_call4 = <span class="prelude-val">Some</span>(destroy_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">let </span>super_callback0: Box_&lt;P&gt; = func_data;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_cell_layout_set_cell_data_func(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                cell.as_ref().to_glib_none().<span class="number">0</span>,
+                func,
+                Box_::into_raw(super_callback0) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                destroy_call4,
             );
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">CellLayout</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;CellLayout&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>CellLayout {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;CellLayout&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

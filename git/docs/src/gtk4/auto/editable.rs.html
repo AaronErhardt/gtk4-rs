@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/editable.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>editable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/editable.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>editable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -1008,944 +1005,939 @@
 <span id="932">932</span>
 <span id="933">933</span>
 <span id="934">934</span>
-<span id="935">935</span>
-<span id="936">936</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Accessible</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Buildable</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ConstraintTarget</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Widget</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::StaticType</span>;
-<span class="kw">use</span> <span class="ident">glib::ToValue</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::Accessible;
+<span class="kw">use </span><span class="kw">crate</span>::Buildable;
+<span class="kw">use </span><span class="kw">crate</span>::ConstraintTarget;
+<span class="kw">use </span><span class="kw">crate</span>::Widget;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::StaticType;
+<span class="kw">use </span>glib::ToValue;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// [`Editable`][crate::Editable] is an interface for text editing widgets.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Typical examples of editable widgets are [`Entry`][crate::Entry] and</span>
-    <span class="doccomment">/// [`SpinButton`][crate::SpinButton]. It contains functions for generically manipulating</span>
-    <span class="doccomment">/// an editable widget, a large number of action signals used for key bindings,</span>
-    <span class="doccomment">/// and several signals that an application can connect to modify the behavior</span>
-    <span class="doccomment">/// of a widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// As an example of the latter usage, by connecting the following handler to</span>
-    <span class="doccomment">/// `signal::Editable::insert-text`, an application can convert all entry</span>
-    <span class="doccomment">/// into a widget into uppercase.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Forcing entry to uppercase.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// #include &lt;ctype.h&gt;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// void</span>
-    <span class="doccomment">/// insert_text_handler (GtkEditable *editable,</span>
-    <span class="doccomment">///                      const char  *text,</span>
-    <span class="doccomment">///                      int          length,</span>
-    <span class="doccomment">///                      int         *position,</span>
-    <span class="doccomment">///                      gpointer     data)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   char *result = g_utf8_strup (text, length);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   g_signal_handlers_block_by_func (editable,</span>
-    <span class="doccomment">///                                (gpointer) insert_text_handler, data);</span>
-    <span class="doccomment">///   gtk_editable_insert_text (editable, result, length, position);</span>
-    <span class="doccomment">///   g_signal_handlers_unblock_by_func (editable,</span>
-    <span class="doccomment">///                                      (gpointer) insert_text_handler, data);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   g_signal_stop_emission_by_name (editable, &quot;insert_text&quot;);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   g_free (result);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## Implementing GtkEditable</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The most likely scenario for implementing [`Editable`][crate::Editable] on your own widget</span>
-    <span class="doccomment">/// is that you will embed a [`Text`][crate::Text] inside a complex widget, and want to</span>
-    <span class="doccomment">/// delegate the editable functionality to that text widget. [`Editable`][crate::Editable]</span>
-    <span class="doccomment">/// provides some utility functions to make this easy.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In your class_init function, call [`install_properties()`][Self::install_properties()],</span>
-    <span class="doccomment">/// passing the first available property ID:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// static void</span>
-    <span class="doccomment">/// my_class_init (MyClass *class)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">///   g_object_class_install_properties (object_class, NUM_PROPERTIES, props);</span>
-    <span class="doccomment">///   gtk_editable_install_properties (object_clas, NUM_PROPERTIES);</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In your interface_init function for the [`Editable`][crate::Editable] interface, provide</span>
-    <span class="doccomment">/// an implementation for the get_delegate vfunc that returns your text widget:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// GtkEditable *</span>
-    <span class="doccomment">/// get_editable_delegate (GtkEditable *editable)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   return GTK_EDITABLE (MY_WIDGET (editable)-&gt;text_widget);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// static void</span>
-    <span class="doccomment">/// my_editable_init (GtkEditableInterface *iface)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   iface-&gt;get_delegate = get_editable_delegate;</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// You don&#39;t need to provide any other vfuncs. The default implementations</span>
-    <span class="doccomment">/// work by forwarding to the delegate that the GtkEditableInterface.get_delegate()</span>
-    <span class="doccomment">/// vfunc returns.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In your instance_init function, create your text widget, and then call</span>
-    <span class="doccomment">/// [`EditableExt::init_delegate()`][crate::prelude::EditableExt::init_delegate()]:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// static void</span>
-    <span class="doccomment">/// my_widget_init (MyWidget *self)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">///   self-&gt;text_widget = gtk_text_new ();</span>
-    <span class="doccomment">///   gtk_editable_init_delegate (GTK_EDITABLE (self));</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In your dispose function, call [`EditableExt::finish_delegate()`][crate::prelude::EditableExt::finish_delegate()] before</span>
-    <span class="doccomment">/// destroying your text widget:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">/// static void</span>
-    <span class="doccomment">/// my_widget_dispose (GObject *object)</span>
-    <span class="doccomment">/// {</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">///   gtk_editable_finish_delegate (GTK_EDITABLE (self));</span>
-    <span class="doccomment">///   g_clear_pointer (&amp;self-&gt;text_widget, gtk_widget_unparent);</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Finally, use [`delegate_set_property()`][Self::delegate_set_property()] in your `set_property`</span>
-    <span class="doccomment">/// function (and similar for `get_property`), to set the editable properties:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// **⚠️ The following code is in c ⚠️**</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```c</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">///   if (gtk_editable_delegate_set_property (object, prop_id, value, pspec))</span>
-    <span class="doccomment">///     return;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   switch (prop_id)</span>
-    <span class="doccomment">///   ...</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It is important to note that if you create a [`Editable`][crate::Editable] that uses</span>
-    <span class="doccomment">/// a delegate, the low level `signal::Editable::insert-text` and</span>
-    <span class="doccomment">/// `signal::Editable::delete-text` signals will be propagated from the</span>
-    <span class="doccomment">/// &quot;wrapper&quot; editable to the delegate, but they will not be propagated from</span>
-    <span class="doccomment">/// the delegate to the &quot;wrapper&quot; editable, as they would cause an infinite</span>
-    <span class="doccomment">/// recursion. If you wish to connect to the `signal::Editable::insert-text`</span>
-    <span class="doccomment">/// and `signal::Editable::delete-text` signals, you will need to connect</span>
-    <span class="doccomment">/// to them on the delegate obtained via [`EditableExt::delegate()`][crate::prelude::EditableExt::delegate()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`EditableExt`][trait@crate::prelude::EditableExt], [`WidgetExt`][trait@crate::prelude::WidgetExt], [`trait@glib::ObjectExt`], [`AccessibleExt`][trait@crate::prelude::AccessibleExt], [`BuildableExt`][trait@crate::prelude::BuildableExt], [`ConstraintTargetExt`][trait@crate::prelude::ConstraintTargetExt], [`EditableExtManual`][trait@crate::prelude::EditableExtManual], [`WidgetExtManual`][trait@crate::prelude::WidgetExtManual], [`AccessibleExtManual`][trait@crate::prelude::AccessibleExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkEditable&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Editable</span>(<span class="ident">Interface</span><span class="op">&lt;</span><span class="ident">ffi::GtkEditable</span>, <span class="ident">ffi::GtkEditableInterface</span><span class="op">&gt;</span>) @<span class="ident">requires</span> <span class="ident">Widget</span>, <span class="ident">Accessible</span>, <span class="ident">Buildable</span>, <span class="ident">ConstraintTarget</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// [`Editable`][crate::Editable] is an interface for text editing widgets.
+    ///
+    /// Typical examples of editable widgets are [`Entry`][crate::Entry] and
+    /// [`SpinButton`][crate::SpinButton]. It contains functions for generically manipulating
+    /// an editable widget, a large number of action signals used for key bindings,
+    /// and several signals that an application can connect to modify the behavior
+    /// of a widget.
+    ///
+    /// As an example of the latter usage, by connecting the following handler to
+    /// `signal::Editable::insert-text`, an application can convert all entry
+    /// into a widget into uppercase.
+    ///
+    /// ## Forcing entry to uppercase.
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// #include &lt;ctype.h&gt;
+    ///
+    /// void
+    /// insert_text_handler (GtkEditable *editable,
+    ///                      const char  *text,
+    ///                      int          length,
+    ///                      int         *position,
+    ///                      gpointer     data)
+    /// {
+    ///   char *result = g_utf8_strup (text, length);
+    ///
+    ///   g_signal_handlers_block_by_func (editable,
+    ///                                (gpointer) insert_text_handler, data);
+    ///   gtk_editable_insert_text (editable, result, length, position);
+    ///   g_signal_handlers_unblock_by_func (editable,
+    ///                                      (gpointer) insert_text_handler, data);
+    ///
+    ///   g_signal_stop_emission_by_name (editable, &quot;insert_text&quot;);
+    ///
+    ///   g_free (result);
+    /// }
+    /// ```
+    ///
+    /// ## Implementing GtkEditable
+    ///
+    /// The most likely scenario for implementing [`Editable`][crate::Editable] on your own widget
+    /// is that you will embed a [`Text`][crate::Text] inside a complex widget, and want to
+    /// delegate the editable functionality to that text widget. [`Editable`][crate::Editable]
+    /// provides some utility functions to make this easy.
+    ///
+    /// In your class_init function, call [`install_properties()`][Self::install_properties()],
+    /// passing the first available property ID:
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// static void
+    /// my_class_init (MyClass *class)
+    /// {
+    ///   ...
+    ///   g_object_class_install_properties (object_class, NUM_PROPERTIES, props);
+    ///   gtk_editable_install_properties (object_clas, NUM_PROPERTIES);
+    ///   ...
+    /// }
+    /// ```
+    ///
+    /// In your interface_init function for the [`Editable`][crate::Editable] interface, provide
+    /// an implementation for the get_delegate vfunc that returns your text widget:
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// GtkEditable *
+    /// get_editable_delegate (GtkEditable *editable)
+    /// {
+    ///   return GTK_EDITABLE (MY_WIDGET (editable)-&gt;text_widget);
+    /// }
+    ///
+    /// static void
+    /// my_editable_init (GtkEditableInterface *iface)
+    /// {
+    ///   iface-&gt;get_delegate = get_editable_delegate;
+    /// }
+    /// ```
+    ///
+    /// You don&#39;t need to provide any other vfuncs. The default implementations
+    /// work by forwarding to the delegate that the GtkEditableInterface.get_delegate()
+    /// vfunc returns.
+    ///
+    /// In your instance_init function, create your text widget, and then call
+    /// [`EditableExt::init_delegate()`][crate::prelude::EditableExt::init_delegate()]:
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// static void
+    /// my_widget_init (MyWidget *self)
+    /// {
+    ///   ...
+    ///   self-&gt;text_widget = gtk_text_new ();
+    ///   gtk_editable_init_delegate (GTK_EDITABLE (self));
+    ///   ...
+    /// }
+    /// ```
+    ///
+    /// In your dispose function, call [`EditableExt::finish_delegate()`][crate::prelude::EditableExt::finish_delegate()] before
+    /// destroying your text widget:
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    /// static void
+    /// my_widget_dispose (GObject *object)
+    /// {
+    ///   ...
+    ///   gtk_editable_finish_delegate (GTK_EDITABLE (self));
+    ///   g_clear_pointer (&amp;self-&gt;text_widget, gtk_widget_unparent);
+    ///   ...
+    /// }
+    /// ```
+    ///
+    /// Finally, use [`delegate_set_property()`][Self::delegate_set_property()] in your `set_property`
+    /// function (and similar for `get_property`), to set the editable properties:
+    ///
+    /// **⚠️ The following code is in c ⚠️**
+    ///
+    /// ```c
+    ///   ...
+    ///   if (gtk_editable_delegate_set_property (object, prop_id, value, pspec))
+    ///     return;
+    ///
+    ///   switch (prop_id)
+    ///   ...
+    /// ```
+    ///
+    /// It is important to note that if you create a [`Editable`][crate::Editable] that uses
+    /// a delegate, the low level `signal::Editable::insert-text` and
+    /// `signal::Editable::delete-text` signals will be propagated from the
+    /// &quot;wrapper&quot; editable to the delegate, but they will not be propagated from
+    /// the delegate to the &quot;wrapper&quot; editable, as they would cause an infinite
+    /// recursion. If you wish to connect to the `signal::Editable::insert-text`
+    /// and `signal::Editable::delete-text` signals, you will need to connect
+    /// to them on the delegate obtained via [`EditableExt::delegate()`][crate::prelude::EditableExt::delegate()].
+    ///
+    /// # Implements
+    ///
+    /// [`EditableExt`][trait@crate::prelude::EditableExt], [`WidgetExt`][trait@crate::prelude::WidgetExt], [`trait@glib::ObjectExt`], [`AccessibleExt`][trait@crate::prelude::AccessibleExt], [`BuildableExt`][trait@crate::prelude::BuildableExt], [`ConstraintTargetExt`][trait@crate::prelude::ConstraintTargetExt], [`EditableExtManual`][trait@crate::prelude::EditableExtManual], [`WidgetExtManual`][trait@crate::prelude::WidgetExtManual], [`AccessibleExtManual`][trait@crate::prelude::AccessibleExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkEditable&quot;</span>)]
+    </span><span class="kw">pub struct </span>Editable(Interface&lt;ffi::GtkEditable, ffi::GtkEditableInterface&gt;) @requires Widget, Accessible, Buildable, ConstraintTarget;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_editable_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_editable_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Editable</span> {
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Editable</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+<span class="kw">impl </span>Editable {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Editable&gt; = <span class="prelude-val">None</span>;
 }
 
-<span class="doccomment">/// Trait containing all [`struct@Editable`] methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Implementors</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`EditableLabel`][struct@crate::EditableLabel], [`Editable`][struct@crate::Editable], [`Entry`][struct@crate::Entry], [`PasswordEntry`][struct@crate::PasswordEntry], [`SearchEntry`][struct@crate::SearchEntry], [`SpinButton`][struct@crate::SpinButton], [`Text`][struct@crate::Text]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">EditableExt</span>: <span class="lifetime">&#39;static</span> {
-    <span class="doccomment">/// Deletes the currently selected text of the editable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This call doesn’t do anything if there is no selected text.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_delete_selection&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">delete_selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+<span class="doccomment">/// Trait containing all [`struct@Editable`] methods.
+///
+/// # Implementors
+///
+/// [`EditableLabel`][struct@crate::EditableLabel], [`Editable`][struct@crate::Editable], [`Entry`][struct@crate::Entry], [`PasswordEntry`][struct@crate::PasswordEntry], [`SearchEntry`][struct@crate::SearchEntry], [`SpinButton`][struct@crate::SpinButton], [`Text`][struct@crate::Text]
+</span><span class="kw">pub trait </span>EditableExt: <span class="lifetime">&#39;static </span>{
+    <span class="doccomment">/// Deletes the currently selected text of the editable.
+    ///
+    /// This call doesn’t do anything if there is no selected text.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_delete_selection&quot;</span>)]
+    </span><span class="kw">fn </span>delete_selection(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Deletes a sequence of characters.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The characters that are deleted are those characters at positions</span>
-    <span class="doccomment">/// from @start_pos up to, but not including @end_pos. If @end_pos is</span>
-    <span class="doccomment">/// negative, then the characters deleted are those from @start_pos to</span>
-    <span class="doccomment">/// the end of the text.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that the positions are specified in characters, not bytes.</span>
-    <span class="doccomment">/// ## `start_pos`</span>
-    <span class="doccomment">/// start position</span>
-    <span class="doccomment">/// ## `end_pos`</span>
-    <span class="doccomment">/// end position</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_delete_text&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">delete_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start_pos</span>: <span class="ident">i32</span>, <span class="ident">end_pos</span>: <span class="ident">i32</span>);
+    <span class="doccomment">/// Deletes a sequence of characters.
+    ///
+    /// The characters that are deleted are those characters at positions
+    /// from @start_pos up to, but not including @end_pos. If @end_pos is
+    /// negative, then the characters deleted are those from @start_pos to
+    /// the end of the text.
+    ///
+    /// Note that the positions are specified in characters, not bytes.
+    /// ## `start_pos`
+    /// start position
+    /// ## `end_pos`
+    /// end position
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_delete_text&quot;</span>)]
+    </span><span class="kw">fn </span>delete_text(<span class="kw-2">&amp;</span><span class="self">self</span>, start_pos: i32, end_pos: i32);
 
-    <span class="doccomment">/// Undoes the setup done by [`init_delegate()`][Self::init_delegate()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is a helper function that should be called from dispose,</span>
-    <span class="doccomment">/// before removing the delegate object.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_finish_delegate&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">finish_delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Undoes the setup done by [`init_delegate()`][Self::init_delegate()].
+    ///
+    /// This is a helper function that should be called from dispose,
+    /// before removing the delegate object.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_finish_delegate&quot;</span>)]
+    </span><span class="kw">fn </span>finish_delegate(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Gets the alignment of the editable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the alignment</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_alignment&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_alignment&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">alignment</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f32</span>;
+    <span class="doccomment">/// Gets the alignment of the editable.
+    ///
+    /// # Returns
+    ///
+    /// the alignment
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_alignment&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_alignment&quot;</span>)]
+    </span><span class="kw">fn </span>alignment(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f32;
 
-    <span class="doccomment">/// Retrieves a sequence of characters.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The characters that are retrieved are those characters at positions</span>
-    <span class="doccomment">/// from @start_pos up to, but not including @end_pos. If @end_pos is negative,</span>
-    <span class="doccomment">/// then the characters retrieved are those characters from @start_pos to</span>
-    <span class="doccomment">/// the end of the text.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that positions are specified in characters, not bytes.</span>
-    <span class="doccomment">/// ## `start_pos`</span>
-    <span class="doccomment">/// start of text</span>
-    <span class="doccomment">/// ## `end_pos`</span>
-    <span class="doccomment">/// end of text</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a pointer to the contents of the widget as a</span>
-    <span class="doccomment">///   string. This string is allocated by the [`Editable`][crate::Editable] implementation</span>
-    <span class="doccomment">///   and should be freed by the caller.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_chars&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_chars&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start_pos</span>: <span class="ident">i32</span>, <span class="ident">end_pos</span>: <span class="ident">i32</span>) -&gt; <span class="ident">glib::GString</span>;
+    <span class="doccomment">/// Retrieves a sequence of characters.
+    ///
+    /// The characters that are retrieved are those characters at positions
+    /// from @start_pos up to, but not including @end_pos. If @end_pos is negative,
+    /// then the characters retrieved are those characters from @start_pos to
+    /// the end of the text.
+    ///
+    /// Note that positions are specified in characters, not bytes.
+    /// ## `start_pos`
+    /// start of text
+    /// ## `end_pos`
+    /// end of text
+    ///
+    /// # Returns
+    ///
+    /// a pointer to the contents of the widget as a
+    ///   string. This string is allocated by the [`Editable`][crate::Editable] implementation
+    ///   and should be freed by the caller.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_chars&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_chars&quot;</span>)]
+    </span><span class="kw">fn </span>chars(<span class="kw-2">&amp;</span><span class="self">self</span>, start_pos: i32, end_pos: i32) -&gt; glib::GString;
 
-    <span class="doccomment">/// Gets the [`Editable`][crate::Editable] that @self is delegating its</span>
-    <span class="doccomment">/// implementation to.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Typically, the delegate is a [`Text`][crate::Text] widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the delegate [`Editable`][crate::Editable]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_delegate&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_delegate&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Gets the [`Editable`][crate::Editable] that @self is delegating its
+    /// implementation to.
+    ///
+    /// Typically, the delegate is a [`Text`][crate::Text] widget.
+    ///
+    /// # Returns
+    ///
+    /// the delegate [`Editable`][crate::Editable]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_delegate&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_delegate&quot;</span>)]
+    #[must_use]
+    </span><span class="kw">fn </span>delegate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Editable&gt;;
 
-    <span class="doccomment">/// Retrieves whether @self is editable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if @self is editable.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_editable&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_editable&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">is_editable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// Retrieves whether @self is editable.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if @self is editable.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_editable&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_editable&quot;</span>)]
+    </span><span class="kw">fn </span>is_editable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="doccomment">/// Gets if undo/redo actions are enabled for @self</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if undo is enabled</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_enable_undo&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_enable_undo&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">enables_undo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+    <span class="doccomment">/// Gets if undo/redo actions are enabled for @self
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if undo is enabled
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_enable_undo&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_enable_undo&quot;</span>)]
+    </span><span class="kw">fn </span>enables_undo(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="doccomment">/// Retrieves the desired maximum width of @self, in characters.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the maximum width of the entry, in characters</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_max_width_chars&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_max_width_chars&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">max_width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+    <span class="doccomment">/// Retrieves the desired maximum width of @self, in characters.
+    ///
+    /// # Returns
+    ///
+    /// the maximum width of the entry, in characters
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_max_width_chars&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_max_width_chars&quot;</span>)]
+    </span><span class="kw">fn </span>max_width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// Retrieves the current position of the cursor relative</span>
-    <span class="doccomment">/// to the start of the content of the editable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that this position is in characters, not in bytes.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the cursor position</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_position&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_position&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+    <span class="doccomment">/// Retrieves the current position of the cursor relative
+    /// to the start of the content of the editable.
+    ///
+    /// Note that this position is in characters, not in bytes.
+    ///
+    /// # Returns
+    ///
+    /// the cursor position
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_position&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_position&quot;</span>)]
+    </span><span class="kw">fn </span>position(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// Retrieves the selection bound of the editable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// @start_pos will be filled with the start of the selection and</span>
-    <span class="doccomment">/// @end_pos with end. If no text was selected both will be identical</span>
-    <span class="doccomment">/// and [`false`] will be returned.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that positions are specified in characters, not bytes.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if there is a non-empty selection, [`false`] otherwise</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `start_pos`</span>
-    <span class="doccomment">/// location to store the starting position</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `end_pos`</span>
-    <span class="doccomment">/// location to store the end position</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_selection_bounds&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_selection_bounds&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">selection_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>;
+    <span class="doccomment">/// Retrieves the selection bound of the editable.
+    ///
+    /// @start_pos will be filled with the start of the selection and
+    /// @end_pos with end. If no text was selected both will be identical
+    /// and [`false`] will be returned.
+    ///
+    /// Note that positions are specified in characters, not bytes.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if there is a non-empty selection, [`false`] otherwise
+    ///
+    /// ## `start_pos`
+    /// location to store the starting position
+    ///
+    /// ## `end_pos`
+    /// location to store the end position
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_selection_bounds&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_selection_bounds&quot;</span>)]
+    </span><span class="kw">fn </span>selection_bounds(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(i32, i32)&gt;;
 
-    <span class="doccomment">/// Retrieves the contents of @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The returned string is owned by GTK and must not be modified or freed.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a pointer to the contents of the editable</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_text&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_text&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::GString</span>;
+    <span class="doccomment">/// Retrieves the contents of @self.
+    ///
+    /// The returned string is owned by GTK and must not be modified or freed.
+    ///
+    /// # Returns
+    ///
+    /// a pointer to the contents of the editable
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_text&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_text&quot;</span>)]
+    </span><span class="kw">fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::GString;
 
-    <span class="doccomment">/// Gets the number of characters of space reserved</span>
-    <span class="doccomment">/// for the contents of the editable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// number of chars to request space for, or negative if unset</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_get_width_chars&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_width_chars&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+    <span class="doccomment">/// Gets the number of characters of space reserved
+    /// for the contents of the editable.
+    ///
+    /// # Returns
+    ///
+    /// number of chars to request space for, or negative if unset
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_get_width_chars&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_width_chars&quot;</span>)]
+    </span><span class="kw">fn </span>width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// Sets up a delegate for [`Editable`][crate::Editable].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is assuming that the get_delegate vfunc in the [`Editable`][crate::Editable]</span>
-    <span class="doccomment">/// interface has been set up for the @self&#39;s type.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is a helper function that should be called in instance init,</span>
-    <span class="doccomment">/// after creating the delegate object.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_init_delegate&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">init_delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Sets up a delegate for [`Editable`][crate::Editable].
+    ///
+    /// This is assuming that the get_delegate vfunc in the [`Editable`][crate::Editable]
+    /// interface has been set up for the @self&#39;s type.
+    ///
+    /// This is a helper function that should be called in instance init,
+    /// after creating the delegate object.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_init_delegate&quot;</span>)]
+    </span><span class="kw">fn </span>init_delegate(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
-    <span class="doccomment">/// Inserts @length bytes of @text into the contents of the</span>
-    <span class="doccomment">/// widget, at position @position.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that the position is in characters, not in bytes.</span>
-    <span class="doccomment">/// The function updates @position to point after the newly</span>
-    <span class="doccomment">/// inserted text.</span>
-    <span class="doccomment">/// ## `text`</span>
-    <span class="doccomment">/// the text to append</span>
-    <span class="doccomment">/// ## `length`</span>
-    <span class="doccomment">/// the length of the text in bytes, or -1</span>
-    <span class="doccomment">/// ## `position`</span>
-    <span class="doccomment">/// location of the position text will be inserted at</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_insert_text&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">insert_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">position</span>: <span class="kw-2">&amp;mut</span> <span class="ident">i32</span>);
+    <span class="doccomment">/// Inserts @length bytes of @text into the contents of the
+    /// widget, at position @position.
+    ///
+    /// Note that the position is in characters, not in bytes.
+    /// The function updates @position to point after the newly
+    /// inserted text.
+    /// ## `text`
+    /// the text to append
+    /// ## `length`
+    /// the length of the text in bytes, or -1
+    /// ## `position`
+    /// location of the position text will be inserted at
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_insert_text&quot;</span>)]
+    </span><span class="kw">fn </span>insert_text(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str, position: <span class="kw-2">&amp;mut </span>i32);
 
-    <span class="doccomment">/// Selects a region of text.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The characters that are selected are those characters at positions</span>
-    <span class="doccomment">/// from @start_pos up to, but not including @end_pos. If @end_pos is</span>
-    <span class="doccomment">/// negative, then the characters selected are those characters from</span>
-    <span class="doccomment">/// @start_pos to  the end of the text.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that positions are specified in characters, not bytes.</span>
-    <span class="doccomment">/// ## `start_pos`</span>
-    <span class="doccomment">/// start of region</span>
-    <span class="doccomment">/// ## `end_pos`</span>
-    <span class="doccomment">/// end of region</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_select_region&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">select_region</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start_pos</span>: <span class="ident">i32</span>, <span class="ident">end_pos</span>: <span class="ident">i32</span>);
+    <span class="doccomment">/// Selects a region of text.
+    ///
+    /// The characters that are selected are those characters at positions
+    /// from @start_pos up to, but not including @end_pos. If @end_pos is
+    /// negative, then the characters selected are those characters from
+    /// @start_pos to  the end of the text.
+    ///
+    /// Note that positions are specified in characters, not bytes.
+    /// ## `start_pos`
+    /// start of region
+    /// ## `end_pos`
+    /// end of region
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_select_region&quot;</span>)]
+    </span><span class="kw">fn </span>select_region(<span class="kw-2">&amp;</span><span class="self">self</span>, start_pos: i32, end_pos: i32);
 
-    <span class="doccomment">/// Sets the alignment for the contents of the editable.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This controls the horizontal positioning of the contents when</span>
-    <span class="doccomment">/// the displayed text is shorter than the width of the editable.</span>
-    <span class="doccomment">/// ## `xalign`</span>
-    <span class="doccomment">/// The horizontal alignment, from 0 (left) to 1 (right).</span>
-    <span class="doccomment">///   Reversed for RTL layouts</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_set_alignment&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_alignment</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">xalign</span>: <span class="ident">f32</span>);
+    <span class="doccomment">/// Sets the alignment for the contents of the editable.
+    ///
+    /// This controls the horizontal positioning of the contents when
+    /// the displayed text is shorter than the width of the editable.
+    /// ## `xalign`
+    /// The horizontal alignment, from 0 (left) to 1 (right).
+    ///   Reversed for RTL layouts
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_set_alignment&quot;</span>)]
+    </span><span class="kw">fn </span>set_alignment(<span class="kw-2">&amp;</span><span class="self">self</span>, xalign: f32);
 
-    <span class="doccomment">/// Determines if the user can edit the text in the editable widget.</span>
-    <span class="doccomment">/// ## `is_editable`</span>
-    <span class="doccomment">/// [`true`] if the user is allowed to edit the text</span>
-    <span class="doccomment">///   in the widget</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_set_editable&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_editable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">is_editable</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// Determines if the user can edit the text in the editable widget.
+    /// ## `is_editable`
+    /// [`true`] if the user is allowed to edit the text
+    ///   in the widget
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_set_editable&quot;</span>)]
+    </span><span class="kw">fn </span>set_editable(<span class="kw-2">&amp;</span><span class="self">self</span>, is_editable: bool);
 
-    <span class="doccomment">/// If enabled, changes to @self will be saved for undo/redo</span>
-    <span class="doccomment">/// actions.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This results in an additional copy of text changes and are not</span>
-    <span class="doccomment">/// stored in secure memory. As such, undo is forcefully disabled</span>
-    <span class="doccomment">/// when `property::Text::visibility` is set to [`false`].</span>
-    <span class="doccomment">/// ## `enable_undo`</span>
-    <span class="doccomment">/// if undo/redo should be enabled</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_set_enable_undo&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_enable_undo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">enable_undo</span>: <span class="ident">bool</span>);
+    <span class="doccomment">/// If enabled, changes to @self will be saved for undo/redo
+    /// actions.
+    ///
+    /// This results in an additional copy of text changes and are not
+    /// stored in secure memory. As such, undo is forcefully disabled
+    /// when `property::Text::visibility` is set to [`false`].
+    /// ## `enable_undo`
+    /// if undo/redo should be enabled
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_set_enable_undo&quot;</span>)]
+    </span><span class="kw">fn </span>set_enable_undo(<span class="kw-2">&amp;</span><span class="self">self</span>, enable_undo: bool);
 
-    <span class="doccomment">/// Sets the desired maximum width in characters of @self.</span>
-    <span class="doccomment">/// ## `n_chars`</span>
-    <span class="doccomment">/// the new desired maximum width, in characters</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_set_max_width_chars&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_max_width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n_chars</span>: <span class="ident">i32</span>);
+    <span class="doccomment">/// Sets the desired maximum width in characters of @self.
+    /// ## `n_chars`
+    /// the new desired maximum width, in characters
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_set_max_width_chars&quot;</span>)]
+    </span><span class="kw">fn </span>set_max_width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>, n_chars: i32);
 
-    <span class="doccomment">/// Sets the cursor position in the editable to the given value.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The cursor is displayed before the character with the given (base 0)</span>
-    <span class="doccomment">/// index in the contents of the editable. The value must be less than</span>
-    <span class="doccomment">/// or equal to the number of characters in the editable. A value of -1</span>
-    <span class="doccomment">/// indicates that the position should be set after the last character</span>
-    <span class="doccomment">/// of the editable. Note that @position is in characters, not in bytes.</span>
-    <span class="doccomment">/// ## `position`</span>
-    <span class="doccomment">/// the position of the cursor</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_set_position&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">i32</span>);
+    <span class="doccomment">/// Sets the cursor position in the editable to the given value.
+    ///
+    /// The cursor is displayed before the character with the given (base 0)
+    /// index in the contents of the editable. The value must be less than
+    /// or equal to the number of characters in the editable. A value of -1
+    /// indicates that the position should be set after the last character
+    /// of the editable. Note that @position is in characters, not in bytes.
+    /// ## `position`
+    /// the position of the cursor
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_set_position&quot;</span>)]
+    </span><span class="kw">fn </span>set_position(<span class="kw-2">&amp;</span><span class="self">self</span>, position: i32);
 
-    <span class="doccomment">/// Sets the text in the editable to the given value.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is replacing the current contents.</span>
-    <span class="doccomment">/// ## `text`</span>
-    <span class="doccomment">/// the text to set</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_set_text&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>);
+    <span class="doccomment">/// Sets the text in the editable to the given value.
+    ///
+    /// This is replacing the current contents.
+    /// ## `text`
+    /// the text to set
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_set_text&quot;</span>)]
+    </span><span class="kw">fn </span>set_text(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str);
 
-    <span class="doccomment">/// Changes the size request of the editable to be about the</span>
-    <span class="doccomment">/// right size for @n_chars characters.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that it changes the size request, the size can still</span>
-    <span class="doccomment">/// be affected by how you pack the widget into containers.</span>
-    <span class="doccomment">/// If @n_chars is -1, the size reverts to the default size.</span>
-    <span class="doccomment">/// ## `n_chars`</span>
-    <span class="doccomment">/// width in chars</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_editable_set_width_chars&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">set_width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n_chars</span>: <span class="ident">i32</span>);
+    <span class="doccomment">/// Changes the size request of the editable to be about the
+    /// right size for @n_chars characters.
+    ///
+    /// Note that it changes the size request, the size can still
+    /// be affected by how you pack the widget into containers.
+    /// If @n_chars is -1, the size reverts to the default size.
+    /// ## `n_chars`
+    /// width in chars
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_editable_set_width_chars&quot;</span>)]
+    </span><span class="kw">fn </span>set_width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>, n_chars: i32);
 
-    <span class="doccomment">/// The current position of the insertion cursor in chars.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;cursor-position&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">cursor_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+    <span class="doccomment">/// The current position of the insertion cursor in chars.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;cursor-position&quot;</span>)]
+    </span><span class="kw">fn </span>cursor_position(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// The position of the opposite end of the selection from the cursor in chars.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;selection-bound&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">selection_bound</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+    <span class="doccomment">/// The position of the opposite end of the selection from the cursor in chars.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;selection-bound&quot;</span>)]
+    </span><span class="kw">fn </span>selection_bound(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// The horizontal alignment, from 0 (left) to 1 (right).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Reversed for RTL layouts.</span>
-    <span class="kw">fn</span> <span class="ident">xalign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f32</span>;
+    <span class="doccomment">/// The horizontal alignment, from 0 (left) to 1 (right).
+    ///
+    /// Reversed for RTL layouts.
+    </span><span class="kw">fn </span>xalign(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f32;
 
-    <span class="doccomment">/// The horizontal alignment, from 0 (left) to 1 (right).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Reversed for RTL layouts.</span>
-    <span class="kw">fn</span> <span class="ident">set_xalign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">xalign</span>: <span class="ident">f32</span>);
+    <span class="doccomment">/// The horizontal alignment, from 0 (left) to 1 (right).
+    ///
+    /// Reversed for RTL layouts.
+    </span><span class="kw">fn </span>set_xalign(<span class="kw-2">&amp;</span><span class="self">self</span>, xalign: f32);
 
-    <span class="doccomment">/// Emitted at the end of a single user-visible operation on the</span>
-    <span class="doccomment">/// contents.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// E.g., a paste operation that replaces the contents of the</span>
-    <span class="doccomment">/// selection will cause only one signal emission (even though it</span>
-    <span class="doccomment">/// is implemented by first deleting the selection, then inserting</span>
-    <span class="doccomment">/// the new content, and may cause multiple ::notify::text signals</span>
-    <span class="doccomment">/// to be emitted).</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;changed&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_changed</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="doccomment">/// Emitted at the end of a single user-visible operation on the
+    /// contents.
+    ///
+    /// E.g., a paste operation that replaces the contents of the
+    /// selection will cause only one signal emission (even though it
+    /// is implemented by first deleting the selection, then inserting
+    /// the new content, and may cause multiple ::notify::text signals
+    /// to be emitted).
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;changed&quot;</span>)]
+    </span><span class="kw">fn </span>connect_changed&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="doccomment">/// Emitted when text is deleted from the widget by the user.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The default handler for this signal will normally be responsible for</span>
-    <span class="doccomment">/// deleting the text, so by connecting to this signal and then stopping</span>
-    <span class="doccomment">/// the signal with g_signal_stop_emission(), it is possible to modify the</span>
-    <span class="doccomment">/// range of deleted text, or prevent it from being deleted entirely.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The @start_pos and @end_pos parameters are interpreted as for</span>
-    <span class="doccomment">/// [`delete_text()`][Self::delete_text()].</span>
-    <span class="doccomment">/// ## `start_pos`</span>
-    <span class="doccomment">/// the starting position</span>
-    <span class="doccomment">/// ## `end_pos`</span>
-    <span class="doccomment">/// the end position</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;delete-text&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_delete_text</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">i32</span>, <span class="ident">i32</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="doccomment">/// Emitted when text is deleted from the widget by the user.
+    ///
+    /// The default handler for this signal will normally be responsible for
+    /// deleting the text, so by connecting to this signal and then stopping
+    /// the signal with g_signal_stop_emission(), it is possible to modify the
+    /// range of deleted text, or prevent it from being deleted entirely.
+    ///
+    /// The @start_pos and @end_pos parameters are interpreted as for
+    /// [`delete_text()`][Self::delete_text()].
+    /// ## `start_pos`
+    /// the starting position
+    /// ## `end_pos`
+    /// the end position
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;delete-text&quot;</span>)]
+    </span><span class="kw">fn </span>connect_delete_text&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, i32, i32) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;cursor-position&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_cursor_position_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;cursor-position&quot;</span>)]
+    </span><span class="kw">fn </span>connect_cursor_position_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;editable&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_editable_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;editable&quot;</span>)]
+    </span><span class="kw">fn </span>connect_editable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;enable-undo&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_enable_undo_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;enable-undo&quot;</span>)]
+    </span><span class="kw">fn </span>connect_enable_undo_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;max-width-chars&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_max_width_chars_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;max-width-chars&quot;</span>)]
+    </span><span class="kw">fn </span>connect_max_width_chars_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;selection-bound&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_selection_bound_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;selection-bound&quot;</span>)]
+    </span><span class="kw">fn </span>connect_selection_bound_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;text&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_text_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;text&quot;</span>)]
+    </span><span class="kw">fn </span>connect_text_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;width-chars&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_width_chars_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;width-chars&quot;</span>)]
+    </span><span class="kw">fn </span>connect_width_chars_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;xalign&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">connect_xalign_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span>;
+    <span class="attribute">#[doc(alias = <span class="string">&quot;xalign&quot;</span>)]
+    </span><span class="kw">fn </span>connect_xalign_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">EditableExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">delete_selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_delete_selection</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+<span class="kw">impl</span>&lt;O: IsA&lt;Editable&gt;&gt; EditableExt <span class="kw">for </span>O {
+    <span class="kw">fn </span>delete_selection(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_delete_selection(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">delete_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start_pos</span>: <span class="ident">i32</span>, <span class="ident">end_pos</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_delete_text</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">start_pos</span>, <span class="ident">end_pos</span>);
+    <span class="kw">fn </span>delete_text(<span class="kw-2">&amp;</span><span class="self">self</span>, start_pos: i32, end_pos: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_delete_text(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, start_pos, end_pos);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">finish_delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_finish_delegate</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>finish_delegate(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_finish_delegate(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">alignment</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_editable_get_alignment</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="kw">fn </span>alignment(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f32 {
+        <span class="kw">unsafe </span>{ ffi::gtk_editable_get_alignment(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="kw">fn</span> <span class="ident">chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start_pos</span>: <span class="ident">i32</span>, <span class="ident">end_pos</span>: <span class="ident">i32</span>) -&gt; <span class="ident">glib::GString</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_editable_get_chars</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">start_pos</span>,
-                <span class="ident">end_pos</span>,
+    <span class="kw">fn </span>chars(<span class="kw-2">&amp;</span><span class="self">self</span>, start_pos: i32, end_pos: i32) -&gt; glib::GString {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_editable_get_chars(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                start_pos,
+                end_pos,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_editable_get_delegate</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>delegate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Editable&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_editable_get_delegate(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">is_editable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_editable_get_editable</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>is_editable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_editable_get_editable(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">enables_undo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_editable_get_enable_undo</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="kw">fn </span>enables_undo(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_editable_get_enable_undo(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">max_width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_editable_get_max_width_chars</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="kw">fn </span>max_width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gtk_editable_get_max_width_chars(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_editable_get_position</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="kw">fn </span>position(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gtk_editable_get_position(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="kw">fn</span> <span class="ident">selection_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">start_pos</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::uninit</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">end_pos</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::uninit</span>();
-            <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_editable_get_selection_bounds</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">start_pos</span>.<span class="ident">as_mut_ptr</span>(),
-                <span class="ident">end_pos</span>.<span class="ident">as_mut_ptr</span>(),
+    <span class="kw">fn </span>selection_bounds(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(i32, i32)&gt; {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>start_pos = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>end_pos = mem::MaybeUninit::uninit();
+            <span class="kw">let </span>ret = from_glib(ffi::gtk_editable_get_selection_bounds(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                start_pos.as_mut_ptr(),
+                end_pos.as_mut_ptr(),
             ));
-            <span class="kw">let</span> <span class="ident">start_pos</span> <span class="op">=</span> <span class="ident">start_pos</span>.<span class="ident">assume_init</span>();
-            <span class="kw">let</span> <span class="ident">end_pos</span> <span class="op">=</span> <span class="ident">end_pos</span>.<span class="ident">assume_init</span>();
-            <span class="kw">if</span> <span class="ident">ret</span> {
-                <span class="prelude-val">Some</span>((<span class="ident">start_pos</span>, <span class="ident">end_pos</span>))
-            } <span class="kw">else</span> {
-                <span class="prelude-val">None</span>
-            }
+            <span class="kw">if </span>ret {
+                <span class="prelude-val">Some</span>((start_pos.assume_init(), end_pos.assume_init()))
+            } <span class="kw">else </span>{
+                <span class="prelude-val">None
+            </span>}
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::GString</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_editable_get_text</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+    <span class="kw">fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::GString {
+        <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_editable_get_text(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="kw">fn</span> <span class="ident">width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_editable_get_width_chars</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="kw">fn </span>width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gtk_editable_get_width_chars(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="kw">fn</span> <span class="ident">init_delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_init_delegate</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>init_delegate(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_init_delegate(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">insert_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">position</span>: <span class="kw-2">&amp;mut</span> <span class="ident">i32</span>) {
-        <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">i32</span>;
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_insert_text</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">text</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">length</span>,
-                <span class="ident">position</span>,
+    <span class="kw">fn </span>insert_text(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str, position: <span class="kw-2">&amp;mut </span>i32) {
+        <span class="kw">let </span>length = text.len() <span class="kw">as </span>i32;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_insert_text(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                text.to_glib_none().<span class="number">0</span>,
+                length,
+                position,
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">select_region</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">start_pos</span>: <span class="ident">i32</span>, <span class="ident">end_pos</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_select_region</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">start_pos</span>, <span class="ident">end_pos</span>);
+    <span class="kw">fn </span>select_region(<span class="kw-2">&amp;</span><span class="self">self</span>, start_pos: i32, end_pos: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_select_region(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, start_pos, end_pos);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_alignment</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">xalign</span>: <span class="ident">f32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_set_alignment</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">xalign</span>);
+    <span class="kw">fn </span>set_alignment(<span class="kw-2">&amp;</span><span class="self">self</span>, xalign: f32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_set_alignment(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, xalign);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_editable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">is_editable</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_set_editable</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">is_editable</span>.<span class="ident">into_glib</span>());
+    <span class="kw">fn </span>set_editable(<span class="kw-2">&amp;</span><span class="self">self</span>, is_editable: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_set_editable(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, is_editable.into_glib());
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_enable_undo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">enable_undo</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_set_enable_undo</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">enable_undo</span>.<span class="ident">into_glib</span>(),
+    <span class="kw">fn </span>set_enable_undo(<span class="kw-2">&amp;</span><span class="self">self</span>, enable_undo: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_set_enable_undo(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                enable_undo.into_glib(),
             );
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_max_width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n_chars</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_set_max_width_chars</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">n_chars</span>);
+    <span class="kw">fn </span>set_max_width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>, n_chars: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_set_max_width_chars(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, n_chars);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_set_position</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">position</span>);
+    <span class="kw">fn </span>set_position(<span class="kw-2">&amp;</span><span class="self">self</span>, position: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_set_position(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, position);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_set_text</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">text</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="kw">fn </span>set_text(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_set_text(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, text.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">set_width_chars</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n_chars</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_editable_set_width_chars</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">n_chars</span>);
+    <span class="kw">fn </span>set_width_chars(<span class="kw-2">&amp;</span><span class="self">self</span>, n_chars: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_editable_set_width_chars(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, n_chars);
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">cursor_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;cursor-position&quot;</span>)
+    <span class="kw">fn </span>cursor_position(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;cursor-position&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">selection_bound</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;selection-bound&quot;</span>)
+    <span class="kw">fn </span>selection_bound(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;selection-bound&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">xalign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f32</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;xalign&quot;</span>)
+    <span class="kw">fn </span>xalign(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f32 {
+        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;xalign&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">set_xalign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">xalign</span>: <span class="ident">f32</span>) {
-        <span class="ident">glib::ObjectExt::set_property</span>(<span class="self">self</span>.<span class="ident">as_ref</span>(), <span class="string">&quot;xalign&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">xalign</span>)
+    <span class="kw">fn </span>set_xalign(<span class="kw-2">&amp;</span><span class="self">self</span>, xalign: f32) {
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;xalign&quot;</span>, <span class="kw-2">&amp;</span>xalign)
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_changed</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">changed_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_changed&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>changed_trampoline&lt;P: IsA&lt;Editable&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;changed\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">changed_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;changed\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    changed_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_delete_text</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">i32</span>, <span class="ident">i32</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">delete_text_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">i32</span>, <span class="ident">i32</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">start_pos</span>: <span class="ident">libc::c_int</span>,
-            <span class="ident">end_pos</span>: <span class="ident">libc::c_int</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_delete_text&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, i32, i32) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>delete_text_trampoline&lt;
+            P: IsA&lt;Editable&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P, i32, i32) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            start_pos: libc::c_int,
+            end_pos: libc::c_int,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(
-                <span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>(),
-                <span class="ident">start_pos</span>,
-                <span class="ident">end_pos</span>,
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(
+                Editable::from_glib_borrow(this).unsafe_cast_ref(),
+                start_pos,
+                end_pos,
             )
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;delete-text\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">delete_text_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;delete-text\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    delete_text_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
-            )
-        }
-    }
-
-    <span class="kw">fn</span> <span class="ident">connect_cursor_position_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_cursor_position_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
-        ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
-        }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::cursor-position\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_cursor_position_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
-                )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_editable_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_editable_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_cursor_position_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_cursor_position_trampoline&lt;
+            P: IsA&lt;Editable&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::editable\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_editable_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::cursor-position\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_cursor_position_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_enable_undo_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_enable_undo_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_editable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_editable_trampoline&lt;P: IsA&lt;Editable&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::enable-undo\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_enable_undo_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::editable\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_editable_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_max_width_chars_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_max_width_chars_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_enable_undo_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_enable_undo_trampoline&lt;
+            P: IsA&lt;Editable&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::max-width-chars\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_max_width_chars_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::enable-undo\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_enable_undo_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_selection_bound_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_selection_bound_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_max_width_chars_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_max_width_chars_trampoline&lt;
+            P: IsA&lt;Editable&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::selection-bound\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_selection_bound_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::max-width-chars\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_max_width_chars_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_text_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_text_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_selection_bound_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_selection_bound_trampoline&lt;
+            P: IsA&lt;Editable&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::text\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_text_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::selection-bound\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_selection_bound_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_width_chars_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_width_chars_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>,
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_text_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_text_trampoline&lt;P: IsA&lt;Editable&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::width-chars\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_width_chars_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::text\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_text_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_xalign_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_xalign_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Editable</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEditable</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="kw">fn </span>connect_width_chars_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_width_chars_trampoline&lt;
+            P: IsA&lt;Editable&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="ident">Editable::from_glib_borrow</span>(<span class="ident">this</span>).<span class="ident">unsafe_cast_ref</span>())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::xalign\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_xalign_trampoline</span>::<span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::width-chars\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_width_chars_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    <span class="kw">fn </span>connect_xalign_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_xalign_trampoline&lt;P: IsA&lt;Editable&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEditable,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(Editable::from_glib_borrow(this).unsafe_cast_ref())
+        }
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::xalign\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_xalign_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
+                )),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Editable</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Editable&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Editable {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;Editable&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

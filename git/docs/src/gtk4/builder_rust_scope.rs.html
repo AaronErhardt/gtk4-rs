@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/builder_rust_scope.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>builder_rust_scope.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/builder_rust_scope.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>builder_rust_scope.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -368,195 +365,243 @@
 <span id="292">292</span>
 <span id="293">293</span>
 <span id="294">294</span>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::subclass::prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::BuilderScope</span>;
-<span class="kw">use</span> <span class="ident">std::rc::Rc</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::subclass::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span><span class="kw">crate</span>::BuilderScope;
+<span class="kw">use </span>std::rc::Rc;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// An implementation of [`BuilderScope`](crate::BuilderScope) that can bind Rust callbacks.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```no_run</span>
-    <span class="doccomment">/// # use gtk4 as gtk;</span>
-    <span class="doccomment">/// use gtk::prelude::*;</span>
-    <span class="doccomment">/// use gtk::subclass::prelude::*;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # fn main() {</span>
-    <span class="doccomment">/// let builder = gtk::Builder::new();</span>
-    <span class="doccomment">/// let scope = gtk::BuilderRustScope::new();</span>
-    <span class="doccomment">/// scope.add_callback(&quot;print_label&quot;, |values| {</span>
-    <span class="doccomment">///     let button = values[1].get::&lt;gtk::Button&gt;().unwrap();</span>
-    <span class="doccomment">///     println!(&quot;{}&quot;, button.label().unwrap().as_str());</span>
-    <span class="doccomment">///     None</span>
-    <span class="doccomment">/// });</span>
-    <span class="doccomment">/// builder.set_scope(Some(&amp;scope));</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // can also be used with template_callbacks</span>
-    <span class="doccomment">/// pub struct Callbacks {}</span>
-    <span class="doccomment">/// #[gtk::template_callbacks]</span>
-    <span class="doccomment">/// impl Callbacks {</span>
-    <span class="doccomment">///     #[template_callback]</span>
-    <span class="doccomment">///     fn button_clicked(button: &amp;gtk::Button) {</span>
-    <span class="doccomment">///         button.set_label(&quot;Clicked&quot;);</span>
-    <span class="doccomment">///     }</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// Callbacks::add_callbacks_to_scope(&amp;scope);</span>
-    <span class="doccomment">/// # }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BuilderRustScope</span>(<span class="ident">ObjectSubclass</span><span class="op">&lt;</span><span class="ident">imp::BuilderRustScope</span><span class="op">&gt;</span>)
-        @<span class="ident">implements</span> <span class="ident">BuilderScope</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// An implementation of [`BuilderScope`](crate::BuilderScope) that can bind Rust callbacks.
+    ///
+    /// ```no_run
+    /// # use gtk4 as gtk;
+    /// use gtk::prelude::*;
+    /// use gtk::subclass::prelude::*;
+    ///
+    /// # fn main() {
+    /// let builder = gtk::Builder::new();
+    /// let scope = gtk::BuilderRustScope::new();
+    /// scope.add_callback(&quot;print_label&quot;, |values| {
+    ///     let button = values[1].get::&lt;gtk::Button&gt;().unwrap();
+    ///     println!(&quot;{}&quot;, button.label().unwrap().as_str());
+    ///     None
+    /// });
+    /// builder.set_scope(Some(&amp;scope));
+    ///
+    /// // can also be used with template_callbacks
+    /// pub struct Callbacks {}
+    /// #[gtk::template_callbacks]
+    /// impl Callbacks {
+    ///     #[template_callback]
+    ///     fn button_clicked(button: &amp;gtk::Button) {
+    ///         button.set_label(&quot;Clicked&quot;);
+    ///     }
+    /// }
+    /// Callbacks::add_callbacks_to_scope(&amp;scope);
+    /// # }
+    /// ```
+    </span><span class="kw">pub struct </span>BuilderRustScope(ObjectSubclass&lt;imp::BuilderRustScope&gt;)
+        @implements BuilderScope;
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">BuilderRustScope</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::new</span>()
+<span class="kw">impl </span>Default <span class="kw">for </span>BuilderRustScope {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">BuilderRustScope</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident">glib::Object::new</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">unwrap</span>()
+<span class="kw">impl </span>BuilderRustScope {
+    <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        glib::Object::new(<span class="kw-2">&amp;</span>[])
     }
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Adds a Rust callback to the scope with the given `name`. The callback can then be accessed</span>
-    <span class="doccomment">/// from a [`Builder`](crate::Builder) by referring to it in the builder XML, or by using</span>
-    <span class="doccomment">/// [`Builder::create_closure`](crate::Builder::create_closure).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_callback</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span>[<span class="ident">glib::Value</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::Value</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Adds a Rust callback to the scope with the given `name`. The callback can then be accessed
+    /// from a [`Builder`](crate::Builder) by referring to it in the builder XML, or by using
+    /// [`Builder::create_closure`](crate::Builder::create_closure).
+    </span><span class="kw">pub fn </span>add_callback&lt;N: Into&lt;String&gt;, F: Fn(<span class="kw-2">&amp;</span>[glib::Value]) -&gt; <span class="prelude-ty">Option</span>&lt;glib::Value&gt; + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">name</span>: <span class="ident">N</span>,
-        <span class="ident">callback</span>: <span class="ident">F</span>,
+        name: N,
+        callback: F,
     ) {
-        <span class="ident">imp::BuilderRustScope::from_instance</span>(<span class="self">self</span>)
-            .<span class="ident">callbacks</span>
-            .<span class="ident">borrow_mut</span>()
-            .<span class="ident">insert</span>(<span class="ident">name</span>.<span class="ident">into</span>(), <span class="ident">Rc::new</span>(<span class="ident">callback</span>));
+        <span class="self">self</span>.imp()
+            .callbacks
+            .borrow_mut()
+            .insert(name.into(), Rc::new(callback));
     }
 }
 
-<span class="kw">mod</span> <span class="ident">imp</span> {
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::subclass::prelude</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Builder</span>, <span class="ident">BuilderClosureFlags</span>, <span class="ident">BuilderError</span>, <span class="ident">BuilderScope</span>};
-    <span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">Closure</span>, <span class="ident">RustClosure</span>};
-    <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">cell::RefCell</span>, <span class="ident">collections::HashMap</span>, <span class="ident">rc::Rc</span>};
+<span class="kw">mod </span>imp {
+    <span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">crate</span>::subclass::prelude::<span class="kw-2">*</span>;
+    <span class="kw">use crate</span>::{Builder, BuilderClosureFlags, BuilderError, BuilderScope};
+    <span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+    <span class="kw">use </span>glib::{Closure, RustClosure};
+    <span class="kw">use </span>std::{cell::RefCell, collections::HashMap, rc::Rc};
 
-    <span class="kw">type</span> <span class="ident">Callback</span> <span class="op">=</span> <span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span>[<span class="ident">glib::Value</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::Value</span><span class="op">&gt;</span>;
+    <span class="kw">type </span>Callback = <span class="kw">dyn </span>Fn(<span class="kw-2">&amp;</span>[glib::Value]) -&gt; <span class="prelude-ty">Option</span>&lt;glib::Value&gt;;
 
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BuilderRustScope</span> {
-        <span class="kw">pub</span> <span class="ident">callbacks</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">Callback</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="attribute">#[derive(Default)]
+    </span><span class="kw">pub struct </span>BuilderRustScope {
+        <span class="kw">pub </span>callbacks: RefCell&lt;HashMap&lt;String, Rc&lt;Callback&gt;&gt;&gt;,
     }
 
-    <span class="attribute">#[<span class="ident">glib::object_subclass</span>]</span>
-    <span class="kw">impl</span> <span class="ident">ObjectSubclass</span> <span class="kw">for</span> <span class="ident">BuilderRustScope</span> {
-        <span class="kw">const</span> <span class="ident">NAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;GtkBuilderRustScope&quot;</span>;
-        <span class="kw">type</span> <span class="ident">Type</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::BuilderRustScope</span>;
-        <span class="kw">type</span> <span class="ident">Interfaces</span> <span class="op">=</span> (<span class="ident">BuilderScope</span>,);
+    <span class="attribute">#[glib::object_subclass]
+    </span><span class="kw">impl </span>ObjectSubclass <span class="kw">for </span>BuilderRustScope {
+        <span class="kw">const </span>NAME: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;GtkBuilderRustScope&quot;</span>;
+        <span class="kw">type </span>Type = <span class="kw">super</span>::BuilderRustScope;
+        <span class="kw">type </span>Interfaces = (BuilderScope,);
     }
 
-    <span class="kw">impl</span> <span class="ident">ObjectImpl</span> <span class="kw">for</span> <span class="ident">BuilderRustScope</span> {}
+    <span class="kw">impl </span>ObjectImpl <span class="kw">for </span>BuilderRustScope {}
 
-    <span class="kw">impl</span> <span class="ident">BuilderScopeImpl</span> <span class="kw">for</span> <span class="ident">BuilderRustScope</span> {
-        <span class="kw">fn</span> <span class="ident">create_closure</span>(
+    <span class="kw">impl </span>BuilderScopeImpl <span class="kw">for </span>BuilderRustScope {
+        <span class="kw">fn </span>create_closure(
             <span class="kw-2">&amp;</span><span class="self">self</span>,
-            <span class="ident">_builder_scope</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Type</span>,
-            <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="ident">Builder</span>,
-            <span class="ident">function_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-            <span class="ident">flags</span>: <span class="ident">BuilderClosureFlags</span>,
-            <span class="ident">object</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">glib::Object</span><span class="op">&gt;</span>,
-        ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Closure</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
-            <span class="self">self</span>.<span class="ident">callbacks</span>
-                .<span class="ident">borrow</span>()
-                .<span class="ident">get</span>(<span class="ident">function_name</span>)
-                .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> {
-                    <span class="ident">glib::Error::new</span>(
-                        <span class="ident">BuilderError::InvalidFunction</span>,
-                        <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;No function named `{}`&quot;</span>, <span class="ident">function_name</span>),
+            builder: <span class="kw-2">&amp;</span>Builder,
+            function_name: <span class="kw-2">&amp;</span>str,
+            flags: BuilderClosureFlags,
+            object: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>glib::Object&gt;,
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;Closure, glib::Error&gt; {
+            <span class="self">self</span>.callbacks
+                .borrow()
+                .get(function_name)
+                .ok_or_else(|| {
+                    glib::Error::new(
+                        BuilderError::InvalidFunction,
+                        <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;No function named `{}`&quot;</span>, function_name),
                     )
                 })
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">callback</span><span class="op">|</span> {
-                    <span class="kw">let</span> <span class="ident">callback</span> <span class="op">=</span> <span class="ident">callback</span>.<span class="ident">clone</span>();
-                    <span class="kw">let</span> <span class="ident">swapped</span> <span class="op">=</span> <span class="ident">flags</span>.<span class="ident">contains</span>(<span class="ident">BuilderClosureFlags::SWAPPED</span>);
-                    <span class="kw">let</span> <span class="ident">object</span> <span class="op">=</span> <span class="ident">object</span>.<span class="ident">cloned</span>().<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">builder</span>.<span class="ident">current_object</span>());
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">object</span>) <span class="op">=</span> <span class="ident">object</span> {
-                        <span class="kw">let</span> <span class="ident">object_weak</span> <span class="op">=</span> <span class="ident">object</span>.<span class="ident">downgrade</span>();
-                        <span class="kw">let</span> <span class="ident">closure</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">swapped</span> {
-                            <span class="ident">RustClosure::new_local</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">args</span><span class="op">|</span> {
-                                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">args</span>.<span class="ident">to_owned</span>();
-                                <span class="kw">let</span> <span class="ident">object</span> <span class="op">=</span> <span class="ident">object_weak</span>.<span class="ident">upgrade</span>().<span class="ident">expect</span>(
-                                    <span class="string">&quot;Internal error: Object destroyed before closure invalidated&quot;</span>,
-                                );
-                                <span class="kw">let</span> <span class="ident">obj_v</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-                                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">glib::Value::uninitialized</span>();
-                                    <span class="ident">glib::gobject_ffi::g_value_init</span>(
-                                        <span class="ident">v</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
-                                        <span class="ident">object</span>.<span class="ident">type_</span>().<span class="ident">into_glib</span>(),
+                .map(|callback| {
+                    <span class="kw">let </span>callback = callback.clone();
+                    <span class="kw">let </span>swapped = flags.contains(BuilderClosureFlags::SWAPPED);
+                    <span class="kw">let </span>object = object.cloned().or_else(|| builder.current_object());
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(object) = object {
+                        <span class="comment">// passing a pointer here is safe as `watch_closure` ensures we have a ref
+                        </span><span class="kw">let </span>object_ptr = object.as_ptr();
+                        <span class="kw">let </span>closure = <span class="kw">if </span>swapped {
+                            RustClosure::new_local(<span class="kw">move </span>|args| {
+                                <span class="kw">let </span><span class="kw-2">mut </span>args = args.to_owned();
+                                <span class="kw">let </span>obj_v = <span class="kw">unsafe </span>{
+                                    <span class="kw">let </span>object: Borrowed&lt;glib::Object&gt; =
+                                        from_glib_borrow(object_ptr);
+                                    <span class="kw">let </span><span class="kw-2">mut </span>v = glib::Value::uninitialized();
+                                    glib::gobject_ffi::g_value_init(
+                                        v.to_glib_none_mut().<span class="number">0</span>,
+                                        object.type_().into_glib(),
                                     );
-                                    <span class="ident">glib::gobject_ffi::g_value_set_object</span>(
-                                        <span class="ident">v</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
-                                        <span class="ident">object</span>.<span class="ident">as_object_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+                                    glib::gobject_ffi::g_value_set_object(
+                                        v.to_glib_none_mut().<span class="number">0</span>,
+                                        object.as_object_ref().to_glib_none().<span class="number">0</span>,
                                     );
-                                    <span class="ident">v</span>
+                                    v
                                 };
-                                <span class="ident">args</span>.<span class="ident">push</span>(<span class="ident">obj_v</span>);
-                                <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">args</span>.<span class="ident">len</span>();
-                                <span class="ident">args</span>.<span class="ident">swap</span>(<span class="number">0</span>, <span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>);
-                                <span class="ident">callback</span>(<span class="kw-2">&amp;</span><span class="ident">args</span>)
+                                args.push(obj_v);
+                                <span class="kw">let </span>len = args.len();
+                                args.swap(<span class="number">0</span>, len - <span class="number">1</span>);
+                                callback(<span class="kw-2">&amp;</span>args)
                             })
-                        } <span class="kw">else</span> {
-                            <span class="ident">RustClosure::new_local</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">args</span><span class="op">|</span> {
-                                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">args</span>.<span class="ident">to_owned</span>();
-                                <span class="kw">let</span> <span class="ident">object</span> <span class="op">=</span> <span class="ident">object_weak</span>
-                                    .<span class="ident">upgrade</span>()
-                                    .<span class="ident">expect</span>(<span class="string">&quot;Object destroyed before closure invalidated&quot;</span>);
-                                <span class="kw">let</span> <span class="ident">obj_v</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-                                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">glib::Value::uninitialized</span>();
-                                    <span class="ident">glib::gobject_ffi::g_value_init</span>(
-                                        <span class="ident">v</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
-                                        <span class="ident">object</span>.<span class="ident">type_</span>().<span class="ident">into_glib</span>(),
+                        } <span class="kw">else </span>{
+                            RustClosure::new_local(<span class="kw">move </span>|args| {
+                                <span class="kw">let </span><span class="kw-2">mut </span>args = args.to_owned();
+                                <span class="kw">let </span>obj_v = <span class="kw">unsafe </span>{
+                                    <span class="kw">let </span>object: Borrowed&lt;glib::Object&gt; =
+                                        from_glib_borrow(object_ptr);
+                                    <span class="kw">let </span><span class="kw-2">mut </span>v = glib::Value::uninitialized();
+                                    glib::gobject_ffi::g_value_init(
+                                        v.to_glib_none_mut().<span class="number">0</span>,
+                                        object.type_().into_glib(),
                                     );
-                                    <span class="ident">glib::gobject_ffi::g_value_set_object</span>(
-                                        <span class="ident">v</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
-                                        <span class="ident">object</span>.<span class="ident">as_object_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+                                    glib::gobject_ffi::g_value_set_object(
+                                        v.to_glib_none_mut().<span class="number">0</span>,
+                                        object.as_object_ref().to_glib_none().<span class="number">0</span>,
                                     );
-                                    <span class="ident">v</span>
+                                    v
                                 };
-                                <span class="ident">args</span>.<span class="ident">push</span>(<span class="ident">obj_v</span>);
-                                <span class="ident">callback</span>(<span class="kw-2">&amp;</span><span class="ident">args</span>)
+                                args.push(obj_v);
+                                callback(<span class="kw-2">&amp;</span>args)
                             })
                         };
-                        <span class="ident">object</span>.<span class="ident">watch_closure</span>(<span class="ident">closure</span>.<span class="ident">as_ref</span>());
-                        <span class="ident">closure</span>.<span class="ident">as_ref</span>().<span class="ident">clone</span>()
-                    } <span class="kw">else</span> {
-                        <span class="kw">if</span> <span class="ident">swapped</span> {
-                            <span class="ident">RustClosure::new_local</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">args</span><span class="op">|</span> {
-                                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">args</span>.<span class="ident">to_owned</span>();
-                                <span class="kw">if</span> <span class="op">!</span><span class="ident">args</span>.<span class="ident">is_empty</span>() {
-                                    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">args</span>.<span class="ident">len</span>();
-                                    <span class="ident">args</span>.<span class="ident">swap</span>(<span class="number">0</span>, <span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>);
+                        object.watch_closure(closure.as_ref());
+                        closure.as_ref().clone()
+                    } <span class="kw">else </span>{
+                        <span class="kw">if </span>swapped {
+                            RustClosure::new_local(<span class="kw">move </span>|args| {
+                                <span class="kw">let </span><span class="kw-2">mut </span>args = args.to_owned();
+                                <span class="kw">if </span>!args.is_empty() {
+                                    <span class="kw">let </span>len = args.len();
+                                    args.swap(<span class="number">0</span>, len - <span class="number">1</span>);
                                 }
-                                <span class="ident">callback</span>(<span class="kw-2">&amp;</span><span class="ident">args</span>)
+                                callback(<span class="kw-2">&amp;</span>args)
                             })
-                        } <span class="kw">else</span> {
-                            <span class="ident">RustClosure::new_local</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">args</span><span class="op">|</span> <span class="ident">callback</span>(<span class="ident">args</span>))
+                        } <span class="kw">else </span>{
+                            RustClosure::new_local(<span class="kw">move </span>|args| callback(args))
                         }
-                        .<span class="ident">as_ref</span>()
-                        .<span class="ident">clone</span>()
+                        .as_ref()
+                        .clone()
                     }
                 })
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::BuilderRustScope</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="self">self</span> <span class="kw">as</span> <span class="ident">gtk4</span>, <span class="ident">prelude</span>::<span class="kw-2">*</span>, <span class="ident">subclass::prelude</span>::<span class="kw-2">*</span>, <span class="ident">test_synced</span>, <span class="ident">Builder</span>};
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span><span class="kw">super</span>::BuilderRustScope;
+    <span class="kw">use crate</span>::{<span class="self">self </span><span class="kw">as </span>gtk4, prelude::<span class="kw-2">*</span>, subclass::prelude::<span class="kw-2">*</span>, Builder};
 
-    <span class="kw">const</span> <span class="ident">SIGNAL_XML</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r##&quot;
+    <span class="kw">const </span>SIGNAL_XML: <span class="kw-2">&amp;</span>str = <span class="string">r##&quot;
     &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
     &lt;interface&gt;
       &lt;object class=&quot;GtkButton&quot; id=&quot;button&quot;&gt;
@@ -566,34 +611,32 @@
     &lt;/interface&gt;
     &quot;##</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_rust_builder_scope_signal_handler</span>() {
-        <span class="ident">test_synced</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-            <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Button</span>;
+    <span class="attribute">#[<span class="kw">crate</span>::test]
+    </span><span class="kw">fn </span>test_rust_builder_scope_signal_handler() {
+        <span class="kw">use </span><span class="kw">crate</span>::Button;
 
-            <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Callbacks</span> {}
-            <span class="attribute">#[<span class="ident">template_callbacks</span>]</span>
-            <span class="kw">impl</span> <span class="ident">Callbacks</span> {
-                <span class="attribute">#[<span class="ident">template_callback</span>]</span>
-                <span class="kw">fn</span> <span class="ident">button_clicked</span>(<span class="ident">button</span>: <span class="kw-2">&amp;</span><span class="ident">Button</span>) {
-                    <span class="macro">skip_assert_initialized!</span>();
-                    <span class="macro">assert_eq!</span>(<span class="ident">button</span>.<span class="ident">label</span>().<span class="ident">unwrap</span>().<span class="ident">as_str</span>(), <span class="string">&quot;Hello World&quot;</span>);
-                    <span class="ident">button</span>.<span class="ident">set_label</span>(<span class="string">&quot;Clicked&quot;</span>);
-                }
+        <span class="kw">pub struct </span>Callbacks {}
+        <span class="attribute">#[template_callbacks]
+        </span><span class="kw">impl </span>Callbacks {
+            <span class="attribute">#[template_callback]
+            </span><span class="kw">fn </span>button_clicked(button: <span class="kw-2">&amp;</span>Button) {
+                <span class="macro">skip_assert_initialized!</span>();
+                <span class="macro">assert_eq!</span>(button.label().unwrap().as_str(), <span class="string">&quot;Hello World&quot;</span>);
+                button.set_label(<span class="string">&quot;Clicked&quot;</span>);
             }
+        }
 
-            <span class="kw">let</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">Builder::new</span>();
-            <span class="kw">let</span> <span class="ident">scope</span> <span class="op">=</span> <span class="ident">BuilderRustScope::new</span>();
-            <span class="ident">Callbacks::add_callbacks_to_scope</span>(<span class="kw-2">&amp;</span><span class="ident">scope</span>);
-            <span class="ident">builder</span>.<span class="ident">set_scope</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">scope</span>));
-            <span class="ident">builder</span>.<span class="ident">add_from_string</span>(<span class="ident">SIGNAL_XML</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">button</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">object</span>::<span class="op">&lt;</span><span class="ident">Button</span><span class="op">&gt;</span>(<span class="string">&quot;button&quot;</span>).<span class="ident">unwrap</span>();
-            <span class="ident">button</span>.<span class="ident">emit_clicked</span>();
-            <span class="macro">assert_eq!</span>(<span class="ident">button</span>.<span class="ident">label</span>().<span class="ident">unwrap</span>().<span class="ident">as_str</span>(), <span class="string">&quot;Clicked&quot;</span>);
-        });
+        <span class="kw">let </span>builder = Builder::new();
+        <span class="kw">let </span>scope = BuilderRustScope::new();
+        Callbacks::add_callbacks_to_scope(<span class="kw-2">&amp;</span>scope);
+        builder.set_scope(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>scope));
+        builder.add_from_string(SIGNAL_XML).unwrap();
+        <span class="kw">let </span>button = builder.object::&lt;Button&gt;(<span class="string">&quot;button&quot;</span>).unwrap();
+        button.emit_clicked();
+        <span class="macro">assert_eq!</span>(button.label().unwrap().as_str(), <span class="string">&quot;Clicked&quot;</span>);
     }
 
-    <span class="kw">const</span> <span class="ident">CLOSURE_XML</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r##&quot;
+    <span class="kw">const </span>CLOSURE_XML: <span class="kw-2">&amp;</span>str = <span class="string">r##&quot;
     &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
     &lt;interface&gt;
       &lt;object class=&quot;GtkEntry&quot; id=&quot;entry_a&quot;/&gt;
@@ -607,61 +650,114 @@
     &lt;/interface&gt;
     &quot;##</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_rust_builder_scope_closure</span>() {
-        <span class="ident">test_synced</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-            <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Entry</span>;
+    <span class="attribute">#[<span class="kw">crate</span>::test]
+    </span><span class="kw">fn </span>test_rust_builder_scope_closure() {
+        <span class="kw">use </span><span class="kw">crate</span>::Entry;
 
-            <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StringCallbacks</span> {}
-            <span class="attribute">#[<span class="ident">template_callbacks</span>]</span>
-            <span class="kw">impl</span> <span class="ident">StringCallbacks</span> {
-                <span class="attribute">#[<span class="ident">template_callback</span>(<span class="ident">function</span>)]</span>
-                <span class="kw">fn</span> <span class="ident">uppercase</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">String</span> {
-                    <span class="macro">skip_assert_initialized!</span>();
-                    <span class="ident">s</span>.<span class="ident">to_uppercase</span>()
-                }
+        <span class="kw">pub struct </span>StringCallbacks {}
+        <span class="attribute">#[template_callbacks]
+        </span><span class="kw">impl </span>StringCallbacks {
+            <span class="attribute">#[template_callback(function)]
+            </span><span class="kw">fn </span>uppercase(s: <span class="kw-2">&amp;</span>str) -&gt; String {
+                <span class="macro">skip_assert_initialized!</span>();
+                s.to_uppercase()
             }
+        }
 
-            <span class="kw">let</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">Builder::new</span>();
-            <span class="kw">let</span> <span class="ident">scope</span> <span class="op">=</span> <span class="ident">BuilderRustScope::new</span>();
-            <span class="ident">StringCallbacks::add_callbacks_to_scope_prefixed</span>(<span class="kw-2">&amp;</span><span class="ident">scope</span>, <span class="string">&quot;string_&quot;</span>);
-            <span class="ident">builder</span>.<span class="ident">set_scope</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">scope</span>));
-            <span class="ident">builder</span>.<span class="ident">add_from_string</span>(<span class="ident">CLOSURE_XML</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">entry_a</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">object</span>::<span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span>(<span class="string">&quot;entry_a&quot;</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">entry_b</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">object</span>::<span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span>(<span class="string">&quot;entry_b&quot;</span>).<span class="ident">unwrap</span>();
-            <span class="ident">entry_a</span>.<span class="ident">set_text</span>(<span class="string">&quot;Hello World&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">entry_b</span>.<span class="ident">text</span>().<span class="ident">as_str</span>(), <span class="string">&quot;HELLO WORLD&quot;</span>);
-        });
+        <span class="kw">let </span>builder = Builder::new();
+        <span class="kw">let </span>scope = BuilderRustScope::new();
+        StringCallbacks::add_callbacks_to_scope_prefixed(<span class="kw-2">&amp;</span>scope, <span class="string">&quot;string_&quot;</span>);
+        builder.set_scope(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>scope));
+        builder.add_from_string(CLOSURE_XML).unwrap();
+        <span class="kw">let </span>entry_a = builder.object::&lt;Entry&gt;(<span class="string">&quot;entry_a&quot;</span>).unwrap();
+        <span class="kw">let </span>entry_b = builder.object::&lt;Entry&gt;(<span class="string">&quot;entry_b&quot;</span>).unwrap();
+        entry_a.set_text(<span class="string">&quot;Hello World&quot;</span>);
+        <span class="macro">assert_eq!</span>(entry_b.text().as_str(), <span class="string">&quot;HELLO WORLD&quot;</span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="attribute">#[<span class="ident">should_panic</span>(
-        <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;Closure returned a value of type guint64 but caller expected gchararray&quot;</span>
-    )]</span>
-    <span class="kw">fn</span> <span class="ident">test_rust_builder_scope_closure_return_mismatch</span>() {
-        <span class="ident">test_synced</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-            <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Entry</span>;
+    <span class="attribute">#[<span class="kw">crate</span>::test]
+    #[should_panic(
+        expected = <span class="string">&quot;Closure returned a value of type guint64 but caller expected gchararray&quot;
+    </span>)]
+    </span><span class="kw">fn </span>test_rust_builder_scope_closure_return_mismatch() {
+        <span class="kw">use </span><span class="kw">crate</span>::Entry;
 
-            <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StringCallbacks</span> {}
-            <span class="attribute">#[<span class="ident">template_callbacks</span>]</span>
-            <span class="kw">impl</span> <span class="ident">StringCallbacks</span> {
-                <span class="attribute">#[<span class="ident">template_callback</span>(<span class="ident">function</span>, <span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;uppercase&quot;</span>)]</span>
-                <span class="kw">fn</span> <span class="ident">to_u64</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">u64</span> {
-                    <span class="macro">skip_assert_initialized!</span>();
-                    <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">unwrap_or</span>(<span class="number">0</span>)
-                }
+        <span class="kw">pub struct </span>StringCallbacks {}
+        <span class="attribute">#[template_callbacks]
+        </span><span class="kw">impl </span>StringCallbacks {
+            <span class="attribute">#[template_callback(function, name = <span class="string">&quot;uppercase&quot;</span>)]
+            </span><span class="kw">fn </span>to_u64(s: <span class="kw-2">&amp;</span>str) -&gt; u64 {
+                <span class="macro">skip_assert_initialized!</span>();
+                s.parse().unwrap_or(<span class="number">0</span>)
             }
+        }
 
-            <span class="kw">let</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">Builder::new</span>();
-            <span class="kw">let</span> <span class="ident">scope</span> <span class="op">=</span> <span class="ident">BuilderRustScope::new</span>();
-            <span class="ident">StringCallbacks::add_callbacks_to_scope_prefixed</span>(<span class="kw-2">&amp;</span><span class="ident">scope</span>, <span class="string">&quot;string_&quot;</span>);
-            <span class="ident">builder</span>.<span class="ident">set_scope</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">scope</span>));
-            <span class="ident">builder</span>.<span class="ident">add_from_string</span>(<span class="ident">CLOSURE_XML</span>).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">entry_a</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">object</span>::<span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span>(<span class="string">&quot;entry_a&quot;</span>).<span class="ident">unwrap</span>();
-            <span class="ident">entry_a</span>.<span class="ident">set_text</span>(<span class="string">&quot;Hello World&quot;</span>);
-        });
+        <span class="kw">let </span>builder = Builder::new();
+        <span class="kw">let </span>scope = BuilderRustScope::new();
+        StringCallbacks::add_callbacks_to_scope_prefixed(<span class="kw-2">&amp;</span>scope, <span class="string">&quot;string_&quot;</span>);
+        builder.set_scope(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>scope));
+        builder.add_from_string(CLOSURE_XML).unwrap();
+        <span class="kw">let </span>entry_a = builder.object::&lt;Entry&gt;(<span class="string">&quot;entry_a&quot;</span>).unwrap();
+        entry_a.set_text(<span class="string">&quot;Hello World&quot;</span>);
+    }
+
+    <span class="kw">const </span>DISPOSE_XML: <span class="kw-2">&amp;</span>str = <span class="string">r##&quot;
+    &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+    &lt;interface&gt;
+      &lt;object class=&quot;MyObject&quot; id=&quot;obj&quot;&gt;
+        &lt;signal name=&quot;destroyed&quot; handler=&quot;my_object_destroyed&quot; object=&quot;obj&quot; swapped=&quot;true&quot; /&gt;
+      &lt;/object&gt;
+    &lt;/interface&gt;
+    &quot;##</span>;
+
+    <span class="attribute">#[<span class="kw">crate</span>::test]
+    </span><span class="kw">fn </span>test_rust_builder_scope_object_during_dispose() {
+        <span class="kw">use </span>glib::subclass::Signal;
+        <span class="kw">use </span>once_cell::sync::Lazy;
+        <span class="kw">use </span>std::{cell::Cell, rc::Rc};
+
+        <span class="attribute">#[derive(Debug, Default)]
+        </span><span class="kw">pub struct </span>MyObjectPrivate {
+            counter: Rc&lt;Cell&lt;u64&gt;&gt;,
+        }
+        <span class="attribute">#[glib::object_subclass]
+        </span><span class="kw">impl </span>ObjectSubclass <span class="kw">for </span>MyObjectPrivate {
+            <span class="kw">const </span>NAME: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;MyObject&quot;</span>;
+            <span class="kw">type </span>Type = MyObject;
+        }
+        <span class="kw">impl </span>ObjectImpl <span class="kw">for </span>MyObjectPrivate {
+            <span class="kw">fn </span>signals() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[Signal] {
+                <span class="kw">static </span>SIGNALS: Lazy&lt;Vec&lt;Signal&gt;&gt; =
+                    Lazy::new(|| <span class="macro">vec!</span>[Signal::builder(<span class="string">&quot;destroyed&quot;</span>).build()]);
+                SIGNALS.as_ref()
+            }
+            <span class="kw">fn </span>dispose(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+                <span class="self">self</span>.instance().emit_by_name::&lt;()&gt;(<span class="string">&quot;destroyed&quot;</span>, <span class="kw-2">&amp;</span>[]);
+            }
+        }
+        <span class="macro">glib::wrapper! </span>{
+            <span class="kw">pub struct </span>MyObject(ObjectSubclass&lt;MyObjectPrivate&gt;);
+        }
+        <span class="attribute">#[template_callbacks]
+        </span><span class="kw">impl </span>MyObject {
+            <span class="attribute">#[template_callback]
+            </span><span class="kw">fn </span>my_object_destroyed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+                <span class="self">self</span>.imp().counter.set(<span class="self">self</span>.imp().counter.get() + <span class="number">1</span>);
+            }
+        }
+
+        <span class="kw">let </span>counter = {
+            MyObject::static_type();
+            <span class="kw">let </span>builder = Builder::new();
+            <span class="kw">let </span>scope = BuilderRustScope::new();
+            MyObject::add_callbacks_to_scope(<span class="kw-2">&amp;</span>scope);
+            builder.set_scope(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>scope));
+            builder.add_from_string(DISPOSE_XML).unwrap();
+            <span class="kw">let </span>obj = builder.object::&lt;MyObject&gt;(<span class="string">&quot;obj&quot;</span>).unwrap();
+            obj.imp().counter.clone()
+        };
+        <span class="macro">assert_eq!</span>(counter.get(), <span class="number">1</span>);
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

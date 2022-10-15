@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `SnapshotExtManual` trait in crate `gtk4`."><meta name="keywords" content="rust, rustlang, rust-lang, SnapshotExtManual"><title>SnapshotExtManual in gtk4::prelude - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
+
+    function checkDocsLatestStable() {
+        function popup(msg, url) { return `
+            <style scoped="scoped">
+                .popup {
+                    max-width: 16em;
+                    background-color: #fff;
+                    position: fixed;
+                    z-index: 1;
+                    margin-left: auto;
+                    bottom: 1em;
+                    right: 1em;
+                    border-radius: 5px;
+                    box-shadow: 1px 1px 4px #777;
+                }
+
+                .popup a.version {
+                    color: #e57300;
+                    padding: 0.6em 1em;
+                    display: block;
+                }
+                .popup a.version:hover {
+                    color: #b25900;
+                }
+
+                .popup a.close {
+                    color: white;
+                    background: grey;
+                    border-radius: 99px;
+                    display: inline-block;
+                    width: 19px;
+                    line-height: 19px;
+                    font-weight: bold;
+                    text-align: center;
+                    margin: 0.6em;
+                    float: right;
+                }
+                .popup a.close:hover {
+                    background: black;
+                }
+            </style>
+            <section class="popup" id="gir_docs_popup">
+                <a class="close" href="#" onclick="document.getElementById('gir_docs_popup').remove(); return false">×</a>
+                <a class="version" href="https://gtk-rs.org/gtk4-rs/stable/latest/docs">
+                    ⚠ ${msg}
+                </a>
+            </section>
+        ` };
+
+        if ("master" == "master") {
+            document.body.insertAdjacentHTML(
+                'beforeend',
+                popup("This is the development version. Go to latest stable version.", "stable/latest")
+            );
+        } else {
+            fetch('https://gtk-rs.org/gtk4-rs/LATEST_RELEASE_BRANCH')
+                .then(response => response.text())
+                .then(latest_branch => {
+                    if (latest_branch.trim() != "master") {
+                        document.body.insertAdjacentHTML(
+                            'beforeend',
+                            popup("This version is outdated. Go to latest version.", "stable/latest")
+                        );
+                    }
+                });
+        }
+    }
+</script>
+
+
+<nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"><a href="#">SnapshotExtManual</a></h2><div class="sidebar-elems"><section><h3 class="sidebar-title"><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.append_border">append_border</a></li><li><a href="#tymethod.push_debug">push_debug</a></li><li><a href="#tymethod.to_node">to_node</a></li><li><a href="#tymethod.to_paintable">to_paintable</a></li></ul><h3 class="sidebar-title"><a href="#implementors">Implementors</a></h3></section><h2 class="location"><a href="index.html">In gtk4::prelude</a></h2></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Trait <a href="../index.html">gtk4</a>::<wbr><a href="index.html">prelude</a>::<wbr><a class="trait" href="#">SnapshotExtManual</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../../src/gtk4/snapshot.rs.html#10-68">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="item-decl"><pre class="rust trait"><code>pub trait SnapshotExtManual {
+    fn <a href="#tymethod.append_border" class="fnname">append_border</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outline: &amp;<a class="struct" href="../../gsk4/rounded_rect/struct.RoundedRect.html" title="struct gsk4::rounded_rect::RoundedRect">RoundedRect</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border_width: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">4</a>],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border_color: &amp;[<a class="struct" href="../../gdk4/auto/rgba/struct.RGBA.html" title="struct gdk4::auto::rgba::RGBA">RGBA</a>; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">4</a>]<br>&nbsp;&nbsp;&nbsp;&nbsp;);
+<span class="item-spacer"></span>    fn <a href="#tymethod.push_debug" class="fnname">push_debug</a>(&amp;self, message: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>);
+<span class="item-spacer"></span>    fn <a href="#tymethod.to_node" class="fnname">to_node</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gsk4/auto/render_node/struct.RenderNode.html" title="struct gsk4::auto::render_node::RenderNode">RenderNode</a>&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.to_paintable" class="fnname">to_paintable</a>(self, size: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/size/struct.Size.html" title="struct graphene::auto::size::Size">Size</a>&gt;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk4/auto/paintable/struct.Paintable.html" title="struct gdk4::auto::paintable::Paintable">Paintable</a>&gt;;
+}</code></pre></div><h2 id="required-methods" class="small-section-header">Required Methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><details class="rustdoc-toggle method-toggle" open><summary><section id="tymethod.append_border" class="method has-srclink"><a class="srclink rightside" href="../../src/gtk4/snapshot.rs.html#23-28">source</a><h4 class="code-header">fn <a href="#tymethod.append_border" class="fnname">append_border</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;outline: &amp;<a class="struct" href="../../gsk4/rounded_rect/struct.RoundedRect.html" title="struct gsk4::rounded_rect::RoundedRect">RoundedRect</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;border_width: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">4</a>],<br>&nbsp;&nbsp;&nbsp;&nbsp;border_color: &amp;[<a class="struct" href="../../gdk4/auto/rgba/struct.RGBA.html" title="struct gdk4::auto::rgba::RGBA">RGBA</a>; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">4</a>]<br>)</h4></section></summary><div class="docblock"><p>Appends a stroked border rectangle inside the given @outline.</p>
+<p>The four sides of the border can have different widths and colors.</p>
+<h6 id="outline"><a href="#outline"><code>outline</code></a></h6>
+<p>the outline of the border</p>
+<h6 id="border_width"><a href="#border_width"><code>border_width</code></a></h6>
+<p>the stroke width of the border on
+the top, right, bottom and left side respectively.</p>
+<h6 id="border_color"><a href="#border_color"><code>border_color</code></a></h6>
+<p>the color used on the top, right,
+bottom and left side.</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="tymethod.push_debug" class="method has-srclink"><a class="srclink rightside" href="../../src/gtk4/snapshot.rs.html#38">source</a><h4 class="code-header">fn <a href="#tymethod.push_debug" class="fnname">push_debug</a>(&amp;self, message: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>)</h4></section></summary><div class="docblock"><p>Inserts a debug node with a message.</p>
+<p>Debug nodes don’t affect the rendering at all, but can be
+helpful in identifying parts of a render node tree dump,
+for example in the GTK inspector.</p>
+<h6 id="message"><a href="#message"><code>message</code></a></h6>
+<p>a printf-style format string</p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="tymethod.to_node" class="method has-srclink"><a class="srclink rightside" href="../../src/gtk4/snapshot.rs.html#51">source</a><h4 class="code-header">fn <a href="#tymethod.to_node" class="fnname">to_node</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gsk4/auto/render_node/struct.RenderNode.html" title="struct gsk4::auto::render_node::RenderNode">RenderNode</a>&gt;</h4></section></summary><div class="docblock"><p>Returns the render node that was constructed
+by @self.</p>
+<p>After calling this function, it is no longer possible to
+add more nodes to @self. The only function that should
+be called after this is <code>GObject::Object::unref()</code>.</p>
+<h5 id="returns"><a href="#returns">Returns</a></h5>
+<p>the constructed <a href="../../gsk4/auto/render_node/struct.RenderNode.html" title="crate::gsk::RenderNode"><code>gsk::RenderNode</code></a></p>
+</div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="tymethod.to_paintable" class="method has-srclink"><a class="srclink rightside" href="../../src/gtk4/snapshot.rs.html#67">source</a><h4 class="code-header">fn <a href="#tymethod.to_paintable" class="fnname">to_paintable</a>(self, size: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/size/struct.Size.html" title="struct graphene::auto::size::Size">Size</a>&gt;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk4/auto/paintable/struct.Paintable.html" title="struct gdk4::auto::paintable::Paintable">Paintable</a>&gt;</h4></section></summary><div class="docblock"><p>Returns a paintable encapsulating the render node
+that was constructed by @self.</p>
+<p>After calling this function, it is no longer possible to
+add more nodes to @self. The only function that should
+be called after this is <code>GObject::Object::unref()</code>.</p>
+<h6 id="size"><a href="#size"><code>size</code></a></h6>
+<p>The size of the resulting paintable
+or <a href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html#variant.None" title="None"><code>None</code></a> to use the bounds of the snapshot</p>
+<h5 id="returns-1"><a href="#returns-1">Returns</a></h5>
+<p>a new <a href="../../gdk4/auto/paintable/struct.Paintable.html" title="crate::gdk::Paintable"><code>gdk::Paintable</code></a></p>
+</div></details></div><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div id="implementors-list"><section id="impl-SnapshotExtManual-for-T" class="impl has-srclink"><a class="srclink rightside" href="../../src/gtk4/snapshot.rs.html#70-107">source</a><a href="#impl-SnapshotExtManual-for-T" class="anchor"></a><h3 class="code-header">impl&lt;T:&nbsp;<a class="trait" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.IsA.html" title="trait glib::object::IsA">IsA</a>&lt;<a class="struct" href="../struct.Snapshot.html" title="struct gtk4::Snapshot">Snapshot</a>&gt;&gt; <a class="trait" href="trait.SnapshotExtManual.html" title="trait gtk4::prelude::SnapshotExtManual">SnapshotExtManual</a> for T</h3></section></div><script src="../../implementors/gtk4/snapshot/trait.SnapshotExtManual.js" async></script></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

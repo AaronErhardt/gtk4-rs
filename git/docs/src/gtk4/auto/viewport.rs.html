@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/viewport.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>viewport.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/viewport.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>viewport.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -736,668 +733,671 @@
 <span id="660">660</span>
 <span id="661">661</span>
 <span id="662">662</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+<span id="663">663</span>
+<span id="664">664</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Accessible</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::AccessibleRole</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Adjustment</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Align</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Buildable</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ConstraintTarget</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::LayoutManager</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Overflow</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Scrollable</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ScrollablePolicy</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Widget</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::object::ObjectType</span> <span class="kw">as</span> <span class="ident">ObjectType_</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::StaticType</span>;
-<span class="kw">use</span> <span class="ident">glib::ToValue</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::Accessible;
+<span class="kw">use </span><span class="kw">crate</span>::AccessibleRole;
+<span class="kw">use </span><span class="kw">crate</span>::Adjustment;
+<span class="kw">use </span><span class="kw">crate</span>::Align;
+<span class="kw">use </span><span class="kw">crate</span>::Buildable;
+<span class="kw">use </span><span class="kw">crate</span>::ConstraintTarget;
+<span class="kw">use </span><span class="kw">crate</span>::LayoutManager;
+<span class="kw">use </span><span class="kw">crate</span>::Overflow;
+<span class="kw">use </span><span class="kw">crate</span>::Scrollable;
+<span class="kw">use </span><span class="kw">crate</span>::ScrollablePolicy;
+<span class="kw">use </span><span class="kw">crate</span>::Widget;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::object::ObjectType <span class="kw">as </span>ObjectType_;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::StaticType;
+<span class="kw">use </span>glib::ToValue;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// [`Viewport`][crate::Viewport] implements scrollability for widgets that lack their</span>
-    <span class="doccomment">/// own scrolling capabilities.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Use [`Viewport`][crate::Viewport] to scroll child widgets such as [`Grid`][crate::Grid],</span>
-    <span class="doccomment">/// [`Box`][crate::Box], and so on.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The [`Viewport`][crate::Viewport] will start scrolling content only if allocated</span>
-    <span class="doccomment">/// less than the child widget’s minimum size in a given orientation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # CSS nodes</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Viewport`][crate::Viewport] has a single CSS node with name `viewport`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Accessibility</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Viewport`][crate::Viewport] uses the [`AccessibleRole::Group`][crate::AccessibleRole::Group] role.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`WidgetExt`][trait@crate::prelude::WidgetExt], [`trait@glib::ObjectExt`], [`AccessibleExt`][trait@crate::prelude::AccessibleExt], [`BuildableExt`][trait@crate::prelude::BuildableExt], [`ConstraintTargetExt`][trait@crate::prelude::ConstraintTargetExt], [`ScrollableExt`][trait@crate::prelude::ScrollableExt], [`WidgetExtManual`][trait@crate::prelude::WidgetExtManual], [`AccessibleExtManual`][trait@crate::prelude::AccessibleExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkViewport&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Viewport</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkViewport</span><span class="op">&gt;</span>) @<span class="ident">extends</span> <span class="ident">Widget</span>, @<span class="ident">implements</span> <span class="ident">Accessible</span>, <span class="ident">Buildable</span>, <span class="ident">ConstraintTarget</span>, <span class="ident">Scrollable</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// [`Viewport`][crate::Viewport] implements scrollability for widgets that lack their
+    /// own scrolling capabilities.
+    ///
+    /// Use [`Viewport`][crate::Viewport] to scroll child widgets such as [`Grid`][crate::Grid],
+    /// [`Box`][crate::Box], and so on.
+    ///
+    /// The [`Viewport`][crate::Viewport] will start scrolling content only if allocated
+    /// less than the child widget’s minimum size in a given orientation.
+    ///
+    /// # CSS nodes
+    ///
+    /// [`Viewport`][crate::Viewport] has a single CSS node with name `viewport`.
+    ///
+    /// # Accessibility
+    ///
+    /// [`Viewport`][crate::Viewport] uses the [`AccessibleRole::Group`][crate::AccessibleRole::Group] role.
+    ///
+    /// # Implements
+    ///
+    /// [`WidgetExt`][trait@crate::prelude::WidgetExt], [`trait@glib::ObjectExt`], [`AccessibleExt`][trait@crate::prelude::AccessibleExt], [`BuildableExt`][trait@crate::prelude::BuildableExt], [`ConstraintTargetExt`][trait@crate::prelude::ConstraintTargetExt], [`ScrollableExt`][trait@crate::prelude::ScrollableExt], [`WidgetExtManual`][trait@crate::prelude::WidgetExtManual], [`AccessibleExtManual`][trait@crate::prelude::AccessibleExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkViewport&quot;</span>)]
+    </span><span class="kw">pub struct </span>Viewport(Object&lt;ffi::GtkViewport&gt;) @extends Widget, @implements Accessible, Buildable, ConstraintTarget, Scrollable;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_viewport_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_viewport_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Viewport</span> {
-    <span class="doccomment">/// Creates a new [`Viewport`][crate::Viewport].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The new viewport uses the given adjustments, or default</span>
-    <span class="doccomment">/// adjustments if none are given.</span>
-    <span class="doccomment">/// ## `hadjustment`</span>
-    <span class="doccomment">/// horizontal adjustment</span>
-    <span class="doccomment">/// ## `vadjustment`</span>
-    <span class="doccomment">/// vertical adjustment</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a new [`Viewport`][crate::Viewport]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_viewport_new&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">hadjustment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Adjustment</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-        <span class="ident">vadjustment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Adjustment</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">Viewport</span> {
+<span class="kw">impl </span>Viewport {
+    <span class="doccomment">/// Creates a new [`Viewport`][crate::Viewport].
+    ///
+    /// The new viewport uses the given adjustments, or default
+    /// adjustments if none are given.
+    /// ## `hadjustment`
+    /// horizontal adjustment
+    /// ## `vadjustment`
+    /// vertical adjustment
+    ///
+    /// # Returns
+    ///
+    /// a new [`Viewport`][crate::Viewport]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_viewport_new&quot;</span>)]
+    </span><span class="kw">pub fn </span>new(
+        hadjustment: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Adjustment&gt;&gt;,
+        vadjustment: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Adjustment&gt;&gt;,
+    ) -&gt; Viewport {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">Widget::from_glib_none</span>(<span class="ident">ffi::gtk_viewport_new</span>(
-                <span class="ident">hadjustment</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">vadjustment</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            Widget::from_glib_none(ffi::gtk_viewport_new(
+                hadjustment.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
+                vadjustment.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
             ))
-            .<span class="ident">unsafe_cast</span>()
+            .unsafe_cast()
         }
     }
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`Viewport`] objects.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method returns an instance of [`ViewportBuilder`](crate::builders::ViewportBuilder) which can be used to create [`Viewport`] objects.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">ViewportBuilder</span> {
-        <span class="ident">ViewportBuilder::default</span>()
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`Viewport`] objects.
+    ///
+    /// This method returns an instance of [`ViewportBuilder`](crate::builders::ViewportBuilder) which can be used to create [`Viewport`] objects.
+    </span><span class="kw">pub fn </span>builder() -&gt; ViewportBuilder {
+        ViewportBuilder::default()
     }
 
-    <span class="doccomment">/// Gets the child widget of @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the child widget of @self</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_viewport_get_child&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_child&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">child</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Widget</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_viewport_get_child</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+    <span class="doccomment">/// Gets the child widget of @self.
+    ///
+    /// # Returns
+    ///
+    /// the child widget of @self
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_viewport_get_child&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_child&quot;</span>)]
+    </span><span class="kw">pub fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Widget&gt; {
+        <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_viewport_get_child(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// Gets whether the viewport is scrolling to keep the focused</span>
-    <span class="doccomment">/// child in view.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the viewport keeps the focus child scrolled to view</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_viewport_get_scroll_to_focus&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_scroll_to_focus&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_scroll_to_focus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_viewport_get_scroll_to_focus</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+    <span class="doccomment">/// Gets whether the viewport is scrolling to keep the focused
+    /// child in view.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the viewport keeps the focus child scrolled to view
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_viewport_get_scroll_to_focus&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_scroll_to_focus&quot;</span>)]
+    </span><span class="kw">pub fn </span>is_scroll_to_focus(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_viewport_get_scroll_to_focus(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// Sets the child widget of @self.</span>
-    <span class="doccomment">/// ## `child`</span>
-    <span class="doccomment">/// the child widget</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_viewport_set_child&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_child</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">child</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Widget</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_viewport_set_child</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">child</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Sets the child widget of @self.
+    /// ## `child`
+    /// the child widget
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_viewport_set_child&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_child(<span class="kw-2">&amp;</span><span class="self">self</span>, child: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_viewport_set_child(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                child.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="doccomment">/// Sets whether the viewport should automatically scroll</span>
-    <span class="doccomment">/// to keep the focused child in view.</span>
-    <span class="doccomment">/// ## `scroll_to_focus`</span>
-    <span class="doccomment">/// whether to keep the focus widget scrolled to view</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_viewport_set_scroll_to_focus&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_scroll_to_focus</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">scroll_to_focus</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_viewport_set_scroll_to_focus</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">scroll_to_focus</span>.<span class="ident">into_glib</span>(),
+    <span class="doccomment">/// Sets whether the viewport should automatically scroll
+    /// to keep the focused child in view.
+    /// ## `scroll_to_focus`
+    /// whether to keep the focus widget scrolled to view
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_viewport_set_scroll_to_focus&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_scroll_to_focus(<span class="kw-2">&amp;</span><span class="self">self</span>, scroll_to_focus: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_viewport_set_scroll_to_focus(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                scroll_to_focus.into_glib(),
             );
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;child&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_child_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_child_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Viewport</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkViewport</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;child&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_child_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_child_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>Viewport) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkViewport,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::child\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_child_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::child\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_child_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;scroll-to-focus&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_scroll_to_focus_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_scroll_to_focus_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">Viewport</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkViewport</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;scroll-to-focus&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_scroll_to_focus_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_scroll_to_focus_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>Viewport) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkViewport,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::scroll-to-focus\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_scroll_to_focus_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::scroll-to-focus\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_scroll_to_focus_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Viewport</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident">glib::object::Object::new</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[])
-            .<span class="ident">expect</span>(<span class="string">&quot;Can&#39;t construct Viewport object with default parameters&quot;</span>)
+<span class="kw">impl </span>Default <span class="kw">for </span>Viewport {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        glib::object::Object::new::&lt;<span class="self">Self</span>&gt;(<span class="kw-2">&amp;</span>[])
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// A [builder-pattern] type to construct [`Viewport`] objects.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</span>
-<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;The builder must be built to be used&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ViewportBuilder</span> {
-    <span class="ident">child</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Widget</span><span class="op">&gt;</span>,
-    <span class="ident">scroll_to_focus</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">can_focus</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">can_target</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">css_classes</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">css_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">cursor</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">gdk::Cursor</span><span class="op">&gt;</span>,
-    <span class="ident">focus_on_click</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">focusable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">halign</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Align</span><span class="op">&gt;</span>,
-    <span class="ident">has_tooltip</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">height_request</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-    <span class="ident">hexpand</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">hexpand_set</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">layout_manager</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LayoutManager</span><span class="op">&gt;</span>,
-    <span class="ident">margin_bottom</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-    <span class="ident">margin_end</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-    <span class="ident">margin_start</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-    <span class="ident">margin_top</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-    <span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">opacity</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="ident">overflow</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Overflow</span><span class="op">&gt;</span>,
-    <span class="ident">receives_default</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">sensitive</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">tooltip_markup</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">tooltip_text</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">valign</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Align</span><span class="op">&gt;</span>,
-    <span class="ident">vexpand</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">vexpand_set</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">visible</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">width_request</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-    <span class="ident">accessible_role</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">AccessibleRole</span><span class="op">&gt;</span>,
-    <span class="ident">hadjustment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Adjustment</span><span class="op">&gt;</span>,
-    <span class="ident">hscroll_policy</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ScrollablePolicy</span><span class="op">&gt;</span>,
-    <span class="ident">vadjustment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Adjustment</span><span class="op">&gt;</span>,
-    <span class="ident">vscroll_policy</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ScrollablePolicy</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(Clone, Default)]
+</span><span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`Viewport`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+</span><span class="attribute">#[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
+</span><span class="kw">pub struct </span>ViewportBuilder {
+    child: <span class="prelude-ty">Option</span>&lt;Widget&gt;,
+    scroll_to_focus: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    can_focus: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    can_target: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    css_classes: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+    css_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    cursor: <span class="prelude-ty">Option</span>&lt;gdk::Cursor&gt;,
+    focus_on_click: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    focusable: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    halign: <span class="prelude-ty">Option</span>&lt;Align&gt;,
+    has_tooltip: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    height_request: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+    hexpand: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    hexpand_set: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    layout_manager: <span class="prelude-ty">Option</span>&lt;LayoutManager&gt;,
+    margin_bottom: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+    margin_end: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+    margin_start: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+    margin_top: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+    name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    opacity: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    overflow: <span class="prelude-ty">Option</span>&lt;Overflow&gt;,
+    receives_default: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    sensitive: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    tooltip_markup: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    tooltip_text: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    valign: <span class="prelude-ty">Option</span>&lt;Align&gt;,
+    vexpand: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    vexpand_set: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    visible: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    width_request: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+    accessible_role: <span class="prelude-ty">Option</span>&lt;AccessibleRole&gt;,
+    hadjustment: <span class="prelude-ty">Option</span>&lt;Adjustment&gt;,
+    hscroll_policy: <span class="prelude-ty">Option</span>&lt;ScrollablePolicy&gt;,
+    vadjustment: <span class="prelude-ty">Option</span>&lt;Adjustment&gt;,
+    vscroll_policy: <span class="prelude-ty">Option</span>&lt;ScrollablePolicy&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">ViewportBuilder</span> {
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Create a new [`ViewportBuilder`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::default</span>()
+<span class="kw">impl </span>ViewportBuilder {
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Create a new [`ViewportBuilder`].
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::default()
     }
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Build the [`Viewport`].</span>
-    <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">Viewport</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">properties</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">ToValue</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">child</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">child</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;child&quot;</span>, <span class="ident">child</span>));
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Build the [`Viewport`].
+    </span><span class="attribute">#[must_use = <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Viewport {
+        <span class="kw">let </span><span class="kw-2">mut </span>properties: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span><span class="kw">dyn </span>ToValue)&gt; = <span class="macro">vec!</span>[];
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>child) = <span class="self">self</span>.child {
+            properties.push((<span class="string">&quot;child&quot;</span>, child));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">scroll_to_focus</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">scroll_to_focus</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;scroll-to-focus&quot;</span>, <span class="ident">scroll_to_focus</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>scroll_to_focus) = <span class="self">self</span>.scroll_to_focus {
+            properties.push((<span class="string">&quot;scroll-to-focus&quot;</span>, scroll_to_focus));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">can_focus</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">can_focus</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;can-focus&quot;</span>, <span class="ident">can_focus</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>can_focus) = <span class="self">self</span>.can_focus {
+            properties.push((<span class="string">&quot;can-focus&quot;</span>, can_focus));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">can_target</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">can_target</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;can-target&quot;</span>, <span class="ident">can_target</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>can_target) = <span class="self">self</span>.can_target {
+            properties.push((<span class="string">&quot;can-target&quot;</span>, can_target));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">css_classes</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">css_classes</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;css-classes&quot;</span>, <span class="ident">css_classes</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>css_classes) = <span class="self">self</span>.css_classes {
+            properties.push((<span class="string">&quot;css-classes&quot;</span>, css_classes));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">css_name</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">css_name</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;css-name&quot;</span>, <span class="ident">css_name</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>css_name) = <span class="self">self</span>.css_name {
+            properties.push((<span class="string">&quot;css-name&quot;</span>, css_name));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">cursor</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">cursor</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;cursor&quot;</span>, <span class="ident">cursor</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>cursor) = <span class="self">self</span>.cursor {
+            properties.push((<span class="string">&quot;cursor&quot;</span>, cursor));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">focus_on_click</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">focus_on_click</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;focus-on-click&quot;</span>, <span class="ident">focus_on_click</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>focus_on_click) = <span class="self">self</span>.focus_on_click {
+            properties.push((<span class="string">&quot;focus-on-click&quot;</span>, focus_on_click));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">focusable</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">focusable</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;focusable&quot;</span>, <span class="ident">focusable</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>focusable) = <span class="self">self</span>.focusable {
+            properties.push((<span class="string">&quot;focusable&quot;</span>, focusable));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">halign</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">halign</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;halign&quot;</span>, <span class="ident">halign</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>halign) = <span class="self">self</span>.halign {
+            properties.push((<span class="string">&quot;halign&quot;</span>, halign));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">has_tooltip</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">has_tooltip</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;has-tooltip&quot;</span>, <span class="ident">has_tooltip</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>has_tooltip) = <span class="self">self</span>.has_tooltip {
+            properties.push((<span class="string">&quot;has-tooltip&quot;</span>, has_tooltip));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">height_request</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">height_request</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;height-request&quot;</span>, <span class="ident">height_request</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>height_request) = <span class="self">self</span>.height_request {
+            properties.push((<span class="string">&quot;height-request&quot;</span>, height_request));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">hexpand</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">hexpand</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;hexpand&quot;</span>, <span class="ident">hexpand</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>hexpand) = <span class="self">self</span>.hexpand {
+            properties.push((<span class="string">&quot;hexpand&quot;</span>, hexpand));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">hexpand_set</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">hexpand_set</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;hexpand-set&quot;</span>, <span class="ident">hexpand_set</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>hexpand_set) = <span class="self">self</span>.hexpand_set {
+            properties.push((<span class="string">&quot;hexpand-set&quot;</span>, hexpand_set));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layout_manager</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">layout_manager</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;layout-manager&quot;</span>, <span class="ident">layout_manager</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>layout_manager) = <span class="self">self</span>.layout_manager {
+            properties.push((<span class="string">&quot;layout-manager&quot;</span>, layout_manager));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">margin_bottom</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">margin_bottom</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;margin-bottom&quot;</span>, <span class="ident">margin_bottom</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>margin_bottom) = <span class="self">self</span>.margin_bottom {
+            properties.push((<span class="string">&quot;margin-bottom&quot;</span>, margin_bottom));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">margin_end</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">margin_end</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;margin-end&quot;</span>, <span class="ident">margin_end</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>margin_end) = <span class="self">self</span>.margin_end {
+            properties.push((<span class="string">&quot;margin-end&quot;</span>, margin_end));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">margin_start</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">margin_start</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;margin-start&quot;</span>, <span class="ident">margin_start</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>margin_start) = <span class="self">self</span>.margin_start {
+            properties.push((<span class="string">&quot;margin-start&quot;</span>, margin_start));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">margin_top</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">margin_top</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;margin-top&quot;</span>, <span class="ident">margin_top</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>margin_top) = <span class="self">self</span>.margin_top {
+            properties.push((<span class="string">&quot;margin-top&quot;</span>, margin_top));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">name</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;name&quot;</span>, <span class="ident">name</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>name) = <span class="self">self</span>.name {
+            properties.push((<span class="string">&quot;name&quot;</span>, name));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">opacity</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">opacity</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;opacity&quot;</span>, <span class="ident">opacity</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>opacity) = <span class="self">self</span>.opacity {
+            properties.push((<span class="string">&quot;opacity&quot;</span>, opacity));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">overflow</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">overflow</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;overflow&quot;</span>, <span class="ident">overflow</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>overflow) = <span class="self">self</span>.overflow {
+            properties.push((<span class="string">&quot;overflow&quot;</span>, overflow));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">receives_default</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">receives_default</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;receives-default&quot;</span>, <span class="ident">receives_default</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>receives_default) = <span class="self">self</span>.receives_default {
+            properties.push((<span class="string">&quot;receives-default&quot;</span>, receives_default));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">sensitive</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">sensitive</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;sensitive&quot;</span>, <span class="ident">sensitive</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>sensitive) = <span class="self">self</span>.sensitive {
+            properties.push((<span class="string">&quot;sensitive&quot;</span>, sensitive));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">tooltip_markup</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tooltip_markup</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;tooltip-markup&quot;</span>, <span class="ident">tooltip_markup</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>tooltip_markup) = <span class="self">self</span>.tooltip_markup {
+            properties.push((<span class="string">&quot;tooltip-markup&quot;</span>, tooltip_markup));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">tooltip_text</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tooltip_text</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;tooltip-text&quot;</span>, <span class="ident">tooltip_text</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>tooltip_text) = <span class="self">self</span>.tooltip_text {
+            properties.push((<span class="string">&quot;tooltip-text&quot;</span>, tooltip_text));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">valign</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">valign</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;valign&quot;</span>, <span class="ident">valign</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>valign) = <span class="self">self</span>.valign {
+            properties.push((<span class="string">&quot;valign&quot;</span>, valign));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">vexpand</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vexpand</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;vexpand&quot;</span>, <span class="ident">vexpand</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>vexpand) = <span class="self">self</span>.vexpand {
+            properties.push((<span class="string">&quot;vexpand&quot;</span>, vexpand));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">vexpand_set</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vexpand_set</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;vexpand-set&quot;</span>, <span class="ident">vexpand_set</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>vexpand_set) = <span class="self">self</span>.vexpand_set {
+            properties.push((<span class="string">&quot;vexpand-set&quot;</span>, vexpand_set));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">visible</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">visible</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;visible&quot;</span>, <span class="ident">visible</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>visible) = <span class="self">self</span>.visible {
+            properties.push((<span class="string">&quot;visible&quot;</span>, visible));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">width_request</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">width_request</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;width-request&quot;</span>, <span class="ident">width_request</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>width_request) = <span class="self">self</span>.width_request {
+            properties.push((<span class="string">&quot;width-request&quot;</span>, width_request));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">accessible_role</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">accessible_role</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;accessible-role&quot;</span>, <span class="ident">accessible_role</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>accessible_role) = <span class="self">self</span>.accessible_role {
+            properties.push((<span class="string">&quot;accessible-role&quot;</span>, accessible_role));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">hadjustment</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">hadjustment</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;hadjustment&quot;</span>, <span class="ident">hadjustment</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>hadjustment) = <span class="self">self</span>.hadjustment {
+            properties.push((<span class="string">&quot;hadjustment&quot;</span>, hadjustment));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">hscroll_policy</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">hscroll_policy</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;hscroll-policy&quot;</span>, <span class="ident">hscroll_policy</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>hscroll_policy) = <span class="self">self</span>.hscroll_policy {
+            properties.push((<span class="string">&quot;hscroll-policy&quot;</span>, hscroll_policy));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">vadjustment</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vadjustment</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;vadjustment&quot;</span>, <span class="ident">vadjustment</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>vadjustment) = <span class="self">self</span>.vadjustment {
+            properties.push((<span class="string">&quot;vadjustment&quot;</span>, vadjustment));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">vscroll_policy</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vscroll_policy</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;vscroll-policy&quot;</span>, <span class="ident">vscroll_policy</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>vscroll_policy) = <span class="self">self</span>.vscroll_policy {
+            properties.push((<span class="string">&quot;vscroll-policy&quot;</span>, vscroll_policy));
         }
-        <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">Viewport</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">properties</span>)
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to create an instance of Viewport&quot;</span>)
+        glib::Object::new::&lt;Viewport&gt;(<span class="kw-2">&amp;</span>properties)
     }
 
-    <span class="doccomment">/// The child widget.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">child</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">child</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Widget</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">child</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">child</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The child widget.
+    </span><span class="kw">pub fn </span>child(<span class="kw-2">mut </span><span class="self">self</span>, child: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.child = <span class="prelude-val">Some</span>(child.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to scroll when the focus changes.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scroll_to_focus</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scroll_to_focus</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">scroll_to_focus</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">scroll_to_focus</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to scroll when the focus changes.
+    ///
+    /// Before 4.6.2, this property was mistakenly defaulting to FALSE, so if your
+    /// code needs to work with older versions, consider setting it explicitly to
+    /// TRUE.
+    </span><span class="kw">pub fn </span>scroll_to_focus(<span class="kw-2">mut </span><span class="self">self</span>, scroll_to_focus: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.scroll_to_focus = <span class="prelude-val">Some</span>(scroll_to_focus);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the widget or any of its descendents can accept</span>
-    <span class="doccomment">/// the input focus.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property is meant to be set by widget implementations,</span>
-    <span class="doccomment">/// typically in their instance init function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_focus</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">can_focus</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">can_focus</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">can_focus</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the widget or any of its descendents can accept
+    /// the input focus.
+    ///
+    /// This property is meant to be set by widget implementations,
+    /// typically in their instance init function.
+    </span><span class="kw">pub fn </span>can_focus(<span class="kw-2">mut </span><span class="self">self</span>, can_focus: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.can_focus = <span class="prelude-val">Some</span>(can_focus);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the widget can receive pointer events.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_target</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">can_target</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">can_target</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">can_target</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the widget can receive pointer events.
+    </span><span class="kw">pub fn </span>can_target(<span class="kw-2">mut </span><span class="self">self</span>, can_target: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.can_target = <span class="prelude-val">Some</span>(can_target);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// A list of css classes applied to this widget.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">css_classes</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">css_classes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">css_classes</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">css_classes</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// A list of css classes applied to this widget.
+    </span><span class="kw">pub fn </span>css_classes(<span class="kw-2">mut </span><span class="self">self</span>, css_classes: Vec&lt;String&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.css_classes = <span class="prelude-val">Some</span>(css_classes);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The name of this widget in the CSS tree.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property is meant to be set by widget implementations,</span>
-    <span class="doccomment">/// typically in their instance init function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">css_name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">css_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">css_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">css_name</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The name of this widget in the CSS tree.
+    ///
+    /// This property is meant to be set by widget implementations,
+    /// typically in their instance init function.
+    </span><span class="kw">pub fn </span>css_name(<span class="kw-2">mut </span><span class="self">self</span>, css_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.css_name = <span class="prelude-val">Some</span>(css_name.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The cursor used by @widget.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cursor</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cursor</span>: <span class="kw-2">&amp;</span><span class="ident">gdk::Cursor</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">cursor</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cursor</span>.<span class="ident">clone</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The cursor used by @widget.
+    </span><span class="kw">pub fn </span>cursor(<span class="kw-2">mut </span><span class="self">self</span>, cursor: <span class="kw-2">&amp;</span>gdk::Cursor) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.cursor = <span class="prelude-val">Some</span>(cursor.clone());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the widget should grab focus when it is clicked with the mouse.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property is only relevant for widgets that can take focus.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">focus_on_click</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">focus_on_click</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">focus_on_click</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">focus_on_click</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the widget should grab focus when it is clicked with the mouse.
+    ///
+    /// This property is only relevant for widgets that can take focus.
+    </span><span class="kw">pub fn </span>focus_on_click(<span class="kw-2">mut </span><span class="self">self</span>, focus_on_click: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.focus_on_click = <span class="prelude-val">Some</span>(focus_on_click);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether this widget itself will accept the input focus.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">focusable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">focusable</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">focusable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">focusable</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether this widget itself will accept the input focus.
+    </span><span class="kw">pub fn </span>focusable(<span class="kw-2">mut </span><span class="self">self</span>, focusable: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.focusable = <span class="prelude-val">Some</span>(focusable);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// How to distribute horizontal space if widget gets extra space.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">halign</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">halign</span>: <span class="ident">Align</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">halign</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">halign</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// How to distribute horizontal space if widget gets extra space.
+    </span><span class="kw">pub fn </span>halign(<span class="kw-2">mut </span><span class="self">self</span>, halign: Align) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.halign = <span class="prelude-val">Some</span>(halign);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Enables or disables the emission of the ::query-tooltip signal on @widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A value of [`true`] indicates that @widget can have a tooltip, in this case</span>
-    <span class="doccomment">/// the widget will be queried using `signal::Widget::query-tooltip` to</span>
-    <span class="doccomment">/// determine whether it will provide a tooltip or not.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_tooltip</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">has_tooltip</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">has_tooltip</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">has_tooltip</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Enables or disables the emission of the ::query-tooltip signal on @widget.
+    ///
+    /// A value of [`true`] indicates that @widget can have a tooltip, in this case
+    /// the widget will be queried using `signal::Widget::query-tooltip` to
+    /// determine whether it will provide a tooltip or not.
+    </span><span class="kw">pub fn </span>has_tooltip(<span class="kw-2">mut </span><span class="self">self</span>, has_tooltip: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.has_tooltip = <span class="prelude-val">Some</span>(has_tooltip);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Override for height request of the widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If this is -1, the natural request will be used.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">height_request</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">height_request</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">height_request</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">height_request</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Override for height request of the widget.
+    ///
+    /// If this is -1, the natural request will be used.
+    </span><span class="kw">pub fn </span>height_request(<span class="kw-2">mut </span><span class="self">self</span>, height_request: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.height_request = <span class="prelude-val">Some</span>(height_request);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to expand horizontally.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hexpand</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hexpand</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">hexpand</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">hexpand</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to expand horizontally.
+    </span><span class="kw">pub fn </span>hexpand(<span class="kw-2">mut </span><span class="self">self</span>, hexpand: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.hexpand = <span class="prelude-val">Some</span>(hexpand);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to use the `hexpand` property.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hexpand_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hexpand_set</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">hexpand_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">hexpand_set</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to use the `hexpand` property.
+    </span><span class="kw">pub fn </span>hexpand_set(<span class="kw-2">mut </span><span class="self">self</span>, hexpand_set: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.hexpand_set = <span class="prelude-val">Some</span>(hexpand_set);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The [`LayoutManager`][crate::LayoutManager] instance to use to compute the preferred size</span>
-    <span class="doccomment">/// of the widget, and allocate its children.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property is meant to be set by widget implementations,</span>
-    <span class="doccomment">/// typically in their instance init function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">layout_manager</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">layout_manager</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">LayoutManager</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">layout_manager</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">layout_manager</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The [`LayoutManager`][crate::LayoutManager] instance to use to compute the preferred size
+    /// of the widget, and allocate its children.
+    ///
+    /// This property is meant to be set by widget implementations,
+    /// typically in their instance init function.
+    </span><span class="kw">pub fn </span>layout_manager(<span class="kw-2">mut </span><span class="self">self</span>, layout_manager: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;LayoutManager&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.layout_manager = <span class="prelude-val">Some</span>(layout_manager.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Margin on bottom side of widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property adds margin outside of the widget&#39;s normal size</span>
-    <span class="doccomment">/// request, the margin will be added in addition to the size from</span>
-    <span class="doccomment">/// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_bottom</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_bottom</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_bottom</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_bottom</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Margin on bottom side of widget.
+    ///
+    /// This property adds margin outside of the widget&#39;s normal size
+    /// request, the margin will be added in addition to the size from
+    /// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.
+    </span><span class="kw">pub fn </span>margin_bottom(<span class="kw-2">mut </span><span class="self">self</span>, margin_bottom: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_bottom = <span class="prelude-val">Some</span>(margin_bottom);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Margin on end of widget, horizontally.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property supports left-to-right and right-to-left text</span>
-    <span class="doccomment">/// directions.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property adds margin outside of the widget&#39;s normal size</span>
-    <span class="doccomment">/// request, the margin will be added in addition to the size from</span>
-    <span class="doccomment">/// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_end</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_end</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_end</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_end</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Margin on end of widget, horizontally.
+    ///
+    /// This property supports left-to-right and right-to-left text
+    /// directions.
+    ///
+    /// This property adds margin outside of the widget&#39;s normal size
+    /// request, the margin will be added in addition to the size from
+    /// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.
+    </span><span class="kw">pub fn </span>margin_end(<span class="kw-2">mut </span><span class="self">self</span>, margin_end: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_end = <span class="prelude-val">Some</span>(margin_end);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Margin on start of widget, horizontally.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property supports left-to-right and right-to-left text</span>
-    <span class="doccomment">/// directions.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property adds margin outside of the widget&#39;s normal size</span>
-    <span class="doccomment">/// request, the margin will be added in addition to the size from</span>
-    <span class="doccomment">/// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_start</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_start</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_start</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_start</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Margin on start of widget, horizontally.
+    ///
+    /// This property supports left-to-right and right-to-left text
+    /// directions.
+    ///
+    /// This property adds margin outside of the widget&#39;s normal size
+    /// request, the margin will be added in addition to the size from
+    /// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.
+    </span><span class="kw">pub fn </span>margin_start(<span class="kw-2">mut </span><span class="self">self</span>, margin_start: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_start = <span class="prelude-val">Some</span>(margin_start);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Margin on top side of widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property adds margin outside of the widget&#39;s normal size</span>
-    <span class="doccomment">/// request, the margin will be added in addition to the size from</span>
-    <span class="doccomment">/// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin_top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin_top</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">margin_top</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">margin_top</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Margin on top side of widget.
+    ///
+    /// This property adds margin outside of the widget&#39;s normal size
+    /// request, the margin will be added in addition to the size from
+    /// [`WidgetExt::set_size_request()`][crate::prelude::WidgetExt::set_size_request()] for example.
+    </span><span class="kw">pub fn </span>margin_top(<span class="kw-2">mut </span><span class="self">self</span>, margin_top: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.margin_top = <span class="prelude-val">Some</span>(margin_top);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The name of the widget.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The name of the widget.
+    </span><span class="kw">pub fn </span>name(<span class="kw-2">mut </span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.name = <span class="prelude-val">Some</span>(name.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The requested opacity of the widget.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">opacity</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">opacity</span>: <span class="ident">f64</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">opacity</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">opacity</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The requested opacity of the widget.
+    </span><span class="kw">pub fn </span>opacity(<span class="kw-2">mut </span><span class="self">self</span>, opacity: f64) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.opacity = <span class="prelude-val">Some</span>(opacity);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// How content outside the widget&#39;s content area is treated.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This property is meant to be set by widget implementations,</span>
-    <span class="doccomment">/// typically in their instance init function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overflow</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">overflow</span>: <span class="ident">Overflow</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">overflow</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">overflow</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// How content outside the widget&#39;s content area is treated.
+    ///
+    /// This property is meant to be set by widget implementations,
+    /// typically in their instance init function.
+    </span><span class="kw">pub fn </span>overflow(<span class="kw-2">mut </span><span class="self">self</span>, overflow: Overflow) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.overflow = <span class="prelude-val">Some</span>(overflow);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the widget will receive the default action when it is focused.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">receives_default</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">receives_default</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">receives_default</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">receives_default</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the widget will receive the default action when it is focused.
+    </span><span class="kw">pub fn </span>receives_default(<span class="kw-2">mut </span><span class="self">self</span>, receives_default: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.receives_default = <span class="prelude-val">Some</span>(receives_default);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the widget responds to input.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sensitive</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sensitive</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">sensitive</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">sensitive</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the widget responds to input.
+    </span><span class="kw">pub fn </span>sensitive(<span class="kw-2">mut </span><span class="self">self</span>, sensitive: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.sensitive = <span class="prelude-val">Some</span>(sensitive);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the text of tooltip to be the given string, which is marked up</span>
-    <span class="doccomment">/// with Pango markup.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Also see [`Tooltip::set_markup()`][crate::Tooltip::set_markup()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is a convenience property which will take care of getting the</span>
-    <span class="doccomment">/// tooltip shown if the given string is not [`None`]:</span>
-    <span class="doccomment">/// `property::Widget::has-tooltip` will automatically be set to [`true`]</span>
-    <span class="doccomment">/// and there will be taken care of `signal::Widget::query-tooltip` in</span>
-    <span class="doccomment">/// the default signal handler.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that if both `property::Widget::tooltip-text` and</span>
-    <span class="doccomment">/// `property::Widget::tooltip-markup` are set, the last one wins.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tooltip_markup</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">tooltip_markup</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">tooltip_markup</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tooltip_markup</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the text of tooltip to be the given string, which is marked up
+    /// with Pango markup.
+    ///
+    /// Also see [`Tooltip::set_markup()`][crate::Tooltip::set_markup()].
+    ///
+    /// This is a convenience property which will take care of getting the
+    /// tooltip shown if the given string is not [`None`]:
+    /// `property::Widget::has-tooltip` will automatically be set to [`true`]
+    /// and there will be taken care of `signal::Widget::query-tooltip` in
+    /// the default signal handler.
+    ///
+    /// Note that if both `property::Widget::tooltip-text` and
+    /// `property::Widget::tooltip-markup` are set, the last one wins.
+    </span><span class="kw">pub fn </span>tooltip_markup(<span class="kw-2">mut </span><span class="self">self</span>, tooltip_markup: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.tooltip_markup = <span class="prelude-val">Some</span>(tooltip_markup.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Sets the text of tooltip to be the given string.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Also see [`Tooltip::set_text()`][crate::Tooltip::set_text()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is a convenience property which will take care of getting the</span>
-    <span class="doccomment">/// tooltip shown if the given string is not [`None`]:</span>
-    <span class="doccomment">/// `property::Widget::has-tooltip` will automatically be set to [`true`]</span>
-    <span class="doccomment">/// and there will be taken care of `signal::Widget::query-tooltip` in</span>
-    <span class="doccomment">/// the default signal handler.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that if both `property::Widget::tooltip-text` and</span>
-    <span class="doccomment">/// `property::Widget::tooltip-markup` are set, the last one wins.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tooltip_text</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">tooltip_text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">tooltip_text</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tooltip_text</span>.<span class="ident">to_string</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Sets the text of tooltip to be the given string.
+    ///
+    /// Also see [`Tooltip::set_text()`][crate::Tooltip::set_text()].
+    ///
+    /// This is a convenience property which will take care of getting the
+    /// tooltip shown if the given string is not [`None`]:
+    /// `property::Widget::has-tooltip` will automatically be set to [`true`]
+    /// and there will be taken care of `signal::Widget::query-tooltip` in
+    /// the default signal handler.
+    ///
+    /// Note that if both `property::Widget::tooltip-text` and
+    /// `property::Widget::tooltip-markup` are set, the last one wins.
+    </span><span class="kw">pub fn </span>tooltip_text(<span class="kw-2">mut </span><span class="self">self</span>, tooltip_text: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.tooltip_text = <span class="prelude-val">Some</span>(tooltip_text.to_string());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// How to distribute vertical space if widget gets extra space.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">valign</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">valign</span>: <span class="ident">Align</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">valign</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">valign</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// How to distribute vertical space if widget gets extra space.
+    </span><span class="kw">pub fn </span>valign(<span class="kw-2">mut </span><span class="self">self</span>, valign: Align) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.valign = <span class="prelude-val">Some</span>(valign);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to expand vertically.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vexpand</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">vexpand</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">vexpand</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">vexpand</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to expand vertically.
+    </span><span class="kw">pub fn </span>vexpand(<span class="kw-2">mut </span><span class="self">self</span>, vexpand: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.vexpand = <span class="prelude-val">Some</span>(vexpand);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether to use the `vexpand` property.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vexpand_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">vexpand_set</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">vexpand_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">vexpand_set</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether to use the `vexpand` property.
+    </span><span class="kw">pub fn </span>vexpand_set(<span class="kw-2">mut </span><span class="self">self</span>, vexpand_set: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.vexpand_set = <span class="prelude-val">Some</span>(vexpand_set);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Whether the widget is visible.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">visible</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">visible</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">visible</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">visible</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Whether the widget is visible.
+    </span><span class="kw">pub fn </span>visible(<span class="kw-2">mut </span><span class="self">self</span>, visible: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.visible = <span class="prelude-val">Some</span>(visible);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Override for width request of the widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If this is -1, the natural request will be used.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width_request</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">width_request</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">width_request</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">width_request</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Override for width request of the widget.
+    ///
+    /// If this is -1, the natural request will be used.
+    </span><span class="kw">pub fn </span>width_request(<span class="kw-2">mut </span><span class="self">self</span>, width_request: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.width_request = <span class="prelude-val">Some</span>(width_request);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The accessible role of the given [`Accessible`][crate::Accessible] implementation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The accessible role cannot be changed once set.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accessible_role</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accessible_role</span>: <span class="ident">AccessibleRole</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">accessible_role</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accessible_role</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The accessible role of the given [`Accessible`][crate::Accessible] implementation.
+    ///
+    /// The accessible role cannot be changed once set.
+    </span><span class="kw">pub fn </span>accessible_role(<span class="kw-2">mut </span><span class="self">self</span>, accessible_role: AccessibleRole) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.accessible_role = <span class="prelude-val">Some</span>(accessible_role);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Horizontal [`Adjustment`][crate::Adjustment] of the scrollable widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This adjustment is shared between the scrollable widget and its parent.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hadjustment</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hadjustment</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Adjustment</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">hadjustment</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">hadjustment</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Horizontal [`Adjustment`][crate::Adjustment] of the scrollable widget.
+    ///
+    /// This adjustment is shared between the scrollable widget and its parent.
+    </span><span class="kw">pub fn </span>hadjustment(<span class="kw-2">mut </span><span class="self">self</span>, hadjustment: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Adjustment&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.hadjustment = <span class="prelude-val">Some</span>(hadjustment.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Determines when horizontal scrolling should start.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hscroll_policy</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">hscroll_policy</span>: <span class="ident">ScrollablePolicy</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">hscroll_policy</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">hscroll_policy</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Determines when horizontal scrolling should start.
+    </span><span class="kw">pub fn </span>hscroll_policy(<span class="kw-2">mut </span><span class="self">self</span>, hscroll_policy: ScrollablePolicy) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.hscroll_policy = <span class="prelude-val">Some</span>(hscroll_policy);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Vertical [`Adjustment`][crate::Adjustment] of the scrollable widget.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This adjustment is shared between the scrollable widget and its parent.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vadjustment</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">vadjustment</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Adjustment</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">vadjustment</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">vadjustment</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Vertical [`Adjustment`][crate::Adjustment] of the scrollable widget.
+    ///
+    /// This adjustment is shared between the scrollable widget and its parent.
+    </span><span class="kw">pub fn </span>vadjustment(<span class="kw-2">mut </span><span class="self">self</span>, vadjustment: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Adjustment&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.vadjustment = <span class="prelude-val">Some</span>(vadjustment.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Determines when vertical scrolling should start.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vscroll_policy</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">vscroll_policy</span>: <span class="ident">ScrollablePolicy</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">vscroll_policy</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">vscroll_policy</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Determines when vertical scrolling should start.
+    </span><span class="kw">pub fn </span>vscroll_policy(<span class="kw-2">mut </span><span class="self">self</span>, vscroll_policy: ScrollablePolicy) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.vscroll_policy = <span class="prelude-val">Some</span>(vscroll_policy);
+        <span class="self">self
+    </span>}
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Viewport</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Viewport&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Viewport {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;Viewport&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

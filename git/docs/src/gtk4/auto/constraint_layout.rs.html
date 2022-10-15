@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/constraint_layout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>constraint_layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/constraint_layout.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>constraint_layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -406,338 +403,337 @@
 <span id="330">330</span>
 <span id="331">331</span>
 <span id="332">332</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Buildable</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Constraint</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ConstraintGuide</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::LayoutManager</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::Buildable;
+<span class="kw">use </span><span class="kw">crate</span>::Constraint;
+<span class="kw">use </span><span class="kw">crate</span>::ConstraintGuide;
+<span class="kw">use </span><span class="kw">crate</span>::LayoutManager;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::fmt;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// A layout manager using constraints to describe relations between widgets.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`ConstraintLayout`][crate::ConstraintLayout] is a layout manager that uses relations between</span>
-    <span class="doccomment">/// widget attributes, expressed via [`Constraint`][crate::Constraint] instances, to</span>
-    <span class="doccomment">/// measure and allocate widgets.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ### How do constraints work</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Constraints are objects defining the relationship between attributes</span>
-    <span class="doccomment">/// of a widget; you can read the description of the [`Constraint`][crate::Constraint]</span>
-    <span class="doccomment">/// class to have a more in depth definition.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// By taking multiple constraints and applying them to the children of</span>
-    <span class="doccomment">/// a widget using [`ConstraintLayout`][crate::ConstraintLayout], it&#39;s possible to describe</span>
-    <span class="doccomment">/// complex layout policies; each constraint applied to a child or to the parent</span>
-    <span class="doccomment">/// widgets contributes to the full description of the layout, in terms of</span>
-    <span class="doccomment">/// parameters for resolving the value of each attribute.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It is important to note that a layout is defined by the totality of</span>
-    <span class="doccomment">/// constraints; removing a child, or a constraint, from an existing layout</span>
-    <span class="doccomment">/// without changing the remaining constraints may result in an unstable</span>
-    <span class="doccomment">/// or unsolvable layout.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Constraints have an implicit &quot;reading order&quot;; you should start describing</span>
-    <span class="doccomment">/// each edge of each child, as well as their relationship with the parent</span>
-    <span class="doccomment">/// container, from the top left (or top right, in RTL languages), horizontally</span>
-    <span class="doccomment">/// first, and then vertically.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A constraint-based layout with too few constraints can become &quot;unstable&quot;,</span>
-    <span class="doccomment">/// that is: have more than one solution. The behavior of an unstable layout</span>
-    <span class="doccomment">/// is undefined.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A constraint-based layout with conflicting constraints may be unsolvable,</span>
-    <span class="doccomment">/// and lead to an unstable layout. You can use the `property::Constraint::strength`</span>
-    <span class="doccomment">/// property of [`Constraint`][crate::Constraint] to &quot;nudge&quot; the layout towards a solution.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ### GtkConstraintLayout as GtkBuildable</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`ConstraintLayout`][crate::ConstraintLayout] implements the [`Buildable`][crate::Buildable] interface and</span>
-    <span class="doccomment">/// has a custom &quot;constraints&quot; element which allows describing constraints in</span>
-    <span class="doccomment">/// a [`Builder`][crate::Builder] UI file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// An example of a UI definition fragment specifying a constraint:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```xml</span>
-    <span class="doccomment">///   &lt;object class=&quot;GtkConstraintLayout&quot;&gt;</span>
-    <span class="doccomment">///     &lt;constraints&gt;</span>
-    <span class="doccomment">///       &lt;constraint target=&quot;button&quot; target-attribute=&quot;start&quot;</span>
-    <span class="doccomment">///                   relation=&quot;eq&quot;</span>
-    <span class="doccomment">///                   source=&quot;super&quot; source-attribute=&quot;start&quot;</span>
-    <span class="doccomment">///                   constant=&quot;12&quot;</span>
-    <span class="doccomment">///                   strength=&quot;required&quot; /&gt;</span>
-    <span class="doccomment">///       &lt;constraint target=&quot;button&quot; target-attribute=&quot;width&quot;</span>
-    <span class="doccomment">///                   relation=&quot;ge&quot;</span>
-    <span class="doccomment">///                   constant=&quot;250&quot;</span>
-    <span class="doccomment">///                   strength=&quot;strong&quot; /&gt;</span>
-    <span class="doccomment">///     &lt;/constraints&gt;</span>
-    <span class="doccomment">///   &lt;/object&gt;</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The definition above will add two constraints to the GtkConstraintLayout:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///  - a required constraint between the leading edge of &quot;button&quot; and</span>
-    <span class="doccomment">///    the leading edge of the widget using the constraint layout, plus</span>
-    <span class="doccomment">///    12 pixels</span>
-    <span class="doccomment">///  - a strong, constant constraint making the width of &quot;button&quot; greater</span>
-    <span class="doccomment">///    than, or equal to 250 pixels</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The &quot;target&quot; and &quot;target-attribute&quot; attributes are required.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The &quot;source&quot; and &quot;source-attribute&quot; attributes of the &quot;constraint&quot;</span>
-    <span class="doccomment">/// element are optional; if they are not specified, the constraint is</span>
-    <span class="doccomment">/// assumed to be a constant.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The &quot;relation&quot; attribute is optional; if not specified, the constraint</span>
-    <span class="doccomment">/// is assumed to be an equality.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The &quot;strength&quot; attribute is optional; if not specified, the constraint</span>
-    <span class="doccomment">/// is assumed to be required.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The &quot;source&quot; and &quot;target&quot; attributes can be set to &quot;super&quot; to indicate</span>
-    <span class="doccomment">/// that the constraint target is the widget using the GtkConstraintLayout.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// There can be &quot;constant&quot; and &quot;multiplier&quot; attributes.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Additionally, the &quot;constraints&quot; element can also contain a description</span>
-    <span class="doccomment">/// of the `GtkConstraintGuides` used by the layout:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```xml</span>
-    <span class="doccomment">///   &lt;constraints&gt;</span>
-    <span class="doccomment">///     &lt;guide min-width=&quot;100&quot; max-width=&quot;500&quot; name=&quot;hspace&quot;/&gt;</span>
-    <span class="doccomment">///     &lt;guide min-height=&quot;64&quot; nat-height=&quot;128&quot; name=&quot;vspace&quot; strength=&quot;strong&quot;/&gt;</span>
-    <span class="doccomment">///   &lt;/constraints&gt;</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The &quot;guide&quot; element has the following optional attributes:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   - &quot;min-width&quot;, &quot;nat-width&quot;, and &quot;max-width&quot;, describe the minimum,</span>
-    <span class="doccomment">///     natural, and maximum width of the guide, respectively</span>
-    <span class="doccomment">///   - &quot;min-height&quot;, &quot;nat-height&quot;, and &quot;max-height&quot;, describe the minimum,</span>
-    <span class="doccomment">///     natural, and maximum height of the guide, respectively</span>
-    <span class="doccomment">///   - &quot;strength&quot; describes the strength of the constraint on the natural</span>
-    <span class="doccomment">///     size of the guide; if not specified, the constraint is assumed to</span>
-    <span class="doccomment">///     have a medium strength</span>
-    <span class="doccomment">///   - &quot;name&quot; describes a name for the guide, useful when debugging</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ### Using the Visual Format Language</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Complex constraints can be described using a compact syntax called VFL,</span>
-    <span class="doccomment">/// or *Visual Format Language*.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The Visual Format Language describes all the constraints on a row or</span>
-    <span class="doccomment">/// column, typically starting from the leading edge towards the trailing</span>
-    <span class="doccomment">/// one. Each element of the layout is composed by &quot;views&quot;, which identify</span>
-    <span class="doccomment">/// a [`ConstraintTarget`][crate::ConstraintTarget].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For instance:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```text</span>
-    <span class="doccomment">///   [button]-[textField]</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Describes a constraint that binds the trailing edge of &quot;button&quot; to the</span>
-    <span class="doccomment">/// leading edge of &quot;textField&quot;, leaving a default space between the two.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Using VFL is also possible to specify predicates that describe constraints</span>
-    <span class="doccomment">/// on attributes like width and height:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```text</span>
-    <span class="doccomment">///   // Width must be greater than, or equal to 50</span>
-    <span class="doccomment">///   [button(&gt;=50)]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // Width of button1 must be equal to width of button2</span>
-    <span class="doccomment">///   [button1(==button2)]</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The default orientation for a VFL description is horizontal, unless</span>
-    <span class="doccomment">/// otherwise specified:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```text</span>
-    <span class="doccomment">///   // horizontal orientation, default attribute: width</span>
-    <span class="doccomment">///   H:[button(&gt;=150)]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///   // vertical orientation, default attribute: height</span>
-    <span class="doccomment">///   V:[button1(==button2)]</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It&#39;s also possible to specify multiple predicates, as well as their</span>
-    <span class="doccomment">/// strength:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```text</span>
-    <span class="doccomment">///   // minimum width of button must be 150</span>
-    <span class="doccomment">///   // natural width of button can be 250</span>
-    <span class="doccomment">///   [button(&gt;=150@required, ==250@medium)]</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Finally, it&#39;s also possible to use simple arithmetic operators:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```text</span>
-    <span class="doccomment">///   // width of button1 must be equal to width of button2</span>
-    <span class="doccomment">///   // divided by 2 plus 12</span>
-    <span class="doccomment">///   [button1(button2 / 2 + 12)]</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`LayoutManagerExt`][trait@crate::prelude::LayoutManagerExt], [`trait@glib::ObjectExt`], [`BuildableExt`][trait@crate::prelude::BuildableExt]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkConstraintLayout&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConstraintLayout</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkConstraintLayout</span>, <span class="ident">ffi::GtkConstraintLayoutClass</span><span class="op">&gt;</span>) @<span class="ident">extends</span> <span class="ident">LayoutManager</span>, @<span class="ident">implements</span> <span class="ident">Buildable</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// A layout manager using constraints to describe relations between widgets.
+    ///
+    /// [`ConstraintLayout`][crate::ConstraintLayout] is a layout manager that uses relations between
+    /// widget attributes, expressed via [`Constraint`][crate::Constraint] instances, to
+    /// measure and allocate widgets.
+    ///
+    /// ### How do constraints work
+    ///
+    /// Constraints are objects defining the relationship between attributes
+    /// of a widget; you can read the description of the [`Constraint`][crate::Constraint]
+    /// class to have a more in depth definition.
+    ///
+    /// By taking multiple constraints and applying them to the children of
+    /// a widget using [`ConstraintLayout`][crate::ConstraintLayout], it&#39;s possible to describe
+    /// complex layout policies; each constraint applied to a child or to the parent
+    /// widgets contributes to the full description of the layout, in terms of
+    /// parameters for resolving the value of each attribute.
+    ///
+    /// It is important to note that a layout is defined by the totality of
+    /// constraints; removing a child, or a constraint, from an existing layout
+    /// without changing the remaining constraints may result in an unstable
+    /// or unsolvable layout.
+    ///
+    /// Constraints have an implicit &quot;reading order&quot;; you should start describing
+    /// each edge of each child, as well as their relationship with the parent
+    /// container, from the top left (or top right, in RTL languages), horizontally
+    /// first, and then vertically.
+    ///
+    /// A constraint-based layout with too few constraints can become &quot;unstable&quot;,
+    /// that is: have more than one solution. The behavior of an unstable layout
+    /// is undefined.
+    ///
+    /// A constraint-based layout with conflicting constraints may be unsolvable,
+    /// and lead to an unstable layout. You can use the `property::Constraint::strength`
+    /// property of [`Constraint`][crate::Constraint] to &quot;nudge&quot; the layout towards a solution.
+    ///
+    /// ### GtkConstraintLayout as GtkBuildable
+    ///
+    /// [`ConstraintLayout`][crate::ConstraintLayout] implements the [`Buildable`][crate::Buildable] interface and
+    /// has a custom &quot;constraints&quot; element which allows describing constraints in
+    /// a [`Builder`][crate::Builder] UI file.
+    ///
+    /// An example of a UI definition fragment specifying a constraint:
+    ///
+    /// ```xml
+    ///   &lt;object class=&quot;GtkConstraintLayout&quot;&gt;
+    ///     &lt;constraints&gt;
+    ///       &lt;constraint target=&quot;button&quot; target-attribute=&quot;start&quot;
+    ///                   relation=&quot;eq&quot;
+    ///                   source=&quot;super&quot; source-attribute=&quot;start&quot;
+    ///                   constant=&quot;12&quot;
+    ///                   strength=&quot;required&quot; /&gt;
+    ///       &lt;constraint target=&quot;button&quot; target-attribute=&quot;width&quot;
+    ///                   relation=&quot;ge&quot;
+    ///                   constant=&quot;250&quot;
+    ///                   strength=&quot;strong&quot; /&gt;
+    ///     &lt;/constraints&gt;
+    ///   &lt;/object&gt;
+    /// ```
+    ///
+    /// The definition above will add two constraints to the GtkConstraintLayout:
+    ///
+    ///  - a required constraint between the leading edge of &quot;button&quot; and
+    ///    the leading edge of the widget using the constraint layout, plus
+    ///    12 pixels
+    ///  - a strong, constant constraint making the width of &quot;button&quot; greater
+    ///    than, or equal to 250 pixels
+    ///
+    /// The &quot;target&quot; and &quot;target-attribute&quot; attributes are required.
+    ///
+    /// The &quot;source&quot; and &quot;source-attribute&quot; attributes of the &quot;constraint&quot;
+    /// element are optional; if they are not specified, the constraint is
+    /// assumed to be a constant.
+    ///
+    /// The &quot;relation&quot; attribute is optional; if not specified, the constraint
+    /// is assumed to be an equality.
+    ///
+    /// The &quot;strength&quot; attribute is optional; if not specified, the constraint
+    /// is assumed to be required.
+    ///
+    /// The &quot;source&quot; and &quot;target&quot; attributes can be set to &quot;super&quot; to indicate
+    /// that the constraint target is the widget using the GtkConstraintLayout.
+    ///
+    /// There can be &quot;constant&quot; and &quot;multiplier&quot; attributes.
+    ///
+    /// Additionally, the &quot;constraints&quot; element can also contain a description
+    /// of the `GtkConstraintGuides` used by the layout:
+    ///
+    /// ```xml
+    ///   &lt;constraints&gt;
+    ///     &lt;guide min-width=&quot;100&quot; max-width=&quot;500&quot; name=&quot;hspace&quot;/&gt;
+    ///     &lt;guide min-height=&quot;64&quot; nat-height=&quot;128&quot; name=&quot;vspace&quot; strength=&quot;strong&quot;/&gt;
+    ///   &lt;/constraints&gt;
+    /// ```
+    ///
+    /// The &quot;guide&quot; element has the following optional attributes:
+    ///
+    ///   - &quot;min-width&quot;, &quot;nat-width&quot;, and &quot;max-width&quot;, describe the minimum,
+    ///     natural, and maximum width of the guide, respectively
+    ///   - &quot;min-height&quot;, &quot;nat-height&quot;, and &quot;max-height&quot;, describe the minimum,
+    ///     natural, and maximum height of the guide, respectively
+    ///   - &quot;strength&quot; describes the strength of the constraint on the natural
+    ///     size of the guide; if not specified, the constraint is assumed to
+    ///     have a medium strength
+    ///   - &quot;name&quot; describes a name for the guide, useful when debugging
+    ///
+    /// ### Using the Visual Format Language
+    ///
+    /// Complex constraints can be described using a compact syntax called VFL,
+    /// or *Visual Format Language*.
+    ///
+    /// The Visual Format Language describes all the constraints on a row or
+    /// column, typically starting from the leading edge towards the trailing
+    /// one. Each element of the layout is composed by &quot;views&quot;, which identify
+    /// a [`ConstraintTarget`][crate::ConstraintTarget].
+    ///
+    /// For instance:
+    ///
+    /// ```text
+    ///   [button]-[textField]
+    /// ```
+    ///
+    /// Describes a constraint that binds the trailing edge of &quot;button&quot; to the
+    /// leading edge of &quot;textField&quot;, leaving a default space between the two.
+    ///
+    /// Using VFL is also possible to specify predicates that describe constraints
+    /// on attributes like width and height:
+    ///
+    /// ```text
+    ///   // Width must be greater than, or equal to 50
+    ///   [button(&gt;=50)]
+    ///
+    ///   // Width of button1 must be equal to width of button2
+    ///   [button1(==button2)]
+    /// ```
+    ///
+    /// The default orientation for a VFL description is horizontal, unless
+    /// otherwise specified:
+    ///
+    /// ```text
+    ///   // horizontal orientation, default attribute: width
+    ///   H:[button(&gt;=150)]
+    ///
+    ///   // vertical orientation, default attribute: height
+    ///   V:[button1(==button2)]
+    /// ```
+    ///
+    /// It&#39;s also possible to specify multiple predicates, as well as their
+    /// strength:
+    ///
+    /// ```text
+    ///   // minimum width of button must be 150
+    ///   // natural width of button can be 250
+    ///   [button(&gt;=150@required, ==250@medium)]
+    /// ```
+    ///
+    /// Finally, it&#39;s also possible to use simple arithmetic operators:
+    ///
+    /// ```text
+    ///   // width of button1 must be equal to width of button2
+    ///   // divided by 2 plus 12
+    ///   [button1(button2 / 2 + 12)]
+    /// ```
+    ///
+    /// # Implements
+    ///
+    /// [`LayoutManagerExt`][trait@crate::prelude::LayoutManagerExt], [`trait@glib::ObjectExt`], [`BuildableExt`][trait@crate::prelude::BuildableExt]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkConstraintLayout&quot;</span>)]
+    </span><span class="kw">pub struct </span>ConstraintLayout(Object&lt;ffi::GtkConstraintLayout, ffi::GtkConstraintLayoutClass&gt;) @extends LayoutManager, @implements Buildable;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_constraint_layout_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_constraint_layout_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ConstraintLayout</span> {
-    <span class="doccomment">/// Creates a new [`ConstraintLayout`][crate::ConstraintLayout] layout manager.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the newly created [`ConstraintLayout`][crate::ConstraintLayout]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_new&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="ident">ConstraintLayout</span> {
+<span class="kw">impl </span>ConstraintLayout {
+    <span class="doccomment">/// Creates a new [`ConstraintLayout`][crate::ConstraintLayout] layout manager.
+    ///
+    /// # Returns
+    ///
+    /// the newly created [`ConstraintLayout`][crate::ConstraintLayout]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_new&quot;</span>)]
+    </span><span class="kw">pub fn </span>new() -&gt; ConstraintLayout {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> { <span class="ident">LayoutManager::from_glib_full</span>(<span class="ident">ffi::gtk_constraint_layout_new</span>()).<span class="ident">unsafe_cast</span>() }
+        <span class="kw">unsafe </span>{ LayoutManager::from_glib_full(ffi::gtk_constraint_layout_new()).unsafe_cast() }
     }
 
-    <span class="doccomment">/// Adds a constraint to the layout manager.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The `property::Constraint::source` and `property::Constraint::target`</span>
-    <span class="doccomment">/// properties of `constraint` can be:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///  - set to `NULL` to indicate that the constraint refers to the</span>
-    <span class="doccomment">///    widget using `layout`</span>
-    <span class="doccomment">///  - set to the [`Widget`][crate::Widget] using `layout`</span>
-    <span class="doccomment">///  - set to a child of the [`Widget`][crate::Widget] using `layout`</span>
-    <span class="doccomment">///  - set to a [`ConstraintGuide`][crate::ConstraintGuide] that is part of `layout`</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The @self acquires the ownership of @constraint after calling</span>
-    <span class="doccomment">/// this function.</span>
-    <span class="doccomment">/// ## `constraint`</span>
-    <span class="doccomment">/// a [`Constraint`][crate::Constraint]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_add_constraint&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_constraint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">constraint</span>: <span class="kw-2">&amp;</span><span class="ident">Constraint</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_constraint_layout_add_constraint</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">constraint</span>.<span class="ident">to_glib_full</span>(),
+    <span class="doccomment">/// Adds a constraint to the layout manager.
+    ///
+    /// The `property::Constraint::source` and `property::Constraint::target`
+    /// properties of `constraint` can be:
+    ///
+    ///  - set to `NULL` to indicate that the constraint refers to the
+    ///    widget using `layout`
+    ///  - set to the [`Widget`][crate::Widget] using `layout`
+    ///  - set to a child of the [`Widget`][crate::Widget] using `layout`
+    ///  - set to a [`ConstraintGuide`][crate::ConstraintGuide] that is part of `layout`
+    ///
+    /// The @self acquires the ownership of @constraint after calling
+    /// this function.
+    /// ## `constraint`
+    /// a [`Constraint`][crate::Constraint]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_add_constraint&quot;</span>)]
+    </span><span class="kw">pub fn </span>add_constraint(<span class="kw-2">&amp;</span><span class="self">self</span>, constraint: <span class="kw-2">&amp;</span>Constraint) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_constraint_layout_add_constraint(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                constraint.to_glib_full(),
             );
         }
     }
 
-    <span class="doccomment">/// Adds a guide to `layout`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A guide can be used as the source or target of constraints,</span>
-    <span class="doccomment">/// like a widget, but it is not visible.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The `layout` acquires the ownership of `guide` after calling</span>
-    <span class="doccomment">/// this function.</span>
-    <span class="doccomment">/// ## `guide`</span>
-    <span class="doccomment">/// a [`ConstraintGuide`][crate::ConstraintGuide] object</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_add_guide&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_guide</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">guide</span>: <span class="kw-2">&amp;</span><span class="ident">ConstraintGuide</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_constraint_layout_add_guide</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">guide</span>.<span class="ident">to_glib_full</span>());
+    <span class="doccomment">/// Adds a guide to `layout`.
+    ///
+    /// A guide can be used as the source or target of constraints,
+    /// like a widget, but it is not visible.
+    ///
+    /// The `layout` acquires the ownership of `guide` after calling
+    /// this function.
+    /// ## `guide`
+    /// a [`ConstraintGuide`][crate::ConstraintGuide] object
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_add_guide&quot;</span>)]
+    </span><span class="kw">pub fn </span>add_guide(<span class="kw-2">&amp;</span><span class="self">self</span>, guide: <span class="kw-2">&amp;</span>ConstraintGuide) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_constraint_layout_add_guide(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, guide.to_glib_full());
         }
     }
 
-    <span class="doccomment">/// Returns a `GListModel` to track the constraints that are</span>
-    <span class="doccomment">/// part of the layout.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Calling this function will enable extra internal bookkeeping</span>
-    <span class="doccomment">/// to track constraints and emit signals on the returned listmodel.</span>
-    <span class="doccomment">/// It may slow down operations a lot.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications should try hard to avoid calling this function</span>
-    <span class="doccomment">/// because of the slowdowns.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a</span>
-    <span class="doccomment">///   `GListModel` tracking the layout&#39;s constraints</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_observe_constraints&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">observe_constraints</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">gio::ListModel</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_constraint_layout_observe_constraints</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Returns a `GListModel` to track the constraints that are
+    /// part of the layout.
+    ///
+    /// Calling this function will enable extra internal bookkeeping
+    /// to track constraints and emit signals on the returned listmodel.
+    /// It may slow down operations a lot.
+    ///
+    /// Applications should try hard to avoid calling this function
+    /// because of the slowdowns.
+    ///
+    /// # Returns
+    ///
+    /// a
+    ///   `GListModel` tracking the layout&#39;s constraints
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_observe_constraints&quot;</span>)]
+    </span><span class="kw">pub fn </span>observe_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gio::ListModel {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_constraint_layout_observe_constraints(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Returns a `GListModel` to track the guides that are</span>
-    <span class="doccomment">/// part of the layout.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Calling this function will enable extra internal bookkeeping</span>
-    <span class="doccomment">/// to track guides and emit signals on the returned listmodel.</span>
-    <span class="doccomment">/// It may slow down operations a lot.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications should try hard to avoid calling this function</span>
-    <span class="doccomment">/// because of the slowdowns.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a</span>
-    <span class="doccomment">///   `GListModel` tracking the layout&#39;s guides</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_observe_guides&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">observe_guides</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">gio::ListModel</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_constraint_layout_observe_guides</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Returns a `GListModel` to track the guides that are
+    /// part of the layout.
+    ///
+    /// Calling this function will enable extra internal bookkeeping
+    /// to track guides and emit signals on the returned listmodel.
+    /// It may slow down operations a lot.
+    ///
+    /// Applications should try hard to avoid calling this function
+    /// because of the slowdowns.
+    ///
+    /// # Returns
+    ///
+    /// a
+    ///   `GListModel` tracking the layout&#39;s guides
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_observe_guides&quot;</span>)]
+    </span><span class="kw">pub fn </span>observe_guides(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gio::ListModel {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_constraint_layout_observe_guides(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Removes all constraints from the layout manager.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_remove_all_constraints&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_all_constraints</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_constraint_layout_remove_all_constraints</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="doccomment">/// Removes all constraints from the layout manager.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_remove_all_constraints&quot;</span>)]
+    </span><span class="kw">pub fn </span>remove_all_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_constraint_layout_remove_all_constraints(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="doccomment">/// Removes `constraint` from the layout manager,</span>
-    <span class="doccomment">/// so that it no longer influences the layout.</span>
-    <span class="doccomment">/// ## `constraint`</span>
-    <span class="doccomment">/// a [`Constraint`][crate::Constraint]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_remove_constraint&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_constraint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">constraint</span>: <span class="kw-2">&amp;</span><span class="ident">Constraint</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_constraint_layout_remove_constraint</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">constraint</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Removes `constraint` from the layout manager,
+    /// so that it no longer influences the layout.
+    /// ## `constraint`
+    /// a [`Constraint`][crate::Constraint]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_remove_constraint&quot;</span>)]
+    </span><span class="kw">pub fn </span>remove_constraint(<span class="kw-2">&amp;</span><span class="self">self</span>, constraint: <span class="kw-2">&amp;</span>Constraint) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_constraint_layout_remove_constraint(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                constraint.to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="doccomment">/// Removes `guide` from the layout manager,</span>
-    <span class="doccomment">/// so that it no longer influences the layout.</span>
-    <span class="doccomment">/// ## `guide`</span>
-    <span class="doccomment">/// a [`ConstraintGuide`][crate::ConstraintGuide] object</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_constraint_layout_remove_guide&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_guide</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">guide</span>: <span class="kw-2">&amp;</span><span class="ident">ConstraintGuide</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_constraint_layout_remove_guide</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">guide</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="doccomment">/// Removes `guide` from the layout manager,
+    /// so that it no longer influences the layout.
+    /// ## `guide`
+    /// a [`ConstraintGuide`][crate::ConstraintGuide] object
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_remove_guide&quot;</span>)]
+    </span><span class="kw">pub fn </span>remove_guide(<span class="kw-2">&amp;</span><span class="self">self</span>, guide: <span class="kw-2">&amp;</span>ConstraintGuide) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_constraint_layout_remove_guide(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, guide.to_glib_none().<span class="number">0</span>);
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">ConstraintLayout</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::new</span>()
+<span class="kw">impl </span>Default <span class="kw">for </span>ConstraintLayout {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ConstraintLayout</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;ConstraintLayout&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>ConstraintLayout {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;ConstraintLayout&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

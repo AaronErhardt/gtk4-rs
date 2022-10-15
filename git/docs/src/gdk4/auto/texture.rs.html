@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/texture.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>texture.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/texture.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>texture.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gdk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gdk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -395,327 +392,326 @@
 <span id="319">319</span>
 <span id="320">320</span>
 <span id="321">321</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Paintable</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::ptr</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::Paintable;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::ptr;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// [`Texture`][crate::Texture] is the basic element used to refer to pixel data.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It is primarily meant for pixel data that will not change over</span>
-    <span class="doccomment">/// multiple frames, and will be used for a long time.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// There are various ways to create [`Texture`][crate::Texture] objects from a</span>
-    <span class="doccomment">/// [`gdk_pixbuf::Pixbuf`][crate::gdk_pixbuf::Pixbuf], or a Cairo surface, or other pixel data.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The ownership of the pixel data is transferred to the [`Texture`][crate::Texture]</span>
-    <span class="doccomment">/// instance; you can only make a copy of it, via [`TextureExtManual::download()`][crate::prelude::TextureExtManual::download()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`Texture`][crate::Texture] is an immutable object: That means you cannot change</span>
-    <span class="doccomment">/// anything about it other than increasing the reference count via</span>
-    <span class="doccomment">/// `GObject::Object::ref()`, and consequently, it is a thread-safe object.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is an Abstract Base Class, you cannot instantiate it.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`TextureExt`][trait@crate::prelude::TextureExt], [`PaintableExt`][trait@crate::prelude::PaintableExt], [`trait@gio::prelude::IconExt`], [`trait@gio::prelude::LoadableIconExt`], [`TextureExtManual`][trait@crate::prelude::TextureExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GdkTexture&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Texture</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GdkTexture</span>, <span class="ident">ffi::GdkTextureClass</span><span class="op">&gt;</span>) @<span class="ident">implements</span> <span class="ident">Paintable</span>, <span class="ident">gio::Icon</span>, <span class="ident">gio::LoadableIcon</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// [`Texture`][crate::Texture] is the basic element used to refer to pixel data.
+    ///
+    /// It is primarily meant for pixel data that will not change over
+    /// multiple frames, and will be used for a long time.
+    ///
+    /// There are various ways to create [`Texture`][crate::Texture] objects from a
+    /// [`gdk_pixbuf::Pixbuf`][crate::gdk_pixbuf::Pixbuf], or a Cairo surface, or other pixel data.
+    ///
+    /// The ownership of the pixel data is transferred to the [`Texture`][crate::Texture]
+    /// instance; you can only make a copy of it, via [`TextureExtManual::download()`][crate::prelude::TextureExtManual::download()].
+    ///
+    /// [`Texture`][crate::Texture] is an immutable object: That means you cannot change
+    /// anything about it other than increasing the reference count via
+    /// `GObject::Object::ref()`, and consequently, it is a thread-safe object.
+    ///
+    /// This is an Abstract Base Class, you cannot instantiate it.
+    ///
+    /// # Implements
+    ///
+    /// [`TextureExt`][trait@crate::prelude::TextureExt], [`PaintableExt`][trait@crate::prelude::PaintableExt], [`trait@gio::prelude::IconExt`], [`trait@gio::prelude::LoadableIconExt`], [`TextureExtManual`][trait@crate::prelude::TextureExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GdkTexture&quot;</span>)]
+    </span><span class="kw">pub struct </span>Texture(Object&lt;ffi::GdkTexture, ffi::GdkTextureClass&gt;) @implements Paintable, gio::Icon, gio::LoadableIcon;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gdk_texture_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gdk_texture_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Texture</span> {
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Texture</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
+<span class="kw">impl </span>Texture {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Texture&gt; = <span class="prelude-val">None</span>;
 
-    <span class="doccomment">/// Creates a new texture object representing the [`gdk_pixbuf::Pixbuf`][crate::gdk_pixbuf::Pixbuf].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is threadsafe, so that you can e.g. use GTask</span>
-    <span class="doccomment">/// and `Gio::Task::run_in_thread()` to avoid blocking the main thread</span>
-    <span class="doccomment">/// while loading a big image.</span>
-    <span class="doccomment">/// ## `pixbuf`</span>
-    <span class="doccomment">/// a [`gdk_pixbuf::Pixbuf`][crate::gdk_pixbuf::Pixbuf]</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a new [`Texture`][crate::Texture]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_new_for_pixbuf&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_for_pixbuf&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">for_pixbuf</span>(<span class="ident">pixbuf</span>: <span class="kw-2">&amp;</span><span class="ident">gdk_pixbuf::Pixbuf</span>) -&gt; <span class="ident">Texture</span> {
+    <span class="doccomment">/// Creates a new texture object representing the [`gdk_pixbuf::Pixbuf`][crate::gdk_pixbuf::Pixbuf].
+    ///
+    /// This function is threadsafe, so that you can e.g. use GTask
+    /// and `Gio::Task::run_in_thread()` to avoid blocking the main thread
+    /// while loading a big image.
+    /// ## `pixbuf`
+    /// a [`gdk_pixbuf::Pixbuf`][crate::gdk_pixbuf::Pixbuf]
+    ///
+    /// # Returns
+    ///
+    /// a new [`Texture`][crate::Texture]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_texture_new_for_pixbuf&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;new_for_pixbuf&quot;</span>)]
+    </span><span class="kw">pub fn </span>for_pixbuf(pixbuf: <span class="kw-2">&amp;</span>gdk_pixbuf::Pixbuf) -&gt; Texture {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> { <span class="ident">from_glib_full</span>(<span class="ident">ffi::gdk_texture_new_for_pixbuf</span>(<span class="ident">pixbuf</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gdk_texture_new_for_pixbuf(pixbuf.to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// Creates a new texture by loading an image from memory,</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The file format is detected automatically. The supported formats</span>
-    <span class="doccomment">/// are PNG and JPEG, though more formats might be available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If [`None`] is returned, then @error will be set.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is threadsafe, so that you can e.g. use GTask</span>
-    <span class="doccomment">/// and `Gio::Task::run_in_thread()` to avoid blocking the main thread</span>
-    <span class="doccomment">/// while loading a big image.</span>
-    <span class="doccomment">/// ## `bytes`</span>
-    <span class="doccomment">/// a `GBytes` containing the data to load</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly-created [`Texture`][crate::Texture]</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_new_from_bytes&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_from_bytes&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_bytes</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="ident">glib::Bytes</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Texture</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new texture by loading an image from memory,
+    ///
+    /// The file format is detected automatically. The supported formats
+    /// are PNG and JPEG, though more formats might be available.
+    ///
+    /// If [`None`] is returned, then @error will be set.
+    ///
+    /// This function is threadsafe, so that you can e.g. use GTask
+    /// and `Gio::Task::run_in_thread()` to avoid blocking the main thread
+    /// while loading a big image.
+    /// ## `bytes`
+    /// a `GBytes` containing the data to load
+    ///
+    /// # Returns
+    ///
+    /// A newly-created [`Texture`][crate::Texture]
+    </span><span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gdk_texture_new_from_bytes&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;new_from_bytes&quot;</span>)]
+    </span><span class="kw">pub fn </span>from_bytes(bytes: <span class="kw-2">&amp;</span>glib::Bytes) -&gt; <span class="prelude-ty">Result</span>&lt;Texture, glib::Error&gt; {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">ffi::gdk_texture_new_from_bytes</span>(<span class="ident">bytes</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">error</span>);
-            <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
-                <span class="prelude-val">Ok</span>(<span class="ident">from_glib_full</span>(<span class="ident">ret</span>))
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">from_glib_full</span>(<span class="ident">error</span>))
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
+            <span class="kw">let </span>ret = ffi::gdk_texture_new_from_bytes(bytes.to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>error);
+            <span class="kw">if </span>error.is_null() {
+                <span class="prelude-val">Ok</span>(from_glib_full(ret))
+            } <span class="kw">else </span>{
+                <span class="prelude-val">Err</span>(from_glib_full(error))
             }
         }
     }
 
-    <span class="doccomment">/// Creates a new texture by loading an image from a file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The file format is detected automatically. The supported formats</span>
-    <span class="doccomment">/// are PNG and JPEG, though more formats might be available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If [`None`] is returned, then @error will be set.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is threadsafe, so that you can e.g. use GTask</span>
-    <span class="doccomment">/// and `Gio::Task::run_in_thread()` to avoid blocking the main thread</span>
-    <span class="doccomment">/// while loading a big image.</span>
-    <span class="doccomment">/// ## `file`</span>
-    <span class="doccomment">/// `GFile` to load</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly-created [`Texture`][crate::Texture]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_new_from_file&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_from_file&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_file</span>(<span class="ident">file</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">gio::File</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Texture</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new texture by loading an image from a file.
+    ///
+    /// The file format is detected automatically. The supported formats
+    /// are PNG and JPEG, though more formats might be available.
+    ///
+    /// If [`None`] is returned, then @error will be set.
+    ///
+    /// This function is threadsafe, so that you can e.g. use GTask
+    /// and `Gio::Task::run_in_thread()` to avoid blocking the main thread
+    /// while loading a big image.
+    /// ## `file`
+    /// `GFile` to load
+    ///
+    /// # Returns
+    ///
+    /// A newly-created [`Texture`][crate::Texture]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_texture_new_from_file&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;new_from_file&quot;</span>)]
+    </span><span class="kw">pub fn </span>from_file(file: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::File&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Texture, glib::Error&gt; {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">ffi::gdk_texture_new_from_file</span>(<span class="ident">file</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">error</span>);
-            <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
-                <span class="prelude-val">Ok</span>(<span class="ident">from_glib_full</span>(<span class="ident">ret</span>))
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">from_glib_full</span>(<span class="ident">error</span>))
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
+            <span class="kw">let </span>ret = ffi::gdk_texture_new_from_file(file.as_ref().to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>error);
+            <span class="kw">if </span>error.is_null() {
+                <span class="prelude-val">Ok</span>(from_glib_full(ret))
+            } <span class="kw">else </span>{
+                <span class="prelude-val">Err</span>(from_glib_full(error))
             }
         }
     }
 
-    <span class="doccomment">/// Creates a new texture by loading an image from a file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The file format is detected automatically. The supported formats</span>
-    <span class="doccomment">/// are PNG and JPEG, though more formats might be available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If [`None`] is returned, then @error will be set.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is threadsafe, so that you can e.g. use GTask</span>
-    <span class="doccomment">/// and `Gio::Task::run_in_thread()` to avoid blocking the main thread</span>
-    <span class="doccomment">/// while loading a big image.</span>
-    <span class="doccomment">/// ## `path`</span>
-    <span class="doccomment">/// the filename to load</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly-created [`Texture`][crate::Texture]</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_new_from_filename&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_from_filename&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_filename</span>(<span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Texture</span>, <span class="ident">glib::Error</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new texture by loading an image from a file.
+    ///
+    /// The file format is detected automatically. The supported formats
+    /// are PNG and JPEG, though more formats might be available.
+    ///
+    /// If [`None`] is returned, then @error will be set.
+    ///
+    /// This function is threadsafe, so that you can e.g. use GTask
+    /// and `Gio::Task::run_in_thread()` to avoid blocking the main thread
+    /// while loading a big image.
+    /// ## `path`
+    /// the filename to load
+    ///
+    /// # Returns
+    ///
+    /// A newly-created [`Texture`][crate::Texture]
+    </span><span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gdk_texture_new_from_filename&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;new_from_filename&quot;</span>)]
+    </span><span class="kw">pub fn </span>from_filename(path: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Texture, glib::Error&gt; {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">ptr::null_mut</span>();
-            <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span>
-                <span class="ident">ffi::gdk_texture_new_from_filename</span>(<span class="ident">path</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="kw-2">&amp;mut</span> <span class="ident">error</span>);
-            <span class="kw">if</span> <span class="ident">error</span>.<span class="ident">is_null</span>() {
-                <span class="prelude-val">Ok</span>(<span class="ident">from_glib_full</span>(<span class="ident">ret</span>))
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">from_glib_full</span>(<span class="ident">error</span>))
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>error = ptr::null_mut();
+            <span class="kw">let </span>ret =
+                ffi::gdk_texture_new_from_filename(path.as_ref().to_glib_none().<span class="number">0</span>, <span class="kw-2">&amp;mut </span>error);
+            <span class="kw">if </span>error.is_null() {
+                <span class="prelude-val">Ok</span>(from_glib_full(ret))
+            } <span class="kw">else </span>{
+                <span class="prelude-val">Err</span>(from_glib_full(error))
             }
         }
     }
 
-    <span class="doccomment">/// Creates a new texture by loading an image from a resource.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The file format is detected automatically. The supported formats</span>
-    <span class="doccomment">/// are PNG and JPEG, though more formats might be available.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It is a fatal error if @resource_path does not specify a valid</span>
-    <span class="doccomment">/// image resource and the program will abort if that happens.</span>
-    <span class="doccomment">/// If you are unsure about the validity of a resource, use</span>
-    <span class="doccomment">/// [`from_file()`][Self::from_file()] to load it.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is threadsafe, so that you can e.g. use GTask</span>
-    <span class="doccomment">/// and `Gio::Task::run_in_thread()` to avoid blocking the main thread</span>
-    <span class="doccomment">/// while loading a big image.</span>
-    <span class="doccomment">/// ## `resource_path`</span>
-    <span class="doccomment">/// the path of the resource file</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly-created [`Texture`][crate::Texture]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_new_from_resource&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_from_resource&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_resource</span>(<span class="ident">resource_path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">Texture</span> {
+    <span class="doccomment">/// Creates a new texture by loading an image from a resource.
+    ///
+    /// The file format is detected automatically. The supported formats
+    /// are PNG and JPEG, though more formats might be available.
+    ///
+    /// It is a fatal error if @resource_path does not specify a valid
+    /// image resource and the program will abort if that happens.
+    /// If you are unsure about the validity of a resource, use
+    /// [`from_file()`][Self::from_file()] to load it.
+    ///
+    /// This function is threadsafe, so that you can e.g. use GTask
+    /// and `Gio::Task::run_in_thread()` to avoid blocking the main thread
+    /// while loading a big image.
+    /// ## `resource_path`
+    /// the path of the resource file
+    ///
+    /// # Returns
+    ///
+    /// A newly-created [`Texture`][crate::Texture]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_texture_new_from_resource&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;new_from_resource&quot;</span>)]
+    </span><span class="kw">pub fn </span>from_resource(resource_path: <span class="kw-2">&amp;</span>str) -&gt; Texture {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gdk_texture_new_from_resource</span>(
-                <span class="ident">resource_path</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gdk_texture_new_from_resource(
+                resource_path.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">Texture</span> {}
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">Texture</span> {}
+<span class="kw">unsafe impl </span>Send <span class="kw">for </span>Texture {}
+<span class="kw">unsafe impl </span>Sync <span class="kw">for </span>Texture {}
 
-<span class="doccomment">/// Trait containing all [`struct@Texture`] methods.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Implementors</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`GLTexture`][struct@crate::GLTexture], [`MemoryTexture`][struct@crate::MemoryTexture], [`Texture`][struct@crate::Texture]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TextureExt</span>: <span class="lifetime">&#39;static</span> {
-    <span class="doccomment">/// Returns the height of the @self, in pixels.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the height of the [`Texture`][crate::Texture]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_get_height&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_height&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+<span class="doccomment">/// Trait containing all [`struct@Texture`] methods.
+///
+/// # Implementors
+///
+/// [`GLTexture`][struct@crate::GLTexture], [`MemoryTexture`][struct@crate::MemoryTexture], [`Texture`][struct@crate::Texture]
+</span><span class="kw">pub trait </span>TextureExt: <span class="lifetime">&#39;static </span>{
+    <span class="doccomment">/// Returns the height of the @self, in pixels.
+    ///
+    /// # Returns
+    ///
+    /// the height of the [`Texture`][crate::Texture]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_texture_get_height&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_height&quot;</span>)]
+    </span><span class="kw">fn </span>height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// Returns the width of @self, in pixels.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the width of the [`Texture`][crate::Texture]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_get_width&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_width&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span>;
+    <span class="doccomment">/// Returns the width of @self, in pixels.
+    ///
+    /// # Returns
+    ///
+    /// the width of the [`Texture`][crate::Texture]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_texture_get_width&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_width&quot;</span>)]
+    </span><span class="kw">fn </span>width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
 
-    <span class="doccomment">/// Store the given @self to the @filename as a PNG file.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is a utility function intended for debugging and testing.</span>
-    <span class="doccomment">/// If you want more control over formats, proper error handling or</span>
-    <span class="doccomment">/// want to store to a [`gio::File`][crate::gio::File] or other location, you might want to</span>
-    <span class="doccomment">/// use [`save_to_png_bytes()`][Self::save_to_png_bytes()] or look into the</span>
-    <span class="doccomment">/// gdk-pixbuf library.</span>
-    <span class="doccomment">/// ## `filename`</span>
-    <span class="doccomment">/// the filename to store to</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if saving succeeded, [`false`] on failure.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_save_to_png&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">save_to_png</span>(
+    <span class="doccomment">/// Store the given @self to the @filename as a PNG file.
+    ///
+    /// This is a utility function intended for debugging and testing.
+    /// If you want more control over formats, proper error handling or
+    /// want to store to a [`gio::File`][crate::gio::File] or other location, you might want to
+    /// use [`save_to_png_bytes()`][Self::save_to_png_bytes()] or look into the
+    /// gdk-pixbuf library.
+    /// ## `filename`
+    /// the filename to store to
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if saving succeeded, [`false`] on failure.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_texture_save_to_png&quot;</span>)]
+    </span><span class="kw">fn </span>save_to_png(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">filename</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::error::BoolError</span><span class="op">&gt;</span>;
+        filename: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::error::BoolError&gt;;
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_save_to_png_bytes&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">save_to_png_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Bytes</span>;
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gdk_texture_save_to_png_bytes&quot;</span>)]
+    </span><span class="kw">fn </span>save_to_png_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes;
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_save_to_tiff&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">save_to_tiff</span>(
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gdk_texture_save_to_tiff&quot;</span>)]
+    </span><span class="kw">fn </span>save_to_tiff(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">filename</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::error::BoolError</span><span class="op">&gt;</span>;
+        filename: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::error::BoolError&gt;;
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_texture_save_to_tiff_bytes&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">save_to_tiff_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Bytes</span>;
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gdk_texture_save_to_tiff_bytes&quot;</span>)]
+    </span><span class="kw">fn </span>save_to_tiff_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Texture</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">TextureExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gdk_texture_get_height</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+<span class="kw">impl</span>&lt;O: IsA&lt;Texture&gt;&gt; TextureExt <span class="kw">for </span>O {
+    <span class="kw">fn </span>height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gdk_texture_get_height(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gdk_texture_get_width</span>(<span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="kw">fn </span>width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gdk_texture_get_width(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="kw">fn</span> <span class="ident">save_to_png</span>(
+    <span class="kw">fn </span>save_to_png(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">filename</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::error::BoolError</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
+        filename: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::error::BoolError&gt; {
+        <span class="kw">unsafe </span>{
             <span class="macro">glib::result_from_gboolean!</span>(
-                <span class="ident">ffi::gdk_texture_save_to_png</span>(
-                    <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                    <span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>
-                ),
-                <span class="string">&quot;Failed to save the texture as png&quot;</span>
-            )
+                ffi::gdk_texture_save_to_png(
+                    <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                    filename.as_ref().to_glib_none().<span class="number">0
+                </span>),
+                <span class="string">&quot;Failed to save the texture as png&quot;
+            </span>)
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="kw">fn</span> <span class="ident">save_to_png_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Bytes</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gdk_texture_save_to_png_bytes</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="kw">fn </span>save_to_png_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gdk_texture_save_to_png_bytes(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="kw">fn</span> <span class="ident">save_to_tiff</span>(
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="kw">fn </span>save_to_tiff(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">filename</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">std::path::Path</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">glib::error::BoolError</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
+        filename: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::error::BoolError&gt; {
+        <span class="kw">unsafe </span>{
             <span class="macro">glib::result_from_gboolean!</span>(
-                <span class="ident">ffi::gdk_texture_save_to_tiff</span>(
-                    <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                    <span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>
-                ),
-                <span class="string">&quot;Failed to save the texture as tiff&quot;</span>
-            )
+                ffi::gdk_texture_save_to_tiff(
+                    <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                    filename.as_ref().to_glib_none().<span class="number">0
+                </span>),
+                <span class="string">&quot;Failed to save the texture as tiff&quot;
+            </span>)
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>))]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;dox&quot;</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v4_6&quot;</span>)))]</span>
-    <span class="kw">fn</span> <span class="ident">save_to_tiff_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">glib::Bytes</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gdk_texture_save_to_tiff_bytes</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="attribute">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="kw">fn </span>save_to_tiff_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gdk_texture_save_to_tiff_bytes(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Texture</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Texture&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Texture {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;Texture&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gdk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gdk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

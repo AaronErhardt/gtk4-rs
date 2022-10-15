@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/entry_completion.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>entry_completion.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/entry_completion.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>entry_completion.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -1071,1003 +1068,1230 @@
 <span id="995">995</span>
 <span id="996">996</span>
 <span id="997">997</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+<span id="998">998</span>
+<span id="999">999</span>
+<span id="1000">1000</span>
+<span id="1001">1001</span>
+<span id="1002">1002</span>
+<span id="1003">1003</span>
+<span id="1004">1004</span>
+<span id="1005">1005</span>
+<span id="1006">1006</span>
+<span id="1007">1007</span>
+<span id="1008">1008</span>
+<span id="1009">1009</span>
+<span id="1010">1010</span>
+<span id="1011">1011</span>
+<span id="1012">1012</span>
+<span id="1013">1013</span>
+<span id="1014">1014</span>
+<span id="1015">1015</span>
+<span id="1016">1016</span>
+<span id="1017">1017</span>
+<span id="1018">1018</span>
+<span id="1019">1019</span>
+<span id="1020">1020</span>
+<span id="1021">1021</span>
+<span id="1022">1022</span>
+<span id="1023">1023</span>
+<span id="1024">1024</span>
+<span id="1025">1025</span>
+<span id="1026">1026</span>
+<span id="1027">1027</span>
+<span id="1028">1028</span>
+<span id="1029">1029</span>
+<span id="1030">1030</span>
+<span id="1031">1031</span>
+<span id="1032">1032</span>
+<span id="1033">1033</span>
+<span id="1034">1034</span>
+<span id="1035">1035</span>
+<span id="1036">1036</span>
+<span id="1037">1037</span>
+<span id="1038">1038</span>
+<span id="1039">1039</span>
+<span id="1040">1040</span>
+<span id="1041">1041</span>
+<span id="1042">1042</span>
+<span id="1043">1043</span>
+<span id="1044">1044</span>
+<span id="1045">1045</span>
+<span id="1046">1046</span>
+<span id="1047">1047</span>
+<span id="1048">1048</span>
+<span id="1049">1049</span>
+<span id="1050">1050</span>
+<span id="1051">1051</span>
+<span id="1052">1052</span>
+<span id="1053">1053</span>
+<span id="1054">1054</span>
+<span id="1055">1055</span>
+<span id="1056">1056</span>
+<span id="1057">1057</span>
+<span id="1058">1058</span>
+<span id="1059">1059</span>
+<span id="1060">1060</span>
+<span id="1061">1061</span>
+<span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
+<span id="1074">1074</span>
+<span id="1075">1075</span>
+<span id="1076">1076</span>
+<span id="1077">1077</span>
+<span id="1078">1078</span>
+<span id="1079">1079</span>
+<span id="1080">1080</span>
+<span id="1081">1081</span>
+<span id="1082">1082</span>
+<span id="1083">1083</span>
+<span id="1084">1084</span>
+<span id="1085">1085</span>
+<span id="1086">1086</span>
+<span id="1087">1087</span>
+<span id="1088">1088</span>
+<span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Buildable</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::CellArea</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::CellLayout</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeIter</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::TreeModel</span>;
-<span class="kw">use</span> <span class="ident">glib::object::Cast</span>;
-<span class="kw">use</span> <span class="ident">glib::object::IsA</span>;
-<span class="kw">use</span> <span class="ident">glib::object::ObjectType</span> <span class="kw">as</span> <span class="ident">ObjectType_</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">glib::StaticType</span>;
-<span class="kw">use</span> <span class="ident">glib::ToValue</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::Buildable;
+<span class="kw">use </span><span class="kw">crate</span>::CellArea;
+<span class="kw">use </span><span class="kw">crate</span>::CellLayout;
+<span class="kw">use </span><span class="kw">crate</span>::TreeIter;
+<span class="kw">use </span><span class="kw">crate</span>::TreeModel;
+<span class="kw">use </span>glib::object::Cast;
+<span class="kw">use </span>glib::object::IsA;
+<span class="kw">use </span>glib::object::ObjectType <span class="kw">as </span>ObjectType_;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::StaticType;
+<span class="kw">use </span>glib::ToValue;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// [`EntryCompletion`][crate::EntryCompletion] is an auxiliary object to provide completion functionality</span>
-    <span class="doccomment">/// for [`Entry`][crate::Entry].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// It implements the [`CellLayout`][crate::CellLayout] interface, to allow the user</span>
-    <span class="doccomment">/// to add extra cells to the [`TreeView`][crate::TreeView] with completion matches.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// “Completion functionality” means that when the user modifies the text</span>
-    <span class="doccomment">/// in the entry, [`EntryCompletion`][crate::EntryCompletion] checks which rows in the model match</span>
-    <span class="doccomment">/// the current content of the entry, and displays a list of matches.</span>
-    <span class="doccomment">/// By default, the matching is done by comparing the entry text</span>
-    <span class="doccomment">/// case-insensitively against the text column of the model (see</span>
-    <span class="doccomment">/// [`set_text_column()`][Self::set_text_column()]), but this can be overridden</span>
-    <span class="doccomment">/// with a custom match function (see [`set_match_func()`][Self::set_match_func()]).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// When the user selects a completion, the content of the entry is</span>
-    <span class="doccomment">/// updated. By default, the content of the entry is replaced by the</span>
-    <span class="doccomment">/// text column of the model, but this can be overridden by connecting</span>
-    <span class="doccomment">/// to the `signal::EntryCompletion::match-selected` signal and updating the</span>
-    <span class="doccomment">/// entry in the signal handler. Note that you should return [`true`] from</span>
-    <span class="doccomment">/// the signal handler to suppress the default behaviour.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// To add completion functionality to an entry, use</span>
-    <span class="doccomment">/// [`EntryExt::set_completion()`][crate::prelude::EntryExt::set_completion()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`EntryCompletion`][crate::EntryCompletion] uses a [`TreeModelFilter`][crate::TreeModelFilter] model to</span>
-    <span class="doccomment">/// represent the subset of the entire model that is currently matching.</span>
-    <span class="doccomment">/// While the [`EntryCompletion`][crate::EntryCompletion] signals</span>
-    <span class="doccomment">/// `signal::EntryCompletion::match-selected` and</span>
-    <span class="doccomment">/// `signal::EntryCompletion::cursor-on-match` take the original model</span>
-    <span class="doccomment">/// and an iter pointing to that model as arguments, other callbacks and</span>
-    <span class="doccomment">/// signals (such as `GtkCellLayoutDataFunc` or</span>
-    <span class="doccomment">/// `signal::CellArea::apply-attributes`)]</span>
-    <span class="doccomment">/// will generally take the filter model as argument. As long as you are</span>
-    <span class="doccomment">/// only calling [`TreeModelExtManual::get()`][crate::prelude::TreeModelExtManual::get()], this will make no difference to</span>
-    <span class="doccomment">/// you. If for some reason, you need the original model, use</span>
-    <span class="doccomment">/// [`TreeModelFilterExt::model()`][crate::prelude::TreeModelFilterExt::model()]. Don’t forget to use</span>
-    <span class="doccomment">/// [`TreeModelFilterExt::convert_iter_to_child_iter()`][crate::prelude::TreeModelFilterExt::convert_iter_to_child_iter()] to obtain a</span>
-    <span class="doccomment">/// matching iter.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implements</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`trait@glib::ObjectExt`], [`BuildableExt`][trait@crate::prelude::BuildableExt], [`CellLayoutExt`][trait@crate::prelude::CellLayoutExt], [`CellLayoutExtManual`][trait@crate::prelude::CellLayoutExtManual]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkEntryCompletion&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EntryCompletion</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GtkEntryCompletion</span><span class="op">&gt;</span>) @<span class="ident">implements</span> <span class="ident">Buildable</span>, <span class="ident">CellLayout</span>;
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// [`EntryCompletion`][crate::EntryCompletion] is an auxiliary object to provide completion functionality
+    /// for [`Entry`][crate::Entry].
+    ///
+    /// It implements the [`CellLayout`][crate::CellLayout] interface, to allow the user
+    /// to add extra cells to the [`TreeView`][crate::TreeView] with completion matches.
+    ///
+    /// “Completion functionality” means that when the user modifies the text
+    /// in the entry, [`EntryCompletion`][crate::EntryCompletion] checks which rows in the model match
+    /// the current content of the entry, and displays a list of matches.
+    /// By default, the matching is done by comparing the entry text
+    /// case-insensitively against the text column of the model (see
+    /// [`set_text_column()`][Self::set_text_column()]), but this can be overridden
+    /// with a custom match function (see [`set_match_func()`][Self::set_match_func()]).
+    ///
+    /// When the user selects a completion, the content of the entry is
+    /// updated. By default, the content of the entry is replaced by the
+    /// text column of the model, but this can be overridden by connecting
+    /// to the `signal::EntryCompletion::match-selected` signal and updating the
+    /// entry in the signal handler. Note that you should return [`true`] from
+    /// the signal handler to suppress the default behaviour.
+    ///
+    /// To add completion functionality to an entry, use
+    /// [`EntryExt::set_completion()`][crate::prelude::EntryExt::set_completion()].
+    ///
+    /// [`EntryCompletion`][crate::EntryCompletion] uses a [`TreeModelFilter`][crate::TreeModelFilter] model to
+    /// represent the subset of the entire model that is currently matching.
+    /// While the [`EntryCompletion`][crate::EntryCompletion] signals
+    /// `signal::EntryCompletion::match-selected` and
+    /// `signal::EntryCompletion::cursor-on-match` take the original model
+    /// and an iter pointing to that model as arguments, other callbacks and
+    /// signals (such as `GtkCellLayoutDataFunc` or
+    /// `signal::CellArea::apply-attributes`)]
+    /// will generally take the filter model as argument. As long as you are
+    /// only calling [`TreeModelExtManual::get()`][crate::prelude::TreeModelExtManual::get()], this will make no difference to
+    /// you. If for some reason, you need the original model, use
+    /// [`TreeModelFilterExt::model()`][crate::prelude::TreeModelFilterExt::model()]. Don’t forget to use
+    /// [`TreeModelFilterExt::convert_iter_to_child_iter()`][crate::prelude::TreeModelFilterExt::convert_iter_to_child_iter()] to obtain a
+    /// matching iter.
+    ///
+    /// # Implements
+    ///
+    /// [`trait@glib::ObjectExt`], [`BuildableExt`][trait@crate::prelude::BuildableExt], [`CellLayoutExt`][trait@crate::prelude::CellLayoutExt], [`CellLayoutExtManual`][trait@crate::prelude::CellLayoutExtManual]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GtkEntryCompletion&quot;</span>)]
+    </span><span class="kw">pub struct </span>EntryCompletion(Object&lt;ffi::GtkEntryCompletion&gt;) @implements Buildable, CellLayout;
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gtk_entry_completion_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gtk_entry_completion_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">EntryCompletion</span> {
-    <span class="doccomment">/// Creates a new [`EntryCompletion`][crate::EntryCompletion] object.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly created [`EntryCompletion`][crate::EntryCompletion] object</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_new&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="ident">EntryCompletion</span> {
+<span class="kw">impl </span>EntryCompletion {
+    <span class="doccomment">/// Creates a new [`EntryCompletion`][crate::EntryCompletion] object.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// A newly created [`EntryCompletion`][crate::EntryCompletion] object
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_new&quot;</span>)]
+    </span><span class="kw">pub fn </span>new() -&gt; EntryCompletion {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe</span> { <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_entry_completion_new</span>()) }
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_entry_completion_new()) }
     }
 
-    <span class="doccomment">/// Creates a new [`EntryCompletion`][crate::EntryCompletion] object using the</span>
-    <span class="doccomment">/// specified @area.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The [`CellArea`][crate::CellArea] is used to layout cells in the underlying</span>
-    <span class="doccomment">/// [`TreeViewColumn`][crate::TreeViewColumn] for the drop-down menu.</span>
-    <span class="doccomment">/// ## `area`</span>
-    <span class="doccomment">/// the [`CellArea`][crate::CellArea] used to layout cells</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A newly created [`EntryCompletion`][crate::EntryCompletion] object</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_new_with_area&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;new_with_area&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_area</span>(<span class="ident">area</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellArea</span><span class="op">&gt;</span>) -&gt; <span class="ident">EntryCompletion</span> {
+    <span class="doccomment">/// Creates a new [`EntryCompletion`][crate::EntryCompletion] object using the
+    /// specified @area.
+    ///
+    /// The [`CellArea`][crate::CellArea] is used to layout cells in the underlying
+    /// [`TreeViewColumn`][crate::TreeViewColumn] for the drop-down menu.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `area`
+    /// the [`CellArea`][crate::CellArea] used to layout cells
+    ///
+    /// # Returns
+    ///
+    /// A newly created [`EntryCompletion`][crate::EntryCompletion] object
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_new_with_area&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;new_with_area&quot;</span>)]
+    </span><span class="kw">pub fn </span>with_area(area: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellArea&gt;) -&gt; EntryCompletion {
         <span class="macro">skip_assert_initialized!</span>();
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_entry_completion_new_with_area</span>(
-                <span class="ident">area</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_entry_completion_new_with_area(
+                area.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`EntryCompletion`] objects.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method returns an instance of [`EntryCompletionBuilder`](crate::builders::EntryCompletionBuilder) which can be used to create [`EntryCompletion`] objects.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">EntryCompletionBuilder</span> {
-        <span class="ident">EntryCompletionBuilder::default</span>()
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`EntryCompletion`] objects.
+    ///
+    /// This method returns an instance of [`EntryCompletionBuilder`](crate::builders::EntryCompletionBuilder) which can be used to create [`EntryCompletion`] objects.
+    </span><span class="kw">pub fn </span>builder() -&gt; EntryCompletionBuilder {
+        EntryCompletionBuilder::default()
     }
 
-    <span class="doccomment">/// Requests a completion operation, or in other words a refiltering of the</span>
-    <span class="doccomment">/// current list with completions, using the current key.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The completion list view will be updated accordingly.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_complete&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">complete</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_complete</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="doccomment">/// Requests a completion operation, or in other words a refiltering of the
+    /// current list with completions, using the current key.
+    ///
+    /// The completion list view will be updated accordingly.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_complete&quot;</span>)]
+    </span><span class="kw">pub fn </span>complete(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_complete(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="doccomment">/// Computes the common prefix that is shared by all rows in @self</span>
-    <span class="doccomment">/// that start with @key.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If no row matches @key, [`None`] will be returned.</span>
-    <span class="doccomment">/// Note that a text column must have been set for this function to work,</span>
-    <span class="doccomment">/// see [`set_text_column()`][Self::set_text_column()] for details.</span>
-    <span class="doccomment">/// ## `key`</span>
-    <span class="doccomment">/// The text to complete for</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The common prefix all rows</span>
-    <span class="doccomment">///   starting with @key</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_compute_prefix&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compute_prefix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_full</span>(<span class="ident">ffi::gtk_entry_completion_compute_prefix</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">key</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Computes the common prefix that is shared by all rows in @self
+    /// that start with @key.
+    ///
+    /// If no row matches @key, [`None`] will be returned.
+    /// Note that a text column must have been set for this function to work,
+    /// see [`set_text_column()`][Self::set_text_column()] for details.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `key`
+    /// The text to complete for
+    ///
+    /// # Returns
+    ///
+    /// The common prefix all rows
+    ///   starting with @key
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_compute_prefix&quot;</span>)]
+    </span><span class="kw">pub fn </span>compute_prefix(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_entry_completion_compute_prefix(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                key.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Get the original text entered by the user that triggered</span>
-    <span class="doccomment">/// the completion or [`None`] if there’s no completion ongoing.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the prefix for the current completion</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_completion_prefix&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_completion_prefix&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">completion_prefix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_entry_completion_get_completion_prefix</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Get the original text entered by the user that triggered
+    /// the completion or [`None`] if there’s no completion ongoing.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// the prefix for the current completion
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_completion_prefix&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_completion_prefix&quot;</span>)]
+    </span><span class="kw">pub fn </span>completion_prefix(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gtk_entry_completion_get_completion_prefix(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Returns whether the common prefix of the possible completions should</span>
-    <span class="doccomment">/// be automatically inserted in the entry.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if inline completion is turned on</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_inline_completion&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_inline_completion&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_inline_completion</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_entry_completion_get_inline_completion</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Returns whether the common prefix of the possible completions should
+    /// be automatically inserted in the entry.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if inline completion is turned on
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_inline_completion&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_inline_completion&quot;</span>)]
+    </span><span class="kw">pub fn </span>is_inline_completion(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_entry_completion_get_inline_completion(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Returns [`true`] if inline-selection mode is turned on.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if inline-selection mode is on</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_inline_selection&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_inline_selection&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_inline_selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_entry_completion_get_inline_selection</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Returns [`true`] if inline-selection mode is turned on.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if inline-selection mode is on
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_inline_selection&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_inline_selection&quot;</span>)]
+    </span><span class="kw">pub fn </span>is_inline_selection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_entry_completion_get_inline_selection(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Returns the minimum key length as set for @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The currently used minimum key length</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_minimum_key_length&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_minimum_key_length&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minimum_key_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_entry_completion_get_minimum_key_length</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="doccomment">/// Returns the minimum key length as set for @self.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// The currently used minimum key length
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_minimum_key_length&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_minimum_key_length&quot;</span>)]
+    </span><span class="kw">pub fn </span>minimum_key_length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gtk_entry_completion_get_minimum_key_length(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="doccomment">/// Returns the model the [`EntryCompletion`][crate::EntryCompletion] is using as data source.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns [`None`] if the model is unset.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A [`TreeModel`][crate::TreeModel]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_model&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_model&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">model</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> { <span class="ident">from_glib_none</span>(<span class="ident">ffi::gtk_entry_completion_get_model</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>)) }
+    <span class="doccomment">/// Returns the model the [`EntryCompletion`][crate::EntryCompletion] is using as data source.
+    ///
+    /// Returns [`None`] if the model is unset.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// A [`TreeModel`][crate::TreeModel]
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_model&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_model&quot;</span>)]
+    </span><span class="kw">pub fn </span>model(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;TreeModel&gt; {
+        <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_entry_completion_get_model(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="doccomment">/// Returns whether the completions should be presented in a popup window.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if popup completion is turned on</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_popup_completion&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_popup_completion&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_popup_completion</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_entry_completion_get_popup_completion</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Returns whether the completions should be presented in a popup window.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if popup completion is turned on
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_popup_completion&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_popup_completion&quot;</span>)]
+    </span><span class="kw">pub fn </span>is_popup_completion(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_entry_completion_get_popup_completion(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Returns whether the completion popup window will be resized to the</span>
-    <span class="doccomment">/// width of the entry.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the popup window will be resized to the width of</span>
-    <span class="doccomment">///   the entry</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_popup_set_width&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_popup_set_width&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_popup_set_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_entry_completion_get_popup_set_width</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Returns whether the completion popup window will be resized to the
+    /// width of the entry.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the popup window will be resized to the width of
+    ///   the entry
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_popup_set_width&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_popup_set_width&quot;</span>)]
+    </span><span class="kw">pub fn </span>is_popup_set_width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_entry_completion_get_popup_set_width(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Returns whether the completion popup window will appear even if there is</span>
-    <span class="doccomment">/// only a single match.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the popup window will appear regardless of the</span>
-    <span class="doccomment">///    number of matches</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_popup_single_match&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_popup_single_match&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_popup_single_match</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib</span>(<span class="ident">ffi::gtk_entry_completion_get_popup_single_match</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Returns whether the completion popup window will appear even if there is
+    /// only a single match.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the popup window will appear regardless of the
+    ///    number of matches
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_popup_single_match&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_popup_single_match&quot;</span>)]
+    </span><span class="kw">pub fn </span>is_popup_single_match(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="kw">unsafe </span>{
+            from_glib(ffi::gtk_entry_completion_get_popup_single_match(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Returns the column in the model of @self to get strings from.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the column containing the strings</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_get_text_column&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_text_column&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_column</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gtk_entry_completion_get_text_column</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="doccomment">/// Returns the column in the model of @self to get strings from.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    ///
+    /// # Returns
+    ///
+    /// the column containing the strings
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_get_text_column&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_text_column&quot;</span>)]
+    </span><span class="kw">pub fn </span>text_column(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+        <span class="kw">unsafe </span>{ ffi::gtk_entry_completion_get_text_column(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="doccomment">/// Requests a prefix insertion.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_insert_prefix&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert_prefix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_insert_prefix</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="doccomment">/// Requests a prefix insertion.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_insert_prefix&quot;</span>)]
+    </span><span class="kw">pub fn </span>insert_prefix(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_insert_prefix(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="doccomment">/// Sets whether the common prefix of the possible completions should</span>
-    <span class="doccomment">/// be automatically inserted in the entry.</span>
-    <span class="doccomment">/// ## `inline_completion`</span>
-    <span class="doccomment">/// [`true`] to do inline completion</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_inline_completion&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_inline_completion</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">inline_completion</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_inline_completion</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">inline_completion</span>.<span class="ident">into_glib</span>(),
+    <span class="doccomment">/// Sets whether the common prefix of the possible completions should
+    /// be automatically inserted in the entry.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `inline_completion`
+    /// [`true`] to do inline completion
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_inline_completion&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_inline_completion(<span class="kw-2">&amp;</span><span class="self">self</span>, inline_completion: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_inline_completion(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                inline_completion.into_glib(),
             );
         }
     }
 
-    <span class="doccomment">/// Sets whether it is possible to cycle through the possible completions</span>
-    <span class="doccomment">/// inside the entry.</span>
-    <span class="doccomment">/// ## `inline_selection`</span>
-    <span class="doccomment">/// [`true`] to do inline selection</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_inline_selection&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_inline_selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">inline_selection</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_inline_selection</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">inline_selection</span>.<span class="ident">into_glib</span>(),
+    <span class="doccomment">/// Sets whether it is possible to cycle through the possible completions
+    /// inside the entry.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `inline_selection`
+    /// [`true`] to do inline selection
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_inline_selection&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_inline_selection(<span class="kw-2">&amp;</span><span class="self">self</span>, inline_selection: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_inline_selection(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                inline_selection.into_glib(),
             );
         }
     }
 
-    <span class="doccomment">/// Sets the match function for @self to be @func.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The match function is used to determine if a row should or</span>
-    <span class="doccomment">/// should not be in the completion list.</span>
-    <span class="doccomment">/// ## `func`</span>
-    <span class="doccomment">/// the [`EntryCompletion`][crate::EntryCompletion]MatchFunc to use</span>
-    <span class="doccomment">/// ## `func_data`</span>
-    <span class="doccomment">/// user data for @func</span>
-    <span class="doccomment">/// ## `func_notify`</span>
-    <span class="doccomment">/// destroy notify for @func_data.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_match_func&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_match_func</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="doccomment">/// Sets the match function for @self to be @func.
+    ///
+    /// The match function is used to determine if a row should or
+    /// should not be in the completion list.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `func`
+    /// the [`EntryCompletion`][crate::EntryCompletion]MatchFunc to use
+    /// ## `func_data`
+    /// user data for @func
+    /// ## `func_notify`
+    /// destroy notify for @func_data.
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_match_func&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_match_func&lt;P: Fn(<span class="kw-2">&amp;</span>EntryCompletion, <span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>TreeIter) -&gt; bool + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">func</span>: <span class="ident">P</span>,
+        func: P,
     ) {
-        <span class="kw">let</span> <span class="ident">func_data</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">func</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">func_func</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">completion</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">key</span>: <span class="kw-2">*const</span> <span class="ident">libc::c_char</span>,
-            <span class="ident">iter</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkTreeIter</span>,
-            <span class="ident">user_data</span>: <span class="ident">glib::ffi::gpointer</span>,
-        ) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-            <span class="kw">let</span> <span class="ident">completion</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">completion</span>);
-            <span class="kw">let</span> <span class="ident">key</span>: <span class="ident">Borrowed</span><span class="op">&lt;</span><span class="ident">glib::GString</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">key</span>);
-            <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">from_glib_borrow</span>(<span class="ident">iter</span>);
-            <span class="kw">let</span> <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="ident">P</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">user_data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">callback</span>)(<span class="kw-2">&amp;</span><span class="ident">completion</span>, <span class="ident">key</span>.<span class="ident">as_str</span>(), <span class="kw-2">&amp;</span><span class="ident">iter</span>);
-            <span class="ident">res</span>.<span class="ident">into_glib</span>()
+        <span class="kw">let </span>func_data: Box_&lt;P&gt; = Box_::new(func);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>func_func&lt;
+            P: Fn(<span class="kw-2">&amp;</span>EntryCompletion, <span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>TreeIter) -&gt; bool + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            completion: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            key: <span class="kw-2">*const </span>libc::c_char,
+            iter: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
+            user_data: glib::ffi::gpointer,
+        ) -&gt; glib::ffi::gboolean {
+            <span class="kw">let </span>completion = from_glib_borrow(completion);
+            <span class="kw">let </span>key: Borrowed&lt;glib::GString&gt; = from_glib_borrow(key);
+            <span class="kw">let </span>iter = from_glib_borrow(iter);
+            <span class="kw">let </span>callback: <span class="kw-2">&amp;</span>P = <span class="kw-2">&amp;*</span>(user_data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+            <span class="kw">let </span>res = (<span class="kw-2">*</span>callback)(<span class="kw-2">&amp;</span>completion, key.as_str(), <span class="kw-2">&amp;</span>iter);
+            res.into_glib()
         }
-        <span class="kw">let</span> <span class="ident">func</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">func_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">func_notify_func</span><span class="op">&lt;</span>
-            <span class="ident">P</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">data</span>: <span class="ident">glib::ffi::gpointer</span>,
+        <span class="kw">let </span>func = <span class="prelude-val">Some</span>(func_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>func_notify_func&lt;
+            P: Fn(<span class="kw-2">&amp;</span>EntryCompletion, <span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>TreeIter) -&gt; bool + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            data: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">_callback</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::from_raw</span>(<span class="ident">data</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>);
+            <span class="kw">let </span>_callback: Box_&lt;P&gt; = Box_::from_raw(data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
         }
-        <span class="kw">let</span> <span class="ident">destroy_call3</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">func_notify_func</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">_</span>);
-        <span class="kw">let</span> <span class="ident">super_callback0</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">func_data</span>;
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_match_func</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">func</span>,
-                <span class="ident">Box_::into_raw</span>(<span class="ident">super_callback0</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="ident">destroy_call3</span>,
+        <span class="kw">let </span>destroy_call3 = <span class="prelude-val">Some</span>(func_notify_func::&lt;P&gt; <span class="kw">as _</span>);
+        <span class="kw">let </span>super_callback0: Box_&lt;P&gt; = func_data;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_match_func(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                func,
+                Box_::into_raw(super_callback0) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                destroy_call3,
             );
         }
     }
 
-    <span class="doccomment">/// Requires the length of the search key for @self to be at least</span>
-    <span class="doccomment">/// @length.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is useful for long lists, where completing using a small</span>
-    <span class="doccomment">/// key takes a lot of time and will come up with meaningless results anyway</span>
-    <span class="doccomment">/// (ie, a too large dataset).</span>
-    <span class="doccomment">/// ## `length`</span>
-    <span class="doccomment">/// the minimum length of the key in order to start completing</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_minimum_key_length&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_minimum_key_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">length</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_minimum_key_length</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">length</span>);
+    <span class="doccomment">/// Requires the length of the search key for @self to be at least
+    /// @length.
+    ///
+    /// This is useful for long lists, where completing using a small
+    /// key takes a lot of time and will come up with meaningless results anyway
+    /// (ie, a too large dataset).
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `length`
+    /// the minimum length of the key in order to start completing
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_minimum_key_length&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_minimum_key_length(<span class="kw-2">&amp;</span><span class="self">self</span>, length: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_minimum_key_length(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, length);
         }
     }
 
-    <span class="doccomment">/// Sets the model for a [`EntryCompletion`][crate::EntryCompletion].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If @self already has a model set, it will remove it</span>
-    <span class="doccomment">/// before setting the new model. If model is [`None`], then it</span>
-    <span class="doccomment">/// will unset the model.</span>
-    <span class="doccomment">/// ## `model`</span>
-    <span class="doccomment">/// the [`TreeModel`][crate::TreeModel]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_model&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_model</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">model</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_model</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">model</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">p</span>.<span class="ident">as_ref</span>()).<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Sets the model for a [`EntryCompletion`][crate::EntryCompletion].
+    ///
+    /// If @self already has a model set, it will remove it
+    /// before setting the new model. If model is [`None`], then it
+    /// will unset the model.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `model`
+    /// the [`TreeModel`][crate::TreeModel]
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_model&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_model(<span class="kw-2">&amp;</span><span class="self">self</span>, model: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;TreeModel&gt;&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_model(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                model.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="doccomment">/// Sets whether the completions should be presented in a popup window.</span>
-    <span class="doccomment">/// ## `popup_completion`</span>
-    <span class="doccomment">/// [`true`] to do popup completion</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_popup_completion&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_popup_completion</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">popup_completion</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_popup_completion</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">popup_completion</span>.<span class="ident">into_glib</span>(),
+    <span class="doccomment">/// Sets whether the completions should be presented in a popup window.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `popup_completion`
+    /// [`true`] to do popup completion
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_popup_completion&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_popup_completion(<span class="kw-2">&amp;</span><span class="self">self</span>, popup_completion: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_popup_completion(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                popup_completion.into_glib(),
             );
         }
     }
 
-    <span class="doccomment">/// Sets whether the completion popup window will be resized to be the same</span>
-    <span class="doccomment">/// width as the entry.</span>
-    <span class="doccomment">/// ## `popup_set_width`</span>
-    <span class="doccomment">/// [`true`] to make the width of the popup the same as the entry</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_popup_set_width&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_popup_set_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">popup_set_width</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_popup_set_width</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">popup_set_width</span>.<span class="ident">into_glib</span>(),
+    <span class="doccomment">/// Sets whether the completion popup window will be resized to be the same
+    /// width as the entry.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `popup_set_width`
+    /// [`true`] to make the width of the popup the same as the entry
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_popup_set_width&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_popup_set_width(<span class="kw-2">&amp;</span><span class="self">self</span>, popup_set_width: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_popup_set_width(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                popup_set_width.into_glib(),
             );
         }
     }
 
-    <span class="doccomment">/// Sets whether the completion popup window will appear even if there is</span>
-    <span class="doccomment">/// only a single match.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// You may want to set this to [`false`] if you</span>
-    <span class="doccomment">/// are using `property::EntryCompletion::inline-completion`.</span>
-    <span class="doccomment">/// ## `popup_single_match`</span>
-    <span class="doccomment">/// [`true`] if the popup should appear even for a single match</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_popup_single_match&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_popup_single_match</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">popup_single_match</span>: <span class="ident">bool</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_popup_single_match</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">popup_single_match</span>.<span class="ident">into_glib</span>(),
+    <span class="doccomment">/// Sets whether the completion popup window will appear even if there is
+    /// only a single match.
+    ///
+    /// You may want to set this to [`false`] if you
+    /// are using `property::EntryCompletion::inline-completion`.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `popup_single_match`
+    /// [`true`] if the popup should appear even for a single match
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_popup_single_match&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_popup_single_match(<span class="kw-2">&amp;</span><span class="self">self</span>, popup_single_match: bool) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_popup_single_match(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                popup_single_match.into_glib(),
             );
         }
     }
 
-    <span class="doccomment">/// Convenience function for setting up the most used case of this code: a</span>
-    <span class="doccomment">/// completion list with just strings.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function will set up @self</span>
-    <span class="doccomment">/// to have a list displaying all (and just) strings in the completion list,</span>
-    <span class="doccomment">/// and to get those strings from @column in the model of @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This functions creates and adds a [`CellRendererText`][crate::CellRendererText] for the selected</span>
-    <span class="doccomment">/// column. If you need to set the text column, but don&#39;t want the cell</span>
-    <span class="doccomment">/// renderer, use g_object_set() to set the</span>
-    <span class="doccomment">/// `property::EntryCompletion::text-column` property directly.</span>
-    <span class="doccomment">/// ## `column`</span>
-    <span class="doccomment">/// the column in the model of @self to get strings from</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_entry_completion_set_text_column&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_text_column</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">column</span>: <span class="ident">i32</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_entry_completion_set_text_column</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">column</span>);
+    <span class="doccomment">/// Convenience function for setting up the most used case of this code: a
+    /// completion list with just strings.
+    ///
+    /// This function will set up @self
+    /// to have a list displaying all (and just) strings in the completion list,
+    /// and to get those strings from @column in the model of @self.
+    ///
+    /// This functions creates and adds a [`CellRendererText`][crate::CellRendererText] for the selected
+    /// column. If you need to set the text column, but don&#39;t want the cell
+    /// renderer, use g_object_set() to set the
+    /// `property::EntryCompletion::text-column` property directly.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// GtkEntryCompletion will be removed in GTK 5.
+    /// ## `column`
+    /// the column in the model of @self to get strings from
+    </span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_entry_completion_set_text_column&quot;</span>)]
+    </span><span class="kw">pub fn </span>set_text_column(<span class="kw-2">&amp;</span><span class="self">self</span>, column: i32) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_entry_completion_set_text_column(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, column);
         }
     }
 
-    <span class="doccomment">/// The [`CellArea`][crate::CellArea] used to layout cell renderers in the treeview column.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If no area is specified when creating the entry completion with</span>
-    <span class="doccomment">/// [`with_area()`][Self::with_area()], a horizontally oriented</span>
-    <span class="doccomment">/// [`CellAreaBox`][crate::CellAreaBox] will be used.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;cell-area&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cell_area</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CellArea</span><span class="op">&gt;</span> {
-        <span class="ident">glib::ObjectExt::property</span>(<span class="self">self</span>, <span class="string">&quot;cell-area&quot;</span>)
+    <span class="doccomment">/// The [`CellArea`][crate::CellArea] used to layout cell renderers in the treeview column.
+    ///
+    /// If no area is specified when creating the entry completion with
+    /// [`with_area()`][Self::with_area()], a horizontally oriented
+    /// [`CellAreaBox`][crate::CellAreaBox] will be used.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;cell-area&quot;</span>)]
+    </span><span class="kw">pub fn </span>cell_area(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;CellArea&gt; {
+        glib::ObjectExt::property(<span class="self">self</span>, <span class="string">&quot;cell-area&quot;</span>)
     }
 
-    <span class="doccomment">/// Emitted when a match from the cursor is on a match of the list.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The default behaviour is to replace the contents</span>
-    <span class="doccomment">/// of the entry with the contents of the text column in the row</span>
-    <span class="doccomment">/// pointed to by @iter.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that @model is the model that was passed to</span>
-    <span class="doccomment">/// [`set_model()`][Self::set_model()].</span>
-    <span class="doccomment">/// ## `model`</span>
-    <span class="doccomment">/// the [`TreeModel`][crate::TreeModel] containing the matches</span>
-    <span class="doccomment">/// ## `iter`</span>
-    <span class="doccomment">/// a [`TreeIter`][crate::TreeIter] positioned at the selected match</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the signal has been handled</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;cursor-on-match&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_cursor_on_match</span><span class="op">&lt;</span>
-        <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">glib::signal::Inhibit</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-    <span class="op">&gt;</span>(
+    <span class="doccomment">/// Emitted when a match from the cursor is on a match of the list.
+    ///
+    /// The default behaviour is to replace the contents
+    /// of the entry with the contents of the text column in the row
+    /// pointed to by @iter.
+    ///
+    /// Note that @model is the model that was passed to
+    /// [`set_model()`][Self::set_model()].
+    /// ## `model`
+    /// the [`TreeModel`][crate::TreeModel] containing the matches
+    /// ## `iter`
+    /// a [`TreeIter`][crate::TreeIter] positioned at the selected match
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the signal has been handled
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;cursor-on-match&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_cursor_on_match&lt;
+        F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) -&gt; glib::signal::Inhibit + <span class="lifetime">&#39;static</span>,
+    &gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">f</span>: <span class="ident">F</span>,
-    ) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">cursor_on_match_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">glib::signal::Inhibit</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">model</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkTreeModel</span>,
-            <span class="ident">iter</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkTreeIter</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
-        ) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>),
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">model</span>),
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">iter</span>),
+        f: F,
+    ) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cursor_on_match_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) -&gt; glib::signal::Inhibit + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            model: <span class="kw-2">*mut </span>ffi::GtkTreeModel,
+            iter: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
+            f: glib::ffi::gpointer,
+        ) -&gt; glib::ffi::gboolean {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(
+                <span class="kw-2">&amp;</span>from_glib_borrow(this),
+                <span class="kw-2">&amp;</span>from_glib_borrow(model),
+                <span class="kw-2">&amp;</span>from_glib_borrow(iter),
             )
-            .<span class="ident">into_glib</span>()
+            .into_glib()
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;cursor-on-match\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">cursor_on_match_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;cursor-on-match\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    cursor_on_match_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Emitted when the inline autocompletion is triggered.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The default behaviour is to make the entry display the</span>
-    <span class="doccomment">/// whole prefix and select the newly inserted part.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications may connect to this signal in order to insert only a</span>
-    <span class="doccomment">/// smaller part of the @prefix into the entry - e.g. the entry used in</span>
-    <span class="doccomment">/// the [`FileChooser`][crate::FileChooser] inserts only the part of the prefix up to the</span>
-    <span class="doccomment">/// next &#39;/&#39;.</span>
-    <span class="doccomment">/// ## `prefix`</span>
-    <span class="doccomment">/// the common prefix of all possible completions</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the signal has been handled</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;insert-prefix&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_insert_prefix</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">glib::signal::Inhibit</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="doccomment">/// Emitted when the inline autocompletion is triggered.
+    ///
+    /// The default behaviour is to make the entry display the
+    /// whole prefix and select the newly inserted part.
+    ///
+    /// Applications may connect to this signal in order to insert only a
+    /// smaller part of the @prefix into the entry - e.g. the entry used in
+    /// the [`FileChooser`][crate::FileChooser] inserts only the part of the prefix up to the
+    /// next &#39;/&#39;.
+    /// ## `prefix`
+    /// the common prefix of all possible completions
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the signal has been handled
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;insert-prefix&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_insert_prefix&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>str) -&gt; glib::signal::Inhibit + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">f</span>: <span class="ident">F</span>,
-    ) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">insert_prefix_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">glib::signal::Inhibit</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">prefix</span>: <span class="kw-2">*mut</span> <span class="ident">libc::c_char</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
-        ) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>),
-                <span class="kw-2">&amp;</span><span class="ident">glib::GString::from_glib_borrow</span>(<span class="ident">prefix</span>),
+        f: F,
+    ) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>insert_prefix_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion, <span class="kw-2">&amp;</span>str) -&gt; glib::signal::Inhibit + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            prefix: <span class="kw-2">*mut </span>libc::c_char,
+            f: glib::ffi::gpointer,
+        ) -&gt; glib::ffi::gboolean {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(
+                <span class="kw-2">&amp;</span>from_glib_borrow(this),
+                <span class="kw-2">&amp;</span>glib::GString::from_glib_borrow(prefix),
             )
-            .<span class="ident">into_glib</span>()
+            .into_glib()
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;insert-prefix\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">insert_prefix_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;insert-prefix\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    insert_prefix_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Emitted when a match from the list is selected.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The default behaviour is to replace the contents of the</span>
-    <span class="doccomment">/// entry with the contents of the text column in the row</span>
-    <span class="doccomment">/// pointed to by @iter.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that @model is the model that was passed to</span>
-    <span class="doccomment">/// [`set_model()`][Self::set_model()].</span>
-    <span class="doccomment">/// ## `model`</span>
-    <span class="doccomment">/// the [`TreeModel`][crate::TreeModel] containing the matches</span>
-    <span class="doccomment">/// ## `iter`</span>
-    <span class="doccomment">/// a [`TreeIter`][crate::TreeIter] positioned at the selected match</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`true`] if the signal has been handled</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;match-selected&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_match_selected</span><span class="op">&lt;</span>
-        <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">glib::signal::Inhibit</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-    <span class="op">&gt;</span>(
+    <span class="doccomment">/// Emitted when a match from the list is selected.
+    ///
+    /// The default behaviour is to replace the contents of the
+    /// entry with the contents of the text column in the row
+    /// pointed to by @iter.
+    ///
+    /// Note that @model is the model that was passed to
+    /// [`set_model()`][Self::set_model()].
+    /// ## `model`
+    /// the [`TreeModel`][crate::TreeModel] containing the matches
+    /// ## `iter`
+    /// a [`TreeIter`][crate::TreeIter] positioned at the selected match
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the signal has been handled
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;match-selected&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_match_selected&lt;
+        F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) -&gt; glib::signal::Inhibit + <span class="lifetime">&#39;static</span>,
+    &gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">f</span>: <span class="ident">F</span>,
-    ) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">match_selected_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>, <span class="kw-2">&amp;</span><span class="ident">TreeModel</span>, <span class="kw-2">&amp;</span><span class="ident">TreeIter</span>) -&gt; <span class="ident">glib::signal::Inhibit</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">model</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkTreeModel</span>,
-            <span class="ident">iter</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkTreeIter</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
-        ) -&gt; <span class="ident">glib::ffi::gboolean</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>),
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">model</span>),
-                <span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">iter</span>),
+        f: F,
+    ) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>match_selected_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion, <span class="kw-2">&amp;</span>TreeModel, <span class="kw-2">&amp;</span>TreeIter) -&gt; glib::signal::Inhibit + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            model: <span class="kw-2">*mut </span>ffi::GtkTreeModel,
+            iter: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
+            f: glib::ffi::gpointer,
+        ) -&gt; glib::ffi::gboolean {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(
+                <span class="kw-2">&amp;</span>from_glib_borrow(this),
+                <span class="kw-2">&amp;</span>from_glib_borrow(model),
+                <span class="kw-2">&amp;</span>from_glib_borrow(iter),
             )
-            .<span class="ident">into_glib</span>()
+            .into_glib()
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;match-selected\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">match_selected_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;match-selected\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    match_selected_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Emitted when the filter model has zero</span>
-    <span class="doccomment">/// number of rows in completion_complete method.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// In other words when [`EntryCompletion`][crate::EntryCompletion] is out of suggestions.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;no-matches&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_no_matches</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">no_matches_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// Emitted when the filter model has zero
+    /// number of rows in completion_complete method.
+    ///
+    /// In other words when [`EntryCompletion`][crate::EntryCompletion] is out of suggestions.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;no-matches&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_no_matches&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>no_matches_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;no-matches\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">no_matches_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;no-matches\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    no_matches_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;inline-completion&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_inline_completion_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="attribute">#[doc(alias = <span class="string">&quot;inline-completion&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_inline_completion_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">f</span>: <span class="ident">F</span>,
-    ) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_inline_completion_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+        f: F,
+    ) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_inline_completion_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::inline-completion\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_inline_completion_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::inline-completion\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_inline_completion_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;inline-selection&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_inline_selection_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_inline_selection_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;inline-selection&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_inline_selection_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_inline_selection_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::inline-selection\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_inline_selection_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::inline-selection\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_inline_selection_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;minimum-key-length&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_minimum_key_length_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="attribute">#[doc(alias = <span class="string">&quot;minimum-key-length&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_minimum_key_length_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">f</span>: <span class="ident">F</span>,
-    ) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_minimum_key_length_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+        f: F,
+    ) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_minimum_key_length_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::minimum-key-length\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_minimum_key_length_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::minimum-key-length\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_minimum_key_length_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;model&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_model_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_model_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;model&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_model_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_model_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::model\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_model_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::model\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_model_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;popup-completion&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_popup_completion_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_popup_completion_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;popup-completion&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_popup_completion_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_popup_completion_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::popup-completion\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_popup_completion_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::popup-completion\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_popup_completion_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;popup-set-width&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_popup_set_width_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_popup_set_width_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;popup-set-width&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_popup_set_width_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_popup_set_width_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::popup-set-width\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_popup_set_width_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::popup-set-width\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_popup_set_width_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;popup-single-match&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_popup_single_match_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
+    <span class="attribute">#[doc(alias = <span class="string">&quot;popup-single-match&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_popup_single_match_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">f</span>: <span class="ident">F</span>,
-    ) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_popup_single_match_trampoline</span><span class="op">&lt;</span>
-            <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+        f: F,
+    ) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_popup_single_match_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::popup-single-match\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_popup_single_match_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::popup-single-match\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_popup_single_match_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;text-column&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_text_column_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_text_column_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">EntryCompletion</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GtkEntryCompletion</span>,
-            <span class="ident">_param_spec</span>: <span class="ident">glib::ffi::gpointer</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="attribute">#[doc(alias = <span class="string">&quot;text-column&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_text_column_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_text_column_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>EntryCompletion) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GtkEntryCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;notify::text-column\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">notify_text_column_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;notify::text-column\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    notify_text_column_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">EntryCompletion</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::new</span>()
+<span class="kw">impl </span>Default <span class="kw">for </span>EntryCompletion {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// A [builder-pattern] type to construct [`EntryCompletion`] objects.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html</span>
-<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;The builder must be built to be used&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EntryCompletionBuilder</span> {
-    <span class="ident">cell_area</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CellArea</span><span class="op">&gt;</span>,
-    <span class="ident">inline_completion</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">inline_selection</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">minimum_key_length</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
-    <span class="ident">model</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span>,
-    <span class="ident">popup_completion</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">popup_set_width</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">popup_single_match</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="ident">text_column</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(Clone, Default)]
+</span><span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// A [builder-pattern] type to construct [`EntryCompletion`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+</span><span class="attribute">#[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
+</span><span class="kw">pub struct </span>EntryCompletionBuilder {
+    cell_area: <span class="prelude-ty">Option</span>&lt;CellArea&gt;,
+    inline_completion: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    inline_selection: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    minimum_key_length: <span class="prelude-ty">Option</span>&lt;i32&gt;,
+    model: <span class="prelude-ty">Option</span>&lt;TreeModel&gt;,
+    popup_completion: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    popup_set_width: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    popup_single_match: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    text_column: <span class="prelude-ty">Option</span>&lt;i32&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">EntryCompletionBuilder</span> {
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Create a new [`EntryCompletionBuilder`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::default</span>()
+<span class="kw">impl </span>EntryCompletionBuilder {
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Create a new [`EntryCompletionBuilder`].
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::default()
     }
 
-    <span class="comment">// rustdoc-stripper-ignore-next</span>
-    <span class="doccomment">/// Build the [`EntryCompletion`].</span>
-    <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">EntryCompletion</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">properties</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">ToValue</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">cell_area</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">cell_area</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;cell-area&quot;</span>, <span class="ident">cell_area</span>));
+    <span class="comment">// rustdoc-stripper-ignore-next
+    </span><span class="doccomment">/// Build the [`EntryCompletion`].
+    </span><span class="attribute">#[must_use = <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; EntryCompletion {
+        <span class="kw">let </span><span class="kw-2">mut </span>properties: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span><span class="kw">dyn </span>ToValue)&gt; = <span class="macro">vec!</span>[];
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>cell_area) = <span class="self">self</span>.cell_area {
+            properties.push((<span class="string">&quot;cell-area&quot;</span>, cell_area));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">inline_completion</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">inline_completion</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;inline-completion&quot;</span>, <span class="ident">inline_completion</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>inline_completion) = <span class="self">self</span>.inline_completion {
+            properties.push((<span class="string">&quot;inline-completion&quot;</span>, inline_completion));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">inline_selection</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">inline_selection</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;inline-selection&quot;</span>, <span class="ident">inline_selection</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>inline_selection) = <span class="self">self</span>.inline_selection {
+            properties.push((<span class="string">&quot;inline-selection&quot;</span>, inline_selection));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">minimum_key_length</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">minimum_key_length</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;minimum-key-length&quot;</span>, <span class="ident">minimum_key_length</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>minimum_key_length) = <span class="self">self</span>.minimum_key_length {
+            properties.push((<span class="string">&quot;minimum-key-length&quot;</span>, minimum_key_length));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">model</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">model</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;model&quot;</span>, <span class="ident">model</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>model) = <span class="self">self</span>.model {
+            properties.push((<span class="string">&quot;model&quot;</span>, model));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">popup_completion</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">popup_completion</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;popup-completion&quot;</span>, <span class="ident">popup_completion</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>popup_completion) = <span class="self">self</span>.popup_completion {
+            properties.push((<span class="string">&quot;popup-completion&quot;</span>, popup_completion));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">popup_set_width</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">popup_set_width</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;popup-set-width&quot;</span>, <span class="ident">popup_set_width</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>popup_set_width) = <span class="self">self</span>.popup_set_width {
+            properties.push((<span class="string">&quot;popup-set-width&quot;</span>, popup_set_width));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">popup_single_match</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">popup_single_match</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;popup-single-match&quot;</span>, <span class="ident">popup_single_match</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>popup_single_match) = <span class="self">self</span>.popup_single_match {
+            properties.push((<span class="string">&quot;popup-single-match&quot;</span>, popup_single_match));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">text_column</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">text_column</span> {
-            <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;text-column&quot;</span>, <span class="ident">text_column</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>text_column) = <span class="self">self</span>.text_column {
+            properties.push((<span class="string">&quot;text-column&quot;</span>, text_column));
         }
-        <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">EntryCompletion</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">properties</span>)
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to create an instance of EntryCompletion&quot;</span>)
+        glib::Object::new::&lt;EntryCompletion&gt;(<span class="kw-2">&amp;</span>properties)
     }
 
-    <span class="doccomment">/// The [`CellArea`][crate::CellArea] used to layout cell renderers in the treeview column.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If no area is specified when creating the entry completion with</span>
-    <span class="doccomment">/// [`EntryCompletion::with_area()`][crate::EntryCompletion::with_area()], a horizontally oriented</span>
-    <span class="doccomment">/// [`CellAreaBox`][crate::CellAreaBox] will be used.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cell_area</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cell_area</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">CellArea</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">cell_area</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cell_area</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The [`CellArea`][crate::CellArea] used to layout cell renderers in the treeview column.
+    ///
+    /// If no area is specified when creating the entry completion with
+    /// [`EntryCompletion::with_area()`][crate::EntryCompletion::with_area()], a horizontally oriented
+    /// [`CellAreaBox`][crate::CellAreaBox] will be used.
+    </span><span class="kw">pub fn </span>cell_area(<span class="kw-2">mut </span><span class="self">self</span>, cell_area: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;CellArea&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.cell_area = <span class="prelude-val">Some</span>(cell_area.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Determines whether the common prefix of the possible completions</span>
-    <span class="doccomment">/// should be inserted automatically in the entry.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that this requires text-column to be set, even if you are</span>
-    <span class="doccomment">/// using a custom match function.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inline_completion</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">inline_completion</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">inline_completion</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inline_completion</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Determines whether the common prefix of the possible completions
+    /// should be inserted automatically in the entry.
+    ///
+    /// Note that this requires text-column to be set, even if you are
+    /// using a custom match function.
+    </span><span class="kw">pub fn </span>inline_completion(<span class="kw-2">mut </span><span class="self">self</span>, inline_completion: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.inline_completion = <span class="prelude-val">Some</span>(inline_completion);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Determines whether the possible completions on the popup</span>
-    <span class="doccomment">/// will appear in the entry as you navigate through them.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inline_selection</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">inline_selection</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">inline_selection</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inline_selection</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Determines whether the possible completions on the popup
+    /// will appear in the entry as you navigate through them.
+    </span><span class="kw">pub fn </span>inline_selection(<span class="kw-2">mut </span><span class="self">self</span>, inline_selection: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.inline_selection = <span class="prelude-val">Some</span>(inline_selection);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minimum_key_length</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">minimum_key_length</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">minimum_key_length</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">minimum_key_length</span>);
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>minimum_key_length(<span class="kw-2">mut </span><span class="self">self</span>, minimum_key_length: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.minimum_key_length = <span class="prelude-val">Some</span>(minimum_key_length);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">model</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">model</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">TreeModel</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">model</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">model</span>.<span class="ident">clone</span>().<span class="ident">upcast</span>());
-        <span class="self">self</span>
-    }
+    <span class="kw">pub fn </span>model(<span class="kw-2">mut </span><span class="self">self</span>, model: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;TreeModel&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.model = <span class="prelude-val">Some</span>(model.clone().upcast());
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Determines whether the possible completions should be</span>
-    <span class="doccomment">/// shown in a popup window.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">popup_completion</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">popup_completion</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">popup_completion</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">popup_completion</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Determines whether the possible completions should be
+    /// shown in a popup window.
+    </span><span class="kw">pub fn </span>popup_completion(<span class="kw-2">mut </span><span class="self">self</span>, popup_completion: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.popup_completion = <span class="prelude-val">Some</span>(popup_completion);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Determines whether the completions popup window will be</span>
-    <span class="doccomment">/// resized to the width of the entry.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">popup_set_width</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">popup_set_width</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">popup_set_width</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">popup_set_width</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Determines whether the completions popup window will be
+    /// resized to the width of the entry.
+    </span><span class="kw">pub fn </span>popup_set_width(<span class="kw-2">mut </span><span class="self">self</span>, popup_set_width: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.popup_set_width = <span class="prelude-val">Some</span>(popup_set_width);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Determines whether the completions popup window will shown</span>
-    <span class="doccomment">/// for a single possible completion.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// You probably want to set this to [`false`] if you are using</span>
-    <span class="doccomment">/// `property::EntryCompletion::inline-completion`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">popup_single_match</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">popup_single_match</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">popup_single_match</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">popup_single_match</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Determines whether the completions popup window will shown
+    /// for a single possible completion.
+    ///
+    /// You probably want to set this to [`false`] if you are using
+    /// `property::EntryCompletion::inline-completion`.
+    </span><span class="kw">pub fn </span>popup_single_match(<span class="kw-2">mut </span><span class="self">self</span>, popup_single_match: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.popup_single_match = <span class="prelude-val">Some</span>(popup_single_match);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// The column of the model containing the strings.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note that the strings must be UTF-8.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_column</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">text_column</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">text_column</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">text_column</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// The column of the model containing the strings.
+    ///
+    /// Note that the strings must be UTF-8.
+    </span><span class="kw">pub fn </span>text_column(<span class="kw-2">mut </span><span class="self">self</span>, text_column: i32) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.text_column = <span class="prelude-val">Some</span>(text_column);
+        <span class="self">self
+    </span>}
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">EntryCompletion</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;EntryCompletion&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>EntryCompletion {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;EntryCompletion&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

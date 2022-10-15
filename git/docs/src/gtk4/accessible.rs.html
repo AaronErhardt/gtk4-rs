@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/accessible.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/accessible.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../gtk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -439,383 +436,370 @@
 <span id="363">363</span>
 <span id="364">364</span>
 <span id="365">365</span>
-<span id="366">366</span>
-<span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.</span>
+</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-<span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">Accessible</span>, <span class="ident">AccessibleAutocomplete</span>, <span class="ident">AccessibleInvalidState</span>, <span class="ident">AccessibleProperty</span>,
-    <span class="ident">AccessibleRelation</span>, <span class="ident">AccessibleSort</span>, <span class="ident">AccessibleState</span>, <span class="ident">AccessibleTristate</span>, <span class="ident">Orientation</span>,
+</span><span class="kw">use crate</span>::{
+    Accessible, AccessibleAutocomplete, AccessibleInvalidState, AccessibleProperty,
+    AccessibleRelation, AccessibleSort, AccessibleState, AccessibleTristate, Orientation,
 };
-<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">translate</span>::<span class="kw-2">*</span>, <span class="ident">Value</span>};
-<span class="kw">use</span> <span class="ident">glib</span>::{<span class="ident">IsA</span>, <span class="ident">ToValue</span>};
+<span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>, Value};
+<span class="kw">use </span>glib::{IsA, ToValue};
 
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// Trait containing manually implemented methods of [`Accessible`](crate::Accessible).</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```no_run</span>
-<span class="doccomment">/// # use gtk4 as gtk;</span>
-<span class="doccomment">/// # use gtk::prelude::*;</span>
-<span class="doccomment">/// let entry = gtk::Entry::new();</span>
-<span class="doccomment">/// let label = gtk::Label::new(Some(&quot;Entry&quot;));</span>
-<span class="doccomment">/// entry.update_property(&amp;[</span>
-<span class="doccomment">///     gtk::accessible::Property::Description(&quot;Test&quot;),</span>
-<span class="doccomment">///     gtk::accessible::Property::Orientation(gtk::Orientation::Horizontal),</span>
-<span class="doccomment">/// ]);</span>
-<span class="doccomment">/// entry.update_relation(&amp;[</span>
-<span class="doccomment">///     gtk::accessible::Relation::LabelledBy(&amp;[label.upcast_ref()]),</span>
-<span class="doccomment">/// ]);</span>
-<span class="doccomment">/// entry.update_state(&amp;[</span>
-<span class="doccomment">///     gtk::accessible::State::Invalid(gtk::AccessibleInvalidState::Grammar),</span>
-<span class="doccomment">/// ]);</span>
-<span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AccessibleExtManual</span> {
-    <span class="doccomment">/// Updates an array of accessible properties.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function should be called by [`Widget`][crate::Widget] types whenever an accessible</span>
-    <span class="doccomment">/// property change must be communicated to assistive technologies.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is meant to be used by language bindings.</span>
-    <span class="doccomment">/// ## `properties`</span>
-    <span class="doccomment">/// an array of [`AccessibleProperty`][crate::AccessibleProperty]</span>
-    <span class="doccomment">/// ## `values`</span>
-    <span class="doccomment">/// an array of `GValues`, one for each property</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accessible_update_property&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accessible_update_property_value&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">update_property</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">properties</span>: <span class="kw-2">&amp;</span>[<span class="ident">Property</span>]);
+<span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// Trait containing manually implemented methods of [`Accessible`](crate::Accessible).
+///
+/// ```no_run
+/// # use gtk4 as gtk;
+/// # use gtk::prelude::*;
+/// let entry = gtk::Entry::new();
+/// let label = gtk::Label::new(Some(&quot;Entry&quot;));
+/// entry.update_property(&amp;[
+///     gtk::accessible::Property::Description(&quot;Test&quot;),
+///     gtk::accessible::Property::Orientation(gtk::Orientation::Horizontal),
+/// ]);
+/// entry.update_relation(&amp;[
+///     gtk::accessible::Relation::LabelledBy(&amp;[label.upcast_ref()]),
+/// ]);
+/// entry.update_state(&amp;[
+///     gtk::accessible::State::Invalid(gtk::AccessibleInvalidState::Grammar),
+/// ]);
+/// ```
+</span><span class="kw">pub trait </span>AccessibleExtManual {
+    <span class="doccomment">/// Updates an array of accessible properties.
+    ///
+    /// This function should be called by [`Widget`][crate::Widget] types whenever an accessible
+    /// property change must be communicated to assistive technologies.
+    ///
+    /// This function is meant to be used by language bindings.
+    /// ## `properties`
+    /// an array of [`AccessibleProperty`][crate::AccessibleProperty]
+    /// ## `values`
+    /// an array of `GValues`, one for each property
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_accessible_update_property&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_accessible_update_property_value&quot;</span>)]
+    </span><span class="kw">fn </span>update_property(<span class="kw-2">&amp;</span><span class="self">self</span>, properties: <span class="kw-2">&amp;</span>[Property]);
 
-    <span class="doccomment">/// Updates an array of accessible relations.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function should be called by [`Widget`][crate::Widget] types whenever an accessible</span>
-    <span class="doccomment">/// relation change must be communicated to assistive technologies.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is meant to be used by language bindings.</span>
-    <span class="doccomment">/// ## `relations`</span>
-    <span class="doccomment">/// an array of [`AccessibleRelation`][crate::AccessibleRelation]</span>
-    <span class="doccomment">/// ## `values`</span>
-    <span class="doccomment">/// an array of `GValues`, one for each relation</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accessible_update_relation&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accessible_update_relation_value&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">update_relation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">relations</span>: <span class="kw-2">&amp;</span>[<span class="ident">Relation</span>]);
+    <span class="doccomment">/// Updates an array of accessible relations.
+    ///
+    /// This function should be called by [`Widget`][crate::Widget] types whenever an accessible
+    /// relation change must be communicated to assistive technologies.
+    ///
+    /// This function is meant to be used by language bindings.
+    /// ## `relations`
+    /// an array of [`AccessibleRelation`][crate::AccessibleRelation]
+    /// ## `values`
+    /// an array of `GValues`, one for each relation
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_accessible_update_relation&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_accessible_update_relation_value&quot;</span>)]
+    </span><span class="kw">fn </span>update_relation(<span class="kw-2">&amp;</span><span class="self">self</span>, relations: <span class="kw-2">&amp;</span>[Relation]);
 
-    <span class="doccomment">/// Updates an array of accessible states.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function should be called by [`Widget`][crate::Widget] types whenever an accessible</span>
-    <span class="doccomment">/// state change must be communicated to assistive technologies.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function is meant to be used by language bindings.</span>
-    <span class="doccomment">/// ## `states`</span>
-    <span class="doccomment">/// an array of [`AccessibleState`][crate::AccessibleState]</span>
-    <span class="doccomment">/// ## `values`</span>
-    <span class="doccomment">/// an array of `GValues`, one for each state</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accessible_update_state&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gtk_accessible_update_state_value&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">update_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">states</span>: <span class="kw-2">&amp;</span>[<span class="ident">State</span>]);
+    <span class="doccomment">/// Updates an array of accessible states.
+    ///
+    /// This function should be called by [`Widget`][crate::Widget] types whenever an accessible
+    /// state change must be communicated to assistive technologies.
+    ///
+    /// This function is meant to be used by language bindings.
+    /// ## `states`
+    /// an array of [`AccessibleState`][crate::AccessibleState]
+    /// ## `values`
+    /// an array of `GValues`, one for each state
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gtk_accessible_update_state&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;gtk_accessible_update_state_value&quot;</span>)]
+    </span><span class="kw">fn </span>update_state(<span class="kw-2">&amp;</span><span class="self">self</span>, states: <span class="kw-2">&amp;</span>[State]);
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Accessible</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">AccessibleExtManual</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">update_property</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">properties</span>: <span class="kw-2">&amp;</span>[<span class="ident">Property</span>]) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">properties_ptr</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">for</span> <span class="ident">prop</span> <span class="kw">in</span> <span class="ident">properties</span> {
-            <span class="kw">let</span> (<span class="ident">p</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">prop</span>.<span class="ident">to_property_value</span>();
-            <span class="ident">properties_ptr</span>.<span class="ident">push</span>(<span class="ident">p</span>.<span class="ident">into_glib</span>());
-            <span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">v</span>);
+<span class="kw">impl</span>&lt;O: IsA&lt;Accessible&gt;&gt; AccessibleExtManual <span class="kw">for </span>O {
+    <span class="kw">fn </span>update_property(<span class="kw-2">&amp;</span><span class="self">self</span>, properties: <span class="kw-2">&amp;</span>[Property]) {
+        <span class="kw">let </span><span class="kw-2">mut </span>properties_ptr = <span class="macro">vec!</span>[];
+        <span class="kw">let </span><span class="kw-2">mut </span>values = <span class="macro">vec!</span>[];
+        <span class="kw">for </span>prop <span class="kw">in </span>properties {
+            <span class="kw">let </span>(p, v) = prop.to_property_value();
+            properties_ptr.push(p.into_glib());
+            values.push(v);
         }
 
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_accessible_update_property_value</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">properties</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">i32</span>,
-                <span class="ident">mut_override</span>(<span class="ident">properties_ptr</span>.<span class="ident">as_ptr</span>()),
-                <span class="ident">ToGlibContainerFromSlice::to_glib_none_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">values</span>).<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            ffi::gtk_accessible_update_property_value(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                properties.len() <span class="kw">as </span>i32,
+                mut_override(properties_ptr.as_ptr()),
+                ToGlibContainerFromSlice::to_glib_none_from_slice(<span class="kw-2">&amp;</span>values).<span class="number">0</span>,
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">update_relation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">relations</span>: <span class="kw-2">&amp;</span>[<span class="ident">Relation</span>]) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">relations_ptr</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">for</span> <span class="ident">relation</span> <span class="kw">in</span> <span class="ident">relations</span> {
-            <span class="kw">let</span> (<span class="ident">r</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">relation</span>.<span class="ident">to_relation_value</span>();
-            <span class="ident">relations_ptr</span>.<span class="ident">push</span>(<span class="ident">r</span>.<span class="ident">into_glib</span>());
-            <span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">v</span>);
+    <span class="kw">fn </span>update_relation(<span class="kw-2">&amp;</span><span class="self">self</span>, relations: <span class="kw-2">&amp;</span>[Relation]) {
+        <span class="kw">let </span><span class="kw-2">mut </span>relations_ptr = <span class="macro">vec!</span>[];
+        <span class="kw">let </span><span class="kw-2">mut </span>values = <span class="macro">vec!</span>[];
+        <span class="kw">for </span>relation <span class="kw">in </span>relations {
+            <span class="kw">let </span>(r, v) = relation.to_relation_value();
+            relations_ptr.push(r.into_glib());
+            values.push(v);
         }
 
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_accessible_update_relation_value</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">relations</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">i32</span>,
-                <span class="ident">mut_override</span>(<span class="ident">relations_ptr</span>.<span class="ident">as_ptr</span>()),
-                <span class="ident">ToGlibContainerFromSlice::to_glib_none_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">values</span>).<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            ffi::gtk_accessible_update_relation_value(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                relations.len() <span class="kw">as </span>i32,
+                mut_override(relations_ptr.as_ptr()),
+                ToGlibContainerFromSlice::to_glib_none_from_slice(<span class="kw-2">&amp;</span>values).<span class="number">0</span>,
             )
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">update_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">states</span>: <span class="kw-2">&amp;</span>[<span class="ident">State</span>]) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">states_ptr</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="kw">for</span> <span class="ident">state</span> <span class="kw">in</span> <span class="ident">states</span> {
-            <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">v</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">to_state_value</span>();
-            <span class="ident">states_ptr</span>.<span class="ident">push</span>(<span class="ident">s</span>.<span class="ident">into_glib</span>());
-            <span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">v</span>);
+    <span class="kw">fn </span>update_state(<span class="kw-2">&amp;</span><span class="self">self</span>, states: <span class="kw-2">&amp;</span>[State]) {
+        <span class="kw">let </span><span class="kw-2">mut </span>states_ptr = <span class="macro">vec!</span>[];
+        <span class="kw">let </span><span class="kw-2">mut </span>values = <span class="macro">vec!</span>[];
+        <span class="kw">for </span>state <span class="kw">in </span>states {
+            <span class="kw">let </span>(s, v) = state.to_state_value();
+            states_ptr.push(s.into_glib());
+            values.push(v);
         }
 
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gtk_accessible_update_state_value</span>(
-                <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">states</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">i32</span>,
-                <span class="ident">mut_override</span>(<span class="ident">states_ptr</span>.<span class="ident">as_ptr</span>()),
-                <span class="ident">ToGlibContainerFromSlice::to_glib_none_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">values</span>).<span class="number">0</span>,
+        <span class="kw">unsafe </span>{
+            ffi::gtk_accessible_update_state_value(
+                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                states.len() <span class="kw">as </span>i32,
+                mut_override(states_ptr.as_ptr()),
+                ToGlibContainerFromSlice::to_glib_none_from_slice(<span class="kw-2">&amp;</span>values).<span class="number">0</span>,
             )
         }
     }
 }
 
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// Type-safe enum container for [`AccessibleProperty`](crate::AccessibleProperty) values.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Property</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> {
-    <span class="ident">Autocomplete</span>(<span class="ident">AccessibleAutocomplete</span>),
-    <span class="ident">Description</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>),
-    <span class="ident">HasPopup</span>(<span class="ident">bool</span>),
-    <span class="ident">KeyShortcuts</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>),
-    <span class="ident">Label</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>),
-    <span class="ident">Level</span>(<span class="ident">i32</span>),
-    <span class="ident">Modal</span>(<span class="ident">bool</span>),
-    <span class="ident">MultiLine</span>(<span class="ident">bool</span>),
-    <span class="ident">MultiSelectable</span>(<span class="ident">bool</span>),
-    <span class="ident">Orientation</span>(<span class="ident">Orientation</span>),
-    <span class="ident">Placeholder</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>),
-    <span class="ident">ReadOnly</span>(<span class="ident">bool</span>),
-    <span class="ident">Required</span>(<span class="ident">bool</span>),
-    <span class="ident">RoleDescription</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>),
-    <span class="ident">Sort</span>(<span class="ident">AccessibleSort</span>),
-    <span class="ident">ValueMax</span>(<span class="ident">f64</span>),
-    <span class="ident">ValueMin</span>(<span class="ident">f64</span>),
-    <span class="ident">ValueNow</span>(<span class="ident">f64</span>),
-    <span class="ident">ValueText</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> <span class="ident">str</span>),
+<span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// Type-safe enum container for [`AccessibleProperty`](crate::AccessibleProperty) values.
+</span><span class="attribute">#[derive(Debug)]
+#[non_exhaustive]
+</span><span class="kw">pub enum </span>Property&lt;<span class="lifetime">&#39;p</span>&gt; {
+    Autocomplete(AccessibleAutocomplete),
+    Description(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
+    HasPopup(bool),
+    KeyShortcuts(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
+    Label(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
+    Level(i32),
+    Modal(bool),
+    MultiLine(bool),
+    MultiSelectable(bool),
+    Orientation(Orientation),
+    Placeholder(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
+    ReadOnly(bool),
+    Required(bool),
+    RoleDescription(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
+    Sort(AccessibleSort),
+    ValueMax(f64),
+    ValueMin(f64),
+    ValueNow(f64),
+    ValueText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> <span class="ident">Property</span><span class="op">&lt;</span><span class="lifetime">&#39;p</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_property_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="ident">AccessibleProperty</span>, <span class="ident">Value</span>) {
-        <span class="kw">use</span> <span class="ident">Property</span>::<span class="kw-2">*</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;p</span>&gt; Property&lt;<span class="lifetime">&#39;p</span>&gt; {
+    <span class="kw">fn </span>to_property_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (AccessibleProperty, Value) {
+        <span class="kw">use </span>Property::<span class="kw-2">*</span>;
 
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Autocomplete</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Autocomplete</span>, <span class="ident">v</span>.<span class="ident">into_glib</span>().<span class="ident">to_value</span>()),
-            <span class="ident">Description</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Description</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">HasPopup</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::HasPopup</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">KeyShortcuts</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::KeyShortcuts</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Label</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Label</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Level</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Level</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Modal</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Modal</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">MultiLine</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::MultiLine</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">MultiSelectable</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::MultiSelectable</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Orientation</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Orientation</span>, <span class="ident">v</span>.<span class="ident">into_glib</span>().<span class="ident">to_value</span>()),
-            <span class="ident">Placeholder</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Placeholder</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ReadOnly</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::ReadOnly</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Required</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Required</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">RoleDescription</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::RoleDescription</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Sort</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::Sort</span>, <span class="ident">v</span>.<span class="ident">into_glib</span>().<span class="ident">to_value</span>()),
-            <span class="ident">ValueMax</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::ValueMax</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ValueMin</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::ValueMin</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ValueNow</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::ValueNow</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ValueText</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleProperty::ValueText</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
+        <span class="kw">match </span><span class="self">self </span>{
+            Autocomplete(v) =&gt; (AccessibleProperty::Autocomplete, v.into_glib().to_value()),
+            Description(v) =&gt; (AccessibleProperty::Description, v.to_value()),
+            HasPopup(v) =&gt; (AccessibleProperty::HasPopup, v.to_value()),
+            KeyShortcuts(v) =&gt; (AccessibleProperty::KeyShortcuts, v.to_value()),
+            Label(v) =&gt; (AccessibleProperty::Label, v.to_value()),
+            Level(v) =&gt; (AccessibleProperty::Level, v.to_value()),
+            Modal(v) =&gt; (AccessibleProperty::Modal, v.to_value()),
+            MultiLine(v) =&gt; (AccessibleProperty::MultiLine, v.to_value()),
+            MultiSelectable(v) =&gt; (AccessibleProperty::MultiSelectable, v.to_value()),
+            Orientation(v) =&gt; (AccessibleProperty::Orientation, v.into_glib().to_value()),
+            Placeholder(v) =&gt; (AccessibleProperty::Placeholder, v.to_value()),
+            ReadOnly(v) =&gt; (AccessibleProperty::ReadOnly, v.to_value()),
+            Required(v) =&gt; (AccessibleProperty::Required, v.to_value()),
+            RoleDescription(v) =&gt; (AccessibleProperty::RoleDescription, v.to_value()),
+            Sort(v) =&gt; (AccessibleProperty::Sort, v.into_glib().to_value()),
+            ValueMax(v) =&gt; (AccessibleProperty::ValueMax, v.to_value()),
+            ValueMin(v) =&gt; (AccessibleProperty::ValueMin, v.to_value()),
+            ValueNow(v) =&gt; (AccessibleProperty::ValueNow, v.to_value()),
+            ValueText(v) =&gt; (AccessibleProperty::ValueText, v.to_value()),
         }
     }
 }
 
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// Type-safe enum container for [`AccessibleRelation`](crate::AccessibleRelation) values.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Relation</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span> {
-    <span class="ident">ActiveDescendant</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>),
-    <span class="ident">ColCount</span>(<span class="ident">i32</span>),
-    <span class="ident">ColIndex</span>(<span class="ident">i32</span>),
-    <span class="ident">ColIndexText</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">str</span>),
-    <span class="ident">ColSpan</span>(<span class="ident">i32</span>),
-    <span class="ident">Controls</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>]),
-    <span class="ident">DescribedBy</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>]),
-    <span class="ident">Details</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>]),
-    <span class="ident">ErrorMessage</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>),
-    <span class="ident">FlowTo</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>]),
-    <span class="ident">LabelledBy</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>]),
-    <span class="ident">Owns</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">Accessible</span>]),
-    <span class="ident">PosInSet</span>(<span class="ident">i32</span>),
-    <span class="ident">RowCount</span>(<span class="ident">i32</span>),
-    <span class="ident">RowIndex</span>(<span class="ident">i32</span>),
-    <span class="ident">RowIndexText</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r</span> <span class="ident">str</span>),
-    <span class="ident">RowSpan</span>(<span class="ident">i32</span>),
-    <span class="ident">SetSize</span>(<span class="ident">i32</span>),
+<span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// Type-safe enum container for [`AccessibleRelation`](crate::AccessibleRelation) values.
+</span><span class="attribute">#[derive(Debug)]
+#[non_exhaustive]
+</span><span class="kw">pub enum </span>Relation&lt;<span class="lifetime">&#39;r</span>&gt; {
+    ActiveDescendant(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible),
+    ColCount(i32),
+    ColIndex(i32),
+    ColIndexText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>str),
+    ColSpan(i32),
+    Controls(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
+    DescribedBy(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
+    Details(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
+    ErrorMessage(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible),
+    FlowTo(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
+    LabelledBy(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
+    Owns(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
+    PosInSet(i32),
+    RowCount(i32),
+    RowIndex(i32),
+    RowIndexText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>str),
+    RowSpan(i32),
+    SetSize(i32),
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span> <span class="ident">Relation</span><span class="op">&lt;</span><span class="lifetime">&#39;r</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_relation_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="ident">AccessibleRelation</span>, <span class="ident">Value</span>) {
-        <span class="kw">use</span> <span class="ident">Relation</span>::<span class="kw-2">*</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;r</span>&gt; Relation&lt;<span class="lifetime">&#39;r</span>&gt; {
+    <span class="kw">fn </span>to_relation_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (AccessibleRelation, Value) {
+        <span class="kw">use </span>Relation::<span class="kw-2">*</span>;
 
-        <span class="kw">fn</span> <span class="ident">to_ref_list_value</span>(<span class="ident">objects</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">Accessible</span>]) -&gt; <span class="ident">Value</span> {
+        <span class="kw">fn </span>to_ref_list_value(objects: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Accessible]) -&gt; Value {
             <span class="macro">skip_assert_initialized!</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value::from_type</span>(<span class="ident">glib::Type::POINTER</span>);
-            <span class="kw">let</span> <span class="ident">list</span> <span class="op">=</span>
-                <span class="ident">ToGlibContainerFromSlice</span>::<span class="op">&lt;</span><span class="kw-2">*mut</span> <span class="ident">glib::ffi::GList</span><span class="op">&gt;</span><span class="ident">::to_glib_container_from_slice</span>(
-                    <span class="ident">objects</span>,
+            <span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(glib::Type::POINTER);
+            <span class="kw">let </span>list =
+                ToGlibContainerFromSlice::&lt;<span class="kw-2">*mut </span>glib::ffi::GList&gt;::to_glib_container_from_slice(
+                    objects,
                 );
-            <span class="kw">unsafe</span> {
-                <span class="ident">glib::gobject_ffi::g_value_set_pointer</span>(
-                    <span class="ident">value</span>.<span class="ident">to_glib_none_mut</span>().<span class="number">0</span>,
-                    <span class="ident">list</span>.<span class="number">0</span> <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">std::ffi::c_void</span>,
+            <span class="kw">unsafe </span>{
+                glib::gobject_ffi::g_value_set_pointer(
+                    value.to_glib_none_mut().<span class="number">0</span>,
+                    list.<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span>std::ffi::c_void,
                 );
             }
-            <span class="ident">value</span>
+            value
         }
 
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">ActiveDescendant</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::ActiveDescendant</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ColCount</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::ColCount</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ColIndex</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::ColIndex</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ColIndexText</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::ColIndexText</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">ColSpan</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::ColSpan</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Controls</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::Controls</span>, <span class="ident">to_ref_list_value</span>(<span class="ident">v</span>)),
-            <span class="ident">DescribedBy</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::DescribedBy</span>, <span class="ident">to_ref_list_value</span>(<span class="ident">v</span>)),
-            <span class="ident">Details</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::Details</span>, <span class="ident">to_ref_list_value</span>(<span class="ident">v</span>)),
-            <span class="ident">ErrorMessage</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::ErrorMessage</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">FlowTo</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::FlowTo</span>, <span class="ident">to_ref_list_value</span>(<span class="ident">v</span>)),
-            <span class="ident">LabelledBy</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::LabelledBy</span>, <span class="ident">to_ref_list_value</span>(<span class="ident">v</span>)),
-            <span class="ident">Owns</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::Owns</span>, <span class="ident">to_ref_list_value</span>(<span class="ident">v</span>)),
-            <span class="ident">PosInSet</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::PosInSet</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">RowCount</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::RowCount</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">RowIndex</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::RowIndex</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">RowIndexText</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::RowIndexText</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">RowSpan</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::RowSpan</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">SetSize</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleRelation::SetSize</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
+        <span class="kw">match </span><span class="self">self </span>{
+            ActiveDescendant(v) =&gt; (AccessibleRelation::ActiveDescendant, v.to_value()),
+            ColCount(v) =&gt; (AccessibleRelation::ColCount, v.to_value()),
+            ColIndex(v) =&gt; (AccessibleRelation::ColIndex, v.to_value()),
+            ColIndexText(v) =&gt; (AccessibleRelation::ColIndexText, v.to_value()),
+            ColSpan(v) =&gt; (AccessibleRelation::ColSpan, v.to_value()),
+            Controls(v) =&gt; (AccessibleRelation::Controls, to_ref_list_value(v)),
+            DescribedBy(v) =&gt; (AccessibleRelation::DescribedBy, to_ref_list_value(v)),
+            Details(v) =&gt; (AccessibleRelation::Details, to_ref_list_value(v)),
+            ErrorMessage(v) =&gt; (AccessibleRelation::ErrorMessage, v.to_value()),
+            FlowTo(v) =&gt; (AccessibleRelation::FlowTo, to_ref_list_value(v)),
+            LabelledBy(v) =&gt; (AccessibleRelation::LabelledBy, to_ref_list_value(v)),
+            Owns(v) =&gt; (AccessibleRelation::Owns, to_ref_list_value(v)),
+            PosInSet(v) =&gt; (AccessibleRelation::PosInSet, v.to_value()),
+            RowCount(v) =&gt; (AccessibleRelation::RowCount, v.to_value()),
+            RowIndex(v) =&gt; (AccessibleRelation::RowIndex, v.to_value()),
+            RowIndexText(v) =&gt; (AccessibleRelation::RowIndexText, v.to_value()),
+            RowSpan(v) =&gt; (AccessibleRelation::RowSpan, v.to_value()),
+            SetSize(v) =&gt; (AccessibleRelation::SetSize, v.to_value()),
         }
     }
 }
 
-<span class="comment">// rustdoc-stripper-ignore-next</span>
-<span class="doccomment">/// Type-safe enum container for [`AccessibleState`](crate::AccessibleState) values.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">State</span> {
-    <span class="ident">Busy</span>(<span class="ident">bool</span>),
-    <span class="ident">Checked</span>(<span class="ident">AccessibleTristate</span>),
-    <span class="ident">Disabled</span>(<span class="ident">bool</span>),
-    <span class="ident">Expanded</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>),
-    <span class="ident">Hidden</span>(<span class="ident">bool</span>),
-    <span class="ident">Invalid</span>(<span class="ident">AccessibleInvalidState</span>),
-    <span class="ident">Pressed</span>(<span class="ident">AccessibleTristate</span>),
-    <span class="ident">Selected</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>),
+<span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// Type-safe enum container for [`AccessibleState`](crate::AccessibleState) values.
+</span><span class="attribute">#[derive(Debug)]
+#[non_exhaustive]
+</span><span class="kw">pub enum </span>State {
+    Busy(bool),
+    Checked(AccessibleTristate),
+    Disabled(bool),
+    Expanded(<span class="prelude-ty">Option</span>&lt;bool&gt;),
+    Hidden(bool),
+    Invalid(AccessibleInvalidState),
+    Pressed(AccessibleTristate),
+    Selected(<span class="prelude-ty">Option</span>&lt;bool&gt;),
 }
 
-<span class="kw">impl</span> <span class="ident">State</span> {
-    <span class="kw">fn</span> <span class="ident">to_state_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="ident">AccessibleState</span>, <span class="ident">Value</span>) {
-        <span class="kw">use</span> <span class="ident">State</span>::<span class="kw-2">*</span>;
+<span class="kw">impl </span>State {
+    <span class="kw">fn </span>to_state_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (AccessibleState, Value) {
+        <span class="kw">use </span>State::<span class="kw-2">*</span>;
 
-        <span class="kw">fn</span> <span class="ident">to_optional_bool_value</span>(<span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>) -&gt; <span class="ident">Value</span> {
+        <span class="kw">fn </span>to_optional_bool_value(b: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;bool&gt;) -&gt; Value {
             <span class="macro">skip_assert_initialized!</span>();
-            <span class="ident">b</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">i32</span>).<span class="ident">unwrap_or</span>(<span class="op">-</span><span class="number">1</span>).<span class="ident">to_value</span>()
+            b.map(|b| b <span class="kw">as </span>i32).unwrap_or(-<span class="number">1</span>).to_value()
         }
 
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Busy</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Busy</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Checked</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Checked</span>, <span class="ident">v</span>.<span class="ident">into_glib</span>().<span class="ident">to_value</span>()),
-            <span class="ident">Disabled</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Disabled</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Expanded</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Expanded</span>, <span class="ident">to_optional_bool_value</span>(<span class="ident">v</span>)),
-            <span class="ident">Hidden</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Hidden</span>, <span class="ident">v</span>.<span class="ident">to_value</span>()),
-            <span class="ident">Invalid</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Invalid</span>, <span class="ident">v</span>.<span class="ident">into_glib</span>().<span class="ident">to_value</span>()),
-            <span class="ident">Pressed</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Pressed</span>, <span class="ident">v</span>.<span class="ident">into_glib</span>().<span class="ident">to_value</span>()),
-            <span class="ident">Selected</span>(<span class="ident">v</span>) =&gt; (<span class="ident">AccessibleState::Selected</span>, <span class="ident">to_optional_bool_value</span>(<span class="ident">v</span>)),
+        <span class="kw">match </span><span class="self">self </span>{
+            Busy(v) =&gt; (AccessibleState::Busy, v.to_value()),
+            Checked(v) =&gt; (AccessibleState::Checked, v.into_glib().to_value()),
+            Disabled(v) =&gt; (AccessibleState::Disabled, v.to_value()),
+            Expanded(v) =&gt; (AccessibleState::Expanded, to_optional_bool_value(v)),
+            Hidden(v) =&gt; (AccessibleState::Hidden, v.to_value()),
+            Invalid(v) =&gt; (AccessibleState::Invalid, v.into_glib().to_value()),
+            Pressed(v) =&gt; (AccessibleState::Pressed, v.into_glib().to_value()),
+            Selected(v) =&gt; (AccessibleState::Selected, to_optional_bool_value(v)),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">test_synced</span>, <span class="ident">Button</span>};
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use crate</span>::{<span class="self">self </span><span class="kw">as </span>gtk4, Button};
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_accessible_update_property</span>() {
-        <span class="ident">test_synced</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">widget</span> <span class="op">=</span> <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">Button</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">unwrap</span>();
-            <span class="ident">widget</span>.<span class="ident">update_property</span>(<span class="kw-2">&amp;</span>[
-                <span class="ident">Property::Autocomplete</span>(<span class="ident">AccessibleAutocomplete::Inline</span>),
-                <span class="ident">Property::Description</span>(<span class="string">&quot;Test&quot;</span>),
-                <span class="ident">Property::HasPopup</span>(<span class="bool-val">true</span>),
-                <span class="ident">Property::KeyShortcuts</span>(<span class="string">&quot;Test&quot;</span>),
-                <span class="ident">Property::Label</span>(<span class="string">&quot;Test&quot;</span>),
-                <span class="ident">Property::Level</span>(<span class="number">123</span>),
-                <span class="ident">Property::Modal</span>(<span class="bool-val">true</span>),
-                <span class="ident">Property::MultiLine</span>(<span class="bool-val">true</span>),
-                <span class="ident">Property::MultiSelectable</span>(<span class="bool-val">true</span>),
-                <span class="ident">Property::Orientation</span>(<span class="ident">Orientation::Horizontal</span>),
-                <span class="ident">Property::Placeholder</span>(<span class="string">&quot;Test&quot;</span>),
-                <span class="ident">Property::ReadOnly</span>(<span class="bool-val">true</span>),
-                <span class="ident">Property::Required</span>(<span class="bool-val">true</span>),
-                <span class="ident">Property::RoleDescription</span>(<span class="string">&quot;Test&quot;</span>),
-                <span class="ident">Property::Sort</span>(<span class="ident">AccessibleSort::Ascending</span>),
-                <span class="ident">Property::ValueMax</span>(<span class="number">1.0</span>),
-                <span class="ident">Property::ValueMin</span>(<span class="number">1.0</span>),
-                <span class="ident">Property::ValueNow</span>(<span class="number">1.0</span>),
-                <span class="ident">Property::ValueText</span>(<span class="string">&quot;Test&quot;</span>),
-            ]);
-        });
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_accessible_update_property() {
+        <span class="kw">let </span>widget = glib::Object::new::&lt;Button&gt;(<span class="kw-2">&amp;</span>[]);
+        widget.update_property(<span class="kw-2">&amp;</span>[
+            Property::Autocomplete(AccessibleAutocomplete::Inline),
+            Property::Description(<span class="string">&quot;Test&quot;</span>),
+            Property::HasPopup(<span class="bool-val">true</span>),
+            Property::KeyShortcuts(<span class="string">&quot;Test&quot;</span>),
+            Property::Label(<span class="string">&quot;Test&quot;</span>),
+            Property::Level(<span class="number">123</span>),
+            Property::Modal(<span class="bool-val">true</span>),
+            Property::MultiLine(<span class="bool-val">true</span>),
+            Property::MultiSelectable(<span class="bool-val">true</span>),
+            Property::Orientation(Orientation::Horizontal),
+            Property::Placeholder(<span class="string">&quot;Test&quot;</span>),
+            Property::ReadOnly(<span class="bool-val">true</span>),
+            Property::Required(<span class="bool-val">true</span>),
+            Property::RoleDescription(<span class="string">&quot;Test&quot;</span>),
+            Property::Sort(AccessibleSort::Ascending),
+            Property::ValueMax(<span class="number">1.0</span>),
+            Property::ValueMin(<span class="number">1.0</span>),
+            Property::ValueNow(<span class="number">1.0</span>),
+            Property::ValueText(<span class="string">&quot;Test&quot;</span>),
+        ]);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_accessible_update_relation</span>() {
-        <span class="ident">test_synced</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-            <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::prelude</span>::<span class="kw-2">*</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_accessible_update_relation() {
+        <span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 
-            <span class="kw">let</span> <span class="ident">widget</span> <span class="op">=</span> <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">Button</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">other1</span> <span class="op">=</span> <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">Button</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">other2</span> <span class="op">=</span> <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">Button</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">unwrap</span>();
-            <span class="ident">widget</span>.<span class="ident">update_relation</span>(<span class="kw-2">&amp;</span>[
-                <span class="ident">Relation::ActiveDescendant</span>(<span class="ident">other1</span>.<span class="ident">upcast_ref</span>()),
-                <span class="ident">Relation::ColCount</span>(<span class="number">123</span>),
-                <span class="ident">Relation::ColIndex</span>(<span class="number">123</span>),
-                <span class="ident">Relation::ColIndexText</span>(<span class="string">&quot;Test&quot;</span>),
-                <span class="ident">Relation::ColSpan</span>(<span class="number">123</span>),
-                <span class="ident">Relation::Controls</span>(<span class="kw-2">&amp;</span>[<span class="ident">other1</span>.<span class="ident">upcast_ref</span>(), <span class="ident">other2</span>.<span class="ident">upcast_ref</span>()]),
-                <span class="ident">Relation::DescribedBy</span>(<span class="kw-2">&amp;</span>[<span class="ident">other1</span>.<span class="ident">upcast_ref</span>(), <span class="ident">other2</span>.<span class="ident">upcast_ref</span>()]),
-                <span class="ident">Relation::Details</span>(<span class="kw-2">&amp;</span>[<span class="ident">other1</span>.<span class="ident">upcast_ref</span>(), <span class="ident">other2</span>.<span class="ident">upcast_ref</span>()]),
-                <span class="ident">Relation::ErrorMessage</span>(<span class="ident">other1</span>.<span class="ident">upcast_ref</span>()),
-                <span class="ident">Relation::FlowTo</span>(<span class="kw-2">&amp;</span>[<span class="ident">other1</span>.<span class="ident">upcast_ref</span>(), <span class="ident">other2</span>.<span class="ident">upcast_ref</span>()]),
-                <span class="ident">Relation::LabelledBy</span>(<span class="kw-2">&amp;</span>[<span class="ident">other1</span>.<span class="ident">upcast_ref</span>(), <span class="ident">other2</span>.<span class="ident">upcast_ref</span>()]),
-                <span class="ident">Relation::Owns</span>(<span class="kw-2">&amp;</span>[<span class="ident">other1</span>.<span class="ident">upcast_ref</span>(), <span class="ident">other2</span>.<span class="ident">upcast_ref</span>()]),
-                <span class="ident">Relation::PosInSet</span>(<span class="number">123</span>),
-                <span class="ident">Relation::RowCount</span>(<span class="number">123</span>),
-                <span class="ident">Relation::RowIndex</span>(<span class="number">123</span>),
-                <span class="ident">Relation::RowIndexText</span>(<span class="string">&quot;Test&quot;</span>),
-                <span class="ident">Relation::RowSpan</span>(<span class="number">123</span>),
-                <span class="ident">Relation::SetSize</span>(<span class="number">123</span>),
-            ]);
-        });
+        <span class="kw">let </span>widget = glib::Object::new::&lt;Button&gt;(<span class="kw-2">&amp;</span>[]);
+        <span class="kw">let </span>other1 = glib::Object::new::&lt;Button&gt;(<span class="kw-2">&amp;</span>[]);
+        <span class="kw">let </span>other2 = glib::Object::new::&lt;Button&gt;(<span class="kw-2">&amp;</span>[]);
+        widget.update_relation(<span class="kw-2">&amp;</span>[
+            Relation::ActiveDescendant(other1.upcast_ref()),
+            Relation::ColCount(<span class="number">123</span>),
+            Relation::ColIndex(<span class="number">123</span>),
+            Relation::ColIndexText(<span class="string">&quot;Test&quot;</span>),
+            Relation::ColSpan(<span class="number">123</span>),
+            Relation::Controls(<span class="kw-2">&amp;</span>[other1.upcast_ref(), other2.upcast_ref()]),
+            Relation::DescribedBy(<span class="kw-2">&amp;</span>[other1.upcast_ref(), other2.upcast_ref()]),
+            Relation::Details(<span class="kw-2">&amp;</span>[other1.upcast_ref(), other2.upcast_ref()]),
+            Relation::ErrorMessage(other1.upcast_ref()),
+            Relation::FlowTo(<span class="kw-2">&amp;</span>[other1.upcast_ref(), other2.upcast_ref()]),
+            Relation::LabelledBy(<span class="kw-2">&amp;</span>[other1.upcast_ref(), other2.upcast_ref()]),
+            Relation::Owns(<span class="kw-2">&amp;</span>[other1.upcast_ref(), other2.upcast_ref()]),
+            Relation::PosInSet(<span class="number">123</span>),
+            Relation::RowCount(<span class="number">123</span>),
+            Relation::RowIndex(<span class="number">123</span>),
+            Relation::RowIndexText(<span class="string">&quot;Test&quot;</span>),
+            Relation::RowSpan(<span class="number">123</span>),
+            Relation::SetSize(<span class="number">123</span>),
+        ]);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_accessible_update_state</span>() {
-        <span class="ident">test_synced</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">widget</span> <span class="op">=</span> <span class="ident">glib::Object::new</span>::<span class="op">&lt;</span><span class="ident">Button</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span>[]).<span class="ident">unwrap</span>();
-            <span class="ident">widget</span>.<span class="ident">update_state</span>(<span class="kw-2">&amp;</span>[
-                <span class="ident">State::Busy</span>(<span class="bool-val">true</span>),
-                <span class="ident">State::Checked</span>(<span class="ident">AccessibleTristate::Mixed</span>),
-                <span class="ident">State::Disabled</span>(<span class="bool-val">true</span>),
-                <span class="ident">State::Expanded</span>(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>)),
-                <span class="ident">State::Hidden</span>(<span class="bool-val">true</span>),
-                <span class="ident">State::Invalid</span>(<span class="ident">AccessibleInvalidState::Grammar</span>),
-                <span class="ident">State::Pressed</span>(<span class="ident">AccessibleTristate::Mixed</span>),
-                <span class="ident">State::Selected</span>(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>)),
-            ]);
-        });
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_accessible_update_state() {
+        <span class="kw">let </span>widget = glib::Object::new::&lt;Button&gt;(<span class="kw-2">&amp;</span>[]);
+        widget.update_state(<span class="kw-2">&amp;</span>[
+            State::Busy(<span class="bool-val">true</span>),
+            State::Checked(AccessibleTristate::Mixed),
+            State::Disabled(<span class="bool-val">true</span>),
+            State::Expanded(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>)),
+            State::Hidden(<span class="bool-val">true</span>),
+            State::Invalid(AccessibleInvalidState::Grammar),
+            State::Pressed(AccessibleTristate::Mixed),
+            State::Selected(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>)),
+        ]);
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="gtk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

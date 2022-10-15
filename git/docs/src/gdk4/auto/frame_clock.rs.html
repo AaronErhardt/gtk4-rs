@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/frame_clock.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>frame_clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/frame_clock.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>frame_clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -72,107 +71,105 @@
 </script>
 
 
-<nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../gdk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div>
-                                <input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
-<span id="2">  2</span>
-<span id="3">  3</span>
-<span id="4">  4</span>
-<span id="5">  5</span>
-<span id="6">  6</span>
-<span id="7">  7</span>
-<span id="8">  8</span>
-<span id="9">  9</span>
-<span id="10"> 10</span>
-<span id="11"> 11</span>
-<span id="12"> 12</span>
-<span id="13"> 13</span>
-<span id="14"> 14</span>
-<span id="15"> 15</span>
-<span id="16"> 16</span>
-<span id="17"> 17</span>
-<span id="18"> 18</span>
-<span id="19"> 19</span>
-<span id="20"> 20</span>
-<span id="21"> 21</span>
-<span id="22"> 22</span>
-<span id="23"> 23</span>
-<span id="24"> 24</span>
-<span id="25"> 25</span>
-<span id="26"> 26</span>
-<span id="27"> 27</span>
-<span id="28"> 28</span>
-<span id="29"> 29</span>
-<span id="30"> 30</span>
-<span id="31"> 31</span>
-<span id="32"> 32</span>
-<span id="33"> 33</span>
-<span id="34"> 34</span>
-<span id="35"> 35</span>
-<span id="36"> 36</span>
-<span id="37"> 37</span>
-<span id="38"> 38</span>
-<span id="39"> 39</span>
-<span id="40"> 40</span>
-<span id="41"> 41</span>
-<span id="42"> 42</span>
-<span id="43"> 43</span>
-<span id="44"> 44</span>
-<span id="45"> 45</span>
-<span id="46"> 46</span>
-<span id="47"> 47</span>
-<span id="48"> 48</span>
-<span id="49"> 49</span>
-<span id="50"> 50</span>
-<span id="51"> 51</span>
-<span id="52"> 52</span>
-<span id="53"> 53</span>
-<span id="54"> 54</span>
-<span id="55"> 55</span>
-<span id="56"> 56</span>
-<span id="57"> 57</span>
-<span id="58"> 58</span>
-<span id="59"> 59</span>
-<span id="60"> 60</span>
-<span id="61"> 61</span>
-<span id="62"> 62</span>
-<span id="63"> 63</span>
-<span id="64"> 64</span>
-<span id="65"> 65</span>
-<span id="66"> 66</span>
-<span id="67"> 67</span>
-<span id="68"> 68</span>
-<span id="69"> 69</span>
-<span id="70"> 70</span>
-<span id="71"> 71</span>
-<span id="72"> 72</span>
-<span id="73"> 73</span>
-<span id="74"> 74</span>
-<span id="75"> 75</span>
-<span id="76"> 76</span>
-<span id="77"> 77</span>
-<span id="78"> 78</span>
-<span id="79"> 79</span>
-<span id="80"> 80</span>
-<span id="81"> 81</span>
-<span id="82"> 82</span>
-<span id="83"> 83</span>
-<span id="84"> 84</span>
-<span id="85"> 85</span>
-<span id="86"> 86</span>
-<span id="87"> 87</span>
-<span id="88"> 88</span>
-<span id="89"> 89</span>
-<span id="90"> 90</span>
-<span id="91"> 91</span>
-<span id="92"> 92</span>
-<span id="93"> 93</span>
-<span id="94"> 94</span>
-<span id="95"> 95</span>
-<span id="96"> 96</span>
-<span id="97"> 97</span>
-<span id="98"> 98</span>
-<span id="99"> 99</span>
+<nav class="sidebar"><a class="sidebar-logo" href="../../../gdk4/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
@@ -516,448 +513,449 @@
 <span id="440">440</span>
 <span id="441">441</span>
 <span id="442">442</span>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
-<span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files.git)</span>
-<span class="comment">// DO NOT EDIT</span>
+<span id="443">443</span>
+</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+// from gir-files (https://github.com/gtk-rs/gir-files)
+// DO NOT EDIT
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::FrameClockPhase</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::FrameTimings</span>;
-<span class="kw">use</span> <span class="ident">glib::object::ObjectType</span> <span class="kw">as</span> <span class="ident">ObjectType_</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::connect_raw</span>;
-<span class="kw">use</span> <span class="ident">glib::signal::SignalHandlerId</span>;
-<span class="kw">use</span> <span class="ident">glib::translate</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std::boxed::Box</span> <span class="kw">as</span> <span class="ident">Box_</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::mem</span>;
-<span class="kw">use</span> <span class="ident">std::mem::transmute</span>;
+</span><span class="kw">use </span><span class="kw">crate</span>::FrameClockPhase;
+<span class="kw">use </span><span class="kw">crate</span>::FrameTimings;
+<span class="kw">use </span>glib::object::ObjectType <span class="kw">as </span>ObjectType_;
+<span class="kw">use </span>glib::signal::connect_raw;
+<span class="kw">use </span>glib::signal::SignalHandlerId;
+<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span>std::boxed::Box <span class="kw">as </span>Box_;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::mem;
+<span class="kw">use </span>std::mem::transmute;
 
-<span class="macro">glib::wrapper!</span> {
-    <span class="doccomment">/// A [`FrameClock`][crate::FrameClock] tells the application when to update and repaint</span>
-    <span class="doccomment">/// a surface.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This may be synced to the vertical refresh rate of the monitor, for example.</span>
-    <span class="doccomment">/// Even when the frame clock uses a simple timer rather than a hardware-based</span>
-    <span class="doccomment">/// vertical sync, the frame clock helps because it ensures everything paints at</span>
-    <span class="doccomment">/// the same time (reducing the total number of frames).</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The frame clock can also automatically stop painting when it knows the frames</span>
-    <span class="doccomment">/// will not be visible, or scale back animation framerates.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`FrameClock`][crate::FrameClock] is designed to be compatible with an OpenGL-based implementation</span>
-    <span class="doccomment">/// or with mozRequestAnimationFrame in Firefox, for example.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A frame clock is idle until someone requests a frame with</span>
-    <span class="doccomment">/// [`request_phase()`][Self::request_phase()]. At some later point that makes sense</span>
-    <span class="doccomment">/// for the synchronization being implemented, the clock will process a frame and</span>
-    <span class="doccomment">/// emit signals for each phase that has been requested. (See the signals of the</span>
-    <span class="doccomment">/// [`FrameClock`][crate::FrameClock] class for documentation of the phases.</span>
-    <span class="doccomment">/// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] and the `signal::GdkFrameClock::update` signal</span>
-    <span class="doccomment">/// are most interesting for application writers, and are used to update the</span>
-    <span class="doccomment">/// animations, using the frame time given by [`frame_time()`][Self::frame_time()].</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The frame time is reported in microseconds and generally in the same</span>
-    <span class="doccomment">/// timescale as g_get_monotonic_time(), however, it is not the same</span>
-    <span class="doccomment">/// as g_get_monotonic_time(). The frame time does not advance during</span>
-    <span class="doccomment">/// the time a frame is being painted, and outside of a frame, an attempt</span>
-    <span class="doccomment">/// is made so that all calls to [`frame_time()`][Self::frame_time()] that</span>
-    <span class="doccomment">/// are called at a “similar” time get the same value. This means that</span>
-    <span class="doccomment">/// if different animations are timed by looking at the difference in</span>
-    <span class="doccomment">/// time between an initial value from [`frame_time()`][Self::frame_time()]</span>
-    <span class="doccomment">/// and the value inside the `signal::GdkFrameClock::update` signal of the clock,</span>
-    <span class="doccomment">/// they will stay exactly synchronized.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is an Abstract Base Class, you cannot instantiate it.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GdkFrameClock&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FrameClock</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">ffi::GdkFrameClock</span>, <span class="ident">ffi::GdkFrameClockClass</span><span class="op">&gt;</span>);
+<span class="macro">glib::wrapper! </span>{
+    <span class="doccomment">/// A [`FrameClock`][crate::FrameClock] tells the application when to update and repaint
+    /// a surface.
+    ///
+    /// This may be synced to the vertical refresh rate of the monitor, for example.
+    /// Even when the frame clock uses a simple timer rather than a hardware-based
+    /// vertical sync, the frame clock helps because it ensures everything paints at
+    /// the same time (reducing the total number of frames).
+    ///
+    /// The frame clock can also automatically stop painting when it knows the frames
+    /// will not be visible, or scale back animation framerates.
+    ///
+    /// [`FrameClock`][crate::FrameClock] is designed to be compatible with an OpenGL-based implementation
+    /// or with mozRequestAnimationFrame in Firefox, for example.
+    ///
+    /// A frame clock is idle until someone requests a frame with
+    /// [`request_phase()`][Self::request_phase()]. At some later point that makes sense
+    /// for the synchronization being implemented, the clock will process a frame and
+    /// emit signals for each phase that has been requested. (See the signals of the
+    /// [`FrameClock`][crate::FrameClock] class for documentation of the phases.
+    /// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] and the `signal::GdkFrameClock::update` signal
+    /// are most interesting for application writers, and are used to update the
+    /// animations, using the frame time given by [`frame_time()`][Self::frame_time()].
+    ///
+    /// The frame time is reported in microseconds and generally in the same
+    /// timescale as g_get_monotonic_time(), however, it is not the same
+    /// as g_get_monotonic_time(). The frame time does not advance during
+    /// the time a frame is being painted, and outside of a frame, an attempt
+    /// is made so that all calls to [`frame_time()`][Self::frame_time()] that
+    /// are called at a “similar” time get the same value. This means that
+    /// if different animations are timed by looking at the difference in
+    /// time between an initial value from [`frame_time()`][Self::frame_time()]
+    /// and the value inside the `signal::GdkFrameClock::update` signal of the clock,
+    /// they will stay exactly synchronized.
+    ///
+    /// This is an Abstract Base Class, you cannot instantiate it.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;GdkFrameClock&quot;</span>)]
+    </span><span class="kw">pub struct </span>FrameClock(Object&lt;ffi::GdkFrameClock, ffi::GdkFrameClockClass&gt;);
 
-    <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">type_</span> =&gt; <span class="op">|</span><span class="op">|</span> <span class="ident">ffi::gdk_frame_clock_get_type</span>(),
+    <span class="kw">match fn </span>{
+        type_ =&gt; || ffi::gdk_frame_clock_get_type(),
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FrameClock</span> {
-    <span class="doccomment">/// Starts updates for an animation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Until a matching call to [`end_updating()`][Self::end_updating()] is made,</span>
-    <span class="doccomment">/// the frame clock will continually request a new frame with the</span>
-    <span class="doccomment">/// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] phase. This function may be called multiple</span>
-    <span class="doccomment">/// times and frames will be requested until gdk_frame_clock_end_updating()</span>
-    <span class="doccomment">/// is called the same number of times.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_begin_updating&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">begin_updating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_frame_clock_begin_updating</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+<span class="kw">impl </span>FrameClock {
+    <span class="doccomment">/// Starts updates for an animation.
+    ///
+    /// Until a matching call to [`end_updating()`][Self::end_updating()] is made,
+    /// the frame clock will continually request a new frame with the
+    /// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] phase. This function may be called multiple
+    /// times and frames will be requested until gdk_frame_clock_end_updating()
+    /// is called the same number of times.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_begin_updating&quot;</span>)]
+    </span><span class="kw">pub fn </span>begin_updating(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_frame_clock_begin_updating(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="doccomment">/// Stops updates for an animation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See the documentation for [`begin_updating()`][Self::begin_updating()].</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_end_updating&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">end_updating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_frame_clock_end_updating</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>);
+    <span class="doccomment">/// Stops updates for an animation.
+    ///
+    /// See the documentation for [`begin_updating()`][Self::begin_updating()].
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_end_updating&quot;</span>)]
+    </span><span class="kw">pub fn </span>end_updating(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_frame_clock_end_updating(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="doccomment">/// Gets the frame timings for the current frame.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the [`FrameTimings`][crate::FrameTimings] for the</span>
-    <span class="doccomment">///   frame currently being processed, or even no frame is being</span>
-    <span class="doccomment">///   processed, for the previous frame. Before any frames have been</span>
-    <span class="doccomment">///   processed, returns [`None`].</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_get_current_timings&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_current_timings&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_timings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FrameTimings</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gdk_frame_clock_get_current_timings</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
+    <span class="doccomment">/// Gets the frame timings for the current frame.
+    ///
+    /// # Returns
+    ///
+    /// the [`FrameTimings`][crate::FrameTimings] for the
+    ///   frame currently being processed, or even no frame is being
+    ///   processed, for the previous frame. Before any frames have been
+    ///   processed, returns [`None`].
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_current_timings&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_current_timings&quot;</span>)]
+    </span><span class="kw">pub fn </span>current_timings(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;FrameTimings&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gdk_frame_clock_get_current_timings(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="doccomment">/// Calculates the current frames-per-second, based on the</span>
-    <span class="doccomment">/// frame timings of @self.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the current fps, as a `double`</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_get_fps&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_fps&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gdk_frame_clock_get_fps</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="doccomment">/// Calculates the current frames-per-second, based on the
+    /// frame timings of @self.
+    ///
+    /// # Returns
+    ///
+    /// the current fps, as a `double`
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_fps&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_fps&quot;</span>)]
+    </span><span class="kw">pub fn </span>fps(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_fps(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="doccomment">/// [`FrameClock`][crate::FrameClock] maintains a 64-bit counter that increments for</span>
-    <span class="doccomment">/// each frame drawn.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// inside frame processing, the value of the frame counter</span>
-    <span class="doccomment">///   for the current frame. Outside of frame processing, the frame</span>
-    <span class="doccomment">///   counter for the last frame.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_get_frame_counter&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_frame_counter&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frame_counter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i64</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gdk_frame_clock_get_frame_counter</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="doccomment">/// [`FrameClock`][crate::FrameClock] maintains a 64-bit counter that increments for
+    /// each frame drawn.
+    ///
+    /// # Returns
+    ///
+    /// inside frame processing, the value of the frame counter
+    ///   for the current frame. Outside of frame processing, the frame
+    ///   counter for the last frame.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_frame_counter&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_frame_counter&quot;</span>)]
+    </span><span class="kw">pub fn </span>frame_counter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_frame_counter(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="doccomment">/// Gets the time that should currently be used for animations.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Inside the processing of a frame, it’s the time used to compute the</span>
-    <span class="doccomment">/// animation position of everything in a frame. Outside of a frame, it&#39;s</span>
-    <span class="doccomment">/// the time of the conceptual “previous frame,” which may be either</span>
-    <span class="doccomment">/// the actual previous frame time, or if that’s too old, an updated</span>
-    <span class="doccomment">/// time.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// a timestamp in microseconds, in the timescale of</span>
-    <span class="doccomment">///  of g_get_monotonic_time().</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_get_frame_time&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_frame_time&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frame_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i64</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gdk_frame_clock_get_frame_time</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="doccomment">/// Gets the time that should currently be used for animations.
+    ///
+    /// Inside the processing of a frame, it’s the time used to compute the
+    /// animation position of everything in a frame. Outside of a frame, it&#39;s
+    /// the time of the conceptual “previous frame,” which may be either
+    /// the actual previous frame time, or if that’s too old, an updated
+    /// time.
+    ///
+    /// # Returns
+    ///
+    /// a timestamp in microseconds, in the timescale of
+    ///  of g_get_monotonic_time().
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_frame_time&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_frame_time&quot;</span>)]
+    </span><span class="kw">pub fn </span>frame_time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_frame_time(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="doccomment">/// Returns the frame counter for the oldest frame available in history.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [`FrameClock`][crate::FrameClock] internally keeps a history of [`FrameTimings`][crate::FrameTimings]</span>
-    <span class="doccomment">/// objects for recent frames that can be retrieved with</span>
-    <span class="doccomment">/// [`timings()`][Self::timings()]. The set of stored frames</span>
-    <span class="doccomment">/// is the set from the counter values given by</span>
-    <span class="doccomment">/// [`history_start()`][Self::history_start()] and</span>
-    <span class="doccomment">/// [`frame_counter()`][Self::frame_counter()], inclusive.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the frame counter value for the oldest frame</span>
-    <span class="doccomment">///  that is available in the internal frame history of the</span>
-    <span class="doccomment">///  [`FrameClock`][crate::FrameClock]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_get_history_start&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_history_start&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">history_start</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i64</span> {
-        <span class="kw">unsafe</span> { <span class="ident">ffi::gdk_frame_clock_get_history_start</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>) }
+    <span class="doccomment">/// Returns the frame counter for the oldest frame available in history.
+    ///
+    /// [`FrameClock`][crate::FrameClock] internally keeps a history of [`FrameTimings`][crate::FrameTimings]
+    /// objects for recent frames that can be retrieved with
+    /// [`timings()`][Self::timings()]. The set of stored frames
+    /// is the set from the counter values given by
+    /// [`history_start()`][Self::history_start()] and
+    /// [`frame_counter()`][Self::frame_counter()], inclusive.
+    ///
+    /// # Returns
+    ///
+    /// the frame counter value for the oldest frame
+    ///  that is available in the internal frame history of the
+    ///  [`FrameClock`][crate::FrameClock]
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_history_start&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_history_start&quot;</span>)]
+    </span><span class="kw">pub fn </span>history_start(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_history_start(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="doccomment">/// Predicts a presentation time, based on history.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Using the frame history stored in the frame clock, finds the last</span>
-    <span class="doccomment">/// known presentation time and refresh interval, and assuming that</span>
-    <span class="doccomment">/// presentation times are separated by the refresh interval,</span>
-    <span class="doccomment">/// predicts a presentation time that is a multiple of the refresh</span>
-    <span class="doccomment">/// interval after the last presentation time, and later than @base_time.</span>
-    <span class="doccomment">/// ## `base_time`</span>
-    <span class="doccomment">/// base time for determining a presentaton time</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `refresh_interval_return`</span>
-    <span class="doccomment">/// a location to store the</span>
-    <span class="doccomment">///   determined refresh interval, or [`None`]. A default refresh interval of</span>
-    <span class="doccomment">///   1/60th of a second will be stored if no history is present.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ## `presentation_time_return`</span>
-    <span class="doccomment">/// a location to store the next</span>
-    <span class="doccomment">///   candidate presentation time after the given base time.</span>
-    <span class="doccomment">///   0 will be will be stored if no history is present.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_get_refresh_info&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_refresh_info&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">refresh_info</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">base_time</span>: <span class="ident">i64</span>) -&gt; (<span class="ident">i64</span>, <span class="ident">i64</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">refresh_interval_return</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::uninit</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">presentation_time_return</span> <span class="op">=</span> <span class="ident">mem::MaybeUninit::uninit</span>();
-            <span class="ident">ffi::gdk_frame_clock_get_refresh_info</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">base_time</span>,
-                <span class="ident">refresh_interval_return</span>.<span class="ident">as_mut_ptr</span>(),
-                <span class="ident">presentation_time_return</span>.<span class="ident">as_mut_ptr</span>(),
+    <span class="doccomment">/// Predicts a presentation time, based on history.
+    ///
+    /// Using the frame history stored in the frame clock, finds the last
+    /// known presentation time and refresh interval, and assuming that
+    /// presentation times are separated by the refresh interval,
+    /// predicts a presentation time that is a multiple of the refresh
+    /// interval after the last presentation time, and later than @base_time.
+    /// ## `base_time`
+    /// base time for determining a presentaton time
+    ///
+    /// # Returns
+    ///
+    ///
+    /// ## `refresh_interval_return`
+    /// a location to store the
+    ///   determined refresh interval, or [`None`]. A default refresh interval of
+    ///   1/60th of a second will be stored if no history is present.
+    ///
+    /// ## `presentation_time_return`
+    /// a location to store the next
+    ///   candidate presentation time after the given base time.
+    ///   0 will be will be stored if no history is present.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_refresh_info&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_refresh_info&quot;</span>)]
+    </span><span class="kw">pub fn </span>refresh_info(<span class="kw-2">&amp;</span><span class="self">self</span>, base_time: i64) -&gt; (i64, i64) {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>refresh_interval_return = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>presentation_time_return = mem::MaybeUninit::uninit();
+            ffi::gdk_frame_clock_get_refresh_info(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                base_time,
+                refresh_interval_return.as_mut_ptr(),
+                presentation_time_return.as_mut_ptr(),
             );
-            <span class="kw">let</span> <span class="ident">refresh_interval_return</span> <span class="op">=</span> <span class="ident">refresh_interval_return</span>.<span class="ident">assume_init</span>();
-            <span class="kw">let</span> <span class="ident">presentation_time_return</span> <span class="op">=</span> <span class="ident">presentation_time_return</span>.<span class="ident">assume_init</span>();
-            (<span class="ident">refresh_interval_return</span>, <span class="ident">presentation_time_return</span>)
+            (
+                refresh_interval_return.assume_init(),
+                presentation_time_return.assume_init(),
+            )
         }
     }
 
-    <span class="doccomment">/// Retrieves a [`FrameTimings`][crate::FrameTimings] object holding timing information</span>
-    <span class="doccomment">/// for the current frame or a recent frame.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The [`FrameTimings`][crate::FrameTimings] object may not yet be complete: see</span>
-    <span class="doccomment">/// [`FrameTimings::is_complete()`][crate::FrameTimings::is_complete()] and</span>
-    <span class="doccomment">/// [`history_start()`][Self::history_start()].</span>
-    <span class="doccomment">/// ## `frame_counter`</span>
-    <span class="doccomment">/// the frame counter value identifying the frame to</span>
-    <span class="doccomment">///  be received</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Returns</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// the [`FrameTimings`][crate::FrameTimings] object</span>
-    <span class="doccomment">///   for the specified frame, or [`None`] if it is not available</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_get_timings&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;get_timings&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">frame_counter</span>: <span class="ident">i64</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FrameTimings</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> {
-            <span class="ident">from_glib_none</span>(<span class="ident">ffi::gdk_frame_clock_get_timings</span>(
-                <span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>,
-                <span class="ident">frame_counter</span>,
+    <span class="doccomment">/// Retrieves a [`FrameTimings`][crate::FrameTimings] object holding timing information
+    /// for the current frame or a recent frame.
+    ///
+    /// The [`FrameTimings`][crate::FrameTimings] object may not yet be complete: see
+    /// [`FrameTimings::is_complete()`][crate::FrameTimings::is_complete()] and
+    /// [`history_start()`][Self::history_start()].
+    /// ## `frame_counter`
+    /// the frame counter value identifying the frame to
+    ///  be received
+    ///
+    /// # Returns
+    ///
+    /// the [`FrameTimings`][crate::FrameTimings] object
+    ///   for the specified frame, or [`None`] if it is not available
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_timings&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_timings&quot;</span>)]
+    </span><span class="kw">pub fn </span>timings(<span class="kw-2">&amp;</span><span class="self">self</span>, frame_counter: i64) -&gt; <span class="prelude-ty">Option</span>&lt;FrameTimings&gt; {
+        <span class="kw">unsafe </span>{
+            from_glib_none(ffi::gdk_frame_clock_get_timings(
+                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                frame_counter,
             ))
         }
     }
 
-    <span class="doccomment">/// Asks the frame clock to run a particular phase.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The signal corresponding the requested phase will be emitted the next</span>
-    <span class="doccomment">/// time the frame clock processes. Multiple calls to</span>
-    <span class="doccomment">/// gdk_frame_clock_request_phase() will be combined together</span>
-    <span class="doccomment">/// and only one frame processed. If you are displaying animated</span>
-    <span class="doccomment">/// content and want to continually request the</span>
-    <span class="doccomment">/// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] phase for a period of time,</span>
-    <span class="doccomment">/// you should use [`begin_updating()`][Self::begin_updating()] instead,</span>
-    <span class="doccomment">/// since this allows GTK to adjust system parameters to get maximally</span>
-    <span class="doccomment">/// smooth animations.</span>
-    <span class="doccomment">/// ## `phase`</span>
-    <span class="doccomment">/// the phase that is requested</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;gdk_frame_clock_request_phase&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">request_phase</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">phase</span>: <span class="ident">FrameClockPhase</span>) {
-        <span class="kw">unsafe</span> {
-            <span class="ident">ffi::gdk_frame_clock_request_phase</span>(<span class="self">self</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>, <span class="ident">phase</span>.<span class="ident">into_glib</span>());
+    <span class="doccomment">/// Asks the frame clock to run a particular phase.
+    ///
+    /// The signal corresponding the requested phase will be emitted the next
+    /// time the frame clock processes. Multiple calls to
+    /// gdk_frame_clock_request_phase() will be combined together
+    /// and only one frame processed. If you are displaying animated
+    /// content and want to continually request the
+    /// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] phase for a period of time,
+    /// you should use [`begin_updating()`][Self::begin_updating()] instead,
+    /// since this allows GTK to adjust system parameters to get maximally
+    /// smooth animations.
+    /// ## `phase`
+    /// the phase that is requested
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;gdk_frame_clock_request_phase&quot;</span>)]
+    </span><span class="kw">pub fn </span>request_phase(<span class="kw-2">&amp;</span><span class="self">self</span>, phase: FrameClockPhase) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_frame_clock_request_phase(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, phase.into_glib());
         }
     }
 
-    <span class="doccomment">/// This signal ends processing of the frame.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications should generally not handle this signal.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;after-paint&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_after_paint</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">after_paint_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FrameClock</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkFrameClock</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// This signal ends processing of the frame.
+    ///
+    /// Applications should generally not handle this signal.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;after-paint&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_after_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>after_paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;after-paint\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">after_paint_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;after-paint\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    after_paint_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Begins processing of the frame.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications should generally not handle this signal.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;before-paint&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_before_paint</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">before_paint_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FrameClock</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkFrameClock</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// Begins processing of the frame.
+    ///
+    /// Applications should generally not handle this signal.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;before-paint&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_before_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>before_paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;before-paint\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">before_paint_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;before-paint\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    before_paint_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Used to flush pending motion events that are being batched up and</span>
-    <span class="doccomment">/// compressed together.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Applications should not handle this signal.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;flush-events&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_flush_events</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">flush_events_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FrameClock</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkFrameClock</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// Used to flush pending motion events that are being batched up and
+    /// compressed together.
+    ///
+    /// Applications should not handle this signal.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;flush-events&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_flush_events&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>flush_events_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;flush-events\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">flush_events_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;flush-events\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    flush_events_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Emitted as the second step of toolkit and application processing</span>
-    <span class="doccomment">/// of the frame.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Any work to update sizes and positions of application elements</span>
-    <span class="doccomment">/// should be performed. GTK normally handles this internally.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;layout&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_layout</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">layout_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FrameClock</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkFrameClock</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// Emitted as the second step of toolkit and application processing
+    /// of the frame.
+    ///
+    /// Any work to update sizes and positions of application elements
+    /// should be performed. GTK normally handles this internally.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;layout&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_layout&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>layout_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;layout\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">layout_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;layout\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    layout_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Emitted as the third step of toolkit and application processing</span>
-    <span class="doccomment">/// of the frame.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The frame is repainted. GDK normally handles this internally and</span>
-    <span class="doccomment">/// emits `signal::Surface::render` signals which are turned into</span>
-    <span class="doccomment">/// `signal::Gtk::Widget::snapshot` signals by GTK.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;paint&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_paint</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">paint_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FrameClock</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkFrameClock</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// Emitted as the third step of toolkit and application processing
+    /// of the frame.
+    ///
+    /// The frame is repainted. GDK normally handles this internally and
+    /// emits `signal::Surface::render` signals which are turned into
+    /// `signal::Gtk::Widget::snapshot` signals by GTK.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;paint&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;paint\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">paint_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;paint\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    paint_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Emitted after processing of the frame is finished.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This signal is handled internally by GTK to resume normal</span>
-    <span class="doccomment">/// event processing. Applications should not handle this signal.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;resume-events&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_resume_events</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">resume_events_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FrameClock</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkFrameClock</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// Emitted after processing of the frame is finished.
+    ///
+    /// This signal is handled internally by GTK to resume normal
+    /// event processing. Applications should not handle this signal.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;resume-events&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_resume_events&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>resume_events_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;resume-events\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">resume_events_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;resume-events\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    resume_events_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 
-    <span class="doccomment">/// Emitted as the first step of toolkit and application processing</span>
-    <span class="doccomment">/// of the frame.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Animations should be updated using [`frame_time()`][Self::frame_time()].</span>
-    <span class="doccomment">/// Applications can connect directly to this signal, or use</span>
-    <span class="doccomment">/// `Gtk::Widget::add_tick_callback()` as a more convenient interface.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;update&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect_update</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">SignalHandlerId</span> {
-        <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">update_trampoline</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">FrameClock</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
-            <span class="ident">this</span>: <span class="kw-2">*mut</span> <span class="ident">ffi::GdkFrameClock</span>,
-            <span class="ident">f</span>: <span class="ident">glib::ffi::gpointer</span>,
+    <span class="doccomment">/// Emitted as the first step of toolkit and application processing
+    /// of the frame.
+    ///
+    /// Animations should be updated using [`frame_time()`][Self::frame_time()].
+    /// Applications can connect directly to this signal, or use
+    /// `Gtk::Widget::add_tick_callback()` as a more convenient interface.
+    </span><span class="attribute">#[doc(alias = <span class="string">&quot;update&quot;</span>)]
+    </span><span class="kw">pub fn </span>connect_update&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>update_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
+            f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">F</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">f</span> <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">F</span>);
-            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">from_glib_borrow</span>(<span class="ident">this</span>))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
+            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
         }
-        <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">Box_</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box_::new</span>(<span class="ident">f</span>);
-            <span class="ident">connect_raw</span>(
-                <span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="kw">_</span>,
-                <span class="string">b&quot;update\0&quot;</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*const</span> <span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(
-                    <span class="ident">update_trampoline</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*const</span> (),
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
+            connect_raw(
+                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;update\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    update_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                <span class="ident">Box_::into_raw</span>(<span class="ident">f</span>),
+                Box_::into_raw(f),
             )
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">FrameClock</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;FrameClock&quot;</span>)
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>FrameClock {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        f.write_str(<span class="string">&quot;FrameClock&quot;</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gdk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (ec4bcaac4 2022-01-15)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="gdk4" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (bf15a9e52 2022-10-14)" ></div></body></html>

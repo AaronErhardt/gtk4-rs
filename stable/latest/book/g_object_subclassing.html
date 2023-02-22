@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Subclassing - GUI development with Rust and GTK 4</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,9 +18,11 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
@@ -26,16 +30,18 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/style.css">
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -51,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -63,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -95,7 +101,7 @@
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -114,6 +120,7 @@
                         <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -127,8 +134,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -166,8 +174,7 @@ impl ObjectImpl for CustomButton {}
 impl WidgetImpl for CustomButton {}
 
 // Trait shared by all buttons
-impl ButtonImpl for CustomButton {}
-</code></pre>
+impl ButtonImpl for CustomButton {}</code></pre>
 <p>The description of the subclassing is in <code>ObjectSubclass</code>.</p>
 <ul>
 <li><code>NAME</code> should consist of crate-name and object-name in order to avoid name collisions. Use <a href="https://en.wikipedia.org/wiki/Camel_case">UpperCamelCase</a> here.</li>
@@ -177,7 +184,7 @@ impl ButtonImpl for CustomButton {}
 <p>After that, we would have the option to override the virtual methods of our ancestors.
 Since we only want to have a plain button for now, we override nothing.
 We still have to add the empty <code>impl</code> though.
-Next, we describe the public interface our custom GObject.</p>
+Next, we describe the public interface of our custom GObject.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_subclassing/1/custom_button/mod.rs">listings/g_object_subclassing/1/custom_button/mod.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">mod imp;
 
@@ -192,11 +199,11 @@ glib::wrapper! {
 
 impl CustomButton {
     pub fn new() -&gt; Self {
-        Object::new(&amp;[]).expect(&quot;Failed to create `CustomButton`.&quot;)
+        Object::builder().build()
     }
 
     pub fn with_label(label: &amp;str) -&gt; Self {
-        Object::new(&amp;[(&quot;label&quot;, &amp;label)]).expect(&quot;Failed to create `CustomButton`.&quot;)
+        Object::builder().property(&quot;label&quot;, label).build()
     }
 }
 <span class="boring">
@@ -204,8 +211,7 @@ impl CustomButton {
 </span><span class="boring">    fn default() -&gt; Self {
 </span><span class="boring">        Self::new()
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p><a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.wrapper.html"><code>glib::wrapper!</code></a> implements the same traits that our <code>ParentType</code> implements.
 Theoretically that would mean that the <code>ParentType</code> is also the only thing we have to specify here.
 Unfortunately, nobody found yet a good way to do that.
@@ -217,11 +223,11 @@ For <code>gtk::Button</code>, we can look up the ancestors and interfaces in the
 
 use custom_button::CustomButton;
 use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow};
+use gtk::{glib, Application, ApplicationWindow};
 
 const APP_ID: &amp;str = &quot;org.gtk_rs.GObjectSubclassing1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -229,7 +235,7 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn build_ui(app: &amp;Application) {
@@ -255,12 +261,11 @@ fn build_ui(app: &amp;Application) {
 
     // Present window
     window.present();
-}
-</code></pre>
+}</code></pre>
 <blockquote>
 <p>Describing objects with two structs is a peculiarity coming from how GObjects are defined in C.
 <code>imp::CustomButton</code> handles the state of the GObject and the overridden virtual methods.
-<code>CustomButton</code> determines the exposed methods be determining the implemented traits and adding methods itself. </p>
+<code>CustomButton</code> determines the exposed methods from the implemented traits and added methods. </p>
 </blockquote>
 <h2 id="adding-functionality"><a class="header" href="#adding-functionality">Adding Functionality</a></h2>
 <p>We are able to use <code>CustomButton</code> as a drop-in replacement for <code>gtk::Button</code>.
@@ -291,9 +296,9 @@ impl ObjectSubclass for CustomButton {
 
 // Trait shared by all GObjects
 impl ObjectImpl for CustomButton {
-    fn constructed(&amp;self, obj: &amp;Self::Type) {
-        self.parent_constructed(obj);
-        obj.set_label(&amp;self.number.get().to_string());
+    fn constructed(&amp;self) {
+        self.parent_constructed();
+        self.obj().set_label(&amp;self.number.get().to_string());
     }
 }
 
@@ -302,12 +307,11 @@ impl WidgetImpl for CustomButton {}
 
 // Trait shared by all buttons
 impl ButtonImpl for CustomButton {
-    fn clicked(&amp;self, button: &amp;Self::Type) {
+    fn clicked(&amp;self) {
         self.number.set(self.number.get() + 1);
-        button.set_label(&amp;self.number.get().to_string())
+        self.obj().set_label(&amp;self.number.get().to_string())
     }
-}
-</code></pre>
+}</code></pre>
 <p>We override <code>constructed</code> in <code>ObjectImpl</code> so that the label of the button initializes with <code>number</code>.
 We also override <code>clicked</code> in <code>ButtonImpl</code> so that every click increases <code>number</code> and updates the label.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_subclassing/2/main.rs">listings/g_object_subclassing/2/main.rs</a></p>
@@ -315,11 +319,11 @@ We also override <code>clicked</code> in <code>ButtonImpl</code> so that every c
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{Application, ApplicationWindow};
+</span><span class="boring">use gtk::{glib, Application, ApplicationWindow};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.GObjectSubclassing2&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -327,7 +331,7 @@ We also override <code>clicked</code> in <code>ButtonImpl</code> so that every c
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_ui(app: &amp;Application) {
@@ -347,15 +351,14 @@ We also override <code>clicked</code> in <code>ButtonImpl</code> so that every c
 
     // Present window
     window.present();
-}
-</code></pre>
+}</code></pre>
 <p>In <code>build_ui</code> we stop calling <code>connect_clicked</code>, and that was it.
 After a rebuild, the app now features our <code>CustomButton</code> with the label &quot;0&quot;.
 Every time we click on the button, the number displayed by the label increases by 1.</p>
 <div style="text-align:center">
  <video autoplay muted loop>
   <source src="vid/g_object_subclassing.webm" type="video/webm">
-Your browser does not support the video tag.
+  <p>A video showing that pressing on a button increases the number</p>
  </video>
 </div>
 <p>So, when do we want to inherit from GObject?</p>
@@ -372,9 +375,11 @@ Your browser does not support the video tag.
                             <a rel="prev" href="g_object_memory_management.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="g_object_values.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -384,6 +389,7 @@ Your browser does not support the video tag.
                     <a rel="prev" href="g_object_memory_management.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="g_object_values.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -391,16 +397,25 @@ Your browser does not support the video tag.
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>

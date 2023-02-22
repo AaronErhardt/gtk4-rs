@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>CSS - GUI development with Rust and GTK 4</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,9 +18,11 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
@@ -26,16 +30,18 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/style.css">
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -51,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -63,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -95,7 +101,7 @@
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -114,6 +120,7 @@
                         <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -127,8 +134,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -159,11 +167,13 @@ As usual, the widgets are created during the &quot;activate&quot; step.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/1/main.rs">listings/css/1/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gdk::Display;
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
+</span><span class="boring">use gtk::{
+</span><span class="boring">    gdk, glib, Application, ApplicationWindow, Button, CssProvider, StyleContext,
+</span><span class="boring">};
 </span><span class="boring">
 </span>const APP_ID: &amp;str = &quot;org.gtk_rs.Css1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -172,13 +182,13 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn load_css() {
     // Load the CSS file and add it to the provider
     let provider = CssProvider::new();
-    provider.load_from_data(include_bytes!(&quot;style.css&quot;));
+    provider.load_from_data(include_str!(&quot;style.css&quot;));
 
     // Add the provider to the default screen
     StyleContext::add_provider_for_display(
@@ -205,12 +215,11 @@ fn build_ui(app: &amp;Application) {
         .child(&amp;button)
         .build();
     window.show();
-}
-</code></pre>
+}</code></pre>
 <p>When we now run the app, we notice that our button <em>and</em> the &quot;close&quot; button are magenta.
 Probably not what we wanted, but that is what our CSS snippet does.
 We did not specify for which button the rule should apply, so it was applied to both of them.</p>
-<div style="text-align:center"><img src="img/css_1.png"/></div>
+<div style="text-align:center"><img src="img/css_1.png" alt="Window with magenta text"/></div>
 <blockquote>
 <p>The <code>GtkInspector</code> comes in quite handy (not only) when playing with CSS.
 Make sure that the window of your app is focused and press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>.
@@ -233,7 +242,7 @@ That is why we create a new CSS rule which only applies to <code>button</code> n
 }
 </code></pre>
 <p>Now only the font of our button becomes magenta.</p>
-<div style="text-align:center"><img src="img/css_2.png"/></div>
+<div style="text-align:center"><img src="img/css_2.png" alt="Now only the text of the button is magenta"/></div>
 <h2 id="adding-your-own-style-class"><a class="header" href="#adding-your-own-style-class">Adding Your Own Style Class</a></h2>
 <p>With <a href="../docs/gtk4/prelude/trait.WidgetExt.html#tymethod.add_css_class"><code>add_css_class</code></a> we can also add our own style classes to widgets.
 One use-case for this is when you want a rule to apply to a hand-picked set of widgets.
@@ -243,11 +252,13 @@ Which is why we add the style class <code>button-1</code> to the first one.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/3/main.rs">listings/css/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gdk::Display;
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
+</span><span class="boring">use gtk::{
+</span><span class="boring">    gdk, glib, Application, ApplicationWindow, Button, CssProvider, StyleContext,
+</span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Css3&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -256,13 +267,13 @@ Which is why we add the style class <code>button-1</code> to the first one.</p>
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn load_css() {
 </span><span class="boring">    // Load the CSS file and add it to the provider
 </span><span class="boring">    let provider = CssProvider::new();
-</span><span class="boring">    provider.load_from_data(include_bytes!(&quot;style.css&quot;));
+</span><span class="boring">    provider.load_from_data(include_str!(&quot;style.css&quot;));
 </span><span class="boring">
 </span><span class="boring">    // Add the provider to the default screen
 </span><span class="boring">    StyleContext::add_provider_for_display(
@@ -297,8 +308,7 @@ Which is why we add the style class <code>button-1</code> to the first one.</p>
 </span><span class="boring">        .child(&amp;gtk_box)
 </span><span class="boring">        .build();
 </span><span class="boring">    window.show();
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Then, we create a CSS rule that applies to <code>button</code> nodes with the style class <code>button-1</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/3/style.css">listings/css/3/style.css</a></p>
 <pre><code class="language-css">button.button-1 {
@@ -306,7 +316,7 @@ Which is why we add the style class <code>button-1</code> to the first one.</p>
 }
 </code></pre>
 <p>We can see that this way only the first button gets colored magenta.</p>
-<div style="text-align:center"><img src="img/css_3.png"/></div>
+<div style="text-align:center"><img src="img/css_3.png" alt="Two buttons and only the left one has magenta font"/></div>
 <h2 id="specifying-name-of-a-widget"><a class="header" href="#specifying-name-of-a-widget">Specifying Name of a Widget</a></h2>
 <p>If you want that your rule only applies to a single widget, matching with style classes can be fine.
 Ideally however, you would give the widget a name and match with that name instead.
@@ -316,11 +326,13 @@ We set the name of the first one with <a href="../docs/gtk4/prelude/trait.Widget
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/4/main.rs">listings/css/4/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gdk::Display;
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
+</span><span class="boring">use gtk::{
+</span><span class="boring">    gdk, glib, Application, ApplicationWindow, Button, CssProvider, StyleContext,
+</span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Css4&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -329,13 +341,13 @@ We set the name of the first one with <a href="../docs/gtk4/prelude/trait.Widget
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn load_css() {
 </span><span class="boring">    // Load the CSS file and add it to the provider
 </span><span class="boring">    let provider = CssProvider::new();
-</span><span class="boring">    provider.load_from_data(include_bytes!(&quot;style.css&quot;));
+</span><span class="boring">    provider.load_from_data(include_str!(&quot;style.css&quot;));
 </span><span class="boring">
 </span><span class="boring">    // Add the provider to the default screen
 </span><span class="boring">    StyleContext::add_provider_for_display(
@@ -370,8 +382,7 @@ We set the name of the first one with <a href="../docs/gtk4/prelude/trait.Widget
 </span><span class="boring">        .child(&amp;gtk_box)
 </span><span class="boring">        .build();
 </span><span class="boring">    window.show();
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Then, create a CSS rule that applies to <code>button</code> nodes with the name <code>button-1</code>.
 The name is specified after the <code>#</code> symbol.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/4/style.css">listings/css/4/style.css</a></p>
@@ -380,19 +391,20 @@ The name is specified after the <code>#</code> symbol.</p>
 }
 </code></pre>
 <p>Again, the style rule only applies to the first button.</p>
-<div style="text-align:center"><img src="img/css_4.png"/></div>
+<div style="text-align:center"><img src="img/css_4.png" alt="Two buttons and only the left one has magenta font"/></div>
 <h2 id="css-rules-provided-by-gtk"><a class="header" href="#css-rules-provided-by-gtk">CSS Rules Provided by GTK</a></h2>
 <p>Certain styles are common enough that GTK provides CSS rules for them.
 For example, if you want to indicate that your button leads to a destructive or suggested action you don't have to provide your own CSS rules.
 All you have to do is to add &quot;destructive-action&quot; or &quot;suggested-action&quot; style class to your button.
 Most widgets will document these rules in their documentation under <a href="../docs/gtk4/struct.Button.html#css-nodes">CSS nodes</a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/5/main.rs">listings/css/5/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
+<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::glib;
+</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{Application, ApplicationWindow, Button};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Css5&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -400,7 +412,7 @@ Most widgets will document these rules in their documentation under <a href="../
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -429,9 +441,8 @@ Most widgets will document these rules in their documentation under <a href="../
 </span><span class="boring">        .child(&amp;gtk_box)
 </span><span class="boring">        .build();
 </span><span class="boring">    window.show();
-</span><span class="boring">}
-</span></code></pre>
-<div style="text-align:center"><img src="img/css_5.png"/></div>
+</span><span class="boring">}</span></code></pre>
+<div style="text-align:center"><img src="img/css_5.png" alt="The left button is red, the right one is blue"/></div>
 <h2 id="interface-builder"><a class="header" href="#interface-builder">Interface Builder</a></h2>
 <p>We can also add style classes with the interface builder.
 Just add the <code>&lt;style&gt;</code> element to your widget.
@@ -504,7 +515,7 @@ After we removed the cursor, the button returns to its original state.</p>
 <div style="text-align:center">
  <video autoplay muted loop>
   <source src="vid/css_6.webm" type="video/webm">
-Your browser does not support the video tag.
+  <p>A video which shows that hovering over one button makes its background yellow and text red</p>
  </video>
 </div>
 <h2 id="nodes"><a class="header" href="#nodes">Nodes</a></h2>
@@ -545,7 +556,7 @@ Now we know that we have to add a CSS rule that applies to the <code>arrow</code
 }
 </code></pre>
 <p>Indeed, we get a <code>MenuButton</code> with a magenta arrow.</p>
-<div style="text-align:center"><img src="img/css_8.png"/></div>
+<div style="text-align:center"><img src="img/css_8.png" alt="Button with a magenta symbol in it"/></div>
 <h2 id="set-css-name-and-use-exported-colors"><a class="header" href="#set-css-name-and-use-exported-colors">Set CSS Name and Use Exported Colors</a></h2>
 <p>We already learned how to give an instance of a widget a name with pseudo-classes.
 But what if we have a custom widget and we want to reference all instances of it?
@@ -559,7 +570,6 @@ In our case, the widget <code>TaskRow</code> then corresponds to the node <code>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::Binding;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, CheckButton, CompositeTemplate, Label};
 </span><span class="boring">
@@ -600,8 +610,7 @@ impl ObjectSubclass for TaskRow {
 </span><span class="boring">impl WidgetImpl for TaskRow {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all boxes
-</span><span class="boring">impl BoxImpl for TaskRow {}
-</span></code></pre>
+</span><span class="boring">impl BoxImpl for TaskRow {}</span></code></pre>
 <p>What to do with the new node name now?
 Let's change the background color once more but this time with a twist.
 We are going to use the named color <code>success_color</code>.</p>
@@ -616,7 +625,7 @@ As of this writing, these exported colors can only be found in its <a href="http
 We can then access the pre-defined color by adding an <code>@</code> in front of its name.
 And that is how the task rows look like after the change.
 Probably better to revert this immediately again.</p>
-<div style="text-align:center"><img src="img/todo_3.png"/></div>
+<div style="text-align:center"><img src="img/todo_3.png" alt="To-Do app with green background for its task widget"/></div>
 <h2 id="adapt-todo-app"><a class="header" href="#adapt-todo-app">Adapt Todo App</a></h2>
 <p>Luckily, finding an actual use for CSS in our To-Do app isn't too hard.
 Until now the different tasks weren't nicely separated.
@@ -630,7 +639,7 @@ We can change that by adding the <code>frame</code> and the <code>separators</co
   &lt;/style&gt;
 &lt;/object&gt;
 </code></pre>
-<div style="text-align:center"><img src="img/todo_4.png"/></div>
+<div style="text-align:center"><img src="img/todo_4.png" alt="To-Do app with borders for its task widget"/></div>
 <h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
 <p>There are surely enough ways to define CSS rules.
 Let's briefly recap the syntax we learned.
@@ -650,9 +659,11 @@ You can find the full list of supported parameters in GTK's <a href="https://doc
                             <a rel="prev" href="todo_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="libadwaita.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -662,6 +673,7 @@ You can find the full list of supported parameters in GTK's <a href="https://doc
                     <a rel="prev" href="todo_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="libadwaita.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -669,16 +681,25 @@ You can find the full list of supported parameters in GTK's <a href="https://doc
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>

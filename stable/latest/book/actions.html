@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Actions - GUI development with Rust and GTK 4</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,9 +18,11 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
@@ -26,16 +30,18 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/style.css">
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -51,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -63,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -95,7 +101,7 @@
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -114,6 +120,7 @@
                         <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -127,8 +134,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -152,7 +160,7 @@ Let's check out the simplest case where we activate an action without a paramete
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions1&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -163,7 +171,7 @@ Let's check out the simplest case where we activate an action without a paramete
 </span><span class="boring">    app.set_accels_for_action(&quot;win.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_ui(app: &amp;Application) {
@@ -183,8 +191,7 @@ Let's check out the simplest case where we activate an action without a paramete
 
     // Present window
     window.present();
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>First, we created a new <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.SimpleAction.html"><code>gio::SimpleAction</code></a> which is named &quot;close&quot; and takes no parameter.
 We also connected a callback which closes the window.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/1/main.rs">listings/actions/1/main.rs</a></p>
@@ -195,7 +202,7 @@ We also connected a callback which closes the window.</p>
 </span><span class="boring">
 </span>const APP_ID: &amp;str = &quot;org.gtk_rs.Actions1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -206,7 +213,7 @@ fn main() {
     app.set_accels_for_action(&quot;win.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
 
     // Run the application
-    app.run();
+    app.run()
 }
 <span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -226,8 +233,7 @@ fn main() {
 </span><span class="boring">
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>One of the most popular reasons to use actions are keyboard accelerators, so we added one here.
 With <a href="../docs/gtk4/prelude/trait.GtkApplicationExt.html#tymethod.set_accels_for_action"><code>set_accels_for_action</code></a> one can assign one or more accelerators to a certain action.
 Check the documentation of <a href="../docs/gtk4/functions/fn.accelerator_parse.html"><code>accelerator_parse</code></a> in order to learn more about its syntax.</p>
@@ -249,7 +255,7 @@ The answer is that it is so common to add actions to windows and applications th
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions2&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -260,7 +266,7 @@ The answer is that it is so common to add actions to windows and applications th
 </span><span class="boring">    app.set_accels_for_action(&quot;win.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -285,8 +291,7 @@ The answer is that it is so common to add actions to windows and applications th
 <span class="boring">
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Also, if we had multiple instances of the same windows we would expect that only the currently focused window will be closed when activating &quot;win.close&quot;.
 And indeed, the &quot;win.close&quot; will be dispatched to the currently focused window.
 However, that also means that we actually define one action per window instance.
@@ -309,7 +314,7 @@ Let's see how this works.</p>
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions3&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -317,13 +322,13 @@ Let's see how this works.</p>
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_ui(app: &amp;Application) {
     let original_state = 0;
     let label = Label::builder()
-        .label(&amp;format!(&quot;Counter: {original_state}&quot;))
+        .label(format!(&quot;Counter: {original_state}&quot;))
         .build();
 
     // Create a button with label
@@ -363,7 +368,7 @@ Let's see how this works.</p>
     let action_count = SimpleAction::new_stateful(
         &quot;count&quot;,
         Some(&amp;i32::static_variant_type()),
-        &amp;original_state.to_variant(),
+        original_state.to_variant(),
     );
     action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
         // Get state
@@ -381,7 +386,7 @@ Let's see how this works.</p>
 
         // Increase state by parameter and store state
         state += parameter;
-        action.set_state(&amp;state.to_variant());
+        action.set_state(state.to_variant());
 
         // Update label with new state
         label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -390,8 +395,7 @@ Let's see how this works.</p>
 
     // Present window
     window.present();
-}
-</code></pre>
+}</code></pre>
 <p>Here we created a &quot;win.count&quot; action that increases its state by the given parameter every time it is activated.
 It also takes care of updating the <code>label</code> with the current state.
 The button activates the action with each click while passing &quot;1&quot; as parameter.
@@ -399,7 +403,7 @@ This is how our app works:</p>
 <div style="text-align:center">
  <video autoplay muted loop>
   <source src="vid/actions_counter.webm" type="video/webm">
-Your browser does not support the video tag.
+  <p>A video which shows that pressing on one button also changes the label below</p>
  </video>
 </div>
 <h2 id="actionable"><a class="header" href="#actionable">Actionable</a></h2>
@@ -417,7 +421,7 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions4&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -425,13 +429,13 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    let original_state = 0;
 </span><span class="boring">    let label = Label::builder()
-</span><span class="boring">        .label(&amp;format!(&quot;Counter: {original_state}&quot;))
+</span><span class="boring">        .label(format!(&quot;Counter: {original_state}&quot;))
 </span><span class="boring">        .build();
 </span>    // Create a button with label and action
     let button = Button::builder()
@@ -465,7 +469,7 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">    let action_count = SimpleAction::new_stateful(
 </span><span class="boring">        &quot;count&quot;,
 </span><span class="boring">        Some(&amp;i32::static_variant_type()),
-</span><span class="boring">        &amp;original_state.to_variant(),
+</span><span class="boring">        original_state.to_variant(),
 </span><span class="boring">    );
 </span><span class="boring">    action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
 </span><span class="boring">        // Get state
@@ -483,7 +487,7 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">
 </span><span class="boring">        // Increase state by parameter and save state
 </span><span class="boring">        state += parameter;
-</span><span class="boring">        action.set_state(&amp;state.to_variant());
+</span><span class="boring">        action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">        // Update label with new state
 </span><span class="boring">        label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -493,8 +497,7 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Actionable widgets are also easily accessible through the interface builder.
 As usual, we build up the window via a composite template.
 Within the template we can then set the &quot;action-name&quot; and &quot;action-target&quot; properties.</p>
@@ -549,7 +552,7 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
 </span>impl Window {
     pub fn new(app: &amp;Application) -&gt; Self {
         // Create new window
-        Object::new(&amp;[(&quot;application&quot;, app)]).expect(&quot;Failed to create Window&quot;)
+        Object::builder().property(&quot;application&quot;, app).build()
     }
 
     fn setup_actions(&amp;self) {
@@ -560,7 +563,7 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
         let action_count = SimpleAction::new_stateful(
             &quot;count&quot;,
             Some(&amp;i32::static_variant_type()),
-            &amp;original_state.to_variant(),
+            original_state.to_variant(),
         );
 
         action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -579,19 +582,17 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
 
             // Increase state by parameter and save state
             state += parameter;
-            action.set_state(&amp;state.to_variant());
+            action.set_state(state.to_variant());
 
             // Update label with new state
             label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
         }));
         self.add_action(&amp;action_count);
     }
-}
-</code></pre>
+}</code></pre>
 <p>Finally, <code>setup_actions</code> will be called within <code>constructed</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/5/window/imp.rs">listings/actions/5/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, CompositeTemplate, Label};
 </span><span class="boring">
@@ -622,12 +623,12 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
 </span><span class="boring">
 </span>// Trait shared by all GObjects
 impl ObjectImpl for Window {
-    fn constructed(&amp;self, obj: &amp;Self::Type) {
+    fn constructed(&amp;self) {
         // Call &quot;constructed&quot; on parent
-        self.parent_constructed(obj);
+        self.parent_constructed();
 
         // Add actions
-        obj.setup_actions();
+        self.obj().setup_actions();
     }
 }
 <span class="boring">
@@ -638,8 +639,7 @@ impl ObjectImpl for Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>This app behaves the same as our previous example, but it leads us to menu creation.</p>
 <h2 id="menus"><a class="header" href="#menus">Menus</a></h2>
 <p>If you want to create a <a href="https://developer.gnome.org/hig/patterns/controls/menus.html">menu</a> you have to use actions and you will want to use the interface builder.
@@ -675,7 +675,7 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">impl Window {
 </span><span class="boring">    pub fn new(app: &amp;Application) -&gt; Self {
 </span><span class="boring">        // Create new window
-</span><span class="boring">        Object::new(&amp;[(&quot;application&quot;, app)]).expect(&quot;Failed to create Window&quot;)
+</span><span class="boring">        Object::builder().property(&quot;application&quot;, app).build()
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_actions(&amp;self) {
@@ -687,7 +687,7 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -706,7 +706,7 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -725,7 +725,7 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">        let action_orientation = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;orientation&quot;,
 </span><span class="boring">            Some(&amp;String::static_variant_type()),
-</span><span class="boring">            &amp;&quot;Vertical&quot;.to_variant(),
+</span><span class="boring">            &quot;Vertical&quot;.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_orientation.connect_activate(clone!(@weak gtk_box =&gt;
@@ -744,12 +744,11 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">
 </span><span class="boring">                // Set orientation and save state
 </span><span class="boring">                gtk_box.set_orientation(orientation);
-</span><span class="boring">                action.set_state(&amp;parameter.to_variant());
+</span><span class="boring">                action.set_state(parameter.to_variant());
 </span><span class="boring">        }));
 </span><span class="boring">        self.add_action(&amp;action_orientation);
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <blockquote>
 <p>A <code>PropertyAction</code> is useful when you need an action that manipulates the property of a GObject.
 The property then acts as the state of the action.
@@ -780,7 +779,7 @@ We don't need the action state to implement orientation switching, however it is
 </span><span class="boring">impl Window {
 </span><span class="boring">    pub fn new(app: &amp;Application) -&gt; Self {
 </span><span class="boring">        // Create new window
-</span><span class="boring">        Object::new(&amp;[(&quot;application&quot;, app)]).expect(&quot;Failed to create Window&quot;)
+</span><span class="boring">        Object::builder().property(&quot;application&quot;, app).build()
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_actions(&amp;self) {
@@ -792,7 +791,7 @@ We don't need the action state to implement orientation switching, however it is
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -811,7 +810,7 @@ We don't need the action state to implement orientation switching, however it is
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -830,7 +829,7 @@ We don't need the action state to implement orientation switching, however it is
         let action_orientation = SimpleAction::new_stateful(
             &quot;orientation&quot;,
             Some(&amp;String::static_variant_type()),
-            &amp;&quot;Vertical&quot;.to_variant(),
+            &quot;Vertical&quot;.to_variant(),
         );
 
         action_orientation.connect_activate(clone!(@weak gtk_box =&gt;
@@ -849,12 +848,11 @@ We don't need the action state to implement orientation switching, however it is
 
                 // Set orientation and save state
                 gtk_box.set_orientation(orientation);
-                action.set_state(&amp;parameter.to_variant());
+                action.set_state(parameter.to_variant());
         }));
         self.add_action(&amp;action_orientation);
 <span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Even though <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Menu.html"><code>gio::Menu</code></a> can also be created with the bindings, the most convenient way is to use the interface builder for that.
 We do that by adding the menu in front of the template.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/6/resources/window.ui">listings/actions/6/resources/window.ui</a></p>
@@ -914,7 +912,7 @@ For example, an <code>i32</code> variable with value &quot;5&quot; would corresp
 <div style="text-align:center">
  <video autoplay muted loop>
   <source src="vid/actions_menu.webm" type="video/webm">
-Your browser does not support the video tag.
+  <p>A video which now also shows the menu</p>
  </video>
 </div>
 <blockquote>
@@ -951,7 +949,6 @@ Since <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Sett
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/imp.rs">listings/actions/7/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Button, CompositeTemplate, Label};
 </span><span class="boring">use once_cell::sync::OnceCell;
@@ -988,11 +985,12 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for Window {
-</span><span class="boring">    fn constructed(&amp;self, obj: &amp;Self::Type) {
+</span><span class="boring">    fn constructed(&amp;self) {
 </span><span class="boring">        // Call &quot;constructed&quot; on parent
-</span><span class="boring">        self.parent_constructed(obj);
+</span><span class="boring">        self.parent_constructed();
 </span><span class="boring">
 </span><span class="boring">        // Setup
+</span><span class="boring">        let obj = self.obj();
 </span><span class="boring">        obj.setup_settings();
 </span><span class="boring">        obj.setup_actions();
 </span><span class="boring">        obj.bind_settings();
@@ -1006,8 +1004,7 @@ pub struct Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>Now we create functions to make it easier to access settings.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/mod.rs">listings/actions/7/window/mod.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
@@ -1030,7 +1027,7 @@ pub struct Window {
 </span><span class="boring">impl Window {
 </span><span class="boring">    pub fn new(app: &amp;Application) -&gt; Self {
 </span><span class="boring">        // Create new window
-</span><span class="boring">        Object::new(&amp;[(&quot;application&quot;, app)]).expect(&quot;Failed to create Window&quot;)
+</span><span class="boring">        Object::builder().property(&quot;application&quot;, app).build()
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    fn setup_settings(&amp;self) {
@@ -1057,7 +1054,7 @@ pub struct Window {
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -1076,7 +1073,7 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -1128,8 +1125,7 @@ pub struct Window {
 </span><span class="boring">            })
 </span><span class="boring">            .build();
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Creating stateful actions from setting entries is so common that <code>Settings</code> provides a method for that exact purpose.
 We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/prelude/trait.SettingsExt.html#tymethod.create_action"> <code>create_action</code></a> method and then add them to the action group of our window.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/mod.rs">listings/actions/7/window/mod.rs</a></p>
@@ -1153,7 +1149,7 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">impl Window {
 </span><span class="boring">    pub fn new(app: &amp;Application) -&gt; Self {
 </span><span class="boring">        // Create new window
-</span><span class="boring">        Object::new(&amp;[(&quot;application&quot;, app)]).expect(&quot;Failed to create Window&quot;)
+</span><span class="boring">        Object::builder().property(&quot;application&quot;, app).build()
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_settings(&amp;self) {
@@ -1180,7 +1176,7 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -1199,7 +1195,7 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -1251,8 +1247,7 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">            })
 </span><span class="boring">            .build();
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Since actions from <code>create_action</code> follow the aforementioned conventions, we can keep further changes to a minimum.
 The action &quot;win.sensitive-button&quot; toggles its state with each activation and the state of the &quot;win.orientation&quot; action follows the given parameter.</p>
 <p>We still have to specify what should happen when the actions are activated though.
@@ -1278,7 +1273,7 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">impl Window {
 </span><span class="boring">    pub fn new(app: &amp;Application) -&gt; Self {
 </span><span class="boring">        // Create new window
-</span><span class="boring">        Object::new(&amp;[(&quot;application&quot;, app)]).expect(&quot;Failed to create Window&quot;)
+</span><span class="boring">        Object::builder().property(&quot;application&quot;, app).build()
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_settings(&amp;self) {
@@ -1305,7 +1300,7 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -1324,7 +1319,7 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -1376,13 +1371,11 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
             })
             .build();
     }
-<span class="boring">}
-</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>Finally, we make sure that <code>bind_settings</code> is called within <code>constructed</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/imp.rs">listings/actions/7/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Button, CompositeTemplate, Label};
 </span><span class="boring">use once_cell::sync::OnceCell;
@@ -1419,11 +1412,12 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">
 </span>// Trait shared by all GObjects
 impl ObjectImpl for Window {
-    fn constructed(&amp;self, obj: &amp;Self::Type) {
+    fn constructed(&amp;self) {
         // Call &quot;constructed&quot; on parent
-        self.parent_constructed(obj);
+        self.parent_constructed();
 
         // Setup
+        let obj = self.obj();
         obj.setup_settings();
         obj.setup_actions();
         obj.bind_settings();
@@ -1437,8 +1431,7 @@ impl ObjectImpl for Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>Actions are extremely powerful and we are only scratching the surface here.
 If you want to learn more about them, the <a href="https://developer.gnome.org/documentation/tutorials/actions.html">GNOME developer documentation</a> is a good place to start.</p>
 
@@ -1449,9 +1442,11 @@ If you want to learn more about them, the <a href="https://developer.gnome.org/d
                             <a rel="prev" href="todo_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="todo_2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -1461,6 +1456,7 @@ If you want to learn more about them, the <a href="https://developer.gnome.org/d
                     <a rel="prev" href="todo_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="todo_2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -1468,16 +1464,25 @@ If you want to learn more about them, the <a href="https://developer.gnome.org/d
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>

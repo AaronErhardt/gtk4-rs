@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Composite Templates - GUI development with Rust and GTK 4</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,9 +18,11 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
@@ -26,16 +30,18 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/style.css">
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -51,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -63,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -95,7 +101,7 @@
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -114,6 +120,7 @@
                         <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -127,8 +134,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -143,10 +151,10 @@
 As a reminder, that is how we used it to build our trusty &quot;Hello World!&quot; app.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/3/main.rs">listings/hello_world/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, Button};
+use gtk::{glib, Application, ApplicationWindow, Button};
 const APP_ID: &amp;str = &quot;org.gtk_rs.HelloWorld3&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -154,7 +162,7 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn build_ui(app: &amp;Application) {
@@ -168,7 +176,7 @@ fn build_ui(app: &amp;Application) {
         .build();
 
     // Connect to &quot;clicked&quot; signal of `button`
-    button.connect_clicked(move |button| {
+    button.connect_clicked(|button| {
         // Set the label to &quot;Hello World!&quot; after the button has been clicked on
         button.set_label(&quot;Hello World!&quot;);
     });
@@ -182,12 +190,11 @@ fn build_ui(app: &amp;Application) {
 
     // Present window
     window.present();
-}
-</code></pre>
+}</code></pre>
 <div style="text-align:center">
  <video autoplay muted loop>
   <source src="vid/hello_world_button.webm" type="video/webm">
-Your browser does not support the video tag.
+  <p>A video which shows that pressing on a button changes its label</p>
  </video>
 </div>
 <p>Creating widgets directly from code is fine, but it makes it harder to separate the logic from the user interface.
@@ -231,35 +238,32 @@ For our template file we also add the <code>compressed</code> and <code>preproce
 &lt;/gresources&gt;
 </code></pre>
 <p>Now we have to compile the resources and link it to our application.
-One way to do this is to execute <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/fn.compile_resources.html"><code>gio::compile_resources</code></a> within a cargo <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build script</a>.</p>
-<p>First, we have to add <code>gtk4</code> as build dependency in <code>Cargo.toml</code> by executing:</p>
-<pre><code>cargo add gtk4 --rename gtk --build
+One way to do this is to execute <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib_build_tools/fn.compile_resources.html"><code>glib_build_tools::compile_resources</code></a> within a cargo <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build script</a>.</p>
+<p>First, we have to add <code>glib-build-tools</code> as build dependency in <code>Cargo.toml</code> by executing:</p>
+<pre><code>cargo add glib-build-tools --build
 </code></pre>
 <p>Then, we create a <code>build.rs</code> at the root of our package with the following content.
 This will compile the resources whenever we trigger a build with cargo and then statically link our executable to them.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/build.rs">listings/build.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">use gtk::gio;
-
-fn main() {
-    gio::compile_resources(
-        &quot;composite_templates/1/resources&quot;,
+<pre><code class="language-rust  no_run noplayground">fn main() {
+    glib_build_tools::compile_resources(
+        &amp;[&quot;composite_templates/1/resources&quot;],
         &quot;composite_templates/1/resources/resources.gresource.xml&quot;,
         &quot;composite_templates_1.gresource&quot;,
     );
-}
-</code></pre>
+}</code></pre>
 <p>Finally, we register and include the resources by calling the macro <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/macro.resources_register_include.html"><code>gio::resources_register_include!</code></a>.
 In your own apps take care to register the resources before creating the <code>gtk::Application</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/main.rs">listings/composite_templates/1/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">mod window;
 
 use gtk::prelude::*;
-use gtk::{gio, Application};
+use gtk::{gio, glib, Application};
 use window::Window;
 
 const APP_ID: &amp;str = &quot;org.gtk_rs.CompositeTemplates1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Register and include resources
     gio::resources_register_include!(&quot;composite_templates_1.gresource&quot;)
         .expect(&quot;Failed to register resources.&quot;);
@@ -271,14 +275,13 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 fn build_ui(app: &amp;Application) {
     // Create new window and present it
     let window = Window::new(app);
     window.present();
-}
-</code></pre>
+}</code></pre>
 <p>Within our code we create a custom widget inheriting from <code>gtk::ApplicationWindow</code> to make use of our template.
 Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/mod.rs">listings/composite_templates/1/window/mod.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">mod imp;
@@ -296,10 +299,9 @@ glib::wrapper! {
 impl Window {
     pub fn new(app: &amp;Application) -&gt; Self {
         // Create new window
-        Object::new(&amp;[(&quot;application&quot;, app)]).expect(&quot;Failed to create Window&quot;)
+        Object::builder().property(&quot;application&quot;, app).build()
     }
-}
-</code></pre>
+}</code></pre>
 <p>In the implementation struct, we then add the derive macro <a href="../docs/gtk4_macros/derive.CompositeTemplate.html"><code>gtk::CompositeTemplate</code></a>.
 We also specify that the template information comes from a resource of prefix <code>/org/gtk-rs/example</code> containing a file <code>window.ui</code>.</p>
 <p>One very convenient feature of templates is the template child.
@@ -339,9 +341,9 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for Window {
-</span><span class="boring">    fn constructed(&amp;self, obj: &amp;Self::Type) {
+</span><span class="boring">    fn constructed(&amp;self) {
 </span><span class="boring">        // Call &quot;constructed&quot; on parent
-</span><span class="boring">        self.parent_constructed(obj);
+</span><span class="boring">        self.parent_constructed();
 </span><span class="boring">
 </span><span class="boring">        // Connect to &quot;clicked&quot; signal of `button`
 </span><span class="boring">        self.button.connect_clicked(move |button| {
@@ -358,8 +360,7 @@ pub struct Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>Within the <code>ObjectSubclass</code> trait, we make sure that <code>NAME</code> corresponds to <code>class</code> in the template and <code>ParentType</code> corresponds to <code>parent</code> in the template.
 We also bind and initialize the template in <code>class_init</code> and <code>instance_init</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/imp.rs">listings/composite_templates/1/window/imp.rs</a></p>
@@ -395,9 +396,9 @@ impl ObjectSubclass for Window {
 <span class="boring">
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for Window {
-</span><span class="boring">    fn constructed(&amp;self, obj: &amp;Self::Type) {
+</span><span class="boring">    fn constructed(&amp;self) {
 </span><span class="boring">        // Call &quot;constructed&quot; on parent
-</span><span class="boring">        self.parent_constructed(obj);
+</span><span class="boring">        self.parent_constructed();
 </span><span class="boring">
 </span><span class="boring">        // Connect to &quot;clicked&quot; signal of `button`
 </span><span class="boring">        self.button.connect_clicked(move |button| {
@@ -414,8 +415,7 @@ impl ObjectSubclass for Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>Finally, we connect the callback to the &quot;clicked&quot; signal of <code>button</code> within <code>constructed</code>.
 The button is easily available thanks to the stored reference in <code>self</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/imp.rs">listings/composite_templates/1/window/imp.rs</a></p>
@@ -451,9 +451,9 @@ The button is easily available thanks to the stored reference in <code>self</cod
 </span><span class="boring">
 </span>// Trait shared by all GObjects
 impl ObjectImpl for Window {
-    fn constructed(&amp;self, obj: &amp;Self::Type) {
+    fn constructed(&amp;self) {
         // Call &quot;constructed&quot; on parent
-        self.parent_constructed(obj);
+        self.parent_constructed();
 
         // Connect to &quot;clicked&quot; signal of `button`
         self.button.connect_clicked(move |button| {
@@ -470,8 +470,7 @@ impl ObjectImpl for Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <h2 id="custom-widgets"><a class="header" href="#custom-widgets">Custom Widgets</a></h2>
 <p>We can also instantiate custom widgets within a template file.
 First we define <code>CustomButton</code> that inherits from <code>gtk::Button</code>.
@@ -500,8 +499,7 @@ impl ObjectSubclass for CustomButton {
 </span><span class="boring">impl WidgetImpl for CustomButton {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all buttons
-</span><span class="boring">impl ButtonImpl for CustomButton {}
-</span></code></pre>
+</span><span class="boring">impl ButtonImpl for CustomButton {}</span></code></pre>
 <p>We also define the public struct in <code>mod.rs</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/2/custom_button/mod.rs">listings/composite_templates/2/custom_button/mod.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::Object;
@@ -518,7 +516,7 @@ glib::wrapper! {
 <span class="boring">
 </span><span class="boring">impl CustomButton {
 </span><span class="boring">    pub fn new() -&gt; Self {
-</span><span class="boring">        Object::new(&amp;[]).expect(&quot;Failed to create `CustomButton`.&quot;)
+</span><span class="boring">        Object::builder().build()
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -526,8 +524,7 @@ glib::wrapper! {
 </span><span class="boring">    fn default() -&gt; Self {
 </span><span class="boring">        Self::new()
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Since we want to refer to a <code>CustomButton</code> now we also have to change the type of the template child to it.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/2/window/imp.rs">listings/composite_templates/2/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
@@ -564,9 +561,9 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for Window {
-</span><span class="boring">    fn constructed(&amp;self, obj: &amp;Self::Type) {
+</span><span class="boring">    fn constructed(&amp;self) {
 </span><span class="boring">        // Call &quot;constructed&quot; on parent
-</span><span class="boring">        self.parent_constructed(obj);
+</span><span class="boring">        self.parent_constructed();
 </span><span class="boring">
 </span><span class="boring">        // Connect to &quot;clicked&quot; signal of `button`
 </span><span class="boring">        self.button.connect_clicked(move |button| {
@@ -583,8 +580,7 @@ pub struct Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>Finally, we can replace <code>GtkButton</code> with <code>MyGtkAppCustomButton</code> within our composite template.
 Since the custom button is a direct subclass of <code>gtk::Button</code> without any modifications, the behavior of our app stays the same.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/2/resources/window.ui">listings/composite_templates/2/resources/window.ui</a></p>
@@ -684,8 +680,7 @@ impl Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>Then we have to bind the template callbacks with <a href="../docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/3/window/imp.rs">listings/composite_templates/3/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
@@ -740,8 +735,7 @@ impl ObjectSubclass for Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>We can also access the state of our widget.
 Let's say we want to manipulate a <code>number</code> stored in <code>imp::Window</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/4/window/imp.rs">listings/composite_templates/4/window/imp.rs</a></p>
@@ -801,8 +795,7 @@ pub struct Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>In order to access the widget's state we have to add <code>swapped=&quot;true&quot;</code> to the <code>signal</code> tag.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/4/resources/window.ui">listings/composite_templates/4/resources/window.ui</a></p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
@@ -881,8 +874,7 @@ impl Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <h2 id="registering-types"><a class="header" href="#registering-types">Registering Types</a></h2>
 <p>Now that we use template callbacks we don't access the template child anymore.
 Let's remove it. </p>
@@ -941,8 +933,7 @@ pub struct Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>However, when we now run it GTK doesn't see <code>MyGtkAppCustomButton</code> as valid object type anymore.
 So what happened here?</p>
 <pre><code>Gtk-CRITICAL **: Error building template class 'MyGtkAppWindow' for an instance of
@@ -1009,8 +1000,7 @@ impl ObjectSubclass for Window {
 </span><span class="boring">impl WindowImpl for Window {}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
-</span><span class="boring">impl ApplicationWindowImpl for Window {}
-</span></code></pre>
+</span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p>We call the <code>ensure_type</code> method within <code>class_init</code> and voilà: our app works again.</p>
 <h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
 <p>Thanks to custom widgets we can</p>
@@ -1037,9 +1027,11 @@ If a certain widget accepts additional element, then they are typically explaine
                             <a rel="prev" href="list_widgets.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="todo_1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -1049,6 +1041,7 @@ If a certain widget accepts additional element, then they are typically explaine
                     <a rel="prev" href="list_widgets.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="todo_1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -1056,16 +1049,25 @@ If a certain widget accepts additional element, then they are typically explaine
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>

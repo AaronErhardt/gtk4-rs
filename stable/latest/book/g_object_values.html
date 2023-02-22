@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Generic Values - GUI development with Rust and GTK 4</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,9 +18,11 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
@@ -26,16 +30,18 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/style.css">
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -51,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -63,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -95,7 +101,7 @@
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -114,6 +120,7 @@
                         <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -127,8 +134,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -157,8 +165,7 @@ Conceptually, a <code>Value</code> is similar to a Rust <code>enum</code> define
     // boxed types
     String(Option&lt;String&gt;),
     Object(Option&lt;dyn IsA&lt;glib::Object&gt;&gt;),
-}
-</code></pre>
+}</code></pre>
 <p>For example, this is how you would use a <code>Value</code> representing an <code>i32</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_values/1/main.rs">listings/g_object_values/1/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
@@ -201,8 +208,7 @@ Conceptually, a <code>Value</code> is similar to a Rust <code>enum</code> define
 </span><span class="boring">    // Check if the retrieved value is correct
 </span><span class="boring">    assert_eq!(string_some, Some(&quot;Hello!&quot;.to_string()));
 </span><span class="boring">    assert_eq!(string_none, None);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Also note that in the <code>enum</code> above boxed types such as <code>String</code> or <code>glib::Object</code> are wrapped in an <code>Option</code>.
 This comes from C, where every boxed type can potentially be <code>None</code> (or <code>NULL</code> in C terms).
 You can still access it the same way as with the <code>i32</code> above.
@@ -248,8 +254,7 @@ You can still access it the same way as with the <code>i32</code> above.
 </span><span class="boring">    // Check if the retrieved value is correct
 </span><span class="boring">    assert_eq!(string_some, Some(&quot;Hello!&quot;.to_string()));
 </span><span class="boring">    assert_eq!(string_none, None);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>If you want to differentiate between specifying the wrong type and a <code>Value</code> representing <code>None</code>, just call <code>get::&lt;Option&lt;T&gt;&gt;</code> instead.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_values/1/main.rs">listings/g_object_values/1/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
@@ -292,8 +297,7 @@ You can still access it the same way as with the <code>i32</code> above.
     // Check if the retrieved value is correct
     assert_eq!(string_some, Some(&quot;Hello!&quot;.to_string()));
     assert_eq!(string_none, None);
-<span class="boring">}
-</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>We will use <code>Value</code> when we deal with properties and signals later on.</p>
 <h2 id="variant"><a class="header" href="#variant">Variant</a></h2>
 <p>A <code>Variant</code> is used whenever data needs to be serialized, for example for sending it to another process or over the network, or for storing it on disk.
@@ -322,8 +326,7 @@ Variants can even be <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/
 </span><span class="boring">        .get::&lt;Vec&lt;String&gt;&gt;()
 </span><span class="boring">        .expect(&quot;The variant needs to be of type `String`.&quot;);
 </span><span class="boring">    assert_eq!(vec[0], &quot;Hello&quot;);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>However, a <code>Variant</code> is also able to represent containers such as <a href="https://doc.rust-lang.org/std/collections/struct.HashMap.html"><code>HashMap</code></a> or <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html"><code>Vec</code></a>.
 The following snippet shows how to convert between <code>Vec</code> and <code>Variant</code>.
 More examples can be found in the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/variant/index.html">docs</a>.</p>
@@ -348,8 +351,7 @@ More examples can be found in the <a href="https://gtk-rs.org/gtk-rs-core/stable
         .get::&lt;Vec&lt;String&gt;&gt;()
         .expect(&quot;The variant needs to be of type `String`.&quot;);
     assert_eq!(vec[0], &quot;Hello&quot;);
-<span class="boring">}
-</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>We will use <code>Variant</code> when saving settings using <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Settings.html"><code>gio::Settings</code></a> or activating actions via <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Action.html"><code>gio::Action</code></a>.</p>
 
                     </main>
@@ -359,9 +361,11 @@ More examples can be found in the <a href="https://gtk-rs.org/gtk-rs-core/stable
                             <a rel="prev" href="g_object_subclassing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="g_object_properties.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -371,6 +375,7 @@ More examples can be found in the <a href="https://gtk-rs.org/gtk-rs-core/stable
                     <a rel="prev" href="g_object_subclassing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="g_object_properties.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -378,16 +383,25 @@ More examples can be found in the <a href="https://gtk-rs.org/gtk-rs-core/stable
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>

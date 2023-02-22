@@ -4,8 +4,10 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Hello World! - GUI development with Rust and GTK 4</title>
+
+
         <!-- Custom HTML head -->
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -16,9 +18,11 @@
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link rel="stylesheet" href="fonts/fonts.css">
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
@@ -26,16 +30,18 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/style.css">
+
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -51,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -63,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -84,7 +90,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -95,7 +101,7 @@
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
@@ -114,6 +120,7 @@
                         <a href="https://github.com/gtk-rs/gtk4-rs/tree/master/book" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
+
                     </div>
                 </div>
 
@@ -127,8 +134,9 @@
                         </ul>
                     </div>
                 </div>
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -145,18 +153,17 @@ For that we use the <a href="https://rust-unofficial.github.io/patterns/patterns
 Note that we also import the prelude to bring the necessary traits into scope.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/1/main.rs">listings/hello_world/1/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">use gtk::prelude::*;
-use gtk::Application;
+use gtk::{glib, Application};
 
 const APP_ID: &amp;str = &quot;org.gtk_rs.HelloWorld1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
     // Run the application
-    app.run();
-}
-</code></pre>
+    app.run()
+}</code></pre>
 <p>It builds fine, but nothing but a warning in our terminal appears.</p>
 <pre><code>GLib-GIO-WARNING: Your application does not implement g_application_activate()
 and has no handlers connected to the 'activate' signal. It should do one of these.
@@ -165,11 +172,11 @@ and has no handlers connected to the 'activate' signal. It should do one of thes
 So let's create a <a href="../docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> there.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/2/main.rs">listings/hello_world/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow};
+use gtk::{glib, Application, ApplicationWindow};
 
 const APP_ID: &amp;str = &quot;org.gtk_rs.HelloWorld2&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -177,7 +184,7 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn build_ui(app: &amp;Application) {
@@ -189,18 +196,17 @@ fn build_ui(app: &amp;Application) {
 
     // Present window
     window.present();
-}
-</code></pre>
+}</code></pre>
 <p>That is better!</p>
-<div style="text-align:center"><img src="img/hello_world_empty.png" /></div>
+<div style="text-align:center"><img src="img/hello_world_empty.png" alt="An empty window with a header bar with label 'My GTK App'"/></div>
 <p>Normally we expect to be able to interact with the user interface.
 Also, the name of the chapter suggests that the phrase &quot;Hello World!&quot; will be involved.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/3/main.rs">listings/hello_world/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{Application, ApplicationWindow, Button};
+</span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.HelloWorld3&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -208,7 +214,7 @@ Also, the name of the chapter suggests that the phrase &quot;Hello World!&quot; 
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_ui(app: &amp;Application) {
@@ -222,7 +228,7 @@ Also, the name of the chapter suggests that the phrase &quot;Hello World!&quot; 
         .build();
 
     // Connect to &quot;clicked&quot; signal of `button`
-    button.connect_clicked(move |button| {
+    button.connect_clicked(|button| {
         // Set the label to &quot;Hello World!&quot; after the button has been clicked on
         button.set_label(&quot;Hello World!&quot;);
     });
@@ -236,8 +242,7 @@ Also, the name of the chapter suggests that the phrase &quot;Hello World!&quot; 
 
     // Present window
     window.present();
-}
-</code></pre>
+}</code></pre>
 <blockquote>
 <p>If you look closely at the code snippet you will notice that it has a small eye symbol on its top right.
 After you press on it you can see the full code of the listing.
@@ -249,7 +254,7 @@ Here, we've hidden that we brought <code>gtk::Button</code> into scope.</p>
 <div style="text-align:center">
  <video autoplay muted loop>
   <source src="vid/hello_world_button.webm" type="video/webm">
-Your browser does not support the video tag.
+  <p>A video which shows that pressing on the button changes it's label</p>
  </video>
 </div>
 <p>Wasn't that hard to create our first <code>gtk-rs</code> app, right?
@@ -262,9 +267,11 @@ Let's now get a better understanding of what we did here.</p>
                             <a rel="prev" href="project_setup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+
                             <a rel="next" href="widgets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -274,6 +281,7 @@ Let's now get a better understanding of what we did here.</p>
                     <a rel="prev" href="project_setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+
                     <a rel="next" href="widgets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -281,16 +289,25 @@ Let's now get a better understanding of what we did here.</p>
 
         </div>
 
-        <script type="text/javascript">
+
+
+
+        <script>
             window.playground_copyable = true;
         </script>
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+
+
+    </div>
     </body>
 </html>

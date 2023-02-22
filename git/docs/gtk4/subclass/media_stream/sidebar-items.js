@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["MediaStreamImpl",""],["MediaStreamImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["MediaStreamImpl","MediaStreamImplExt"]};

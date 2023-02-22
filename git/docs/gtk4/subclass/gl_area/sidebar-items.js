@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["GLAreaImpl",""],["GLAreaImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["GLAreaImpl","GLAreaImplExt"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["TextBufferImpl",""],["TextBufferImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["TextBufferImpl","TextBufferImplExt"]};

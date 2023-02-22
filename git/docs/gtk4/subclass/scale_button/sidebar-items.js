@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["ScaleButtonImpl",""],["ScaleButtonImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["ScaleButtonImpl","ScaleButtonImplExt"]};

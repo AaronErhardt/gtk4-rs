@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["IMContextImpl",""],["IMContextImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["IMContextImpl","IMContextImplExt"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["GridImpl",""]]};
+window.SIDEBAR_ITEMS = {"trait":["GridImpl"]};

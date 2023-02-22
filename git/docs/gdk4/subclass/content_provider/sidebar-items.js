@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["ContentProviderImpl",""],["ContentProviderImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["ContentProviderImpl","ContentProviderImplExt"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["PopoverImpl",""],["PopoverImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["PopoverImpl","PopoverImplExt"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["OrientableImpl",""]]};
+window.SIDEBAR_ITEMS = {"trait":["OrientableImpl"]};

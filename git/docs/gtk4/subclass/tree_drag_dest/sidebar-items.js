@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["TreeDragDestImpl",""],["TreeDragDestImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["TreeDragDestImpl","TreeDragDestImplExt"]};

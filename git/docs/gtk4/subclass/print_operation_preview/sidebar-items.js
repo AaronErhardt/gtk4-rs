@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["PrintOperationPreviewImpl",""],["PrintOperationPreviewImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["PrintOperationPreviewImpl","PrintOperationPreviewImplExt"]};

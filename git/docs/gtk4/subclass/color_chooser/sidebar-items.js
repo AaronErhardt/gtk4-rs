@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["ColorChooserImpl",""],["ColorChooserImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["ColorChooserImpl","ColorChooserImplExt"]};

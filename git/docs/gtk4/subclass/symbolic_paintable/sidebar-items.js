@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["SymbolicPaintableImpl",""],["SymbolicPaintableImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["SymbolicPaintableImpl","SymbolicPaintableImplExt"]};

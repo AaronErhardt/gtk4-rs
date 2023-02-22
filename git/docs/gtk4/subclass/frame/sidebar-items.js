@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["FrameImpl",""],["FrameImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["FrameImpl","FrameImplExt"]};

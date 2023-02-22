@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["ConstraintTargetImpl",""]]};
+window.SIDEBAR_ITEMS = {"trait":["ConstraintTargetImpl"]};

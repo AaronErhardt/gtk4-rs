@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["LayoutManagerImpl",""],["LayoutManagerImplExt",""]]};
+window.SIDEBAR_ITEMS = {"trait":["LayoutManagerImpl","LayoutManagerImplExt"]};

@@ -2211,8 +2211,8 @@
     /// # Returns
     ///
     /// [`true`] if an arrow will be shown.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_drop_down_get_show_arrow&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_show_arrow&quot;</span>)]
     </span><span class="kw">pub fn </span>shows_arrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -2301,8 +2301,8 @@
     <span class="doccomment">/// Sets whether an arrow will be displayed within the widget.
     /// ## `show_arrow`
     /// whether to show an arrow within the widget
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_drop_down_set_show_arrow&quot;</span>)]
     </span><span class="kw">pub fn </span>set_show_arrow(<span class="kw-2">&amp;</span><span class="self">self</span>, show_arrow: bool) {
         <span class="kw">unsafe </span>{
@@ -2314,8 +2314,8 @@
     ///
     /// The `::activate` signal on [`DropDown`][crate::DropDown] is an action signal and
     /// emitting it causes the drop down to pop up its dropdown.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;activate&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_activate&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>activate_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>DropDown) + <span class="lifetime">&#39;static</span>&gt;(
@@ -2338,8 +2338,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>emit_activate(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="self">self</span>.emit_by_name::&lt;()&gt;(<span class="string">&quot;activate&quot;</span>, <span class="kw-2">&amp;</span>[]);
     }
@@ -2505,8 +2505,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;show-arrow&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_show_arrow_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_show_arrow_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>DropDown) + <span class="lifetime">&#39;static</span>&gt;(
@@ -2613,8 +2613,8 @@
     }
 
     <span class="doccomment">/// Whether to show an arrow within the GtkDropDown widget.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>show_arrow(<span class="self">self</span>, show_arrow: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;show-arrow&quot;</span>, show_arrow),

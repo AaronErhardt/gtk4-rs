@@ -1612,8 +1612,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;center-widget&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_center_widget_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_center_widget_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>CenterBox) + <span class="lifetime">&#39;static</span>&gt;(
@@ -1637,8 +1637,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;end-widget&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_end_widget_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_end_widget_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>CenterBox) + <span class="lifetime">&#39;static</span>&gt;(
@@ -1662,8 +1662,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;start-widget&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_start_widget_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_start_widget_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>CenterBox) + <span class="lifetime">&#39;static</span>&gt;(
@@ -1720,8 +1720,8 @@
     }
 
     <span class="doccomment">/// The widget that is placed at the center position.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>center_widget(<span class="self">self</span>, center_widget: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self
@@ -1735,8 +1735,8 @@
     /// In vertical orientation, the end position is at the bottom.
     /// In horizontal orientation, the end position is at the trailing
     /// edge wrt. to the text direction.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>end_widget(<span class="self">self</span>, end_widget: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self
@@ -1750,8 +1750,8 @@
     /// In vertical orientation, the start position is at the top.
     /// In horizontal orientation, the start position is at the leading
     /// edge wrt. to the text direction.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>start_widget(<span class="self">self</span>, start_widget: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self

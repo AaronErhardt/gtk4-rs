@@ -216,14 +216,14 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::SymbolicPaintable;
 <span class="kw">use </span>glib::{prelude::<span class="kw-2">*</span>, translate::<span class="kw-2">*</span>};
 <span class="kw">use </span>std::fmt;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="doccomment">/// Contains information found when looking up an icon in [`IconTheme`][crate::IconTheme].
     ///
@@ -260,7 +260,7 @@
     }
 }
 
-<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="attr">#[doc(alias = <span class="string">&quot;GtkIconPaintable&quot;</span>)]
     </span><span class="kw">pub struct </span>IconPaintable(Object&lt;ffi::GtkIconPaintable&gt;) @implements gdk::Paintable;

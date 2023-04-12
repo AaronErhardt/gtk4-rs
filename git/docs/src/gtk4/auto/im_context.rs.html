@@ -1006,8 +1006,8 @@
     #[doc(alias = <span class="string">&quot;get_surrounding&quot;</span>)]
     </span><span class="kw">fn </span>surrounding(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(glib::GString, i32)&gt;;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_im_context_get_surrounding_with_selection&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_surrounding_with_selection&quot;</span>)]
     </span><span class="kw">fn </span>surrounding_with_selection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(glib::GString, i32, i32)&gt;;
@@ -1026,8 +1026,8 @@
     #[doc(alias = <span class="string">&quot;gtk_im_context_set_surrounding&quot;</span>)]
     </span><span class="kw">fn </span>set_surrounding(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str, cursor_index: i32);
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_im_context_set_surrounding_with_selection&quot;</span>)]
     </span><span class="kw">fn </span>set_surrounding_with_selection(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str, cursor_index: i32, anchor_index: i32);
 
@@ -1168,8 +1168,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     </span><span class="kw">fn </span>surrounding_with_selection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(glib::GString, i32, i32)&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>text = ptr::null_mut();
@@ -1230,8 +1230,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     </span><span class="kw">fn </span>set_surrounding_with_selection(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str, cursor_index: i32, anchor_index: i32) {
         <span class="kw">let </span>len = text.len() <span class="kw">as _</span>;
         <span class="kw">unsafe </span>{

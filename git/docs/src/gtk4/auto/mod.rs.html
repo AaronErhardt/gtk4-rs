@@ -1670,11 +1670,11 @@
 <span class="kw">mod </span>accessible;
 <span class="kw">pub use </span><span class="self">self</span>::accessible::Accessible;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>accessible_range;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::accessible_range::AccessibleRange;
 
 <span class="kw">mod </span>action_bar;
@@ -1689,11 +1689,11 @@
 <span class="kw">mod </span>adjustment;
 <span class="kw">pub use </span><span class="self">self</span>::adjustment::Adjustment;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>alert_dialog;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::alert_dialog::AlertDialog;
 
 <span class="kw">mod </span>alternative_trigger;
@@ -1884,18 +1884,18 @@
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 </span><span class="kw">pub use </span><span class="self">self</span>::color_chooser_widget::ColorChooserWidget;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>color_dialog;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::color_dialog::ColorDialog;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>color_dialog_button;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::color_dialog_button::ColorDialogButton;
 
 <span class="kw">mod </span>column_view;
@@ -1904,18 +1904,18 @@
 <span class="kw">mod </span>column_view_column;
 <span class="kw">pub use </span><span class="self">self</span>::column_view_column::ColumnViewColumn;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
 </span><span class="kw">mod </span>column_view_row;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::column_view_row::ColumnViewRow;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>column_view_sorter;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::column_view_sorter::ColumnViewSorter;
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
@@ -2051,21 +2051,21 @@
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 </span><span class="kw">pub use </span><span class="self">self</span>::file_chooser_widget::FileChooserWidget;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>file_dialog;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::file_dialog::FileDialog;
 
 <span class="kw">mod </span>file_filter;
 <span class="kw">pub use </span><span class="self">self</span>::file_filter::FileFilter;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>file_launcher;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::file_launcher::FileLauncher;
 
 <span class="kw">mod </span>filter;
@@ -2112,18 +2112,18 @@
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 </span><span class="kw">pub use </span><span class="self">self</span>::font_chooser_widget::FontChooserWidget;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>font_dialog;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::font_dialog::FontDialog;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>font_dialog_button;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::font_dialog_button::FontDialogButton;
 
 <span class="kw">mod </span>frame;
@@ -2205,11 +2205,11 @@
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 </span><span class="kw">pub use </span><span class="self">self</span>::info_bar::InfoBar;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
 </span><span class="kw">mod </span>inscription;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::inscription::Inscription;
 
 <span class="kw">mod </span>label;
@@ -2338,11 +2338,11 @@
 <span class="kw">mod </span>page_setup;
 <span class="kw">pub use </span><span class="self">self</span>::page_setup::PageSetup;
 
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">mod </span>page_setup_unix_dialog;
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::page_setup_unix_dialog::PageSetupUnixDialog;
 
 <span class="kw">mod </span>paned;
@@ -2354,11 +2354,11 @@
 <span class="kw">mod </span>password_entry;
 <span class="kw">pub use </span><span class="self">self</span>::password_entry::PasswordEntry;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
 </span><span class="kw">mod </span>password_entry_buffer;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::password_entry_buffer::PasswordEntryBuffer;
 
 <span class="kw">mod </span>picture;
@@ -2376,11 +2376,11 @@
 <span class="kw">mod </span>print_context;
 <span class="kw">pub use </span><span class="self">self</span>::print_context::PrintContext;
 
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">mod </span>print_job;
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::print_job::PrintJob;
 
 <span class="kw">mod </span>print_operation;
@@ -2392,18 +2392,18 @@
 <span class="kw">mod </span>print_settings;
 <span class="kw">pub use </span><span class="self">self</span>::print_settings::PrintSettings;
 
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">mod </span>print_unix_dialog;
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::print_unix_dialog::PrintUnixDialog;
 
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">mod </span>printer;
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::printer::Printer;
 
 <span class="kw">mod </span>progress_bar;
@@ -2557,11 +2557,11 @@
 <span class="kw">mod </span>switch;
 <span class="kw">pub use </span><span class="self">self</span>::switch::Switch;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">mod </span>symbolic_paintable;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::symbolic_paintable::SymbolicPaintable;
 
 <span class="kw">mod </span>text;
@@ -2653,11 +2653,11 @@
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 </span><span class="kw">pub use </span><span class="self">self</span>::tree_view_column::TreeViewColumn;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>uri_launcher;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::uri_launcher::UriLauncher;
 
 <span class="kw">mod </span>video;
@@ -2719,8 +2719,8 @@
 <span class="kw">mod </span>enums;
 <span class="kw">pub use </span><span class="self">self</span>::enums::AccessibleAutocomplete;
 <span class="kw">pub use </span><span class="self">self</span>::enums::AccessibleInvalidState;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::AccessiblePlatformState;
 <span class="kw">pub use </span><span class="self">self</span>::enums::AccessibleProperty;
 <span class="kw">pub use </span><span class="self">self</span>::enums::AccessibleRelation;
@@ -2737,22 +2737,22 @@
 <span class="kw">pub use </span><span class="self">self</span>::enums::ButtonsType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::CellRendererAccelMode;
 <span class="kw">pub use </span><span class="self">self</span>::enums::CellRendererMode;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::Collation;
 <span class="kw">pub use </span><span class="self">self</span>::enums::ConstraintAttribute;
 <span class="kw">pub use </span><span class="self">self</span>::enums::ConstraintRelation;
 <span class="kw">pub use </span><span class="self">self</span>::enums::ConstraintStrength;
 <span class="kw">pub use </span><span class="self">self</span>::enums::ConstraintVflParserError;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::ContentFit;
 <span class="kw">pub use </span><span class="self">self</span>::enums::CornerType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::CssParserError;
 <span class="kw">pub use </span><span class="self">self</span>::enums::CssParserWarning;
 <span class="kw">pub use </span><span class="self">self</span>::enums::DeleteType;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::DialogError;
 <span class="kw">pub use </span><span class="self">self</span>::enums::DirectionType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::EditableProperties;
@@ -2762,27 +2762,27 @@
 <span class="kw">pub use </span><span class="self">self</span>::enums::FileChooserError;
 <span class="kw">pub use </span><span class="self">self</span>::enums::FilterChange;
 <span class="kw">pub use </span><span class="self">self</span>::enums::FilterMatch;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::FontLevel;
 <span class="kw">pub use </span><span class="self">self</span>::enums::IconSize;
 <span class="kw">pub use </span><span class="self">self</span>::enums::IconThemeError;
 <span class="kw">pub use </span><span class="self">self</span>::enums::IconViewDropPosition;
 <span class="kw">pub use </span><span class="self">self</span>::enums::ImageType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::InputPurpose;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::InscriptionOverflow;
 <span class="kw">pub use </span><span class="self">self</span>::enums::Justification;
 <span class="kw">pub use </span><span class="self">self</span>::enums::LevelBarMode;
 <span class="kw">pub use </span><span class="self">self</span>::enums::License;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::ListTabBehavior;
 <span class="kw">pub use </span><span class="self">self</span>::enums::MessageType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::MovementStep;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::NaturalWrapMode;
 <span class="kw">pub use </span><span class="self">self</span>::enums::NotebookTab;
 <span class="kw">pub use </span><span class="self">self</span>::enums::NumberUpLayout;
@@ -2823,8 +2823,8 @@
 <span class="kw">pub use </span><span class="self">self</span>::enums::SpinType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::StackTransitionType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::StringFilterMatchMode;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::SymbolicColor;
 <span class="kw">pub use </span><span class="self">self</span>::enums::SystemSetting;
 <span class="kw">pub use </span><span class="self">self</span>::enums::TextDirection;
@@ -2849,8 +2849,8 @@
 <span class="kw">pub use </span><span class="self">self</span>::flags::InputHints;
 <span class="kw">pub use </span><span class="self">self</span>::flags::PickFlags;
 <span class="kw">pub use </span><span class="self">self</span>::flags::PopoverMenuFlags;
-<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+<span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::flags::PrintCapabilities;
 <span class="kw">pub use </span><span class="self">self</span>::flags::ShortcutActionFlags;
 <span class="kw">pub use </span><span class="self">self</span>::flags::StateFlags;
@@ -2912,8 +2912,8 @@
 <span class="attr">#[doc(hidden)]
 </span><span class="kw">pub mod </span>traits {
     <span class="kw">pub use </span><span class="kw">super</span>::accessible::AccessibleExt;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::accessible_range::AccessibleRangeExt;
     <span class="kw">pub use </span><span class="kw">super</span>::actionable::ActionableExt;
     <span class="kw">pub use </span><span class="kw">super</span>::adjustment::AdjustmentExt;
@@ -2994,8 +2994,8 @@
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     </span><span class="kw">pub use </span><span class="kw">super</span>::style_context::StyleContextExt;
     <span class="kw">pub use </span><span class="kw">super</span>::style_provider::StyleProviderExt;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::symbolic_paintable::SymbolicPaintableExt;
     <span class="kw">pub use </span><span class="kw">super</span>::text_buffer::TextBufferExt;
     <span class="kw">pub use </span><span class="kw">super</span>::text_child_anchor::TextChildAnchorExt;
@@ -3026,8 +3026,8 @@
     <span class="kw">pub use </span><span class="kw">super</span>::about_dialog::AboutDialogBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::action_bar::ActionBarBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::adjustment::AdjustmentBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::alert_dialog::AlertDialogBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::alternative_trigger::AlternativeTriggerBuilder;
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
@@ -3072,16 +3072,16 @@
     </span><span class="kw">pub use </span><span class="kw">super</span>::color_chooser_dialog::ColorChooserDialogBuilder;
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     </span><span class="kw">pub use </span><span class="kw">super</span>::color_chooser_widget::ColorChooserWidgetBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::color_dialog::ColorDialogBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::color_dialog_button::ColorDialogButtonBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::column_view::ColumnViewBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::column_view_column::ColumnViewColumnBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::column_view_row::ColumnViewRowBuilder;
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     </span><span class="kw">pub use </span><span class="kw">super</span>::combo_box::ComboBoxBuilder;
@@ -3115,8 +3115,8 @@
     </span><span class="kw">pub use </span><span class="kw">super</span>::file_chooser_native::FileChooserNativeBuilder;
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     </span><span class="kw">pub use </span><span class="kw">super</span>::file_chooser_widget::FileChooserWidgetBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::file_dialog::FileDialogBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::filter_list_model::FilterListModelBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::fixed::FixedBuilder;
@@ -3128,11 +3128,11 @@
     </span><span class="kw">pub use </span><span class="kw">super</span>::font_chooser_dialog::FontChooserDialogBuilder;
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     </span><span class="kw">pub use </span><span class="kw">super</span>::font_chooser_widget::FontChooserWidgetBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::font_dialog::FontDialogBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::font_dialog_button::FontDialogButtonBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::frame::FrameBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::gesture_click::GestureClickBuilder;
@@ -3156,8 +3156,8 @@
     <span class="kw">pub use </span><span class="kw">super</span>::image::ImageBuilder;
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     </span><span class="kw">pub use </span><span class="kw">super</span>::info_bar::InfoBarBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::inscription::InscriptionBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::label::LabelBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::level_bar::LevelBarBuilder;
@@ -3176,21 +3176,21 @@
     <span class="kw">pub use </span><span class="kw">super</span>::numeric_sorter::NumericSorterBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::overlay::OverlayBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::pad_controller::PadControllerBuilder;
-    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::page_setup_unix_dialog::PageSetupUnixDialogBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::paned::PanedBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::password_entry::PasswordEntryBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::password_entry_buffer::PasswordEntryBufferBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::picture::PictureBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::popover::PopoverBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::popover_menu::PopoverMenuBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::popover_menu_bar::PopoverMenuBarBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::print_operation::PrintOperationBuilder;
-    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
+    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(target_os = <span class="string">&quot;linux&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::print_unix_dialog::PrintUnixDialogBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::progress_bar::ProgressBarBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::revealer::RevealerBuilder;
@@ -3232,8 +3232,8 @@
     </span><span class="kw">pub use </span><span class="kw">super</span>::tree_view::TreeViewBuilder;
     <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     </span><span class="kw">pub use </span><span class="kw">super</span>::tree_view_column::TreeViewColumnBuilder;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::uri_launcher::UriLauncherBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::video::VideoBuilder;
     <span class="kw">pub use </span><span class="kw">super</span>::viewport::ViewportBuilder;

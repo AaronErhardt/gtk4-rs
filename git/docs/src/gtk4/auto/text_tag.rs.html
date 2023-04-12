@@ -5872,16 +5872,16 @@
     }
 
     <span class="doccomment">/// Factor to scale line height by.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>line_height(<span class="self">self</span>, line_height: f32) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;line-height&quot;</span>, line_height),
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>line_height_set(<span class="self">self</span>, line_height_set: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;line-height-set&quot;</span>, line_height_set),
@@ -6051,16 +6051,16 @@
     <span class="doccomment">/// Whether this tag represents a single sentence.
     ///
     /// This affects cursor movement.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>sentence(<span class="self">self</span>, sentence: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;sentence&quot;</span>, sentence),
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>sentence_set(<span class="self">self</span>, sentence_set: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;sentence-set&quot;</span>, sentence_set),
@@ -6175,16 +6175,16 @@
     }
 
     <span class="doccomment">/// How to transform the text for display.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>text_transform(<span class="self">self</span>, text_transform: pango::TextTransform) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;text-transform&quot;</span>, text_transform),
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>text_transform_set(<span class="self">self</span>, text_transform_set: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self
@@ -6257,16 +6257,16 @@
     <span class="doccomment">/// Whether this tag represents a single word.
     ///
     /// This affects line breaks and cursor movement.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>word(<span class="self">self</span>, word: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;word&quot;</span>, word),
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>word_set(<span class="self">self</span>, word_set: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;word-set&quot;</span>, word_set),
@@ -6575,19 +6575,19 @@
     </span><span class="kw">fn </span>is_letter_spacing_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
     <span class="doccomment">/// Factor to scale line height by.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;line-height&quot;</span>)]
     </span><span class="kw">fn </span>line_height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f32;
 
     <span class="doccomment">/// Factor to scale line height by.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;line-height&quot;</span>)]
     </span><span class="kw">fn </span>set_line_height(<span class="kw-2">&amp;</span><span class="self">self</span>, line_height: f32);
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;line-height-set&quot;</span>)]
     </span><span class="kw">fn </span>is_line_height_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
@@ -6710,19 +6710,19 @@
     <span class="doccomment">/// Whether this tag represents a single sentence.
     ///
     /// This affects cursor movement.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_sentence(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
     <span class="doccomment">/// Whether this tag represents a single sentence.
     ///
     /// This affects cursor movement.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_sentence(<span class="kw-2">&amp;</span><span class="self">self</span>, sentence: bool);
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;sentence-set&quot;</span>)]
     </span><span class="kw">fn </span>is_sentence_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
@@ -6807,19 +6807,19 @@
     </span><span class="kw">fn </span>is_tabs_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
     <span class="doccomment">/// How to transform the text for display.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;text-transform&quot;</span>)]
     </span><span class="kw">fn </span>text_transform(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; pango::TextTransform;
 
     <span class="doccomment">/// How to transform the text for display.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;text-transform&quot;</span>)]
     </span><span class="kw">fn </span>set_text_transform(<span class="kw-2">&amp;</span><span class="self">self</span>, text_transform: pango::TextTransform);
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;text-transform-set&quot;</span>)]
     </span><span class="kw">fn </span>is_text_transform_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
@@ -6877,19 +6877,19 @@
     <span class="doccomment">/// Whether this tag represents a single word.
     ///
     /// This affects line breaks and cursor movement.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_word(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
     <span class="doccomment">/// Whether this tag represents a single word.
     ///
     /// This affects line breaks and cursor movement.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_word(<span class="kw-2">&amp;</span><span class="self">self</span>, word: bool);
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;word-set&quot;</span>)]
     </span><span class="kw">fn </span>is_word_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
@@ -7020,13 +7020,13 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;letter-spacing-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_letter_spacing_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;line-height&quot;</span>)]
     </span><span class="kw">fn </span>connect_line_height_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;line-height-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_line_height_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
@@ -7102,13 +7102,13 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;scale-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_scale_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;sentence&quot;</span>)]
     </span><span class="kw">fn </span>connect_sentence_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;sentence-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_sentence_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
@@ -7160,13 +7160,13 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;tabs-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_tabs_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;text-transform&quot;</span>)]
     </span><span class="kw">fn </span>connect_text_transform_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;text-transform-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_text_transform_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
@@ -7194,13 +7194,13 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;weight-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_weight_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;word&quot;</span>)]
     </span><span class="kw">fn </span>connect_word_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;word-set&quot;</span>)]
     </span><span class="kw">fn </span>connect_word_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
@@ -7452,20 +7452,20 @@
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;letter-spacing-set&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>line_height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f32 {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;line-height&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_line_height(<span class="kw-2">&amp;</span><span class="self">self</span>, line_height: f32) {
         glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;line-height&quot;</span>, line_height)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_line_height_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;line-height-set&quot;</span>)
     }
@@ -7590,20 +7590,20 @@
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;scale-set&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_sentence(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;sentence&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_sentence(<span class="kw-2">&amp;</span><span class="self">self</span>, sentence: bool) {
         glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;sentence&quot;</span>, sentence)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_sentence_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;sentence-set&quot;</span>)
     }
@@ -7700,20 +7700,20 @@
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;tabs-set&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>text_transform(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; pango::TextTransform {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;text-transform&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_text_transform(<span class="kw-2">&amp;</span><span class="self">self</span>, text_transform: pango::TextTransform) {
         glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;text-transform&quot;</span>, text_transform)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_text_transform_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;text-transform-set&quot;</span>)
     }
@@ -7766,20 +7766,20 @@
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;weight-set&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_word(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;word&quot;</span>)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_word(<span class="kw-2">&amp;</span><span class="self">self</span>, word: bool) {
         glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;word&quot;</span>, word)
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>is_word_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;word-set&quot;</span>)
     }
@@ -8660,8 +8660,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_line_height_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_line_height_trampoline&lt;P: IsA&lt;TextTag&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkTextTag,
@@ -8684,8 +8684,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_line_height_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_line_height_set_trampoline&lt;
             P: IsA&lt;TextTag&gt;,
@@ -9186,8 +9186,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_sentence_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_sentence_trampoline&lt;P: IsA&lt;TextTag&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkTextTag,
@@ -9210,8 +9210,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_sentence_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_sentence_set_trampoline&lt;
             P: IsA&lt;TextTag&gt;,
@@ -9585,8 +9585,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_text_transform_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_text_transform_trampoline&lt;
             P: IsA&lt;TextTag&gt;,
@@ -9612,8 +9612,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_text_transform_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_text_transform_set_trampoline&lt;
             P: IsA&lt;TextTag&gt;,
@@ -9824,8 +9824,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_word_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_word_trampoline&lt;P: IsA&lt;TextTag&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkTextTag,
@@ -9848,8 +9848,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>connect_word_set_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_word_set_trampoline&lt;P: IsA&lt;TextTag&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkTextTag,

@@ -2227,8 +2227,8 @@
     }
 
     <span class="doccomment">/// The child widget.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>child(<span class="self">self</span>, child: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;child&quot;</span>, child.clone().upcast()),
@@ -2594,8 +2594,8 @@
     /// # Returns
     ///
     /// the child widget of @self
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_check_button_get_child&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_child&quot;</span>)]
     </span><span class="kw">fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Widget&gt;;
@@ -2645,8 +2645,8 @@
     /// relations from @child to @self.
     /// ## `child`
     /// the child widget
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_check_button_set_child&quot;</span>)]
     </span><span class="kw">fn </span>set_child(<span class="kw-2">&amp;</span><span class="self">self</span>, child: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;&gt;);
 
@@ -2711,13 +2711,13 @@
     ///
     /// The default bindings for this signal are all forms of the
     /// &lt;kbd&gt;␣&lt;/kbd&gt; and &lt;kbd&gt;Enter&lt;/kbd&gt; keys.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;activate&quot;</span>)]
     </span><span class="kw">fn </span>connect_activate&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     </span><span class="kw">fn </span>emit_activate(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
     <span class="doccomment">/// Emitted when the buttons&#39;s [`active`][struct@crate::CheckButton#active]
@@ -2728,8 +2728,8 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;active&quot;</span>)]
     </span><span class="kw">fn </span>connect_active_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;child&quot;</span>)]
     </span><span class="kw">fn </span>connect_child_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
@@ -2755,8 +2755,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Widget&gt; {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gtk_check_button_get_child(
@@ -2795,8 +2795,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">fn </span>set_child(<span class="kw-2">&amp;</span><span class="self">self</span>, child: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;&gt;) {
         <span class="kw">unsafe </span>{
             ffi::gtk_check_button_set_child(
@@ -2839,8 +2839,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     </span><span class="kw">fn </span>connect_activate&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>activate_trampoline&lt;P: IsA&lt;CheckButton&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkCheckButton,
@@ -2862,8 +2862,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     </span><span class="kw">fn </span>emit_activate(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="self">self</span>.emit_by_name::&lt;()&gt;(<span class="string">&quot;activate&quot;</span>, <span class="kw-2">&amp;</span>[]);
     }
@@ -2911,8 +2911,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">fn </span>connect_child_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_child_trampoline&lt;P: IsA&lt;CheckButton&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkCheckButton,

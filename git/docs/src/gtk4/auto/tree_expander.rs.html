@@ -1620,8 +1620,8 @@
     /// # Returns
     ///
     /// TRUE if the expander icon should be hidden. Otherwise FALSE.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_tree_expander_get_hide_expander&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_hide_expander&quot;</span>)]
     </span><span class="kw">pub fn </span>hides_expander(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -1637,8 +1637,8 @@
     /// # Returns
     ///
     /// TRUE if the child should be indented . Otherwise FALSE.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_tree_expander_get_indent_for_depth&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_indent_for_depth&quot;</span>)]
     </span><span class="kw">pub fn </span>is_indent_for_depth(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -1654,8 +1654,8 @@
     /// # Returns
     ///
     /// TRUE if the child should be indented when not expandable. Otherwise FALSE.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_tree_expander_get_indent_for_icon&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_indent_for_icon&quot;</span>)]
     </span><span class="kw">pub fn </span>is_indent_for_icon(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -1712,8 +1712,8 @@
     <span class="doccomment">/// Sets whether the expander icon should be visible in a GtkTreeListRow.
     /// ## `hide_expander`
     /// TRUE if the expander should be hidden. Otherwise FALSE.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_tree_expander_set_hide_expander&quot;</span>)]
     </span><span class="kw">pub fn </span>set_hide_expander(<span class="kw-2">&amp;</span><span class="self">self</span>, hide_expander: bool) {
         <span class="kw">unsafe </span>{
@@ -1727,8 +1727,8 @@
     <span class="doccomment">/// Sets if the TreeExpander should indent the child according to its depth.
     /// ## `indent_for_depth`
     /// TRUE if the child should be indented. Otherwise FALSE.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_tree_expander_set_indent_for_depth&quot;</span>)]
     </span><span class="kw">pub fn </span>set_indent_for_depth(<span class="kw-2">&amp;</span><span class="self">self</span>, indent_for_depth: bool) {
         <span class="kw">unsafe </span>{
@@ -1742,8 +1742,8 @@
     <span class="doccomment">/// Sets if the TreeExpander should indent the child by the width of an expander-icon when it is not expandable.
     /// ## `indent_for_icon`
     /// TRUE if the child should be indented without expander. Otherwise FALSE.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_tree_expander_set_indent_for_icon&quot;</span>)]
     </span><span class="kw">pub fn </span>set_indent_for_icon(<span class="kw-2">&amp;</span><span class="self">self</span>, indent_for_icon: bool) {
         <span class="kw">unsafe </span>{
@@ -1787,8 +1787,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;hide-expander&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_hide_expander_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_hide_expander_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>TreeExpander) + <span class="lifetime">&#39;static</span>&gt;(
@@ -1812,8 +1812,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;indent-for-depth&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_indent_for_depth_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_indent_for_depth_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>TreeExpander) + <span class="lifetime">&#39;static</span>&gt;(
@@ -1837,8 +1837,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;indent-for-icon&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_indent_for_icon_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_indent_for_icon_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>TreeExpander) + <span class="lifetime">&#39;static</span>&gt;(
@@ -1944,8 +1944,8 @@
     ///
     /// A common use for this property would be to bind to the number of children in a
     /// GtkTreeListRow&#39;s model in order to hide the expander when a row has no children.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>hide_expander(<span class="self">self</span>, hide_expander: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;hide-expander&quot;</span>, hide_expander),
@@ -1953,8 +1953,8 @@
     }
 
     <span class="doccomment">/// TreeExpander indents the child according to its depth.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>indent_for_depth(<span class="self">self</span>, indent_for_depth: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;indent-for-depth&quot;</span>, indent_for_depth),
@@ -1962,8 +1962,8 @@
     }
 
     <span class="doccomment">/// TreeExpander indents the child by the width of an expander-icon if it is not expandable.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>indent_for_icon(<span class="self">self</span>, indent_for_icon: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;indent-for-icon&quot;</span>, indent_for_icon),

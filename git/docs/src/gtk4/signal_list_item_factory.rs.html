@@ -191,22 +191,22 @@
 <a href="#118" id="118">118</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+</span><span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs)))]
 </span><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, ListItem};
 
 <span class="kw">use </span><span class="kw">crate</span>::SignalListItemFactory;
 
-<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs)))]
 </span><span class="kw">use </span>glib::{
     signal::{connect_raw, SignalHandlerId},
     translate::<span class="kw-2">*</span>,
 };
-<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs)))]
 </span><span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, mem::transmute};
 
 <span class="kw">impl </span>SignalListItemFactory {
     <span class="attr">#[doc(alias = <span class="string">&quot;bind&quot;</span>)]
-    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs)))]
     </span><span class="kw">pub fn </span>connect_bind&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>bind_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>SignalListItemFactory, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkSignalListItemFactory,
@@ -230,7 +230,7 @@
     }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;setup&quot;</span>)]
-    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs)))]
     </span><span class="kw">pub fn </span>connect_setup&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>setup_trampoline&lt;
             F: Fn(<span class="kw-2">&amp;</span>SignalListItemFactory, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>,
@@ -256,7 +256,7 @@
     }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;teardown&quot;</span>)]
-    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs)))]
     </span><span class="kw">pub fn </span>connect_teardown&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>teardown_trampoline&lt;
             F: Fn(<span class="kw-2">&amp;</span>SignalListItemFactory, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>,
@@ -282,7 +282,7 @@
     }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;unbind&quot;</span>)]
-    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+    #[cfg(not(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs)))]
     </span><span class="kw">pub fn </span>connect_unbind&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>unbind_trampoline&lt;
             F: Fn(<span class="kw-2">&amp;</span>SignalListItemFactory, <span class="kw-2">&amp;</span>ListItem) + <span class="lifetime">&#39;static</span>,

@@ -668,7 +668,7 @@
     <span class="kw">fn </span>set_use_preedit(<span class="kw-2">&amp;</span><span class="self">self</span>, use_preedit: bool) {
         <span class="self">self</span>.parent_set_use_preedit(use_preedit)
     }
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
     </span><span class="kw">fn </span>activate_osk(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="self">self</span>.parent_activate_osk()
     }
@@ -694,7 +694,7 @@
     #[allow(deprecated)]
     </span><span class="kw">fn </span>parent_set_surrounding(<span class="kw-2">&amp;</span><span class="self">self</span>, text: <span class="kw-2">&amp;</span>str, cursor_index: i32);
     <span class="kw">fn </span>parent_set_use_preedit(<span class="kw-2">&amp;</span><span class="self">self</span>, use_preedit: bool);
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
     </span><span class="kw">fn </span>parent_activate_osk(<span class="kw-2">&amp;</span><span class="self">self</span>);
 }
 
@@ -920,7 +920,7 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
     </span><span class="kw">fn </span>parent_activate_osk(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>data = T::type_data();
@@ -955,7 +955,7 @@
         klass.set_cursor_location = <span class="prelude-val">Some</span>(im_context_set_cursor_location::&lt;T&gt;);
         klass.set_surrounding = <span class="prelude-val">Some</span>(im_context_set_surrounding::&lt;T&gt;);
         klass.set_use_preedit = <span class="prelude-val">Some</span>(im_context_set_use_preedit::&lt;T&gt;);
-        <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+        <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
         </span>{
             klass.activate_osk = <span class="prelude-val">Some</span>(im_context_activate_osk::&lt;T&gt;);
         };
@@ -1132,7 +1132,7 @@
     imp.set_use_preedit(from_glib(use_preedit))
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
 </span><span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>im_context_activate_osk&lt;T: IMContextImpl&gt;(ptr: <span class="kw-2">*mut </span>ffi::GtkIMContext) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = instance.imp();

@@ -155,7 +155,7 @@
 <a href="#82" id="82">82</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="attr">#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
+</span><span class="attr">#![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
 
 </span><span class="kw">pub use </span>cairo;
@@ -204,11 +204,11 @@
 <span class="kw">mod </span>gl_shader_node;
 <span class="kw">mod </span>inset_shadow_node;
 <span class="kw">mod </span>linear_gradient_node;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>mask_node;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
 </span><span class="kw">mod </span>ngl_renderer;
 <span class="kw">mod </span>opacity_node;
 <span class="kw">mod </span>outset_shadow_node;
@@ -221,15 +221,15 @@
 <span class="kw">mod </span>shadow_node;
 <span class="kw">mod </span>text_node;
 <span class="kw">mod </span>texture_node;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>texture_scale_node;
 <span class="kw">mod </span>transform;
 <span class="kw">mod </span>transform_node;
 
 <span class="kw">pub use </span>color_stop::ColorStop;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
 #[cfg_attr(feature = <span class="string">&quot;v4_4&quot;</span>, deprecated = <span class="string">&quot;Since 4.4&quot;</span>)]
 </span><span class="kw">pub use </span>ngl_renderer::NglRenderer;
 <span class="kw">pub use </span>parse_location::ParseLocation;

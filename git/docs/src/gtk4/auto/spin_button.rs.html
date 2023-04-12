@@ -2099,8 +2099,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::AccessibleRange;
 <span class="kw">use crate</span>::{
     Accessible, AccessibleRole, Adjustment, Align, Buildable, CellEditable, ConstraintTarget,
@@ -2114,8 +2114,8 @@
 };
 <span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, fmt, mem, mem::transmute};
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="doccomment">/// A [`SpinButton`][crate::SpinButton] is an ideal way to allow the user to set the
     /// value of some attribute.
@@ -2928,7 +2928,7 @@
     }
 }
 
-<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="attr">#[doc(alias = <span class="string">&quot;GtkSpinButton&quot;</span>)]
     </span><span class="kw">pub struct </span>SpinButton(Object&lt;ffi::GtkSpinButton&gt;) @extends Widget, @implements Accessible, Buildable, ConstraintTarget, CellEditable, Editable, Orientable;

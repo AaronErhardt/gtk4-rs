@@ -264,11 +264,11 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub mod </span>accessible;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub mod </span>accessible_range;
 <span class="kw">pub mod </span>actionable;
 <span class="kw">pub mod </span>adjustment;
@@ -322,8 +322,8 @@
 <span class="kw">pub mod </span>shortcut_manager;
 <span class="kw">pub mod </span>sorter;
 <span class="kw">pub mod </span>style_context;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub mod </span>symbolic_paintable;
 <span class="kw">pub mod </span>text_buffer;
 <span class="kw">pub mod </span>text_view;
@@ -345,11 +345,11 @@
     <span class="attr">#[doc(hidden)]
     </span><span class="kw">pub use </span>glib::subclass::prelude::<span class="kw-2">*</span>;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::accessible::{AccessibleImpl, AccessibleImplExt};
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::accessible_range::{AccessibleRangeImpl, AccessibleRangeImplExt};
     <span class="kw">pub use </span><span class="kw">super</span>::actionable::{ActionableImpl, ActionableImplExt};
     <span class="kw">pub use </span><span class="kw">super</span>::adjustment::{AdjustmentImpl, AdjustmentImplExt};
@@ -403,8 +403,8 @@
     <span class="kw">pub use </span><span class="kw">super</span>::shortcut_manager::{ShortcutManagerImpl, ShortcutManagerImplExt};
     <span class="kw">pub use </span><span class="kw">super</span>::sorter::{SorterImpl, SorterImplExt};
     <span class="kw">pub use </span><span class="kw">super</span>::style_context::{StyleContextImpl, StyleContextImplExt};
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::symbolic_paintable::{SymbolicPaintableImpl, SymbolicPaintableImplExt};
     <span class="kw">pub use </span><span class="kw">super</span>::text_buffer::{TextBufferImpl, TextBufferImplExt};
     <span class="kw">pub use </span><span class="kw">super</span>::text_view::{TextViewImpl, TextViewImplExt};

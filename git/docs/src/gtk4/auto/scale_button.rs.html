@@ -1430,8 +1430,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::AccessibleRange;
 <span class="kw">use crate</span>::{
     Accessible, AccessibleRole, Adjustment, Align, Buildable, Button, ConstraintTarget,
@@ -1444,8 +1444,8 @@
 };
 <span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, fmt, mem::transmute};
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="doccomment">/// [`ScaleButton`][crate::ScaleButton] provides a button which pops up a scale widget.
     ///
@@ -1964,7 +1964,7 @@
     }
 }
 
-<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="attr">#[doc(alias = <span class="string">&quot;GtkScaleButton&quot;</span>)]
     </span><span class="kw">pub struct </span>ScaleButton(Object&lt;ffi::GtkScaleButton, ffi::GtkScaleButtonClass&gt;) @extends Widget, @implements Accessible, Buildable, ConstraintTarget, Orientable;
@@ -2393,8 +2393,8 @@
     /// # Returns
     ///
     /// whether the button is pressed
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_scale_button_get_active&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_active&quot;</span>)]
     </span><span class="kw">fn </span>is_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
@@ -2520,8 +2520,8 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;value-changed&quot;</span>)]
     </span><span class="kw">fn </span>connect_value_changed&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, f64) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;active&quot;</span>)]
     </span><span class="kw">fn </span>connect_active_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
@@ -2536,8 +2536,8 @@
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;ScaleButton&gt;&gt; ScaleButtonExt <span class="kw">for </span>O {
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>is_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gtk_scale_button_get_active(
@@ -2682,8 +2682,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>connect_active_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_active_trampoline&lt;P: IsA&lt;ScaleButton&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkScaleButton,

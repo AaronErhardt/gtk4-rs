@@ -558,8 +558,8 @@
     /// are *always* case-insensitive.
     /// ## `suffix`
     /// filename suffix to match
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_file_filter_add_suffix&quot;</span>)]
     </span><span class="kw">pub fn </span>add_suffix(<span class="kw-2">&amp;</span><span class="self">self</span>, suffix: <span class="kw-2">&amp;</span>str) {
         <span class="kw">unsafe </span>{

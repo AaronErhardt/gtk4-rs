@@ -451,11 +451,11 @@
 <span class="kw">mod </span>event_sequence;
 <span class="kw">pub use </span><span class="self">self</span>::event_sequence::EventSequence;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">mod </span>file_list;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::file_list::FileList;
 
 <span class="kw">mod </span>frame_timings;
@@ -470,11 +470,11 @@
 <span class="kw">mod </span>rectangle;
 <span class="kw">pub use </span><span class="self">self</span>::rectangle::Rectangle;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">mod </span>texture_downloader;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::texture_downloader::TextureDownloader;
 
 <span class="kw">mod </span>toplevel_layout;
@@ -495,16 +495,16 @@
 <span class="kw">pub use </span><span class="self">self</span>::enums::MemoryFormat;
 <span class="kw">pub use </span><span class="self">self</span>::enums::NotifyType;
 <span class="kw">pub use </span><span class="self">self</span>::enums::ScrollDirection;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::ScrollUnit;
 <span class="kw">pub use </span><span class="self">self</span>::enums::SubpixelLayout;
 <span class="kw">pub use </span><span class="self">self</span>::enums::SurfaceEdge;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::TextureError;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::enums::TitlebarGesture;
 <span class="kw">pub use </span><span class="self">self</span>::enums::TouchpadGesturePhase;
 <span class="kw">pub use </span><span class="self">self</span>::enums::VulkanError;
@@ -518,8 +518,8 @@
 <span class="kw">pub use </span><span class="self">self</span>::flags::PaintableFlags;
 <span class="kw">pub use </span><span class="self">self</span>::flags::SeatCapabilities;
 <span class="kw">pub use </span><span class="self">self</span>::flags::ToplevelState;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub use </span><span class="self">self</span>::flags::GLAPI;
 
 <span class="kw">pub mod </span>functions;

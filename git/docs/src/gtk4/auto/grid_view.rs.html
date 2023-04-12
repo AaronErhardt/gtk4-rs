@@ -1517,8 +1517,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::ListTabBehavior;
 <span class="kw">use crate</span>::{
     Accessible, AccessibleRole, Adjustment, Align, Buildable, ConstraintTarget, LayoutManager,
@@ -2227,8 +2227,8 @@
     /// # Returns
     ///
     /// The behavior of the &lt;kbd&gt;Tab&lt;/kbd&gt; key
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_grid_view_get_tab_behavior&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_tab_behavior&quot;</span>)]
     </span><span class="kw">pub fn </span>tab_behavior(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ListTabBehavior {
@@ -2323,8 +2323,8 @@
     <span class="doccomment">/// Sets the behavior of the &lt;kbd&gt;Tab&lt;/kbd&gt; and &lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;Tab&lt;/kbd&gt; keys.
     /// ## `tab_behavior`
     /// The desired tab behavior
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_grid_view_set_tab_behavior&quot;</span>)]
     </span><span class="kw">pub fn </span>set_tab_behavior(<span class="kw-2">&amp;</span><span class="self">self</span>, tab_behavior: ListTabBehavior) {
         <span class="kw">unsafe </span>{
@@ -2507,8 +2507,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;tab-behavior&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_tab_behavior_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_tab_behavior_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>GridView) + <span class="lifetime">&#39;static</span>&gt;(
@@ -2605,8 +2605,8 @@
     }
 
     <span class="doccomment">/// Behavior of the &lt;kbd&gt;Tab&lt;/kbd&gt; key
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     </span><span class="kw">pub fn </span>tab_behavior(<span class="self">self</span>, tab_behavior: ListTabBehavior) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;tab-behavior&quot;</span>, tab_behavior),

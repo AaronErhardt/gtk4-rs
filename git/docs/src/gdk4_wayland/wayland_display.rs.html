@@ -187,23 +187,23 @@
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 </span><span class="kw">use </span><span class="kw">crate</span>::WaylandDisplay;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
 </span><span class="kw">use </span>glib::{once_cell::sync::Lazy, prelude::<span class="kw-2">*</span>, translate::<span class="kw-2">*</span>, Quark};
 
-<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
+<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), docsrs))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
 </span><span class="kw">use </span>khronos_egl <span class="kw">as </span>egl;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
 </span><span class="kw">use </span>wayland_client::{
     backend::ObjectId,
     protocol::{wl_compositor::WlCompositor, wl_display::WlDisplay},
     Proxy,
 };
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
 </span><span class="kw">static </span>WAYLAND_DISPLAY_CONNECTION_QUARK: Lazy&lt;Quark&gt; =
     Lazy::new(|| Quark::from_str(<span class="string">&quot;gtk-rs-wayland-display-connection-quark&quot;</span>));
 
@@ -213,8 +213,8 @@
     /// # Returns
     ///
     /// the EGL display
-    </span><span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
+    </span><span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
     #[doc(alias = <span class="string">&quot;gdk_wayland_display_get_egl_display&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_egl_display&quot;</span>)]
     </span><span class="kw">pub fn </span>egl_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;egl::Display&gt; {
@@ -235,8 +235,8 @@
     /// a Wayland `wl_compositor`
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_wayland_display_get_wl_compositor&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_wl_compositor&quot;</span>)]
-    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
     </span><span class="kw">pub fn </span>wl_compositor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WlCompositor&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>compositor_ptr = ffi::gdk_wayland_display_get_wl_compositor(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
@@ -259,8 +259,8 @@
     /// a Wayland `wl_display`
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_wayland_display_get_wl_display&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_wl_display&quot;</span>)]
-    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
     </span><span class="kw">pub fn </span>wl_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WlDisplay&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>display_ptr = ffi::gdk_wayland_display_get_wl_display(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);

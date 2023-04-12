@@ -684,8 +684,8 @@
     <span class="doccomment">/// Sets a name on the controller that can be used for debugging.
     /// ## `name`
     /// a name for @self, must be a static string
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_event_controller_set_static_name&quot;</span>)]
     </span><span class="kw">fn </span>set_static_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;);
 
@@ -796,8 +796,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">fn </span>set_static_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
         <span class="kw">unsafe </span>{
             ffi::gtk_event_controller_set_static_name(

@@ -3132,8 +3132,8 @@
 
     <span class="doccomment">/// Whether the window frame should handle F10 for activating
     /// menubars.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     </span><span class="kw">pub fn </span>handle_menubar_accel(<span class="self">self</span>, handle_menubar_accel: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self
@@ -3212,8 +3212,8 @@
     }
 
     <span class="doccomment">/// The titlebar widget.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>titlebar(<span class="self">self</span>, titlebar: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;titlebar&quot;</span>, titlebar.clone().upcast()),

@@ -3393,8 +3393,8 @@
     ///
     /// ## `weak`
     /// location to store the weak cursor position
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_text_compute_cursor_extents&quot;</span>)]
     </span><span class="kw">pub fn </span>compute_cursor_extents(<span class="kw-2">&amp;</span><span class="self">self</span>, position: usize) -&gt; (graphene::Rect, graphene::Rect) {
         <span class="kw">unsafe </span>{

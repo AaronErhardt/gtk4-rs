@@ -2407,8 +2407,8 @@
     /// # Returns
     ///
     /// TRUE if the button is active
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_get_active&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_active&quot;</span>)]
     </span><span class="kw">pub fn </span>is_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -2420,8 +2420,8 @@
     /// # Returns
     ///
     /// whether to show a dropdown arrow even when using an icon
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_get_always_show_arrow&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_always_show_arrow&quot;</span>)]
     </span><span class="kw">pub fn </span>must_always_show_arrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -2437,8 +2437,8 @@
     /// # Returns
     ///
     /// the child widget of @self
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_get_child&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_child&quot;</span>)]
     </span><span class="kw">pub fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Widget&gt; {
@@ -2519,8 +2519,8 @@
     /// # Returns
     ///
     /// [`true`] if the button is a primary menu
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_get_primary&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_primary&quot;</span>)]
     </span><span class="kw">pub fn </span>is_primary(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -2563,8 +2563,8 @@
     <span class="doccomment">/// Sets whether menu button acts is active.
     /// ## `active`
     /// whether the menu button is active
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_set_active&quot;</span>)]
     </span><span class="kw">pub fn </span>set_active(<span class="kw-2">&amp;</span><span class="self">self</span>, active: bool) {
         <span class="kw">unsafe </span>{
@@ -2576,8 +2576,8 @@
     /// child.
     /// ## `always_show_arrow`
     /// whether to show a dropdown arrow even when using an icon
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_set_always_show_arrow&quot;</span>)]
     </span><span class="kw">pub fn </span>set_always_show_arrow(<span class="kw-2">&amp;</span><span class="self">self</span>, always_show_arrow: bool) {
         <span class="kw">unsafe </span>{
@@ -2598,8 +2598,8 @@
     /// will be shown next to the child.
     /// ## `child`
     /// the child widget
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_set_child&quot;</span>)]
     </span><span class="kw">pub fn </span>set_child(<span class="kw-2">&amp;</span><span class="self">self</span>, child: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;&gt;) {
         <span class="kw">unsafe </span>{
@@ -2765,8 +2765,8 @@
     /// Primary menus can be opened with the &lt;kbd&gt;F10&lt;/kbd&gt; key.
     /// ## `primary`
     /// whether the menubutton should act as a primary menu
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_menu_button_set_primary&quot;</span>)]
     </span><span class="kw">pub fn </span>set_primary(<span class="kw-2">&amp;</span><span class="self">self</span>, primary: bool) {
         <span class="kw">unsafe </span>{
@@ -2791,8 +2791,8 @@
     ///
     /// The `::activate` signal on [`MenuButton`][crate::MenuButton] is an action signal and
     /// emitting it causes the button to pop up its menu.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;activate&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_activate&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>activate_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>MenuButton) + <span class="lifetime">&#39;static</span>&gt;(
@@ -2815,14 +2815,14 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">pub fn </span>emit_activate(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="self">self</span>.emit_by_name::&lt;()&gt;(<span class="string">&quot;activate&quot;</span>, <span class="kw-2">&amp;</span>[]);
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;active&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_active_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_active_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>MenuButton) + <span class="lifetime">&#39;static</span>&gt;(
@@ -2846,8 +2846,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;always-show-arrow&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_always_show_arrow_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -2874,8 +2874,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;child&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_child_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_child_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>MenuButton) + <span class="lifetime">&#39;static</span>&gt;(
@@ -3037,8 +3037,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;primary&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_primary_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_primary_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>MenuButton) + <span class="lifetime">&#39;static</span>&gt;(
@@ -3109,8 +3109,8 @@
     }
 
     <span class="doccomment">/// Whether the menu button is active.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>active(<span class="self">self</span>, active: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;active&quot;</span>, active),
@@ -3118,8 +3118,8 @@
     }
 
     <span class="doccomment">/// Whether to show a dropdown arrow even when using an icon or a custom child.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">pub fn </span>always_show_arrow(<span class="self">self</span>, always_show_arrow: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self
@@ -3129,8 +3129,8 @@
     }
 
     <span class="doccomment">/// The child widget.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>child(<span class="self">self</span>, child: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Widget&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;child&quot;</span>, child.clone().upcast()),
@@ -3188,8 +3188,8 @@
     <span class="doccomment">/// Whether the menu button acts as a primary menu.
     ///
     /// Primary menus can be opened using the &lt;kbd&gt;F10&lt;/kbd&gt; key
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">pub fn </span>primary(<span class="self">self</span>, primary: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;primary&quot;</span>, primary),

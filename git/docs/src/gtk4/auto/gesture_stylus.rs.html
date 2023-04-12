@@ -950,8 +950,8 @@
     /// # Returns
     ///
     /// [`true`] if the gesture is only for stylus events
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_gesture_stylus_get_stylus_only&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_stylus_only&quot;</span>)]
     </span><span class="kw">pub fn </span>is_stylus_only(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -968,8 +968,8 @@
     /// otherwise it&#39;ll handle events from any pointing device.
     /// ## `stylus_only`
     /// whether the gesture is used exclusivly for stylus events
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_gesture_stylus_set_stylus_only&quot;</span>)]
     </span><span class="kw">pub fn </span>set_stylus_only(<span class="kw-2">&amp;</span><span class="self">self</span>, stylus_only: bool) {
         <span class="kw">unsafe </span>{
@@ -1093,8 +1093,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;stylus-only&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_stylus_only_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_stylus_only_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>GestureStylus) + <span class="lifetime">&#39;static</span>&gt;(
@@ -1142,8 +1142,8 @@
     }
 
     <span class="doccomment">/// If this gesture should exclusively react to stylus input devices.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub fn </span>stylus_only(<span class="self">self</span>, stylus_only: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;stylus-only&quot;</span>, stylus_only),

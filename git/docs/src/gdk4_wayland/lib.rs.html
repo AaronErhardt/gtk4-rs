@@ -102,31 +102,25 @@
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
-<a href="#32" id="32">32</a>
-<a href="#33" id="33">33</a>
-<a href="#34" id="34">34</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 </span><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
-#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 </span><span class="kw">pub use </span>ffi;
 <span class="kw">pub use </span>gdk;
 <span class="kw">pub use </span>gio;
 <span class="kw">pub use </span>glib;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
 </span><span class="kw">pub use </span>wayland_client;
 
-<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
+<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), docsrs))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
 </span><span class="kw">pub use </span>khronos_egl;
 
-<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(
-    feature = <span class="string">&quot;dox&quot;</span>,
-    doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>)))
-)]
+<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>), docsrs))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>))))]
 </span><span class="kw">pub use </span>xkb;
 
 <span class="kw">mod </span>auto;

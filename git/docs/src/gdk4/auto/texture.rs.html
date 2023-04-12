@@ -436,8 +436,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::MemoryFormat;
 <span class="kw">use </span><span class="kw">crate</span>::Paintable;
 <span class="kw">use </span>glib::{prelude::<span class="kw-2">*</span>, translate::<span class="kw-2">*</span>};
@@ -523,8 +523,8 @@
     /// # Returns
     ///
     /// A newly-created [`Texture`][crate::Texture]
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_texture_new_from_bytes&quot;</span>)]
     #[doc(alias = <span class="string">&quot;new_from_bytes&quot;</span>)]
     </span><span class="kw">pub fn </span>from_bytes(bytes: <span class="kw-2">&amp;</span>glib::Bytes) -&gt; <span class="prelude-ty">Result</span>&lt;Texture, glib::Error&gt; {
@@ -587,8 +587,8 @@
     /// # Returns
     ///
     /// A newly-created [`Texture`][crate::Texture]
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_texture_new_from_filename&quot;</span>)]
     #[doc(alias = <span class="string">&quot;new_from_filename&quot;</span>)]
     </span><span class="kw">pub fn </span>from_filename(path: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Texture, glib::Error&gt; {
@@ -658,8 +658,8 @@
     /// # Returns
     ///
     /// the preferred format for the texture&#39;s data
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_texture_get_format&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_format&quot;</span>)]
     </span><span class="kw">fn </span>format(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MemoryFormat;
@@ -701,28 +701,28 @@
         filename: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::error::BoolError&gt;;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_texture_save_to_png_bytes&quot;</span>)]
     </span><span class="kw">fn </span>save_to_png_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_texture_save_to_tiff&quot;</span>)]
     </span><span class="kw">fn </span>save_to_tiff(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         filename: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::error::BoolError&gt;;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_texture_save_to_tiff_bytes&quot;</span>)]
     </span><span class="kw">fn </span>save_to_tiff_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes;
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;Texture&gt;&gt; TextureExt <span class="kw">for </span>O {
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>format(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MemoryFormat {
         <span class="kw">unsafe </span>{ from_glib(ffi::gdk_texture_get_format(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
     }
@@ -750,8 +750,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>save_to_png_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes {
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::gdk_texture_save_to_png_bytes(
@@ -760,8 +760,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>save_to_tiff(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         filename: <span class="kw">impl </span>AsRef&lt;std::path::Path&gt;,
@@ -777,8 +777,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>save_to_tiff_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Bytes {
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::gdk_texture_save_to_tiff_bytes(

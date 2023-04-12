@@ -1556,8 +1556,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::AccessiblePlatformState;
 <span class="kw">use crate</span>::{Accessible, Buildable, ConstraintTarget, Widget};
 <span class="kw">use </span>glib::{
@@ -2266,8 +2266,8 @@
     /// ```
     /// ## `state`
     /// what kind of accessible state to retrieve
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_editable_delegate_get_accessible_platform_state&quot;</span>)]
     </span><span class="kw">fn </span>delegate_get_accessible_platform_state(<span class="kw-2">&amp;</span><span class="self">self</span>, state: AccessiblePlatformState) -&gt; bool;
 
@@ -2600,8 +2600,8 @@
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;Editable&gt;&gt; EditableExt <span class="kw">for </span>O {
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>delegate_get_accessible_platform_state(<span class="kw-2">&amp;</span><span class="self">self</span>, state: AccessiblePlatformState) -&gt; bool {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gtk_editable_delegate_get_accessible_platform_state(

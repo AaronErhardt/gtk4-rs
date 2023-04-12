@@ -247,24 +247,24 @@
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 </span><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, X11Display};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
 </span><span class="kw">use </span>glib::signal::{connect_raw, SignalHandlerId};
-<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
+<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), docsrs))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
 </span><span class="kw">use </span>khronos_egl <span class="kw">as </span>egl;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
 </span><span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, mem::transmute};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
 </span><span class="kw">use </span>x11::xlib;
 
 <span class="attr">#[cfg(not(feature = <span class="string">&quot;xlib&quot;</span>))]
 </span><span class="kw">use crate</span>::{XCursor, XWindow};
 <span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>, IntoGStr};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
 </span><span class="kw">use </span>x11::xlib::{Cursor <span class="kw">as </span>XCursor, Window <span class="kw">as </span>XWindow};
 
 <span class="kw">impl </span>X11Display {
@@ -275,8 +275,8 @@
     /// # Returns
     ///
     /// the EGL display object
-    </span><span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
+    </span><span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
     #[doc(alias = <span class="string">&quot;gdk_x11_display_get_egl_display&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_egl_display&quot;</span>)]
     </span><span class="kw">pub fn </span>egl_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;egl::Display&gt; {
@@ -325,8 +325,8 @@
     /// # Returns
     ///
     /// an X display
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_x11_display_get_xdisplay&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_xdisplay&quot;</span>)]
     </span><span class="kw">pub unsafe fn </span>xdisplay(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>xlib::Display {
@@ -338,8 +338,8 @@
     /// # Returns
     ///
     /// an X Screen
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_x11_display_get_xscreen&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_xscreen&quot;</span>)]
     </span><span class="kw">pub unsafe fn </span>xscreen(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>xlib::Screen {
@@ -368,8 +368,8 @@
     ///
     /// [`true`] to stop other handlers from being invoked for the event.
     ///   [`false`] to propagate the event further.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;xevent&quot;</span>)]
     </span><span class="kw">pub unsafe fn </span>connect_xevent&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">*mut </span>xlib::XEvent) -&gt; glib::Continue + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,

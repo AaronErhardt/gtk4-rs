@@ -1017,8 +1017,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::TitlebarGesture;
 <span class="kw">use crate</span>::{
     Device, Event, FullscreenMode, Surface, SurfaceEdge, Texture, ToplevelLayout, ToplevelState,
@@ -1464,8 +1464,8 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_supports_edge_constraints&quot;</span>)]
     </span><span class="kw">fn </span>supports_edge_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_toplevel_titlebar_gesture&quot;</span>)]
     </span><span class="kw">fn </span>titlebar_gesture(<span class="kw-2">&amp;</span><span class="self">self</span>, gesture: TitlebarGesture) -&gt; bool;
 
@@ -1669,8 +1669,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">fn </span>titlebar_gesture(<span class="kw-2">&amp;</span><span class="self">self</span>, gesture: TitlebarGesture) -&gt; bool {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_toplevel_titlebar_gesture(

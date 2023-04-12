@@ -372,8 +372,8 @@
 
 </span><span class="kw">use crate</span>::{AnchorHints, Gravity, Rectangle};
 <span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
 </span><span class="kw">use </span>std::mem;
 
 <span class="macro">glib::wrapper! </span>{
@@ -528,8 +528,8 @@
     ///
     /// ## `bottom`
     /// return location for the bottom shadow width
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_popup_layout_get_shadow_width&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_shadow_width&quot;</span>)]
     </span><span class="kw">pub fn </span>shadow_width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (i32, i32, i32, i32) {
@@ -633,8 +633,8 @@
     /// height of the top part of the shadow
     /// ## `bottom`
     /// height of the bottom part of the shadow
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_popup_layout_set_shadow_width&quot;</span>)]
     </span><span class="kw">pub fn </span>set_shadow_width(<span class="kw-2">&amp;</span><span class="self">self</span>, left: i32, right: i32, top: i32, bottom: i32) {
         <span class="kw">unsafe </span>{

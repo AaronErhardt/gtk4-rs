@@ -1029,8 +1029,8 @@
     /// # Returns
     ///
     /// [`true`] if @self includes an icon for @gicon
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_icon_theme_has_gicon&quot;</span>)]
     </span><span class="kw">pub fn </span>has_gicon(<span class="kw-2">&amp;</span><span class="self">self</span>, gicon: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gio::Icon&gt;) -&gt; bool {
         <span class="kw">unsafe </span>{

@@ -187,8 +187,8 @@
 // DO NOT EDIT
 
 </span><span class="kw">use </span><span class="kw">crate</span>::ScrollDirection;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::ScrollUnit;
 <span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
 <span class="kw">use </span>std::{fmt, mem};
@@ -261,8 +261,8 @@
     /// # Returns
     ///
     /// the scroll unit.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gdk_scroll_event_get_unit&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_unit&quot;</span>)]
     </span><span class="kw">pub fn </span>unit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ScrollUnit {

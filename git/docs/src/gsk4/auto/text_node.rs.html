@@ -336,8 +336,8 @@
     /// # Returns
     ///
     /// [`true`] if the text node has color glyphs
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_2&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_2&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gsk_text_node_has_color_glyphs&quot;</span>)]
     </span><span class="kw">pub fn </span>has_color_glyphs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">unsafe </span>{ from_glib(ffi::gsk_text_node_has_color_glyphs(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }

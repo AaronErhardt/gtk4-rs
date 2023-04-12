@@ -344,7 +344,7 @@
     clippy::unreadable_literal,
     clippy::upper_case_acronyms
 )]
-#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 #[allow(unused_imports)]
 </span><span class="kw">use </span>libc::{
@@ -516,16 +516,16 @@
     <span class="kw">pub fn </span>gdk_wayland_device_get_wl_keyboard(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
     <span class="kw">pub fn </span>gdk_wayland_device_get_wl_pointer(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
     <span class="kw">pub fn </span>gdk_wayland_device_get_wl_seat(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">pub fn </span>gdk_wayland_device_get_xkb_keymap(device: <span class="kw-2">*mut </span>GdkWaylandDevice) -&gt; gpointer;
 
     <span class="comment">//=========================================================================
     // GdkWaylandDisplay
     //=========================================================================
     </span><span class="kw">pub fn </span>gdk_wayland_display_get_type() -&gt; GType;
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">pub fn </span>gdk_wayland_display_get_egl_display(display: <span class="kw-2">*mut </span>GdkWaylandDisplay) -&gt; gpointer;
     <span class="kw">pub fn </span>gdk_wayland_display_get_startup_notification_id(
         display: <span class="kw-2">*mut </span>GdkWaylandDisplay,

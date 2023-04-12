@@ -1598,8 +1598,8 @@
     /// may still happen.
     ///
     /// The media stream must be prepared when this function is called.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_media_stream_stream_ended&quot;</span>)]
     </span><span class="kw">fn </span>stream_ended(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
@@ -1621,8 +1621,8 @@
     /// [`true`] if the stream should advertise seekability
     /// ## `duration`
     /// The duration of the stream or 0 if unknown
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_media_stream_stream_prepared&quot;</span>)]
     </span><span class="kw">fn </span>stream_prepared(<span class="kw-2">&amp;</span><span class="self">self</span>, has_audio: bool, has_video: bool, seekable: bool, duration: i64);
 
@@ -1631,8 +1631,8 @@
     /// [`stream_prepared()`][Self::stream_prepared()] can then be called again.
     ///
     /// This function will also reset any error state the stream was in.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_media_stream_stream_unprepared&quot;</span>)]
     </span><span class="kw">fn </span>stream_unprepared(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
@@ -1887,16 +1887,16 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">fn </span>stream_ended(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_media_stream_stream_ended(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">fn </span>stream_prepared(<span class="kw-2">&amp;</span><span class="self">self</span>, has_audio: bool, has_video: bool, seekable: bool, duration: i64) {
         <span class="kw">unsafe </span>{
             ffi::gtk_media_stream_stream_prepared(
@@ -1909,8 +1909,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">fn </span>stream_unprepared(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_media_stream_stream_unprepared(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);

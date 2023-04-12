@@ -5071,8 +5071,8 @@
     #[doc(alias = <span class="string">&quot;get_clipboard&quot;</span>)]
     </span><span class="kw">fn </span>clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gdk::Clipboard;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_widget_get_color&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_color&quot;</span>)]
     </span><span class="kw">fn </span>color(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gdk::RGBA;
@@ -5960,8 +5960,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>color(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; gdk::RGBA {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>color = gdk::RGBA::uninitialized();

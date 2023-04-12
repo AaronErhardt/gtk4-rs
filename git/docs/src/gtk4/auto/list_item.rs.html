@@ -689,8 +689,8 @@
     /// # Returns
     ///
     /// [`true`] if the item is focusable
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_list_item_get_focusable&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_focusable&quot;</span>)]
     </span><span class="kw">fn </span>is_focusable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
@@ -776,8 +776,8 @@
     /// By default, list items are focusable.
     /// ## `focusable`
     /// if the item should be focusable
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_list_item_set_focusable&quot;</span>)]
     </span><span class="kw">fn </span>set_focusable(<span class="kw-2">&amp;</span><span class="self">self</span>, focusable: bool);
 
@@ -804,8 +804,8 @@
     <span class="attr">#[doc(alias = <span class="string">&quot;child&quot;</span>)]
     </span><span class="kw">fn </span>connect_child_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;focusable&quot;</span>)]
     </span><span class="kw">fn </span>connect_focusable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
 
@@ -835,8 +835,8 @@
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_list_item_get_child(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     </span><span class="kw">fn </span>is_focusable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gtk_list_item_get_focusable(
@@ -887,8 +887,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     </span><span class="kw">fn </span>set_focusable(<span class="kw-2">&amp;</span><span class="self">self</span>, focusable: bool) {
         <span class="kw">unsafe </span>{
             ffi::gtk_list_item_set_focusable(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, focusable.into_glib());
@@ -951,8 +951,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     </span><span class="kw">fn </span>connect_focusable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_focusable_trampoline&lt;P: IsA&lt;ListItem&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GtkListItem,

@@ -1375,8 +1375,8 @@
 // DO NOT EDIT
 </span><span class="attr">#![allow(deprecated)]
 
-#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::ContentFit;
 <span class="kw">use crate</span>::{
     Accessible, AccessibleRole, Align, Buildable, ConstraintTarget, LayoutManager, Overflow, Widget,
@@ -1940,8 +1940,8 @@
     /// # Returns
     ///
     /// the content fit mode
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_picture_get_content_fit&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_content_fit&quot;</span>)]
     </span><span class="kw">pub fn </span>content_fit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContentFit {
@@ -2039,8 +2039,8 @@
     /// See [`ContentFit`][crate::ContentFit] for details.
     /// ## `content_fit`
     /// the content fit mode
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_picture_set_content_fit&quot;</span>)]
     </span><span class="kw">pub fn </span>set_content_fit(<span class="kw-2">&amp;</span><span class="self">self</span>, content_fit: ContentFit) {
         <span class="kw">unsafe </span>{
@@ -2197,8 +2197,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;content-fit&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_content_fit_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_content_fit_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>Picture) + <span class="lifetime">&#39;static</span>&gt;(
@@ -2335,8 +2335,8 @@
     }
 
     <span class="doccomment">/// How the content should be resized to fit inside the [`Picture`][crate::Picture].
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>content_fit(<span class="self">self</span>, content_fit: ContentFit) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;content-fit&quot;</span>, content_fit),

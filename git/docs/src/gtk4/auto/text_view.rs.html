@@ -5846,8 +5846,8 @@
     /// # Returns
     ///
     /// a [`pango::Context`][crate::pango::Context]
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_text_view_get_ltr_context&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_ltr_context&quot;</span>)]
     </span><span class="kw">fn </span>ltr_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; pango::Context;
@@ -5923,8 +5923,8 @@
     /// # Returns
     ///
     /// a [`pango::Context`][crate::pango::Context]
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_text_view_get_rtl_context&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_rtl_context&quot;</span>)]
     </span><span class="kw">fn </span>rtl_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; pango::Context;
@@ -6549,8 +6549,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">fn </span>ltr_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; pango::Context {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gtk_text_view_get_ltr_context(
@@ -6591,8 +6591,8 @@
         <span class="kw">unsafe </span>{ ffi::gtk_text_view_get_right_margin(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">fn </span>rtl_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; pango::Context {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gtk_text_view_get_rtl_context(

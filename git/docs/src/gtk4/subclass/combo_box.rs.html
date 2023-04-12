@@ -190,7 +190,7 @@
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
 </span><span class="kw">pub trait </span>ComboBoxImpl: ComboBoxImplExt + WidgetImpl {
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
     </span><span class="kw">fn </span>activate(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="self">self</span>.parent_activate()
     }
@@ -205,7 +205,7 @@
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
 </span><span class="kw">pub trait </span>ComboBoxImplExt: ObjectSubclass {
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
     </span><span class="kw">fn </span>parent_activate(<span class="kw-2">&amp;</span><span class="self">self</span>);
 
     <span class="kw">fn </span>parent_changed(<span class="kw-2">&amp;</span><span class="self">self</span>);
@@ -214,7 +214,7 @@
 }
 
 <span class="kw">impl</span>&lt;T: ComboBoxImpl&gt; ComboBoxImplExt <span class="kw">for </span>T {
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
     </span><span class="kw">fn </span>parent_activate(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>data = T::type_data();
@@ -255,7 +255,7 @@
         <span class="kw">let </span>klass = class.as_mut();
         klass.changed = <span class="prelude-val">Some</span>(combo_box_changed::&lt;T&gt;);
         klass.format_entry_text = <span class="prelude-val">Some</span>(combo_box_format_entry_text::&lt;T&gt;);
-        <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+        <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
         </span>{
             klass.activate = <span class="prelude-val">Some</span>(combo_box_activate::&lt;T&gt;);
         };
@@ -280,7 +280,7 @@
     imp.format_entry_text(path.as_str()).into_glib_ptr()
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
 </span><span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>combo_box_activate&lt;T: ComboBoxImpl&gt;(ptr: <span class="kw-2">*mut </span>ffi::GtkComboBox) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = instance.imp();

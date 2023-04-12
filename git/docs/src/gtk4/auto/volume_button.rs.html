@@ -932,8 +932,8 @@
 // DO NOT EDIT
 </span><span class="attr">#![allow(deprecated)]
 
-#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::AccessibleRange;
 <span class="kw">use crate</span>::{
     Accessible, AccessibleRole, Adjustment, Align, Buildable, ConstraintTarget, LayoutManager,
@@ -946,8 +946,8 @@
 };
 <span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, fmt, mem::transmute};
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="doccomment">/// This widget will be removed in GTK 5
     /// [`VolumeButton`][crate::VolumeButton] is a [`ScaleButton`][crate::ScaleButton] subclass tailored for
@@ -1313,7 +1313,7 @@
     }
 }
 
-<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>)))]
+<span class="attr">#[cfg(not(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs)))]
 </span><span class="macro">glib::wrapper! </span>{
     <span class="attr">#[doc(alias = <span class="string">&quot;GtkVolumeButton&quot;</span>)]
     </span><span class="kw">pub struct </span>VolumeButton(Object&lt;ffi::GtkVolumeButton&gt;) @extends ScaleButton, Widget, @implements Accessible, Buildable, ConstraintTarget, Orientable;

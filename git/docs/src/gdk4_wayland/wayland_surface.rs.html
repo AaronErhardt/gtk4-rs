@@ -123,12 +123,12 @@
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 </span><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, WaylandSurface};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
 </span><span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
 </span><span class="kw">use </span>wayland_client::{backend::ObjectId, protocol::wl_surface::WlSurface, Proxy};
 
 <span class="comment">// rustdoc-stripper-ignore-next
@@ -141,14 +141,14 @@
     /// a Wayland `wl_surface`
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_wayland_surface_get_wl_surface&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_wl_surface&quot;</span>)]
-    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
     </span><span class="kw">fn </span>wl_surface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WlSurface&gt;;
 }
 
 <span class="kw">impl</span>&lt;O: IsA&lt;WaylandSurface&gt;&gt; WaylandSurfaceExtManual <span class="kw">for </span>O {
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
     </span><span class="kw">fn </span>wl_surface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WlSurface&gt; {
         <span class="kw">let </span>display = <span class="self">self
             </span>.as_ref()

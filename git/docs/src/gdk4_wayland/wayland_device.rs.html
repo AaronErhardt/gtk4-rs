@@ -190,38 +190,29 @@
 <a href="#117" id="117">117</a>
 <a href="#118" id="118">118</a>
 <a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
-<a href="#124" id="124">124</a>
-<a href="#125" id="125">125</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::WaylandDevice;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs, feature = <span class="string">&quot;xkb_crate&quot;</span>))]
 #[cfg_attr(
-    feature = <span class="string">&quot;dox&quot;</span>,
+    docsrs,
     doc(cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>)))
 )]
 </span><span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
 </span><span class="kw">use </span>wayland_client::{
     backend::ObjectId,
     protocol::{wl_keyboard::WlKeyboard, wl_pointer::WlPointer, wl_seat::WlSeat},
     Proxy,
 };
 
-<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(
-    feature = <span class="string">&quot;dox&quot;</span>,
-    doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>)))
-)]
+<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>), docsrs))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>))))]
 </span><span class="kw">use </span>xkb::Keymap;
 
 <span class="kw">impl </span>WaylandDevice {
@@ -232,8 +223,8 @@
     /// a Wayland `wl_keyboard`
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_wayland_device_get_wl_keyboard&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_wl_keyboard&quot;</span>)]
-    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
     </span><span class="kw">pub fn </span>wl_keyboard(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WlKeyboard&gt; {
         <span class="kw">let </span>display = <span class="self">self</span>.display().downcast::&lt;<span class="kw">crate</span>::WaylandDisplay&gt;().unwrap();
         <span class="kw">unsafe </span>{
@@ -257,8 +248,8 @@
     /// a Wayland `wl_pointer`
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_wayland_device_get_wl_pointer&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_wl_pointer&quot;</span>)]
-    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
     </span><span class="kw">pub fn </span>wl_pointer(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WlPointer&gt; {
         <span class="kw">let </span>display = <span class="self">self</span>.display().downcast::&lt;<span class="kw">crate</span>::WaylandDisplay&gt;().unwrap();
         <span class="kw">unsafe </span>{
@@ -281,8 +272,8 @@
     /// a Wayland `wl_seat`
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_wayland_device_get_wl_seat&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_wl_seat&quot;</span>)]
-    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
+    #[cfg(any(feature = <span class="string">&quot;wayland_crate&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;wayland_crate&quot;</span>)))]
     </span><span class="kw">pub fn </span>wl_seat(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WlSeat&gt; {
         <span class="kw">let </span>display = <span class="self">self</span>.display().downcast::&lt;<span class="kw">crate</span>::WaylandDisplay&gt;().unwrap();
         <span class="kw">unsafe </span>{
@@ -298,17 +289,14 @@
         }
     }
 
-    <span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(
-        feature = <span class="string">&quot;dox&quot;</span>,
-        doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>)))
-    )]
-    </span><span class="doccomment">/// Returns the `xkb_keymap` of a [`gdk::Device`][crate::gdk::Device].
+    <span class="doccomment">/// Returns the `xkb_keymap` of a [`gdk::Device`][crate::gdk::Device].
     ///
     /// # Returns
     ///
     /// a `struct xkb_keymap`
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_wayland_device_get_xkb_keymap&quot;</span>)]
+    </span><span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>), docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;xkb_crate&quot;</span>))))]
+    #[doc(alias = <span class="string">&quot;gdk_wayland_device_get_xkb_keymap&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_xkb_keymap&quot;</span>)]
     </span><span class="kw">pub fn </span>xkb_keymap(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Keymap&gt; {
         <span class="kw">unsafe </span>{

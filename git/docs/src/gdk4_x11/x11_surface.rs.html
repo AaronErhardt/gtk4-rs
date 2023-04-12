@@ -121,8 +121,8 @@
 <span class="attr">#[cfg(not(feature = <span class="string">&quot;xlib&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::XWindow;
 <span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;xlib&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;xlib&quot;</span>)))]
 </span><span class="kw">use </span>x11::xlib::Window <span class="kw">as </span>XWindow;
 
 <span class="kw">impl </span>X11Surface {

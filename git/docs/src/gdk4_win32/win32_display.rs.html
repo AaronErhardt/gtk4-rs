@@ -184,8 +184,8 @@
 </span><span class="kw">use crate</span>::{Win32Display, Win32MessageFilterReturn, MSG};
 <span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
 
-<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
+<span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), docsrs))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
 </span><span class="kw">use </span>khronos_egl <span class="kw">as </span>egl;
 
 <span class="kw">impl </span>Win32Display {
@@ -194,8 +194,8 @@
     /// # Returns
     ///
     /// the EGL display
-    </span><span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
+    </span><span class="attr">#[cfg(any(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>), docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;egl&quot;</span>))))]
     #[doc(alias = <span class="string">&quot;gdk_win32_display_get_egl_display&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_egl_display&quot;</span>)]
     </span><span class="kw">pub fn </span>egl_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;egl::Display&gt; {

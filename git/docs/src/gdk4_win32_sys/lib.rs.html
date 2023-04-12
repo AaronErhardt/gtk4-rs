@@ -384,7 +384,7 @@
     clippy::unreadable_literal,
     clippy::upper_case_acronyms
 )]
-#![cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 #[allow(unused_imports)]
 </span><span class="kw">use </span>libc::{
@@ -599,8 +599,8 @@
         function: GdkWin32MessageFilterFunc,
         data: gpointer,
     );
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
     </span><span class="kw">pub fn </span>gdk_win32_display_get_egl_display(display: <span class="kw-2">*mut </span>GdkWin32Display) -&gt; gpointer;
     <span class="kw">pub fn </span>gdk_win32_display_get_win32hcursor(
         display: <span class="kw-2">*mut </span>GdkWin32Display,

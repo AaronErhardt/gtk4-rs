@@ -1169,8 +1169,8 @@
         stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
     );
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_snapshot_append_scaled_texture&quot;</span>)]
     </span><span class="kw">fn </span>append_scaled_texture(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1214,8 +1214,8 @@
         take_args: glib::Bytes,
     );
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_snapshot_push_mask&quot;</span>)]
     </span><span class="kw">fn </span>push_mask(<span class="kw-2">&amp;</span><span class="self">self</span>, mask_mode: gsk::MaskMode);
 
@@ -1523,8 +1523,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>append_scaled_texture(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         texture: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gdk::Texture&gt;,
@@ -1619,8 +1619,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>push_mask(<span class="kw-2">&amp;</span><span class="self">self</span>, mask_mode: gsk::MaskMode) {
         <span class="kw">unsafe </span>{
             ffi::gtk_snapshot_push_mask(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, mask_mode.into_glib());

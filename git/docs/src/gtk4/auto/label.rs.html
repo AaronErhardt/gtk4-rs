@@ -2936,8 +2936,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">use </span><span class="kw">crate</span>::NaturalWrapMode;
 <span class="kw">use crate</span>::{
     Accessible, AccessibleRole, Align, Buildable, ConstraintTarget, Justification, LayoutManager,
@@ -4057,8 +4057,8 @@
     /// # Returns
     ///
     /// the natural line wrap mode
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_label_get_natural_wrap_mode&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_natural_wrap_mode&quot;</span>)]
     </span><span class="kw">pub fn </span>natural_wrap_mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaturalWrapMode {
@@ -4127,8 +4127,8 @@
     /// copy of default tab array,
     ///   or [`None`] if standard tabs are used; must be freed with
     ///   `Pango::TabArray::free()`.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_label_get_tabs&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_tabs&quot;</span>)]
     </span><span class="kw">pub fn </span>tabs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;pango::TabArray&gt; {
@@ -4449,8 +4449,8 @@
     /// see the [`wrap-mode`][struct@crate::Label#wrap-mode] property.
     /// ## `wrap_mode`
     /// the line wrapping mode
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_label_set_natural_wrap_mode&quot;</span>)]
     </span><span class="kw">pub fn </span>set_natural_wrap_mode(<span class="kw-2">&amp;</span><span class="self">self</span>, wrap_mode: NaturalWrapMode) {
         <span class="kw">unsafe </span>{
@@ -4487,8 +4487,8 @@
     <span class="doccomment">/// Sets the default tab stops for paragraphs in @self.
     /// ## `tabs`
     /// tabs as a [`pango::TabArray`][crate::pango::TabArray]
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_label_set_tabs&quot;</span>)]
     </span><span class="kw">pub fn </span>set_tabs(<span class="kw-2">&amp;</span><span class="self">self</span>, tabs: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>pango::TabArray&gt;) {
         <span class="kw">unsafe </span>{
@@ -5003,8 +5003,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;natural-wrap-mode&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_natural_wrap_mode_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -5077,8 +5077,8 @@
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;tabs&quot;</span>)]
     </span><span class="kw">pub fn </span>connect_tabs_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_tabs_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>Label) + <span class="lifetime">&#39;static</span>&gt;(
@@ -5386,8 +5386,8 @@
     ///
     /// The default is [`NaturalWrapMode::Inherit`][crate::NaturalWrapMode::Inherit], which inherits the behavior of the
     /// [`wrap-mode`][struct@crate::Label#wrap-mode] property.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>natural_wrap_mode(<span class="self">self</span>, natural_wrap_mode: NaturalWrapMode) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self
@@ -5416,8 +5416,8 @@
     }
 
     <span class="doccomment">/// Custom tabs for this label.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_8&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_8&quot;</span>)))]
     </span><span class="kw">pub fn </span>tabs(<span class="self">self</span>, tabs: <span class="kw-2">&amp;</span>pango::TabArray) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: <span class="self">self</span>.builder.property(<span class="string">&quot;tabs&quot;</span>, tabs),

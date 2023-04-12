@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/text_tag.rs`."><title>text_tag.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e5308b57e507db71.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-d59023bfa12059d2.css"><link rel="stylesheet" disabled href="../../../static.files/dark-1ca41bb1e10af075.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-18b4181a2f3fb862.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/text_tag.rs`."><title>text_tag.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-63a85fc7cf22dee2.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (9df3a39fb 2023-04-11)" data-search-js="search-bc5a112813b5d712.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-0bcba95ff279c1db.css" data-theme-light-css="light-db279b6232be9c13.css" data-theme-dark-css="dark-cf923f49f397b216.css" data-theme-ayu-css="ayu-be46fdc453a55015.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-1159a395118aa44e.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -4998,7 +4998,7 @@
 <a href="#4925" id="4925">4925</a>
 <a href="#4926" id="4926">4926</a>
 <a href="#4927" id="4927">4927</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
@@ -7233,7 +7233,7 @@
     }
 
     <span class="kw">fn </span>set_accumulative_margin(<span class="kw-2">&amp;</span><span class="self">self</span>, accumulative_margin: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;accumulative-margin&quot;</span>, <span class="kw-2">&amp;</span>accumulative_margin)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;accumulative-margin&quot;</span>, accumulative_margin)
     }
 
     <span class="kw">fn </span>allows_breaks(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7241,7 +7241,7 @@
     }
 
     <span class="kw">fn </span>set_allow_breaks(<span class="kw-2">&amp;</span><span class="self">self</span>, allow_breaks: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;allow-breaks&quot;</span>, <span class="kw-2">&amp;</span>allow_breaks)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;allow-breaks&quot;</span>, allow_breaks)
     }
 
     <span class="kw">fn </span>allows_breaks_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7249,7 +7249,7 @@
     }
 
     <span class="kw">fn </span>set_background(<span class="kw-2">&amp;</span><span class="self">self</span>, background: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;background&quot;</span>, <span class="kw-2">&amp;</span>background)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;background&quot;</span>, background)
     }
 
     <span class="kw">fn </span>is_background_full_height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7260,7 +7260,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>.as_ref(),
             <span class="string">&quot;background-full-height&quot;</span>,
-            <span class="kw-2">&amp;</span>background_full_height,
+            background_full_height,
         )
     }
 
@@ -7273,7 +7273,7 @@
     }
 
     <span class="kw">fn </span>set_background_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>, background_rgba: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gdk::RGBA&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;background-rgba&quot;</span>, <span class="kw-2">&amp;</span>background_rgba)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;background-rgba&quot;</span>, background_rgba)
     }
 
     <span class="kw">fn </span>is_background_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7285,7 +7285,7 @@
     }
 
     <span class="kw">fn </span>set_direction(<span class="kw-2">&amp;</span><span class="self">self</span>, direction: TextDirection) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;direction&quot;</span>, <span class="kw-2">&amp;</span>direction)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;direction&quot;</span>, direction)
     }
 
     <span class="kw">fn </span>is_editable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7293,7 +7293,7 @@
     }
 
     <span class="kw">fn </span>set_editable(<span class="kw-2">&amp;</span><span class="self">self</span>, editable: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;editable&quot;</span>, <span class="kw-2">&amp;</span>editable)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;editable&quot;</span>, editable)
     }
 
     <span class="kw">fn </span>is_editable_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7305,7 +7305,7 @@
     }
 
     <span class="kw">fn </span>set_fallback(<span class="kw-2">&amp;</span><span class="self">self</span>, fallback: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;fallback&quot;</span>, <span class="kw-2">&amp;</span>fallback)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;fallback&quot;</span>, fallback)
     }
 
     <span class="kw">fn </span>is_fallback_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7317,7 +7317,7 @@
     }
 
     <span class="kw">fn </span>set_family(<span class="kw-2">&amp;</span><span class="self">self</span>, family: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;family&quot;</span>, <span class="kw-2">&amp;</span>family)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;family&quot;</span>, family)
     }
 
     <span class="kw">fn </span>is_family_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7329,7 +7329,7 @@
     }
 
     <span class="kw">fn </span>set_font(<span class="kw-2">&amp;</span><span class="self">self</span>, font: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;font&quot;</span>, <span class="kw-2">&amp;</span>font)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;font&quot;</span>, font)
     }
 
     <span class="kw">fn </span>font_desc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;pango::FontDescription&gt; {
@@ -7337,7 +7337,7 @@
     }
 
     <span class="kw">fn </span>set_font_desc(<span class="kw-2">&amp;</span><span class="self">self</span>, font_desc: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>pango::FontDescription&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;font-desc&quot;</span>, <span class="kw-2">&amp;</span>font_desc)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;font-desc&quot;</span>, font_desc)
     }
 
     <span class="kw">fn </span>font_features(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
@@ -7345,7 +7345,7 @@
     }
 
     <span class="kw">fn </span>set_font_features(<span class="kw-2">&amp;</span><span class="self">self</span>, font_features: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;font-features&quot;</span>, <span class="kw-2">&amp;</span>font_features)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;font-features&quot;</span>, font_features)
     }
 
     <span class="kw">fn </span>is_font_features_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7353,7 +7353,7 @@
     }
 
     <span class="kw">fn </span>set_foreground(<span class="kw-2">&amp;</span><span class="self">self</span>, foreground: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;foreground&quot;</span>, <span class="kw-2">&amp;</span>foreground)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;foreground&quot;</span>, foreground)
     }
 
     <span class="kw">fn </span>foreground_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::RGBA&gt; {
@@ -7361,7 +7361,7 @@
     }
 
     <span class="kw">fn </span>set_foreground_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>, foreground_rgba: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gdk::RGBA&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;foreground-rgba&quot;</span>, <span class="kw-2">&amp;</span>foreground_rgba)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;foreground-rgba&quot;</span>, foreground_rgba)
     }
 
     <span class="kw">fn </span>is_foreground_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7373,7 +7373,7 @@
     }
 
     <span class="kw">fn </span>set_indent(<span class="kw-2">&amp;</span><span class="self">self</span>, indent: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;indent&quot;</span>, <span class="kw-2">&amp;</span>indent)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;indent&quot;</span>, indent)
     }
 
     <span class="kw">fn </span>is_indent_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7385,7 +7385,7 @@
     }
 
     <span class="kw">fn </span>set_insert_hyphens(<span class="kw-2">&amp;</span><span class="self">self</span>, insert_hyphens: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;insert-hyphens&quot;</span>, <span class="kw-2">&amp;</span>insert_hyphens)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;insert-hyphens&quot;</span>, insert_hyphens)
     }
 
     <span class="kw">fn </span>is_insert_hyphens_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7397,7 +7397,7 @@
     }
 
     <span class="kw">fn </span>set_invisible(<span class="kw-2">&amp;</span><span class="self">self</span>, invisible: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;invisible&quot;</span>, <span class="kw-2">&amp;</span>invisible)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;invisible&quot;</span>, invisible)
     }
 
     <span class="kw">fn </span>is_invisible_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7409,7 +7409,7 @@
     }
 
     <span class="kw">fn </span>set_justification(<span class="kw-2">&amp;</span><span class="self">self</span>, justification: Justification) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;justification&quot;</span>, <span class="kw-2">&amp;</span>justification)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;justification&quot;</span>, justification)
     }
 
     <span class="kw">fn </span>is_justification_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7421,7 +7421,7 @@
     }
 
     <span class="kw">fn </span>set_language(<span class="kw-2">&amp;</span><span class="self">self</span>, language: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;language&quot;</span>, <span class="kw-2">&amp;</span>language)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;language&quot;</span>, language)
     }
 
     <span class="kw">fn </span>is_language_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7433,7 +7433,7 @@
     }
 
     <span class="kw">fn </span>set_left_margin(<span class="kw-2">&amp;</span><span class="self">self</span>, left_margin: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;left-margin&quot;</span>, <span class="kw-2">&amp;</span>left_margin)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;left-margin&quot;</span>, left_margin)
     }
 
     <span class="kw">fn </span>is_left_margin_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7445,7 +7445,7 @@
     }
 
     <span class="kw">fn </span>set_letter_spacing(<span class="kw-2">&amp;</span><span class="self">self</span>, letter_spacing: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;letter-spacing&quot;</span>, <span class="kw-2">&amp;</span>letter_spacing)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;letter-spacing&quot;</span>, letter_spacing)
     }
 
     <span class="kw">fn </span>is_letter_spacing_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7461,7 +7461,7 @@
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_line_height(<span class="kw-2">&amp;</span><span class="self">self</span>, line_height: f32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;line-height&quot;</span>, <span class="kw-2">&amp;</span>line_height)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;line-height&quot;</span>, line_height)
     }
 
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
@@ -7479,7 +7479,7 @@
     }
 
     <span class="kw">fn </span>set_overline(<span class="kw-2">&amp;</span><span class="self">self</span>, overline: pango::Overline) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;overline&quot;</span>, <span class="kw-2">&amp;</span>overline)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;overline&quot;</span>, overline)
     }
 
     <span class="kw">fn </span>overline_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::RGBA&gt; {
@@ -7487,7 +7487,7 @@
     }
 
     <span class="kw">fn </span>set_overline_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>, overline_rgba: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gdk::RGBA&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;overline-rgba&quot;</span>, <span class="kw-2">&amp;</span>overline_rgba)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;overline-rgba&quot;</span>, overline_rgba)
     }
 
     <span class="kw">fn </span>is_overline_rgba_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7499,7 +7499,7 @@
     }
 
     <span class="kw">fn </span>set_paragraph_background(<span class="kw-2">&amp;</span><span class="self">self</span>, paragraph_background: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;paragraph-background&quot;</span>, <span class="kw-2">&amp;</span>paragraph_background)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;paragraph-background&quot;</span>, paragraph_background)
     }
 
     <span class="kw">fn </span>paragraph_background_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::RGBA&gt; {
@@ -7510,7 +7510,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>.as_ref(),
             <span class="string">&quot;paragraph-background-rgba&quot;</span>,
-            <span class="kw-2">&amp;</span>paragraph_background_rgba,
+            paragraph_background_rgba,
         )
     }
 
@@ -7523,7 +7523,7 @@
     }
 
     <span class="kw">fn </span>set_pixels_above_lines(<span class="kw-2">&amp;</span><span class="self">self</span>, pixels_above_lines: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;pixels-above-lines&quot;</span>, <span class="kw-2">&amp;</span>pixels_above_lines)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;pixels-above-lines&quot;</span>, pixels_above_lines)
     }
 
     <span class="kw">fn </span>is_pixels_above_lines_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7535,7 +7535,7 @@
     }
 
     <span class="kw">fn </span>set_pixels_below_lines(<span class="kw-2">&amp;</span><span class="self">self</span>, pixels_below_lines: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;pixels-below-lines&quot;</span>, <span class="kw-2">&amp;</span>pixels_below_lines)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;pixels-below-lines&quot;</span>, pixels_below_lines)
     }
 
     <span class="kw">fn </span>is_pixels_below_lines_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7547,7 +7547,7 @@
     }
 
     <span class="kw">fn </span>set_pixels_inside_wrap(<span class="kw-2">&amp;</span><span class="self">self</span>, pixels_inside_wrap: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;pixels-inside-wrap&quot;</span>, <span class="kw-2">&amp;</span>pixels_inside_wrap)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;pixels-inside-wrap&quot;</span>, pixels_inside_wrap)
     }
 
     <span class="kw">fn </span>is_pixels_inside_wrap_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7559,7 +7559,7 @@
     }
 
     <span class="kw">fn </span>set_right_margin(<span class="kw-2">&amp;</span><span class="self">self</span>, right_margin: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;right-margin&quot;</span>, <span class="kw-2">&amp;</span>right_margin)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;right-margin&quot;</span>, right_margin)
     }
 
     <span class="kw">fn </span>is_right_margin_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7571,7 +7571,7 @@
     }
 
     <span class="kw">fn </span>set_rise(<span class="kw-2">&amp;</span><span class="self">self</span>, rise: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;rise&quot;</span>, <span class="kw-2">&amp;</span>rise)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;rise&quot;</span>, rise)
     }
 
     <span class="kw">fn </span>is_rise_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7583,7 +7583,7 @@
     }
 
     <span class="kw">fn </span>set_scale(<span class="kw-2">&amp;</span><span class="self">self</span>, scale: f64) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;scale&quot;</span>, <span class="kw-2">&amp;</span>scale)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;scale&quot;</span>, scale)
     }
 
     <span class="kw">fn </span>is_scale_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7599,7 +7599,7 @@
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_sentence(<span class="kw-2">&amp;</span><span class="self">self</span>, sentence: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;sentence&quot;</span>, <span class="kw-2">&amp;</span>sentence)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;sentence&quot;</span>, sentence)
     }
 
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
@@ -7613,7 +7613,7 @@
     }
 
     <span class="kw">fn </span>set_show_spaces(<span class="kw-2">&amp;</span><span class="self">self</span>, show_spaces: pango::ShowFlags) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;show-spaces&quot;</span>, <span class="kw-2">&amp;</span>show_spaces)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;show-spaces&quot;</span>, show_spaces)
     }
 
     <span class="kw">fn </span>shows_spaces_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7625,7 +7625,7 @@
     }
 
     <span class="kw">fn </span>set_size(<span class="kw-2">&amp;</span><span class="self">self</span>, size: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;size&quot;</span>, <span class="kw-2">&amp;</span>size)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;size&quot;</span>, size)
     }
 
     <span class="kw">fn </span>size_points(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
@@ -7633,7 +7633,7 @@
     }
 
     <span class="kw">fn </span>set_size_points(<span class="kw-2">&amp;</span><span class="self">self</span>, size_points: f64) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;size-points&quot;</span>, <span class="kw-2">&amp;</span>size_points)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;size-points&quot;</span>, size_points)
     }
 
     <span class="kw">fn </span>is_size_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7645,7 +7645,7 @@
     }
 
     <span class="kw">fn </span>set_stretch(<span class="kw-2">&amp;</span><span class="self">self</span>, stretch: pango::Stretch) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;stretch&quot;</span>, <span class="kw-2">&amp;</span>stretch)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;stretch&quot;</span>, stretch)
     }
 
     <span class="kw">fn </span>is_stretch_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7657,7 +7657,7 @@
     }
 
     <span class="kw">fn </span>set_strikethrough(<span class="kw-2">&amp;</span><span class="self">self</span>, strikethrough: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;strikethrough&quot;</span>, <span class="kw-2">&amp;</span>strikethrough)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;strikethrough&quot;</span>, strikethrough)
     }
 
     <span class="kw">fn </span>strikethrough_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::RGBA&gt; {
@@ -7665,7 +7665,7 @@
     }
 
     <span class="kw">fn </span>set_strikethrough_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>, strikethrough_rgba: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gdk::RGBA&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;strikethrough-rgba&quot;</span>, <span class="kw-2">&amp;</span>strikethrough_rgba)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;strikethrough-rgba&quot;</span>, strikethrough_rgba)
     }
 
     <span class="kw">fn </span>is_strikethrough_rgba_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7681,7 +7681,7 @@
     }
 
     <span class="kw">fn </span>set_style(<span class="kw-2">&amp;</span><span class="self">self</span>, style: pango::Style) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;style&quot;</span>, <span class="kw-2">&amp;</span>style)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;style&quot;</span>, style)
     }
 
     <span class="kw">fn </span>is_style_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7693,7 +7693,7 @@
     }
 
     <span class="kw">fn </span>set_tabs(<span class="kw-2">&amp;</span><span class="self">self</span>, tabs: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>pango::TabArray&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;tabs&quot;</span>, <span class="kw-2">&amp;</span>tabs)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;tabs&quot;</span>, tabs)
     }
 
     <span class="kw">fn </span>is_tabs_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7709,7 +7709,7 @@
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_text_transform(<span class="kw-2">&amp;</span><span class="self">self</span>, text_transform: pango::TextTransform) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;text-transform&quot;</span>, <span class="kw-2">&amp;</span>text_transform)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;text-transform&quot;</span>, text_transform)
     }
 
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
@@ -7723,7 +7723,7 @@
     }
 
     <span class="kw">fn </span>set_underline(<span class="kw-2">&amp;</span><span class="self">self</span>, underline: pango::Underline) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;underline&quot;</span>, <span class="kw-2">&amp;</span>underline)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;underline&quot;</span>, underline)
     }
 
     <span class="kw">fn </span>underline_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::RGBA&gt; {
@@ -7731,7 +7731,7 @@
     }
 
     <span class="kw">fn </span>set_underline_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>, underline_rgba: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gdk::RGBA&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;underline-rgba&quot;</span>, <span class="kw-2">&amp;</span>underline_rgba)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;underline-rgba&quot;</span>, underline_rgba)
     }
 
     <span class="kw">fn </span>is_underline_rgba_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7747,7 +7747,7 @@
     }
 
     <span class="kw">fn </span>set_variant(<span class="kw-2">&amp;</span><span class="self">self</span>, variant: pango::Variant) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;variant&quot;</span>, <span class="kw-2">&amp;</span>variant)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;variant&quot;</span>, variant)
     }
 
     <span class="kw">fn </span>is_variant_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7759,7 +7759,7 @@
     }
 
     <span class="kw">fn </span>set_weight(<span class="kw-2">&amp;</span><span class="self">self</span>, weight: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;weight&quot;</span>, <span class="kw-2">&amp;</span>weight)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;weight&quot;</span>, weight)
     }
 
     <span class="kw">fn </span>is_weight_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -7775,7 +7775,7 @@
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">fn </span>set_word(<span class="kw-2">&amp;</span><span class="self">self</span>, word: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;word&quot;</span>, <span class="kw-2">&amp;</span>word)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;word&quot;</span>, word)
     }
 
     <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
@@ -7789,7 +7789,7 @@
     }
 
     <span class="kw">fn </span>set_wrap_mode(<span class="kw-2">&amp;</span><span class="self">self</span>, wrap_mode: WrapMode) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;wrap-mode&quot;</span>, <span class="kw-2">&amp;</span>wrap_mode)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;wrap-mode&quot;</span>, wrap_mode)
     }
 
     <span class="kw">fn </span>wraps_mode_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -9925,5 +9925,4 @@
         f.write_str(<span class="string">&quot;TextTag&quot;</span>)
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (246eae2fa 2023-02-21)" data-search-js="search-14421e1532aead08.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

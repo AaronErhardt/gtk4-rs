@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/sys/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e5308b57e507db71.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-d59023bfa12059d2.css"><link rel="stylesheet" disabled href="../../static.files/dark-1ca41bb1e10af075.css"><link rel="stylesheet" disabled href="../../static.files/ayu-18b4181a2f3fb862.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/sys/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-63a85fc7cf22dee2.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4_sys" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (9df3a39fb 2023-04-11)" data-search-js="search-bc5a112813b5d712.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-0bcba95ff279c1db.css" data-theme-light-css="light-db279b6232be9c13.css" data-theme-dark-css="dark-cf923f49f397b216.css" data-theme-ayu-css="ayu-be46fdc453a55015.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-1159a395118aa44e.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4_sys/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4_sys/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -20022,7 +20022,173 @@
 <a href="#19949" id="19949">19949</a>
 <a href="#19950" id="19950">19950</a>
 <a href="#19951" id="19951">19951</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+<a href="#19952" id="19952">19952</a>
+<a href="#19953" id="19953">19953</a>
+<a href="#19954" id="19954">19954</a>
+<a href="#19955" id="19955">19955</a>
+<a href="#19956" id="19956">19956</a>
+<a href="#19957" id="19957">19957</a>
+<a href="#19958" id="19958">19958</a>
+<a href="#19959" id="19959">19959</a>
+<a href="#19960" id="19960">19960</a>
+<a href="#19961" id="19961">19961</a>
+<a href="#19962" id="19962">19962</a>
+<a href="#19963" id="19963">19963</a>
+<a href="#19964" id="19964">19964</a>
+<a href="#19965" id="19965">19965</a>
+<a href="#19966" id="19966">19966</a>
+<a href="#19967" id="19967">19967</a>
+<a href="#19968" id="19968">19968</a>
+<a href="#19969" id="19969">19969</a>
+<a href="#19970" id="19970">19970</a>
+<a href="#19971" id="19971">19971</a>
+<a href="#19972" id="19972">19972</a>
+<a href="#19973" id="19973">19973</a>
+<a href="#19974" id="19974">19974</a>
+<a href="#19975" id="19975">19975</a>
+<a href="#19976" id="19976">19976</a>
+<a href="#19977" id="19977">19977</a>
+<a href="#19978" id="19978">19978</a>
+<a href="#19979" id="19979">19979</a>
+<a href="#19980" id="19980">19980</a>
+<a href="#19981" id="19981">19981</a>
+<a href="#19982" id="19982">19982</a>
+<a href="#19983" id="19983">19983</a>
+<a href="#19984" id="19984">19984</a>
+<a href="#19985" id="19985">19985</a>
+<a href="#19986" id="19986">19986</a>
+<a href="#19987" id="19987">19987</a>
+<a href="#19988" id="19988">19988</a>
+<a href="#19989" id="19989">19989</a>
+<a href="#19990" id="19990">19990</a>
+<a href="#19991" id="19991">19991</a>
+<a href="#19992" id="19992">19992</a>
+<a href="#19993" id="19993">19993</a>
+<a href="#19994" id="19994">19994</a>
+<a href="#19995" id="19995">19995</a>
+<a href="#19996" id="19996">19996</a>
+<a href="#19997" id="19997">19997</a>
+<a href="#19998" id="19998">19998</a>
+<a href="#19999" id="19999">19999</a>
+<a href="#20000" id="20000">20000</a>
+<a href="#20001" id="20001">20001</a>
+<a href="#20002" id="20002">20002</a>
+<a href="#20003" id="20003">20003</a>
+<a href="#20004" id="20004">20004</a>
+<a href="#20005" id="20005">20005</a>
+<a href="#20006" id="20006">20006</a>
+<a href="#20007" id="20007">20007</a>
+<a href="#20008" id="20008">20008</a>
+<a href="#20009" id="20009">20009</a>
+<a href="#20010" id="20010">20010</a>
+<a href="#20011" id="20011">20011</a>
+<a href="#20012" id="20012">20012</a>
+<a href="#20013" id="20013">20013</a>
+<a href="#20014" id="20014">20014</a>
+<a href="#20015" id="20015">20015</a>
+<a href="#20016" id="20016">20016</a>
+<a href="#20017" id="20017">20017</a>
+<a href="#20018" id="20018">20018</a>
+<a href="#20019" id="20019">20019</a>
+<a href="#20020" id="20020">20020</a>
+<a href="#20021" id="20021">20021</a>
+<a href="#20022" id="20022">20022</a>
+<a href="#20023" id="20023">20023</a>
+<a href="#20024" id="20024">20024</a>
+<a href="#20025" id="20025">20025</a>
+<a href="#20026" id="20026">20026</a>
+<a href="#20027" id="20027">20027</a>
+<a href="#20028" id="20028">20028</a>
+<a href="#20029" id="20029">20029</a>
+<a href="#20030" id="20030">20030</a>
+<a href="#20031" id="20031">20031</a>
+<a href="#20032" id="20032">20032</a>
+<a href="#20033" id="20033">20033</a>
+<a href="#20034" id="20034">20034</a>
+<a href="#20035" id="20035">20035</a>
+<a href="#20036" id="20036">20036</a>
+<a href="#20037" id="20037">20037</a>
+<a href="#20038" id="20038">20038</a>
+<a href="#20039" id="20039">20039</a>
+<a href="#20040" id="20040">20040</a>
+<a href="#20041" id="20041">20041</a>
+<a href="#20042" id="20042">20042</a>
+<a href="#20043" id="20043">20043</a>
+<a href="#20044" id="20044">20044</a>
+<a href="#20045" id="20045">20045</a>
+<a href="#20046" id="20046">20046</a>
+<a href="#20047" id="20047">20047</a>
+<a href="#20048" id="20048">20048</a>
+<a href="#20049" id="20049">20049</a>
+<a href="#20050" id="20050">20050</a>
+<a href="#20051" id="20051">20051</a>
+<a href="#20052" id="20052">20052</a>
+<a href="#20053" id="20053">20053</a>
+<a href="#20054" id="20054">20054</a>
+<a href="#20055" id="20055">20055</a>
+<a href="#20056" id="20056">20056</a>
+<a href="#20057" id="20057">20057</a>
+<a href="#20058" id="20058">20058</a>
+<a href="#20059" id="20059">20059</a>
+<a href="#20060" id="20060">20060</a>
+<a href="#20061" id="20061">20061</a>
+<a href="#20062" id="20062">20062</a>
+<a href="#20063" id="20063">20063</a>
+<a href="#20064" id="20064">20064</a>
+<a href="#20065" id="20065">20065</a>
+<a href="#20066" id="20066">20066</a>
+<a href="#20067" id="20067">20067</a>
+<a href="#20068" id="20068">20068</a>
+<a href="#20069" id="20069">20069</a>
+<a href="#20070" id="20070">20070</a>
+<a href="#20071" id="20071">20071</a>
+<a href="#20072" id="20072">20072</a>
+<a href="#20073" id="20073">20073</a>
+<a href="#20074" id="20074">20074</a>
+<a href="#20075" id="20075">20075</a>
+<a href="#20076" id="20076">20076</a>
+<a href="#20077" id="20077">20077</a>
+<a href="#20078" id="20078">20078</a>
+<a href="#20079" id="20079">20079</a>
+<a href="#20080" id="20080">20080</a>
+<a href="#20081" id="20081">20081</a>
+<a href="#20082" id="20082">20082</a>
+<a href="#20083" id="20083">20083</a>
+<a href="#20084" id="20084">20084</a>
+<a href="#20085" id="20085">20085</a>
+<a href="#20086" id="20086">20086</a>
+<a href="#20087" id="20087">20087</a>
+<a href="#20088" id="20088">20088</a>
+<a href="#20089" id="20089">20089</a>
+<a href="#20090" id="20090">20090</a>
+<a href="#20091" id="20091">20091</a>
+<a href="#20092" id="20092">20092</a>
+<a href="#20093" id="20093">20093</a>
+<a href="#20094" id="20094">20094</a>
+<a href="#20095" id="20095">20095</a>
+<a href="#20096" id="20096">20096</a>
+<a href="#20097" id="20097">20097</a>
+<a href="#20098" id="20098">20098</a>
+<a href="#20099" id="20099">20099</a>
+<a href="#20100" id="20100">20100</a>
+<a href="#20101" id="20101">20101</a>
+<a href="#20102" id="20102">20102</a>
+<a href="#20103" id="20103">20103</a>
+<a href="#20104" id="20104">20104</a>
+<a href="#20105" id="20105">20105</a>
+<a href="#20106" id="20106">20106</a>
+<a href="#20107" id="20107">20107</a>
+<a href="#20108" id="20108">20108</a>
+<a href="#20109" id="20109">20109</a>
+<a href="#20110" id="20110">20110</a>
+<a href="#20111" id="20111">20111</a>
+<a href="#20112" id="20112">20112</a>
+<a href="#20113" id="20113">20113</a>
+<a href="#20114" id="20114">20114</a>
+<a href="#20115" id="20115">20115</a>
+<a href="#20116" id="20116">20116</a>
+<a href="#20117" id="20117">20117</a>
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
@@ -20187,6 +20353,7 @@
 <span class="kw">pub const </span>GTK_ACCESSIBLE_ROLE_TREE_ITEM: GtkAccessibleRole = <span class="number">75</span>;
 <span class="kw">pub const </span>GTK_ACCESSIBLE_ROLE_WIDGET: GtkAccessibleRole = <span class="number">76</span>;
 <span class="kw">pub const </span>GTK_ACCESSIBLE_ROLE_WINDOW: GtkAccessibleRole = <span class="number">77</span>;
+<span class="kw">pub const </span>GTK_ACCESSIBLE_ROLE_TOGGLE_BUTTON: GtkAccessibleRole = <span class="number">78</span>;
 
 <span class="kw">pub type </span>GtkAccessibleSort = c_int;
 <span class="kw">pub const </span>GTK_ACCESSIBLE_SORT_NONE: GtkAccessibleSort = <span class="number">0</span>;
@@ -20203,6 +20370,7 @@
 <span class="kw">pub const </span>GTK_ACCESSIBLE_STATE_INVALID: GtkAccessibleState = <span class="number">5</span>;
 <span class="kw">pub const </span>GTK_ACCESSIBLE_STATE_PRESSED: GtkAccessibleState = <span class="number">6</span>;
 <span class="kw">pub const </span>GTK_ACCESSIBLE_STATE_SELECTED: GtkAccessibleState = <span class="number">7</span>;
+<span class="kw">pub const </span>GTK_ACCESSIBLE_STATE_VISITED: GtkAccessibleState = <span class="number">8</span>;
 
 <span class="kw">pub type </span>GtkAccessibleTristate = c_int;
 <span class="kw">pub const </span>GTK_ACCESSIBLE_TRISTATE_FALSE: GtkAccessibleTristate = <span class="number">0</span>;
@@ -20485,6 +20653,11 @@
 <span class="kw">pub const </span>GTK_LICENSE_BSD_3: GtkLicense = <span class="number">15</span>;
 <span class="kw">pub const </span>GTK_LICENSE_APACHE_2_0: GtkLicense = <span class="number">16</span>;
 <span class="kw">pub const </span>GTK_LICENSE_MPL_2_0: GtkLicense = <span class="number">17</span>;
+
+<span class="kw">pub type </span>GtkListTabBehavior = c_int;
+<span class="kw">pub const </span>GTK_LIST_TAB_ALL: GtkListTabBehavior = <span class="number">0</span>;
+<span class="kw">pub const </span>GTK_LIST_TAB_ITEM: GtkListTabBehavior = <span class="number">1</span>;
+<span class="kw">pub const </span>GTK_LIST_TAB_CELL: GtkListTabBehavior = <span class="number">2</span>;
 
 <span class="kw">pub type </span>GtkMessageType = c_int;
 <span class="kw">pub const </span>GTK_MESSAGE_INFO: GtkMessageType = <span class="number">0</span>;
@@ -22223,6 +22396,14 @@
 }
 
 <span class="attr">#[repr(C)]
+</span><span class="kw">pub struct </span>_GtkColumnViewCellClass {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
+}
+
+<span class="kw">pub type </span>GtkColumnViewCellClass = <span class="kw-2">*mut </span>_GtkColumnViewCellClass;
+
+<span class="attr">#[repr(C)]
 </span><span class="kw">pub struct </span>_GtkColumnViewClass {
     _data: [u8; <span class="number">0</span>],
     _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
@@ -22237,6 +22418,14 @@
 }
 
 <span class="kw">pub type </span>GtkColumnViewColumnClass = <span class="kw-2">*mut </span>_GtkColumnViewColumnClass;
+
+<span class="attr">#[repr(C)]
+</span><span class="kw">pub struct </span>_GtkColumnViewRowClass {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
+}
+
+<span class="kw">pub type </span>GtkColumnViewRowClass = <span class="kw-2">*mut </span>_GtkColumnViewRowClass;
 
 <span class="attr">#[derive(Copy, Clone)]
 #[repr(C)]
@@ -26059,6 +26248,19 @@
 }
 
 <span class="attr">#[repr(C)]
+</span><span class="kw">pub struct </span>GtkColumnViewCell {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
+}
+
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GtkColumnViewCell {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GtkColumnViewCell @ {self:p}&quot;</span>))
+            .finish()
+    }
+}
+
+<span class="attr">#[repr(C)]
 </span><span class="kw">pub struct </span>GtkColumnViewColumn {
     _data: [u8; <span class="number">0</span>],
     _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
@@ -26067,6 +26269,19 @@
 <span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GtkColumnViewColumn {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
         f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GtkColumnViewColumn @ {self:p}&quot;</span>))
+            .finish()
+    }
+}
+
+<span class="attr">#[repr(C)]
+</span><span class="kw">pub struct </span>GtkColumnViewRow {
+    _data: [u8; <span class="number">0</span>],
+    _marker: core::marker::PhantomData&lt;(<span class="kw-2">*mut </span>u8, core::marker::PhantomPinned)&gt;,
+}
+
+<span class="kw">impl </span>::std::fmt::Debug <span class="kw">for </span>GtkColumnViewRow {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
+        f.debug_struct(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;GtkColumnViewRow @ {self:p}&quot;</span>))
             .finish()
     }
 }
@@ -29364,6 +29579,13 @@
     </span><span class="kw">pub fn </span>gtk_license_get_type() -&gt; GType;
 
     <span class="comment">//=========================================================================
+    // GtkListTabBehavior
+    //=========================================================================
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_list_tab_behavior_get_type() -&gt; GType;
+
+    <span class="comment">//=========================================================================
     // GtkMessageType
     //=========================================================================
     </span><span class="kw">pub fn </span>gtk_message_type_get_type() -&gt; GType;
@@ -31785,10 +32007,16 @@
     <span class="kw">pub fn </span>gtk_column_view_get_enable_rubberband(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_column_view_get_model(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; <span class="kw-2">*mut </span>GtkSelectionModel;
     <span class="kw">pub fn </span>gtk_column_view_get_reorderable(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_get_row_factory(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; <span class="kw-2">*mut </span>GtkListItemFactory;
     <span class="kw">pub fn </span>gtk_column_view_get_show_column_separators(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_column_view_get_show_row_separators(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_column_view_get_single_click_activate(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_column_view_get_sorter(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; <span class="kw-2">*mut </span>GtkSorter;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_get_tab_behavior(self_: <span class="kw-2">*mut </span>GtkColumnView) -&gt; GtkListTabBehavior;
     <span class="kw">pub fn </span>gtk_column_view_insert_column(
         self_: <span class="kw-2">*mut </span>GtkColumnView,
         position: c_uint,
@@ -31804,6 +32032,12 @@
     );
     <span class="kw">pub fn </span>gtk_column_view_set_model(self_: <span class="kw-2">*mut </span>GtkColumnView, model: <span class="kw-2">*mut </span>GtkSelectionModel);
     <span class="kw">pub fn </span>gtk_column_view_set_reorderable(self_: <span class="kw-2">*mut </span>GtkColumnView, reorderable: gboolean);
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_set_row_factory(
+        self_: <span class="kw-2">*mut </span>GtkColumnView,
+        factory: <span class="kw-2">*mut </span>GtkListItemFactory,
+    );
     <span class="kw">pub fn </span>gtk_column_view_set_show_column_separators(
         self_: <span class="kw-2">*mut </span>GtkColumnView,
         show_column_separators: gboolean,
@@ -31816,11 +32050,45 @@
         self_: <span class="kw-2">*mut </span>GtkColumnView,
         single_click_activate: gboolean,
     );
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_set_tab_behavior(
+        self_: <span class="kw-2">*mut </span>GtkColumnView,
+        tab_behavior: GtkListTabBehavior,
+    );
     <span class="kw">pub fn </span>gtk_column_view_sort_by_column(
         self_: <span class="kw-2">*mut </span>GtkColumnView,
         column: <span class="kw-2">*mut </span>GtkColumnViewColumn,
         direction: GtkSortType,
     );
+
+    <span class="comment">//=========================================================================
+    // GtkColumnViewCell
+    //=========================================================================
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_get_type() -&gt; GType;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_get_child(self_: <span class="kw-2">*mut </span>GtkColumnViewCell) -&gt; <span class="kw-2">*mut </span>GtkWidget;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_get_focusable(self_: <span class="kw-2">*mut </span>GtkColumnViewCell) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_get_item(self_: <span class="kw-2">*mut </span>GtkColumnViewCell) -&gt; <span class="kw-2">*mut </span>gobject::GObject;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_get_position(self_: <span class="kw-2">*mut </span>GtkColumnViewCell) -&gt; c_uint;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_get_selected(self_: <span class="kw-2">*mut </span>GtkColumnViewCell) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_set_child(self_: <span class="kw-2">*mut </span>GtkColumnViewCell, child: <span class="kw-2">*mut </span>GtkWidget);
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_cell_set_focusable(self_: <span class="kw-2">*mut </span>GtkColumnViewCell, focusable: gboolean);
 
     <span class="comment">//=========================================================================
     // GtkColumnViewColumn
@@ -31874,6 +32142,40 @@
     );
     <span class="kw">pub fn </span>gtk_column_view_column_set_title(self_: <span class="kw-2">*mut </span>GtkColumnViewColumn, title: <span class="kw-2">*const </span>c_char);
     <span class="kw">pub fn </span>gtk_column_view_column_set_visible(self_: <span class="kw-2">*mut </span>GtkColumnViewColumn, visible: gboolean);
+
+    <span class="comment">//=========================================================================
+    // GtkColumnViewRow
+    //=========================================================================
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_get_type() -&gt; GType;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_get_activatable(self_: <span class="kw-2">*mut </span>GtkColumnViewRow) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_get_focusable(self_: <span class="kw-2">*mut </span>GtkColumnViewRow) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_get_item(self_: <span class="kw-2">*mut </span>GtkColumnViewRow) -&gt; <span class="kw-2">*mut </span>gobject::GObject;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_get_position(self_: <span class="kw-2">*mut </span>GtkColumnViewRow) -&gt; c_uint;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_get_selectable(self_: <span class="kw-2">*mut </span>GtkColumnViewRow) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_get_selected(self_: <span class="kw-2">*mut </span>GtkColumnViewRow) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_set_activatable(self_: <span class="kw-2">*mut </span>GtkColumnViewRow, activatable: gboolean);
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_set_focusable(self_: <span class="kw-2">*mut </span>GtkColumnViewRow, focusable: gboolean);
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_column_view_row_set_selectable(self_: <span class="kw-2">*mut </span>GtkColumnViewRow, selectable: gboolean);
 
     <span class="comment">//=========================================================================
     // GtkColumnViewSorter
@@ -33201,6 +33503,9 @@
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub fn </span>gtk_flow_box_prepend(self_: <span class="kw-2">*mut </span>GtkFlowBox, child: <span class="kw-2">*mut </span>GtkWidget);
     <span class="kw">pub fn </span>gtk_flow_box_remove(box_: <span class="kw-2">*mut </span>GtkFlowBox, widget: <span class="kw-2">*mut </span>GtkWidget);
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_flow_box_remove_all(box_: <span class="kw-2">*mut </span>GtkFlowBox);
     <span class="kw">pub fn </span>gtk_flow_box_select_all(box_: <span class="kw-2">*mut </span>GtkFlowBox);
     <span class="kw">pub fn </span>gtk_flow_box_select_child(box_: <span class="kw-2">*mut </span>GtkFlowBox, child: <span class="kw-2">*mut </span>GtkFlowBoxChild);
     <span class="kw">pub fn </span>gtk_flow_box_selected_foreach(
@@ -33785,6 +34090,9 @@
     <span class="kw">pub fn </span>gtk_grid_view_get_min_columns(self_: <span class="kw-2">*mut </span>GtkGridView) -&gt; c_uint;
     <span class="kw">pub fn </span>gtk_grid_view_get_model(self_: <span class="kw-2">*mut </span>GtkGridView) -&gt; <span class="kw-2">*mut </span>GtkSelectionModel;
     <span class="kw">pub fn </span>gtk_grid_view_get_single_click_activate(self_: <span class="kw-2">*mut </span>GtkGridView) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_grid_view_get_tab_behavior(self_: <span class="kw-2">*mut </span>GtkGridView) -&gt; GtkListTabBehavior;
     <span class="kw">pub fn </span>gtk_grid_view_set_enable_rubberband(
         self_: <span class="kw-2">*mut </span>GtkGridView,
         enable_rubberband: gboolean,
@@ -33796,6 +34104,12 @@
     <span class="kw">pub fn </span>gtk_grid_view_set_single_click_activate(
         self_: <span class="kw-2">*mut </span>GtkGridView,
         single_click_activate: gboolean,
+    );
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_grid_view_set_tab_behavior(
+        self_: <span class="kw-2">*mut </span>GtkGridView,
+        tab_behavior: GtkListTabBehavior,
     );
 
     <span class="comment">//=========================================================================
@@ -34475,6 +34789,9 @@
     <span class="kw">pub fn </span>gtk_list_box_invalidate_sort(box_: <span class="kw-2">*mut </span>GtkListBox);
     <span class="kw">pub fn </span>gtk_list_box_prepend(box_: <span class="kw-2">*mut </span>GtkListBox, child: <span class="kw-2">*mut </span>GtkWidget);
     <span class="kw">pub fn </span>gtk_list_box_remove(box_: <span class="kw-2">*mut </span>GtkListBox, child: <span class="kw-2">*mut </span>GtkWidget);
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_list_box_remove_all(box_: <span class="kw-2">*mut </span>GtkListBox);
     <span class="kw">pub fn </span>gtk_list_box_select_all(box_: <span class="kw-2">*mut </span>GtkListBox);
     <span class="kw">pub fn </span>gtk_list_box_select_row(box_: <span class="kw-2">*mut </span>GtkListBox, row: <span class="kw-2">*mut </span>GtkListBoxRow);
     <span class="kw">pub fn </span>gtk_list_box_selected_foreach(
@@ -34531,12 +34848,18 @@
     </span><span class="kw">pub fn </span>gtk_list_item_get_type() -&gt; GType;
     <span class="kw">pub fn </span>gtk_list_item_get_activatable(self_: <span class="kw-2">*mut </span>GtkListItem) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_list_item_get_child(self_: <span class="kw-2">*mut </span>GtkListItem) -&gt; <span class="kw-2">*mut </span>GtkWidget;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_list_item_get_focusable(self_: <span class="kw-2">*mut </span>GtkListItem) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_list_item_get_item(self_: <span class="kw-2">*mut </span>GtkListItem) -&gt; <span class="kw-2">*mut </span>gobject::GObject;
     <span class="kw">pub fn </span>gtk_list_item_get_position(self_: <span class="kw-2">*mut </span>GtkListItem) -&gt; c_uint;
     <span class="kw">pub fn </span>gtk_list_item_get_selectable(self_: <span class="kw-2">*mut </span>GtkListItem) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_list_item_get_selected(self_: <span class="kw-2">*mut </span>GtkListItem) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_list_item_set_activatable(self_: <span class="kw-2">*mut </span>GtkListItem, activatable: gboolean);
     <span class="kw">pub fn </span>gtk_list_item_set_child(self_: <span class="kw-2">*mut </span>GtkListItem, child: <span class="kw-2">*mut </span>GtkWidget);
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_list_item_set_focusable(self_: <span class="kw-2">*mut </span>GtkListItem, focusable: gboolean);
     <span class="kw">pub fn </span>gtk_list_item_set_selectable(self_: <span class="kw-2">*mut </span>GtkListItem, selectable: gboolean);
 
     <span class="comment">//=========================================================================
@@ -34634,6 +34957,9 @@
     <span class="kw">pub fn </span>gtk_list_view_get_model(self_: <span class="kw-2">*mut </span>GtkListView) -&gt; <span class="kw-2">*mut </span>GtkSelectionModel;
     <span class="kw">pub fn </span>gtk_list_view_get_show_separators(self_: <span class="kw-2">*mut </span>GtkListView) -&gt; gboolean;
     <span class="kw">pub fn </span>gtk_list_view_get_single_click_activate(self_: <span class="kw-2">*mut </span>GtkListView) -&gt; gboolean;
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_list_view_get_tab_behavior(self_: <span class="kw-2">*mut </span>GtkListView) -&gt; GtkListTabBehavior;
     <span class="kw">pub fn </span>gtk_list_view_set_enable_rubberband(
         self_: <span class="kw-2">*mut </span>GtkListView,
         enable_rubberband: gboolean,
@@ -34644,6 +34970,12 @@
     <span class="kw">pub fn </span>gtk_list_view_set_single_click_activate(
         self_: <span class="kw-2">*mut </span>GtkListView,
         single_click_activate: gboolean,
+    );
+    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
+    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
+    </span><span class="kw">pub fn </span>gtk_list_view_set_tab_behavior(
+        self_: <span class="kw-2">*mut </span>GtkListView,
+        tab_behavior: GtkListTabBehavior,
     );
 
     <span class="comment">//=========================================================================
@@ -39973,5 +40305,4 @@
     <span class="kw">pub fn </span>gtk_value_take_expression(value: <span class="kw-2">*mut </span>gobject::GValue, expression: <span class="kw-2">*mut </span>GtkExpression);
 
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4_sys" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (246eae2fa 2023-02-21)" data-search-js="search-14421e1532aead08.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

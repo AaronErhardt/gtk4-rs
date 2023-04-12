@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/settings.rs`."><title>settings.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e5308b57e507db71.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-d59023bfa12059d2.css"><link rel="stylesheet" disabled href="../../../static.files/dark-1ca41bb1e10af075.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-18b4181a2f3fb862.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/settings.rs`."><title>settings.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-63a85fc7cf22dee2.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (9df3a39fb 2023-04-11)" data-search-js="search-bc5a112813b5d712.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-0bcba95ff279c1db.css" data-theme-light-css="light-db279b6232be9c13.css" data-theme-dark-css="dark-cf923f49f397b216.css" data-theme-ayu-css="ayu-be46fdc453a55015.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-1159a395118aa44e.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3590,31 +3590,7 @@
 <a href="#3517" id="3517">3517</a>
 <a href="#3518" id="3518">3518</a>
 <a href="#3519" id="3519">3519</a>
-<a href="#3520" id="3520">3520</a>
-<a href="#3521" id="3521">3521</a>
-<a href="#3522" id="3522">3522</a>
-<a href="#3523" id="3523">3523</a>
-<a href="#3524" id="3524">3524</a>
-<a href="#3525" id="3525">3525</a>
-<a href="#3526" id="3526">3526</a>
-<a href="#3527" id="3527">3527</a>
-<a href="#3528" id="3528">3528</a>
-<a href="#3529" id="3529">3529</a>
-<a href="#3530" id="3530">3530</a>
-<a href="#3531" id="3531">3531</a>
-<a href="#3532" id="3532">3532</a>
-<a href="#3533" id="3533">3533</a>
-<a href="#3534" id="3534">3534</a>
-<a href="#3535" id="3535">3535</a>
-<a href="#3536" id="3536">3536</a>
-<a href="#3537" id="3537">3537</a>
-<a href="#3538" id="3538">3538</a>
-<a href="#3539" id="3539">3539</a>
-<a href="#3540" id="3540">3540</a>
-<a href="#3541" id="3541">3541</a>
-<a href="#3542" id="3542">3542</a>
-<a href="#3543" id="3543">3543</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
@@ -4168,7 +4144,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>,
             <span class="string">&quot;gtk-alternative-button-order&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_alternative_button_order,
+            gtk_alternative_button_order,
         )
     }
 
@@ -4192,7 +4168,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>,
             <span class="string">&quot;gtk-alternative-sort-arrows&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_alternative_sort_arrows,
+            gtk_alternative_sort_arrows,
         )
     }
 
@@ -4234,7 +4210,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>,
             <span class="string">&quot;gtk-application-prefer-dark-theme&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_application_prefer_dark_theme,
+            gtk_application_prefer_dark_theme,
         )
     }
 
@@ -4247,7 +4223,7 @@
     <span class="doccomment">/// The aspect ratio of the text caret.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-cursor-aspect-ratio&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_cursor_aspect_ratio(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_cursor_aspect_ratio: f64) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-aspect-ratio&quot;</span>, <span class="kw-2">&amp;</span>gtk_cursor_aspect_ratio)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-aspect-ratio&quot;</span>, gtk_cursor_aspect_ratio)
     }
 
     <span class="doccomment">/// Whether the cursor should blink.
@@ -4265,7 +4241,7 @@
     /// which allows more flexible control over cursor blinking.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-cursor-blink&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_cursor_blink(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_cursor_blink: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-blink&quot;</span>, <span class="kw-2">&amp;</span>gtk_cursor_blink)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-blink&quot;</span>, gtk_cursor_blink)
     }
 
     <span class="doccomment">/// Length of the cursor blink cycle, in milliseconds.
@@ -4277,7 +4253,7 @@
     <span class="doccomment">/// Length of the cursor blink cycle, in milliseconds.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-cursor-blink-time&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_cursor_blink_time(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_cursor_blink_time: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-blink-time&quot;</span>, <span class="kw-2">&amp;</span>gtk_cursor_blink_time)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-blink-time&quot;</span>, gtk_cursor_blink_time)
     }
 
     <span class="doccomment">/// Time after which the cursor stops blinking, in seconds.
@@ -4299,7 +4275,7 @@
     /// [`gtk-cursor-blink`][struct@crate::Settings#gtk-cursor-blink] to [`false`].
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-cursor-blink-timeout&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_cursor_blink_timeout(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_cursor_blink_timeout: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-blink-timeout&quot;</span>, <span class="kw-2">&amp;</span>gtk_cursor_blink_timeout)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-blink-timeout&quot;</span>, gtk_cursor_blink_timeout)
     }
 
     <span class="doccomment">/// Name of the cursor theme to use.
@@ -4315,7 +4291,7 @@
     /// Use [`None`] to use the default theme.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-cursor-theme-name&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_cursor_theme_name(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_cursor_theme_name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-theme-name&quot;</span>, <span class="kw-2">&amp;</span>gtk_cursor_theme_name)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-theme-name&quot;</span>, gtk_cursor_theme_name)
     }
 
     <span class="doccomment">/// The size to use for cursors.
@@ -4331,7 +4307,7 @@
     /// 0 means to use the default size.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-cursor-theme-size&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_cursor_theme_size(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_cursor_theme_size: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-theme-size&quot;</span>, <span class="kw-2">&amp;</span>gtk_cursor_theme_size)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-cursor-theme-size&quot;</span>, gtk_cursor_theme_size)
     }
 
     <span class="doccomment">/// Determines which buttons should be put in the
@@ -4381,7 +4357,7 @@
     /// [`decoration-layout`][struct@crate::HeaderBar#decoration-layout] property.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-decoration-layout&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_decoration_layout(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_decoration_layout: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-decoration-layout&quot;</span>, <span class="kw-2">&amp;</span>gtk_decoration_layout)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-decoration-layout&quot;</span>, gtk_decoration_layout)
     }
 
     <span class="doccomment">/// Whether builtin GTK dialogs such as the file chooser, the
@@ -4403,7 +4379,7 @@
     /// directly, or message dialogs.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-dialogs-use-header&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_dialogs_use_header(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_dialogs_use_header: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-dialogs-use-header&quot;</span>, <span class="kw-2">&amp;</span>gtk_dialogs_use_header)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-dialogs-use-header&quot;</span>, gtk_dialogs_use_header)
     }
 
     <span class="doccomment">/// The number of pixels the cursor can move before dragging.
@@ -4415,7 +4391,7 @@
     <span class="doccomment">/// The number of pixels the cursor can move before dragging.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-dnd-drag-threshold&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_dnd_drag_threshold(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_dnd_drag_threshold: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-dnd-drag-threshold&quot;</span>, <span class="kw-2">&amp;</span>gtk_dnd_drag_threshold)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-dnd-drag-threshold&quot;</span>, gtk_dnd_drag_threshold)
     }
 
     <span class="doccomment">/// The maximum distance allowed between two clicks for them to be considered
@@ -4429,11 +4405,7 @@
     /// a double click, in pixels.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-double-click-distance&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_double_click_distance(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_double_click_distance: i32) {
-        glib::ObjectExt::set_property(
-            <span class="self">self</span>,
-            <span class="string">&quot;gtk-double-click-distance&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_double_click_distance,
-        )
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-double-click-distance&quot;</span>, gtk_double_click_distance)
     }
 
     <span class="doccomment">/// The maximum time to allow between two clicks for them to be considered
@@ -4447,7 +4419,7 @@
     /// a double click, in milliseconds.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-double-click-time&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_double_click_time(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_double_click_time: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-double-click-time&quot;</span>, <span class="kw-2">&amp;</span>gtk_double_click_time)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-double-click-time&quot;</span>, gtk_double_click_time)
     }
 
     <span class="doccomment">/// Whether menu items should have visible accelerators which can be
@@ -4461,7 +4433,7 @@
     /// activated.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-enable-accels&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_enable_accels(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_enable_accels: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-accels&quot;</span>, <span class="kw-2">&amp;</span>gtk_enable_accels)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-accels&quot;</span>, gtk_enable_accels)
     }
 
     <span class="doccomment">/// Whether to enable toolkit-wide animations.
@@ -4473,7 +4445,7 @@
     <span class="doccomment">/// Whether to enable toolkit-wide animations.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-enable-animations&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_enable_animations(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_enable_animations: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-animations&quot;</span>, <span class="kw-2">&amp;</span>gtk_enable_animations)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-animations&quot;</span>, gtk_enable_animations)
     }
 
     <span class="doccomment">/// Whether to play any event sounds at all.
@@ -4497,7 +4469,7 @@
     /// module like the one that comes with libcanberra.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-enable-event-sounds&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_enable_event_sounds(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_enable_event_sounds: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-event-sounds&quot;</span>, <span class="kw-2">&amp;</span>gtk_enable_event_sounds)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-event-sounds&quot;</span>, gtk_enable_event_sounds)
     }
 
     <span class="doccomment">/// Whether to play event sounds as feedback to user input.
@@ -4524,7 +4496,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>,
             <span class="string">&quot;gtk-enable-input-feedback-sounds&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_enable_input_feedback_sounds,
+            gtk_enable_input_feedback_sounds,
         )
     }
 
@@ -4539,7 +4511,7 @@
     /// &#39;PRIMARY&#39; clipboard content at the cursor location.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-enable-primary-paste&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_enable_primary_paste(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_enable_primary_paste: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-primary-paste&quot;</span>, <span class="kw-2">&amp;</span>gtk_enable_primary_paste)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-enable-primary-paste&quot;</span>, gtk_enable_primary_paste)
     }
 
     <span class="doccomment">/// How long to show the last input character in hidden
@@ -4562,7 +4534,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>,
             <span class="string">&quot;gtk-entry-password-hint-timeout&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_entry_password_hint_timeout,
+            gtk_entry_password_hint_timeout,
         )
     }
 
@@ -4573,11 +4545,7 @@
 
     <span class="attr">#[doc(alias = <span class="string">&quot;gtk-entry-select-on-focus&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_entry_select_on_focus(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_entry_select_on_focus: bool) {
-        glib::ObjectExt::set_property(
-            <span class="self">self</span>,
-            <span class="string">&quot;gtk-entry-select-on-focus&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_entry_select_on_focus,
-        )
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-entry-select-on-focus&quot;</span>, gtk_entry_select_on_focus)
     }
 
     <span class="doccomment">/// When [`true`], keyboard navigation and other input-related errors
@@ -4599,7 +4567,7 @@
     /// ways, such as flashing the window or similar visual effects.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-error-bell&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_error_bell(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_error_bell: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-error-bell&quot;</span>, <span class="kw-2">&amp;</span>gtk_error_bell)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-error-bell&quot;</span>, gtk_error_bell)
     }
 
     <span class="doccomment">/// The default font to use.
@@ -4615,7 +4583,7 @@
     /// GTK uses the family name and size from this string.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-font-name&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_font_name(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_font_name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-font-name&quot;</span>, <span class="kw-2">&amp;</span>gtk_font_name)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-font-name&quot;</span>, gtk_font_name)
     }
 
     <span class="doccomment">/// Timestamp of the current fontconfig configuration.
@@ -4627,7 +4595,7 @@
     <span class="doccomment">/// Timestamp of the current fontconfig configuration.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-fontconfig-timestamp&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_fontconfig_timestamp(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_fontconfig_timestamp: u32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-fontconfig-timestamp&quot;</span>, <span class="kw-2">&amp;</span>gtk_fontconfig_timestamp)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-fontconfig-timestamp&quot;</span>, gtk_fontconfig_timestamp)
     }
 
     <span class="doccomment">/// Whether hinting should be applied to font metrics.
@@ -4649,7 +4617,7 @@
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk-hint-font-metrics&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_hint_font_metrics(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_hint_font_metrics: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-hint-font-metrics&quot;</span>, <span class="kw-2">&amp;</span>gtk_hint_font_metrics)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-hint-font-metrics&quot;</span>, gtk_hint_font_metrics)
     }
 
     <span class="doccomment">/// Name of the icon theme to use.
@@ -4667,7 +4635,7 @@
     /// GTK handles icon themes.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-icon-theme-name&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_icon_theme_name(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_icon_theme_name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-icon-theme-name&quot;</span>, <span class="kw-2">&amp;</span>gtk_icon_theme_name)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-icon-theme-name&quot;</span>, gtk_icon_theme_name)
     }
 
     <span class="doccomment">/// Which IM (input method) module should be used by default.
@@ -4693,7 +4661,7 @@
     /// See [`IMContext`][crate::IMContext].
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-im-module&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_im_module(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_im_module: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-im-module&quot;</span>, <span class="kw-2">&amp;</span>gtk_im_module)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-im-module&quot;</span>, gtk_im_module)
     }
 
     <span class="doccomment">/// Whether GTK should make sure that text can be navigated with
@@ -4711,7 +4679,7 @@
     /// This is useful when using a screen reader.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-keynav-use-caret&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_keynav_use_caret(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_keynav_use_caret: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-keynav-use-caret&quot;</span>, <span class="kw-2">&amp;</span>gtk_keynav_use_caret)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-keynav-use-caret&quot;</span>, gtk_keynav_use_caret)
     }
 
     <span class="doccomment">/// Whether to select the contents of a selectable
@@ -4725,11 +4693,7 @@
     /// label when it is focused.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-label-select-on-focus&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_label_select_on_focus(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_label_select_on_focus: bool) {
-        glib::ObjectExt::set_property(
-            <span class="self">self</span>,
-            <span class="string">&quot;gtk-label-select-on-focus&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_label_select_on_focus,
-        )
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-label-select-on-focus&quot;</span>, gtk_label_select_on_focus)
     }
 
     <span class="doccomment">/// The time for a button or touch press to be considered a “long press”.
@@ -4745,7 +4709,7 @@
     /// See [`GestureLongPress`][crate::GestureLongPress].
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-long-press-time&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_long_press_time(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_long_press_time: u32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-long-press-time&quot;</span>, <span class="kw-2">&amp;</span>gtk_long_press_time)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-long-press-time&quot;</span>, gtk_long_press_time)
     }
 
     <span class="doccomment">/// Whether scrolled windows may use overlaid scrolling indicators.
@@ -4763,7 +4727,7 @@
     /// scrollbars.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-overlay-scrolling&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_overlay_scrolling(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_overlay_scrolling: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-overlay-scrolling&quot;</span>, <span class="kw-2">&amp;</span>gtk_overlay_scrolling)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-overlay-scrolling&quot;</span>, gtk_overlay_scrolling)
     }
 
     <span class="doccomment">/// If the value of this setting is [`true`], clicking the primary button in a
@@ -4796,7 +4760,7 @@
         glib::ObjectExt::set_property(
             <span class="self">self</span>,
             <span class="string">&quot;gtk-primary-button-warps-slider&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_primary_button_warps_slider,
+            gtk_primary_button_warps_slider,
         )
     }
 
@@ -4817,7 +4781,7 @@
     /// and may include &quot;file&quot;, &quot;cups&quot;, &quot;lpr&quot; or &quot;papi&quot;.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-print-backends&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_print_backends(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_print_backends: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-print-backends&quot;</span>, <span class="kw-2">&amp;</span>gtk_print_backends)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-print-backends&quot;</span>, gtk_print_backends)
     }
 
     <span class="doccomment">/// A command to run for displaying the print preview.
@@ -4847,11 +4811,7 @@
     /// file and the print settings file when it is done.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-print-preview-command&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_print_preview_command(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_print_preview_command: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(
-            <span class="self">self</span>,
-            <span class="string">&quot;gtk-print-preview-command&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_print_preview_command,
-        )
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-print-preview-command&quot;</span>, gtk_print_preview_command)
     }
 
     <span class="doccomment">/// Whether GTK should keep track of items inside the recently used
@@ -4869,7 +4829,7 @@
     /// If set to [`false`], the list will always be empty.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-recent-files-enabled&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_recent_files_enabled(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_recent_files_enabled: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-recent-files-enabled&quot;</span>, <span class="kw-2">&amp;</span>gtk_recent_files_enabled)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-recent-files-enabled&quot;</span>, gtk_recent_files_enabled)
     }
 
     <span class="doccomment">/// The maximum age, in days, of the items inside the recently used
@@ -4891,7 +4851,7 @@
     /// item will be removed.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-recent-files-max-age&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_recent_files_max_age(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_recent_files_max_age: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-recent-files-max-age&quot;</span>, <span class="kw-2">&amp;</span>gtk_recent_files_max_age)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-recent-files-max-age&quot;</span>, gtk_recent_files_max_age)
     }
 
     <span class="doccomment">/// Set to [`true`] if the desktop environment is displaying
@@ -4905,7 +4865,7 @@
     /// the app menu, [`false`] if the app should display it itself.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-shell-shows-app-menu&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_shell_shows_app_menu(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_shell_shows_app_menu: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-shell-shows-app-menu&quot;</span>, <span class="kw-2">&amp;</span>gtk_shell_shows_app_menu)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-shell-shows-app-menu&quot;</span>, gtk_shell_shows_app_menu)
     }
 
     <span class="doccomment">/// Set to [`true`] if the desktop environment is displaying
@@ -4919,7 +4879,7 @@
     /// the desktop folder, [`false`] if not.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-shell-shows-desktop&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_shell_shows_desktop(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_shell_shows_desktop: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-shell-shows-desktop&quot;</span>, <span class="kw-2">&amp;</span>gtk_shell_shows_desktop)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-shell-shows-desktop&quot;</span>, gtk_shell_shows_desktop)
     }
 
     <span class="doccomment">/// Set to [`true`] if the desktop environment is displaying
@@ -4933,7 +4893,7 @@
     /// the menubar, [`false`] if the app should display it itself.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-shell-shows-menubar&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_shell_shows_menubar(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_shell_shows_menubar: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-shell-shows-menubar&quot;</span>, <span class="kw-2">&amp;</span>gtk_shell_shows_menubar)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-shell-shows-menubar&quot;</span>, gtk_shell_shows_menubar)
     }
 
     <span class="doccomment">/// The XDG sound theme to use for event sounds.
@@ -4957,7 +4917,7 @@
     /// a loadable module like the one that comes with libcanberra.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-sound-theme-name&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_sound_theme_name(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_sound_theme_name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-sound-theme-name&quot;</span>, <span class="kw-2">&amp;</span>gtk_sound_theme_name)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-sound-theme-name&quot;</span>, gtk_sound_theme_name)
     }
 
     <span class="doccomment">/// Whether two cursors should be displayed for mixed left-to-right and
@@ -4971,7 +4931,7 @@
     /// right-to-left text.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-split-cursor&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_split_cursor(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_split_cursor: bool) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-split-cursor&quot;</span>, <span class="kw-2">&amp;</span>gtk_split_cursor)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-split-cursor&quot;</span>, gtk_split_cursor)
     }
 
     <span class="doccomment">/// Name of the theme to load.
@@ -4989,7 +4949,7 @@
     /// GTK finds the CSS stylesheet for a theme.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-theme-name&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_theme_name(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_theme_name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-theme-name&quot;</span>, <span class="kw-2">&amp;</span>gtk_theme_name)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-theme-name&quot;</span>, gtk_theme_name)
     }
 
     <span class="doccomment">/// Determines the action to take when a double-click
@@ -5009,11 +4969,7 @@
     /// or none.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-titlebar-double-click&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_titlebar_double_click(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_titlebar_double_click: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(
-            <span class="self">self</span>,
-            <span class="string">&quot;gtk-titlebar-double-click&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_titlebar_double_click,
-        )
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-titlebar-double-click&quot;</span>, gtk_titlebar_double_click)
     }
 
     <span class="doccomment">/// Determines the action to take when a middle-click
@@ -5033,11 +4989,7 @@
     /// or none.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-titlebar-middle-click&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_titlebar_middle_click(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_titlebar_middle_click: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(
-            <span class="self">self</span>,
-            <span class="string">&quot;gtk-titlebar-middle-click&quot;</span>,
-            <span class="kw-2">&amp;</span>gtk_titlebar_middle_click,
-        )
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-titlebar-middle-click&quot;</span>, gtk_titlebar_middle_click)
     }
 
     <span class="doccomment">/// Determines the action to take when a right-click
@@ -5057,7 +5009,7 @@
     /// or none.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-titlebar-right-click&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_titlebar_right_click(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_titlebar_right_click: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-titlebar-right-click&quot;</span>, <span class="kw-2">&amp;</span>gtk_titlebar_right_click)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-titlebar-right-click&quot;</span>, gtk_titlebar_right_click)
     }
 
     <span class="doccomment">/// Whether to antialias fonts.
@@ -5073,7 +5025,7 @@
     /// The values are 0 for no, 1 for yes, or -1 for the system default.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-xft-antialias&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_xft_antialias(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_xft_antialias: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-antialias&quot;</span>, <span class="kw-2">&amp;</span>gtk_xft_antialias)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-antialias&quot;</span>, gtk_xft_antialias)
     }
 
     <span class="doccomment">/// The font resolution, in 1024 * dots/inch.
@@ -5089,7 +5041,7 @@
     /// -1 to use the default value.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-xft-dpi&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_xft_dpi(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_xft_dpi: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-dpi&quot;</span>, <span class="kw-2">&amp;</span>gtk_xft_dpi)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-dpi&quot;</span>, gtk_xft_dpi)
     }
 
     <span class="doccomment">/// Whether to enable font hinting.
@@ -5105,7 +5057,7 @@
     /// The values are 0 for no, 1 for yes, or -1 for the system default.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-xft-hinting&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_xft_hinting(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_xft_hinting: i32) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-hinting&quot;</span>, <span class="kw-2">&amp;</span>gtk_xft_hinting)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-hinting&quot;</span>, gtk_xft_hinting)
     }
 
     <span class="doccomment">/// What degree of font hinting to use.
@@ -5123,7 +5075,7 @@
     /// hintmedium, hintfull.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-xft-hintstyle&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_xft_hintstyle(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_xft_hintstyle: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-hintstyle&quot;</span>, <span class="kw-2">&amp;</span>gtk_xft_hintstyle)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-hintstyle&quot;</span>, gtk_xft_hintstyle)
     }
 
     <span class="doccomment">/// The type of subpixel antialiasing to use.
@@ -5139,7 +5091,7 @@
     /// The possible values are none, rgb, bgr, vrgb, vbgr.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk-xft-rgba&quot;</span>)]
     </span><span class="kw">pub fn </span>set_gtk_xft_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>, gtk_xft_rgba: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-rgba&quot;</span>, <span class="kw-2">&amp;</span>gtk_xft_rgba)
+        glib::ObjectExt::set_property(<span class="self">self</span>, <span class="string">&quot;gtk-xft-rgba&quot;</span>, gtk_xft_rgba)
     }
 
     <span class="doccomment">/// Gets the [`Settings`][crate::Settings] object for the default display, creating
@@ -7157,5 +7109,4 @@
         f.write_str(<span class="string">&quot;Settings&quot;</span>)
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (246eae2fa 2023-02-21)" data-search-js="search-14421e1532aead08.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

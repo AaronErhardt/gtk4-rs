@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e5308b57e507db71.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-d59023bfa12059d2.css"><link rel="stylesheet" disabled href="../../../static.files/dark-1ca41bb1e10af075.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-18b4181a2f3fb862.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-63a85fc7cf22dee2.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0-nightly (9df3a39fb 2023-04-11)" data-search-js="search-bc5a112813b5d712.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-0bcba95ff279c1db.css" data-theme-light-css="light-db279b6232be9c13.css" data-theme-dark-css="dark-cf923f49f397b216.css" data-theme-ayu-css="ayu-be46fdc453a55015.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-1159a395118aa44e.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -489,7 +489,8 @@
 <a href="#416" id="416">416</a>
 <a href="#417" id="417">417</a>
 <a href="#418" id="418">418</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+<a href="#419" id="419">419</a>
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
@@ -569,9 +570,9 @@
 ///
 /// [`AboutDialog`][struct@crate::AboutDialog], [`AccessibleRange`][struct@crate::AccessibleRange], [`Accessible`][struct@crate::Accessible], [`ActionBar`][struct@crate::ActionBar], [`AppChooserButton`][struct@crate::AppChooserButton], [`AppChooserDialog`][struct@crate::AppChooserDialog], [`AppChooserWidget`][struct@crate::AppChooserWidget], [`ApplicationWindow`][struct@crate::ApplicationWindow], [`AspectFrame`][struct@crate::AspectFrame], [`Assistant`][struct@crate::Assistant], [`Box`][struct@crate::Box], [`Button`][struct@crate::Button], [`Calendar`][struct@crate::Calendar], [`CellView`][struct@crate::CellView], [`CenterBox`][struct@crate::CenterBox], [`CheckButton`][struct@crate::CheckButton], [`ColorButton`][struct@crate::ColorButton], [`ColorChooserDialog`][struct@crate::ColorChooserDialog], [`ColorChooserWidget`][struct@crate::ColorChooserWidget], [`ColorDialogButton`][struct@crate::ColorDialogButton], [`ColumnView`][struct@crate::ColumnView], [`ComboBoxText`][struct@crate::ComboBoxText], [`ComboBox`][struct@crate::ComboBox], [`Dialog`][struct@crate::Dialog], [`DragIcon`][struct@crate::DragIcon], [`DrawingArea`][struct@crate::DrawingArea], [`DropDown`][struct@crate::DropDown], [`EditableLabel`][struct@crate::EditableLabel], [`EmojiChooser`][struct@crate::EmojiChooser], [`Entry`][struct@crate::Entry], [`Expander`][struct@crate::Expander], [`FileChooserDialog`][struct@crate::FileChooserDialog], [`FileChooserWidget`][struct@crate::FileChooserWidget], [`Fixed`][struct@crate::Fixed], [`FlowBoxChild`][struct@crate::FlowBoxChild], [`FlowBox`][struct@crate::FlowBox], [`FontButton`][struct@crate::FontButton], [`FontChooserDialog`][struct@crate::FontChooserDialog], [`FontChooserWidget`][struct@crate::FontChooserWidget], [`FontDialogButton`][struct@crate::FontDialogButton], [`Frame`][struct@crate::Frame], [`GLArea`][struct@crate::GLArea], [`GridView`][struct@crate::GridView], [`Grid`][struct@crate::Grid], [`HeaderBar`][struct@crate::HeaderBar], [`IconView`][struct@crate::IconView], [`Image`][struct@crate::Image], [`InfoBar`][struct@crate::InfoBar], [`Inscription`][struct@crate::Inscription], [`Label`][struct@crate::Label], [`LevelBar`][struct@crate::LevelBar], [`LinkButton`][struct@crate::LinkButton], [`ListBase`][struct@crate::ListBase], [`ListBoxRow`][struct@crate::ListBoxRow], [`ListBox`][struct@crate::ListBox], [`ListView`][struct@crate::ListView], [`LockButton`][struct@crate::LockButton], [`MediaControls`][struct@crate::MediaControls], [`MenuButton`][struct@crate::MenuButton], [`MessageDialog`][struct@crate::MessageDialog], [`Notebook`][struct@crate::Notebook], [`Overlay`][struct@crate::Overlay], [`PageSetupUnixDialog`][struct@crate::PageSetupUnixDialog], [`Paned`][struct@crate::Paned], [`PasswordEntry`][struct@crate::PasswordEntry], [`Picture`][struct@crate::Picture], [`PopoverMenuBar`][struct@crate::PopoverMenuBar], [`PopoverMenu`][struct@crate::PopoverMenu], [`Popover`][struct@crate::Popover], [`PrintUnixDialog`][struct@crate::PrintUnixDialog], [`ProgressBar`][struct@crate::ProgressBar], [`Range`][struct@crate::Range], [`Revealer`][struct@crate::Revealer], [`ScaleButton`][struct@crate::ScaleButton], [`Scale`][struct@crate::Scale], [`Scrollbar`][struct@crate::Scrollbar], [`ScrolledWindow`][struct@crate::ScrolledWindow], [`SearchBar`][struct@crate::SearchBar], [`SearchEntry`][struct@crate::SearchEntry], [`Separator`][struct@crate::Separator], [`ShortcutLabel`][struct@crate::ShortcutLabel], [`ShortcutsGroup`][struct@crate::ShortcutsGroup], [`ShortcutsSection`][struct@crate::ShortcutsSection], [`ShortcutsShortcut`][struct@crate::ShortcutsShortcut], [`ShortcutsWindow`][struct@crate::ShortcutsWindow], [`SpinButton`][struct@crate::SpinButton], [`Spinner`][struct@crate::Spinner], [`StackPage`][struct@crate::StackPage], [`StackSidebar`][struct@crate::StackSidebar], [`StackSwitcher`][struct@crate::StackSwitcher], [`Stack`][struct@crate::Stack], [`Statusbar`][struct@crate::Statusbar], [`Switch`][struct@crate::Switch], [`TextView`][struct@crate::TextView], [`Text`][struct@crate::Text], [`ToggleButton`][struct@crate::ToggleButton], [`TreeExpander`][struct@crate::TreeExpander], [`TreeView`][struct@crate::TreeView], [`Video`][struct@crate::Video], [`Viewport`][struct@crate::Viewport], [`VolumeButton`][struct@crate::VolumeButton], [`Widget`][struct@crate::Widget], [`WindowControls`][struct@crate::WindowControls], [`WindowHandle`][struct@crate::WindowHandle], [`Window`][struct@crate::Window]
 </span><span class="kw">pub trait </span>AccessibleExt: <span class="lifetime">&#39;static </span>{
-    <span class="doccomment">/// Retrieves the accessible accessible for an accessible object
+    <span class="doccomment">/// Retrieves the accessible parent for an accessible object.
     ///
-    /// This function returns `NULL` for top level widgets
+    /// This function returns `NULL` for top level widgets.
     ///
     /// # Returns
     ///
@@ -592,11 +593,11 @@
     #[doc(alias = <span class="string">&quot;get_accessible_role&quot;</span>)]
     </span><span class="kw">fn </span>accessible_role(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; AccessibleRole;
 
-    <span class="doccomment">/// Retrieves the [`ATContext`][crate::ATContext] for the given [`Accessible`][crate::Accessible].
+    <span class="doccomment">/// Retrieves the accessible implementation for the given [`Accessible`][crate::Accessible].
     ///
     /// # Returns
     ///
-    /// the [`ATContext`][crate::ATContext]
+    /// the accessible implementation object
     </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gtk_accessible_get_at_context&quot;</span>)]
@@ -714,6 +715,7 @@
     );
 
     <span class="doccomment">/// Updates the next accessible sibling of @self.
+    ///
     /// That might be useful when a new child of a custom [`Accessible`][crate::Accessible]
     /// is created, and it needs to be linked to a previous child.
     /// ## `new_sibling`
@@ -738,7 +740,7 @@
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>accessible_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Accessible&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_none(ffi::gtk_accessible_get_accessible_parent(
+            from_glib_full(ffi::gtk_accessible_get_accessible_parent(
                 <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
@@ -756,7 +758,7 @@
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>at_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ATContext {
         <span class="kw">unsafe </span>{
-            from_glib_none(ffi::gtk_accessible_get_at_context(
+            from_glib_full(ffi::gtk_accessible_get_at_context(
                 <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
@@ -794,7 +796,7 @@
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>first_accessible_child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Accessible&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_none(ffi::gtk_accessible_get_first_accessible_child(
+            from_glib_full(ffi::gtk_accessible_get_first_accessible_child(
                 <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
@@ -804,7 +806,7 @@
     #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">fn </span>next_accessible_sibling(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Accessible&gt; {
         <span class="kw">unsafe </span>{
-            from_glib_none(ffi::gtk_accessible_get_next_accessible_sibling(
+            from_glib_full(ffi::gtk_accessible_get_next_accessible_sibling(
                 <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
             ))
         }
@@ -873,7 +875,7 @@
     }
 
     <span class="kw">fn </span>set_accessible_role(<span class="kw-2">&amp;</span><span class="self">self</span>, accessible_role: AccessibleRole) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;accessible-role&quot;</span>, <span class="kw-2">&amp;</span>accessible_role)
+        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;accessible-role&quot;</span>, accessible_role)
     }
 
     <span class="kw">fn </span>connect_accessible_role_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
@@ -907,5 +909,4 @@
         f.write_str(<span class="string">&quot;Accessible&quot;</span>)
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (246eae2fa 2023-02-21)" data-search-js="search-14421e1532aead08.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

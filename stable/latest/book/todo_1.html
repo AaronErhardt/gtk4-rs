@@ -71,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -427,7 +429,7 @@ Here, they already include <code>task_row.ui</code> which we will handle later i
   &lt;/gresource&gt;
 &lt;/gresources&gt;
 </code></pre>
-<h2 id="to-do-object"><a class="header" href="#to-do-object">To-Do Object</a></h2>
+<h2 id="task-object"><a class="header" href="#task-object">Task Object</a></h2>
 <p>So far so good.
 The main user interface is done, but the entry does not react to input yet.
 Also, where would the input go?
@@ -491,24 +493,26 @@ pub struct TaskData {
     pub completed: bool,
     pub content: String,
 }</code></pre>
-<p>Exposing <code>completed</code> and <code>content</code> as properties does not become much different that way, so we will not discuss it further.
-If you are curious, you can press on the small eye symbol on the top right of the code snippet to read the implementation.</p>
+<p>We are going to expose <code>completed</code> and <code>content</code> as properties.
+Since the data is now inside a struct rather than individual member variables we have to add more annotations.
+For each property we additionally specify the name, the type and which member variable of <code>TaskData</code> we want to access.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_object/imp.rs">listings/todo/1/task_object/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
-</span><span class="boring">use std::rc::Rc;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, ParamSpecBoolean, ParamSpecString, Value};
+</span><span class="boring">use glib::{ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">use super::TaskData;
 </span><span class="boring">
 </span>// Object holding the state
-#[derive(Default)]
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::TaskObject)]
 pub struct TaskObject {
-    pub data: Rc&lt;RefCell&lt;TaskData&gt;&gt;,
+    #[property(name = &quot;completed&quot;, get, set, type = bool, member = completed)]
+    #[property(name = &quot;content&quot;, get, set, type = String, member = content)]
+    pub data: RefCell&lt;TaskData&gt;,
 }
 
 // The central trait for subclassing a GObject
@@ -517,45 +521,22 @@ impl ObjectSubclass for TaskObject {
     const NAME: &amp;'static str = &quot;TodoTaskObject&quot;;
     type Type = super::TaskObject;
 }
-<span class="boring">
-</span><span class="boring">// Trait shared by all GObjects
-</span><span class="boring">impl ObjectImpl for TaskObject {
-</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; = Lazy::new(|| {
-</span><span class="boring">            vec![
-</span><span class="boring">                ParamSpecBoolean::builder(&quot;completed&quot;).build(),
-</span><span class="boring">                ParamSpecString::builder(&quot;content&quot;).build(),
-</span><span class="boring">            ]
-</span><span class="boring">        });
-</span><span class="boring">        PROPERTIES.as_ref()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;completed&quot; =&gt; {
-</span><span class="boring">                let input_value =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `bool`.&quot;);
-</span><span class="boring">                self.data.borrow_mut().completed = input_value;
-</span><span class="boring">            }
-</span><span class="boring">            &quot;content&quot; =&gt; {
-</span><span class="boring">                let input_value = value
-</span><span class="boring">                    .get()
-</span><span class="boring">                    .expect(&quot;The value needs to be of type `String`.&quot;);
-</span><span class="boring">                self.data.borrow_mut().content = input_value;
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;completed&quot; =&gt; self.data.borrow().completed.to_value(),
-</span><span class="boring">            &quot;content&quot; =&gt; self.data.borrow().content.to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">}</span></code></pre>
-<h2 id="to-do-row"><a class="header" href="#to-do-row">To-Do Row</a></h2>
+
+// Trait shared by all GObjects
+impl ObjectImpl for TaskObject {
+    fn properties() -&gt; &amp;'static [ParamSpec] {
+        Self::derived_properties()
+    }
+
+    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+        self.derived_set_property(id, value, pspec)
+    }
+
+    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+        self.derived_property(id, pspec)
+    }
+}</code></pre>
+<h2 id="task-row"><a class="header" href="#task-row">Task Row</a></h2>
 <p>Let's move on to the individual tasks.
 The row of a task should look like this:</p>
 <div style="text-align:center"><img src="img/task_row.png" alt="A single task widget"/></div>

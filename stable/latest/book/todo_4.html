@@ -71,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -800,15 +802,17 @@ As usual, the full implementation can be seen by clicking at the eye symbol at t
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use glib::{ParamSpec, ParamSpecString, Value};
-</span><span class="boring">use gtk::glib::ParamSpecObject;
+</span><span class="boring">use glib::{ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::{gio, glib};
-</span><span class="boring">use once_cell::sync::{Lazy, OnceCell};
+</span><span class="boring">use once_cell::sync::OnceCell;
 </span><span class="boring">
 </span>// Object holding the state
-#[derive(Default)]
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::CollectionObject)]
 pub struct CollectionObject {
+    #[property(get, set)]
     pub title: RefCell&lt;String&gt;,
+    #[property(get, set)]
     pub tasks: OnceCell&lt;gio::ListStore&gt;,
 }
 
@@ -822,39 +826,15 @@ impl ObjectSubclass for CollectionObject {
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for CollectionObject {
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; = Lazy::new(|| {
-</span><span class="boring">            vec![
-</span><span class="boring">                ParamSpecString::builder(&quot;title&quot;).build(),
-</span><span class="boring">                ParamSpecObject::builder::&lt;gio::ListStore&gt;(&quot;tasks&quot;).build(),
-</span><span class="boring">            ]
-</span><span class="boring">        });
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;title&quot; =&gt; {
-</span><span class="boring">                let input_value = value
-</span><span class="boring">                    .get()
-</span><span class="boring">                    .expect(&quot;The value needs to be of type `String`.&quot;);
-</span><span class="boring">                self.title.replace(input_value);
-</span><span class="boring">            }
-</span><span class="boring">            &quot;tasks&quot; =&gt; {
-</span><span class="boring">                let input_value = value
-</span><span class="boring">                    .get()
-</span><span class="boring">                    .expect(&quot;The value needs to be of type `gio::ListStore`.&quot;);
-</span><span class="boring">                self.tasks.set(input_value).expect(&quot;Could not set task&quot;);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;title&quot; =&gt; self.title.borrow().to_value(),
-</span><span class="boring">            &quot;tasks&quot; =&gt; self.tasks.get().expect(&quot;Could not get tasks.&quot;).to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>We also add the struct <code>CollectionData</code> to aid in serialization and deserialization.</p>
@@ -879,14 +859,6 @@ impl ObjectSubclass for CollectionObject {
 </span><span class="boring">            .property(&quot;title&quot;, title)
 </span><span class="boring">            .property(&quot;tasks&quot;, tasks)
 </span><span class="boring">            .build()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn tasks(&amp;self) -&gt; gio::ListStore {
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .tasks
-</span><span class="boring">            .get()
-</span><span class="boring">            .expect(&quot;Could not get tasks.&quot;)
-</span><span class="boring">            .clone()
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    pub fn to_collection_data(&amp;self) -&gt; CollectionData {
@@ -949,14 +921,6 @@ pub struct CollectionData {
             .property(&quot;title&quot;, title)
             .property(&quot;tasks&quot;, tasks)
             .build()
-    }
-
-    pub fn tasks(&amp;self) -&gt; gio::ListStore {
-        self.imp()
-            .tasks
-            .get()
-            .expect(&quot;Could not get tasks.&quot;)
-            .clone()
     }
 
     pub fn to_collection_data(&amp;self) -&gt; CollectionData {
@@ -1113,13 +1077,13 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -1485,46 +1449,37 @@ pub struct Window {
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -1535,12 +1490,13 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -1789,13 +1745,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -2161,46 +2117,37 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -2211,12 +2158,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -2246,13 +2194,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -2618,46 +2566,37 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -2668,12 +2607,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -2706,13 +2646,13 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -3078,46 +3018,37 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -3128,12 +3059,13 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -3169,13 +3101,13 @@ Finally, we select the collection row.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -3541,46 +3473,37 @@ Finally, we select the collection row.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -3591,12 +3514,13 @@ Finally, we select the collection row.</p>
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -3627,13 +3551,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -3999,46 +3923,37 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -4049,12 +3964,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -4084,13 +4000,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -4456,46 +4372,37 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -4506,12 +4413,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -4558,13 +4466,13 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -4930,46 +4838,37 @@ This action will be activated by a click on the <code>+</code> button as well as
 <span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -4980,12 +4879,13 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -5008,7 +4908,7 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>As soon as the &quot;new-collection&quot; action is activated, the <code>new_collection</code> method is called.
-Here, we create the dialog, set up the buttons as well as add the entry to it.
+Here, we create the <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.MessageDialog.html"><code>adw::MessageDialog</code></a>, set up the buttons as well as add the entry to it.
 We add a callback to the entry to ensure that when the content changes, an empty content sets <code>dialog_button</code> as insensitive and adds an &quot;error&quot; CSS class to the entry.
 We also add a callback to the dialog itself.
 If we click &quot;Cancel&quot;, the dialog should just be destroyed without any further actions.
@@ -5021,13 +4921,13 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -5393,46 +5293,37 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    fn new_collection(&amp;self) {
-        // Create new Dialog
-        let dialog = Dialog::with_buttons(
-            Some(&quot;New Collection&quot;),
-            Some(self),
-            DialogFlags::MODAL
-                | DialogFlags::DESTROY_WITH_PARENT
-                | DialogFlags::USE_HEADER_BAR,
-            &amp;[
-                (&quot;Cancel&quot;, ResponseType::Cancel),
-                (&quot;Create&quot;, ResponseType::Accept),
-            ],
-        );
-        dialog.set_default_response(ResponseType::Accept);
-
-        // Make the dialog button insensitive initially
-        let dialog_button = dialog
-            .widget_for_response(ResponseType::Accept)
-            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-        dialog_button.set_sensitive(false);
-
-        // Create entry and add it to the dialog
+        // Create entry
         let entry = Entry::builder()
-            .margin_top(12)
-            .margin_bottom(12)
-            .margin_start(12)
-            .margin_end(12)
             .placeholder_text(&quot;Name&quot;)
             .activates_default(true)
             .build();
-        dialog.content_area().append(&amp;entry);
 
-        // Set entry's css class to &quot;error&quot;, when there is not text in it
+        let cancel_response = &quot;cancel&quot;;
+        let create_response = &quot;create&quot;;
+
+        // Create new dialog
+        let dialog = MessageDialog::builder()
+            .heading(&quot;New Collection&quot;)
+            .transient_for(self)
+            .modal(true)
+            .destroy_with_parent(true)
+            .close_response(cancel_response)
+            .default_response(create_response)
+            .extra_child(&amp;entry)
+            .build();
+        dialog
+            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+        // Make the dialog button insensitive initially
+        dialog.set_response_enabled(create_response, false);
+        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+
+        // Set entry's css class to &quot;error&quot;, when there is no text in it
         entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
             let text = entry.text();
-            let dialog_button = dialog.
-                widget_for_response(ResponseType::Accept).
-                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
             let empty = text.is_empty();
 
-            dialog_button.set_sensitive(!empty);
+            dialog.set_response_enabled(create_response, !empty);
 
             if empty {
                 entry.add_css_class(&quot;error&quot;);
@@ -5443,12 +5334,13 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 
         // Connect response to dialog
         dialog.connect_response(
+            None,
             clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
                 // Destroy dialog
                 dialog.destroy();
 
-                // Return if the user chose a response different than `Accept`
-                if response != ResponseType::Accept {
+                // Return if the user chose a response different than `create_response`
+                if response != create_response {
                     return;
                 }
 
@@ -5484,13 +5376,13 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -5856,46 +5748,37 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -5906,12 +5789,13 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -5942,13 +5826,13 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -6314,46 +6198,37 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -6364,12 +6239,13 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">

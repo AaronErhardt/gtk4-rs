@@ -71,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -247,7 +249,13 @@ You can even set multiple properties that way.
 When creating new GObjects, this is nicer than calling the setter methods manually.</p>
 </blockquote>
 <p>The implementation struct holds the <code>settings</code>.
-We also override the <code>constructed</code> and <code>close_request</code> methods, where we load or save the window state. </p>
+You can see that we embed <code>Settings</code> in <a href="https://docs.rs/once_cell/latest/once_cell/sync/struct.OnceCell.html"><code>once_cell::sync::OnceCell</code></a>.
+This is a nice alternative to <code>RefCell&lt;Option&lt;T&gt;&gt;</code> when you know that you will only write to it once. 
+<code>once_cell</code> is already part of Rust nightly.
+Until it hits stable, we will add it as external dependency.</p>
+<pre><code>cargo add once_cell
+</code></pre>
+<p>We also override the <code>constructed</code> and <code>close_request</code> methods, where we load or save the window state. </p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/saving_window_state/1/custom_window/imp.rs">listings/saving_window_state/1/custom_window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::signal::Inhibit;

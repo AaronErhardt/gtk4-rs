@@ -71,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -203,65 +205,9 @@ That is why <code>gtk-rs</code> provides corresponding <a href="../docs/gtk4/str
 </span><span class="boring">    // Present the window
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
-<p>Alternatively, we can use the general <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/trait.ObjectExt.html#tymethod.property"><code>property</code></a> and <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/trait.ObjectExt.html#tymethod.set_property"><code>set_property</code></a> methods.
-We use the <a href="https://matematikaadit.github.io/posts/rust-turbofish.html">turbofish</a> syntax to specify the type if it cannot be inferred.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
-</span><span class="boring">
-</span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.GObjectProperties2&quot;;
-</span><span class="boring">
-</span><span class="boring">fn main() -&gt; glib::ExitCode {
-</span><span class="boring">    // Create a new application
-</span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
-</span><span class="boring">
-</span><span class="boring">    // Connect to &quot;activate&quot; signal of `app`
-</span><span class="boring">    app.connect_activate(build_ui);
-</span><span class="boring">
-</span><span class="boring">    // Run the application
-</span><span class="boring">    app.run()
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn build_ui(app: &amp;Application) {
-</span>    // Create the switch
-    let switch = Switch::new();
-
-    // Set and then immediately obtain state
-    switch.set_property(&quot;state&quot;, &amp;true);
-    let current_state = switch.property::&lt;bool&gt;(&quot;state&quot;);
-
-    // This prints: &quot;The current state is true&quot;
-    println!(&quot;The current state is {}&quot;, current_state);
-<span class="boring">
-</span><span class="boring">    // Set up box
-</span><span class="boring">    let gtk_box = Box::builder()
-</span><span class="boring">        .margin_top(12)
-</span><span class="boring">        .margin_bottom(12)
-</span><span class="boring">        .margin_start(12)
-</span><span class="boring">        .margin_end(12)
-</span><span class="boring">        .valign(Align::Center)
-</span><span class="boring">        .halign(Align::Center)
-</span><span class="boring">        .spacing(12)
-</span><span class="boring">        .orientation(Orientation::Vertical)
-</span><span class="boring">        .build();
-</span><span class="boring">    gtk_box.append(&amp;switch);
-</span><span class="boring">
-</span><span class="boring">    // Create a window
-</span><span class="boring">    let window = ApplicationWindow::builder()
-</span><span class="boring">        .application(app)
-</span><span class="boring">        .title(&quot;My GTK App&quot;)
-</span><span class="boring">        .child(&amp;gtk_box)
-</span><span class="boring">        .build();
-</span><span class="boring">
-</span><span class="boring">    // Present the window
-</span><span class="boring">    window.present();
-</span><span class="boring">}</span></code></pre>
-<p>Both <code>property</code> and <code>set_property</code> panic if the property does not exist, has the wrong type or has the wrong permissions.
-This is fine in most situations where these cases are hard-coded within the program.
-However, if you want to decide for yourself how to react to failure, you can enforce a returned <code>Option</code> by specifying <code>property::&lt;Option&lt;T&gt;&gt;</code> or <code>set_property::&lt;Option&lt;T&gt;&gt;</code>.</p>
 <p>Properties can not only be accessed via getters &amp; setters, they can also be bound to each other.
 Let's see how that would look like for two <code>Switch</code> instances.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::BindingFlags;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
@@ -315,7 +261,7 @@ Let's see how that would look like for two <code>Switch</code> instances.</p>
 </span><span class="boring">}</span></code></pre>
 <p>In our case, we want to bind the &quot;state&quot; property of <code>switch_1</code> to the &quot;state&quot; property of <code>switch_2</code>.
 We also want the binding to be bidirectional, so we specify this with the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.BindingFlags.html"><code>BindingFlags</code></a>.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::BindingFlags;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
@@ -377,29 +323,87 @@ We also want the binding to be bidirectional, so we specify this with the <a hre
 <h2 id="adding-properties-to-custom-gobjects"><a class="header" href="#adding-properties-to-custom-gobjects">Adding Properties to Custom GObjects</a></h2>
 <p>We can also add properties to custom GObjects.
 We can demonstrate that by binding the <code>number</code> of our <code>CustomButton</code> to a property.
-For that we need to be able to <a href="https://en.wikipedia.org/wiki/Lazy_evaluation">lazily evaluate</a> expressions.
-The crate <code>once_cell</code> provides the <code>Lazy</code> type which allows us to do that.
-<code>once_cell</code> is already part of Rust nightly.
-Until it hits stable, we will add it as external dependency.</p>
-<pre><code>cargo add once_cell
-</code></pre>
-<p>Now we define the &quot;number&quot; property within the <code>ObjectImpl</code> implementation.
-The <code>properties</code> method describes our set of properties.
-When naming our property, we make sure to do that in <a href="https://en.wikipedia.org/wiki/Letter_case#Kebab_case">kebab-case</a>.
-<code>set_property</code> describes how the underlying values can be changed.
-<code>property</code> takes care of returning the underlying value.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/custom_button/imp.rs">listings/g_object_properties/4/custom_button/imp.rs</a></p>
+Most of the work is done by the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/derive.Properties.html"><code>glib::Properties</code></a> derive macro.
+We tell it that the wrapper type is <code>super::CustomButton</code>.
+We also annotate <code>number</code>, so that macro knows that it should create a property &quot;number&quot; that is readable and writable.
+It also generates <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/derive.Properties.html#generated-wrapper-methods">wrapper methods</a> which we are going to use later in this chapter.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
+</span><span class="boring">
+</span>// Object holding the state
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::CustomButton)]
+pub struct CustomButton {
+    #[property(get, set)]
+    number: Cell&lt;i32&gt;,
+}
+<span class="boring">
+</span><span class="boring">// The central trait for subclassing a GObject
+</span><span class="boring">#[glib::object_subclass]
+</span><span class="boring">impl ObjectSubclass for CustomButton {
+</span><span class="boring">    const NAME: &amp;'static str = &quot;MyGtkAppCustomButton&quot;;
+</span><span class="boring">    type Type = super::CustomButton;
+</span><span class="boring">    type ParentType = gtk::Button;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">// Trait shared by all GObjects
+</span><span class="boring">impl ObjectImpl for CustomButton {
+</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
+</span><span class="boring">        Self::derived_properties()
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn constructed(&amp;self) {
+</span><span class="boring">        self.parent_constructed();
+</span><span class="boring">
+</span><span class="boring">        // Bind label to number
+</span><span class="boring">        // `SYNC_CREATE` ensures that the label will be immediately set
+</span><span class="boring">        let obj = self.obj();
+</span><span class="boring">        obj.bind_property(&quot;number&quot;, obj.as_ref(), &quot;label&quot;)
+</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .build();
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">// Trait shared by all widgets
+</span><span class="boring">impl WidgetImpl for CustomButton {}
+</span><span class="boring">
+</span><span class="boring">// Trait shared by all buttons
+</span><span class="boring">impl ButtonImpl for CustomButton {
+</span><span class="boring">    fn clicked(&amp;self) {
+</span><span class="boring">        let incremented_number = self.obj().number() + 1;
+</span><span class="boring">        self.obj().set_number(incremented_number);
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<p>The implementation of <code>properties</code>, <code>set_property</code> and <code>property</code> is boilerplate that is the same for every GObject that generates its properties with the <code>Property</code> macro.
+In <code>constructed</code> we use our new property &quot;number&quot; by binding the &quot;label&quot; property to it.
+<code>bind_property</code> converts the integer value of &quot;number&quot; to the string of &quot;label&quot; on its own.
+Now we don't have to adapt the label in the &quot;clicked&quot; callback anymore.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
+<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+</span><span class="boring">
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
+</span><span class="boring">use gtk::glib;
+</span><span class="boring">use gtk::prelude::*;
+</span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -414,27 +418,15 @@ When naming our property, we make sure to do that in <a href="https://en.wikiped
 </span>// Trait shared by all GObjects
 impl ObjectImpl for CustomButton {
     fn properties() -&gt; &amp;'static [ParamSpec] {
-        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-        PROPERTIES.as_ref()
+        Self::derived_properties()
     }
 
-    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-        match pspec.name() {
-            &quot;number&quot; =&gt; {
-                let input_number =
-                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-                self.number.replace(input_number);
-            }
-            _ =&gt; unimplemented!(),
-        }
+    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+        self.derived_set_property(id, value, pspec)
     }
 
-    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-        match pspec.name() {
-            &quot;number&quot; =&gt; self.number.get().to_value(),
-            _ =&gt; unimplemented!(),
-        }
+    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+        self.derived_property(id, pspec)
     }
 
     fn constructed(&amp;self) {
@@ -455,27 +447,25 @@ impl ObjectImpl for CustomButton {
 </span><span class="boring">// Trait shared by all buttons
 </span><span class="boring">impl ButtonImpl for CustomButton {
 </span><span class="boring">    fn clicked(&amp;self) {
-</span><span class="boring">        let incremented_number = self.number.get() + 1;
-</span><span class="boring">        self.obj().set_property(&quot;number&quot;, &amp;incremented_number);
+</span><span class="boring">        let incremented_number = self.obj().number() + 1;
+</span><span class="boring">        self.obj().set_number(incremented_number);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p>We could immediately take advantage of this new property by binding the &quot;label&quot; property to it.
-It even converts the integer value of &quot;number&quot; to the string of &quot;label&quot;.
-Now we don't have to adapt the label in the &quot;clicked&quot; callback anymore.</p>
 <p>We also have to adapt the <code>clicked</code> method.
-Before we modified <code>number</code> directly, now we do it through <code>set_property</code>.
-This way the &quot;notify&quot; signal will be emitted which bindings work as expected.</p>
+Before we modified <code>number</code> directly, now we can use the generated wrapper methods <code>number</code> and <code>set_number</code>.
+This way the &quot;notify&quot; signal will be emitted, which is necessary for the bindings to work as expected.</p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -490,27 +480,15 @@ This way the &quot;notify&quot; signal will be emitted which bindings work as ex
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for CustomButton {
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-</span><span class="boring">            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; {
-</span><span class="boring">                let input_number =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-</span><span class="boring">                self.number.replace(input_number);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; self.number.get().to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
@@ -531,12 +509,12 @@ This way the &quot;notify&quot; signal will be emitted which bindings work as ex
 </span>// Trait shared by all buttons
 impl ButtonImpl for CustomButton {
     fn clicked(&amp;self) {
-        let incremented_number = self.number.get() + 1;
-        self.obj().set_property(&quot;number&quot;, &amp;incremented_number);
+        let incremented_number = self.obj().number() + 1;
+        self.obj().set_number(incremented_number);
     }
 }</code></pre>
 <p>Let's see what we can do with this by creating two custom buttons.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/main.rs">listings/g_object_properties/4/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
@@ -580,9 +558,8 @@ impl ButtonImpl for CustomButton {
 </span><span class="boring">
 </span><span class="boring">    // The closure will be called
 </span><span class="boring">    // whenever the property &quot;number&quot; of `button_1` gets changed
-</span><span class="boring">    button_1.connect_notify_local(Some(&quot;number&quot;), move |button, _| {
-</span><span class="boring">        let number = button.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, number);
+</span><span class="boring">    button_1.connect_number_notify(|button| {
+</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, button.number());
 </span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    // Set up box
@@ -611,7 +588,7 @@ impl ButtonImpl for CustomButton {
 </span><span class="boring">}</span></code></pre>
 <p>We have already seen that bound properties don't necessarily have to be of the same type.
 By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/struct.BindingBuilder.html#method.transform_to"><code>transform_to</code></a> and <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/struct.BindingBuilder.html#method.transform_from"><code>transform_from</code></a>, we can assure that <code>button_2</code> always displays a number which is 1 higher than the number of <code>button_1</code>.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/main.rs">listings/g_object_properties/4/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
@@ -655,9 +632,8 @@ By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/ob
 <span class="boring">
 </span><span class="boring">    // The closure will be called
 </span><span class="boring">    // whenever the property &quot;number&quot; of `button_1` gets changed
-</span><span class="boring">    button_1.connect_notify_local(Some(&quot;number&quot;), move |button, _| {
-</span><span class="boring">        let number = button.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, number);
+</span><span class="boring">    button_1.connect_number_notify(|button| {
+</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, button.number());
 </span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    // Set up box
@@ -691,9 +667,9 @@ By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/ob
     <p>A video which shows that pressing on one button also changes the number on the other one</p>
  </video>
 </div>
-<p>The final nice feature of properties is, that you can connect a callback to the event when a property gets changed.
+<p>Another nice feature of properties is, that you can connect a callback to the event, when a property gets changed.
 For example like this:</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/main.rs">listings/g_object_properties/4/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
@@ -737,9 +713,8 @@ For example like this:</p>
 </span><span class="boring">
 </span>    // The closure will be called
     // whenever the property &quot;number&quot; of `button_1` gets changed
-    button_1.connect_notify_local(Some(&quot;number&quot;), move |button, _| {
-        let number = button.property::&lt;i32&gt;(&quot;number&quot;);
-        println!(&quot;The current number of `button_1` is {}.&quot;, number);
+    button_1.connect_number_notify(|button| {
+        println!(&quot;The current number of `button_1` is {}.&quot;, button.number());
     });
 <span class="boring">
 </span><span class="boring">    // Set up box

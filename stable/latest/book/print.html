@@ -72,10 +72,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -1595,65 +1597,9 @@ That is why <code>gtk-rs</code> provides corresponding <a href="../docs/gtk4/str
 </span><span class="boring">    // Present the window
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
-<p>Alternatively, we can use the general <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/trait.ObjectExt.html#tymethod.property"><code>property</code></a> and <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/trait.ObjectExt.html#tymethod.set_property"><code>set_property</code></a> methods.
-We use the <a href="https://matematikaadit.github.io/posts/rust-turbofish.html">turbofish</a> syntax to specify the type if it cannot be inferred.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
-</span><span class="boring">
-</span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.GObjectProperties2&quot;;
-</span><span class="boring">
-</span><span class="boring">fn main() -&gt; glib::ExitCode {
-</span><span class="boring">    // Create a new application
-</span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
-</span><span class="boring">
-</span><span class="boring">    // Connect to &quot;activate&quot; signal of `app`
-</span><span class="boring">    app.connect_activate(build_ui);
-</span><span class="boring">
-</span><span class="boring">    // Run the application
-</span><span class="boring">    app.run()
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn build_ui(app: &amp;Application) {
-</span>    // Create the switch
-    let switch = Switch::new();
-
-    // Set and then immediately obtain state
-    switch.set_property(&quot;state&quot;, &amp;true);
-    let current_state = switch.property::&lt;bool&gt;(&quot;state&quot;);
-
-    // This prints: &quot;The current state is true&quot;
-    println!(&quot;The current state is {}&quot;, current_state);
-<span class="boring">
-</span><span class="boring">    // Set up box
-</span><span class="boring">    let gtk_box = Box::builder()
-</span><span class="boring">        .margin_top(12)
-</span><span class="boring">        .margin_bottom(12)
-</span><span class="boring">        .margin_start(12)
-</span><span class="boring">        .margin_end(12)
-</span><span class="boring">        .valign(Align::Center)
-</span><span class="boring">        .halign(Align::Center)
-</span><span class="boring">        .spacing(12)
-</span><span class="boring">        .orientation(Orientation::Vertical)
-</span><span class="boring">        .build();
-</span><span class="boring">    gtk_box.append(&amp;switch);
-</span><span class="boring">
-</span><span class="boring">    // Create a window
-</span><span class="boring">    let window = ApplicationWindow::builder()
-</span><span class="boring">        .application(app)
-</span><span class="boring">        .title(&quot;My GTK App&quot;)
-</span><span class="boring">        .child(&amp;gtk_box)
-</span><span class="boring">        .build();
-</span><span class="boring">
-</span><span class="boring">    // Present the window
-</span><span class="boring">    window.present();
-</span><span class="boring">}</span></code></pre>
-<p>Both <code>property</code> and <code>set_property</code> panic if the property does not exist, has the wrong type or has the wrong permissions.
-This is fine in most situations where these cases are hard-coded within the program.
-However, if you want to decide for yourself how to react to failure, you can enforce a returned <code>Option</code> by specifying <code>property::&lt;Option&lt;T&gt;&gt;</code> or <code>set_property::&lt;Option&lt;T&gt;&gt;</code>.</p>
 <p>Properties can not only be accessed via getters &amp; setters, they can also be bound to each other.
 Let's see how that would look like for two <code>Switch</code> instances.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::BindingFlags;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
@@ -1707,7 +1653,7 @@ Let's see how that would look like for two <code>Switch</code> instances.</p>
 </span><span class="boring">}</span></code></pre>
 <p>In our case, we want to bind the &quot;state&quot; property of <code>switch_1</code> to the &quot;state&quot; property of <code>switch_2</code>.
 We also want the binding to be bidirectional, so we specify this with the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.BindingFlags.html"><code>BindingFlags</code></a>.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::BindingFlags;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
@@ -1769,29 +1715,87 @@ We also want the binding to be bidirectional, so we specify this with the <a hre
 <h2 id="adding-properties-to-custom-gobjects"><a class="header" href="#adding-properties-to-custom-gobjects">Adding Properties to Custom GObjects</a></h2>
 <p>We can also add properties to custom GObjects.
 We can demonstrate that by binding the <code>number</code> of our <code>CustomButton</code> to a property.
-For that we need to be able to <a href="https://en.wikipedia.org/wiki/Lazy_evaluation">lazily evaluate</a> expressions.
-The crate <code>once_cell</code> provides the <code>Lazy</code> type which allows us to do that.
-<code>once_cell</code> is already part of Rust nightly.
-Until it hits stable, we will add it as external dependency.</p>
-<pre><code>cargo add once_cell
-</code></pre>
-<p>Now we define the &quot;number&quot; property within the <code>ObjectImpl</code> implementation.
-The <code>properties</code> method describes our set of properties.
-When naming our property, we make sure to do that in <a href="https://en.wikipedia.org/wiki/Letter_case#Kebab_case">kebab-case</a>.
-<code>set_property</code> describes how the underlying values can be changed.
-<code>property</code> takes care of returning the underlying value.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/custom_button/imp.rs">listings/g_object_properties/4/custom_button/imp.rs</a></p>
+Most of the work is done by the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/derive.Properties.html"><code>glib::Properties</code></a> derive macro.
+We tell it that the wrapper type is <code>super::CustomButton</code>.
+We also annotate <code>number</code>, so that macro knows that it should create a property &quot;number&quot; that is readable and writable.
+It also generates <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/derive.Properties.html#generated-wrapper-methods">wrapper methods</a> which we are going to use later in this chapter.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
+</span><span class="boring">
+</span>// Object holding the state
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::CustomButton)]
+pub struct CustomButton {
+    #[property(get, set)]
+    number: Cell&lt;i32&gt;,
+}
+<span class="boring">
+</span><span class="boring">// The central trait for subclassing a GObject
+</span><span class="boring">#[glib::object_subclass]
+</span><span class="boring">impl ObjectSubclass for CustomButton {
+</span><span class="boring">    const NAME: &amp;'static str = &quot;MyGtkAppCustomButton&quot;;
+</span><span class="boring">    type Type = super::CustomButton;
+</span><span class="boring">    type ParentType = gtk::Button;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">// Trait shared by all GObjects
+</span><span class="boring">impl ObjectImpl for CustomButton {
+</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
+</span><span class="boring">        Self::derived_properties()
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn constructed(&amp;self) {
+</span><span class="boring">        self.parent_constructed();
+</span><span class="boring">
+</span><span class="boring">        // Bind label to number
+</span><span class="boring">        // `SYNC_CREATE` ensures that the label will be immediately set
+</span><span class="boring">        let obj = self.obj();
+</span><span class="boring">        obj.bind_property(&quot;number&quot;, obj.as_ref(), &quot;label&quot;)
+</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .build();
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">// Trait shared by all widgets
+</span><span class="boring">impl WidgetImpl for CustomButton {}
+</span><span class="boring">
+</span><span class="boring">// Trait shared by all buttons
+</span><span class="boring">impl ButtonImpl for CustomButton {
+</span><span class="boring">    fn clicked(&amp;self) {
+</span><span class="boring">        let incremented_number = self.obj().number() + 1;
+</span><span class="boring">        self.obj().set_number(incremented_number);
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
+<p>The implementation of <code>properties</code>, <code>set_property</code> and <code>property</code> is boilerplate that is the same for every GObject that generates its properties with the <code>Property</code> macro.
+In <code>constructed</code> we use our new property &quot;number&quot; by binding the &quot;label&quot; property to it.
+<code>bind_property</code> converts the integer value of &quot;number&quot; to the string of &quot;label&quot; on its own.
+Now we don't have to adapt the label in the &quot;clicked&quot; callback anymore.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
+<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+</span><span class="boring">
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
+</span><span class="boring">use gtk::glib;
+</span><span class="boring">use gtk::prelude::*;
+</span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -1806,27 +1810,15 @@ When naming our property, we make sure to do that in <a href="https://en.wikiped
 </span>// Trait shared by all GObjects
 impl ObjectImpl for CustomButton {
     fn properties() -&gt; &amp;'static [ParamSpec] {
-        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-        PROPERTIES.as_ref()
+        Self::derived_properties()
     }
 
-    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-        match pspec.name() {
-            &quot;number&quot; =&gt; {
-                let input_number =
-                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-                self.number.replace(input_number);
-            }
-            _ =&gt; unimplemented!(),
-        }
+    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+        self.derived_set_property(id, value, pspec)
     }
 
-    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-        match pspec.name() {
-            &quot;number&quot; =&gt; self.number.get().to_value(),
-            _ =&gt; unimplemented!(),
-        }
+    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+        self.derived_property(id, pspec)
     }
 
     fn constructed(&amp;self) {
@@ -1847,27 +1839,25 @@ impl ObjectImpl for CustomButton {
 </span><span class="boring">// Trait shared by all buttons
 </span><span class="boring">impl ButtonImpl for CustomButton {
 </span><span class="boring">    fn clicked(&amp;self) {
-</span><span class="boring">        let incremented_number = self.number.get() + 1;
-</span><span class="boring">        self.obj().set_property(&quot;number&quot;, &amp;incremented_number);
+</span><span class="boring">        let incremented_number = self.obj().number() + 1;
+</span><span class="boring">        self.obj().set_number(incremented_number);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p>We could immediately take advantage of this new property by binding the &quot;label&quot; property to it.
-It even converts the integer value of &quot;number&quot; to the string of &quot;label&quot;.
-Now we don't have to adapt the label in the &quot;clicked&quot; callback anymore.</p>
 <p>We also have to adapt the <code>clicked</code> method.
-Before we modified <code>number</code> directly, now we do it through <code>set_property</code>.
-This way the &quot;notify&quot; signal will be emitted which bindings work as expected.</p>
+Before we modified <code>number</code> directly, now we can use the generated wrapper methods <code>number</code> and <code>set_number</code>.
+This way the &quot;notify&quot; signal will be emitted, which is necessary for the bindings to work as expected.</p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -1882,27 +1872,15 @@ This way the &quot;notify&quot; signal will be emitted which bindings work as ex
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for CustomButton {
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-</span><span class="boring">            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; {
-</span><span class="boring">                let input_number =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-</span><span class="boring">                self.number.replace(input_number);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; self.number.get().to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
@@ -1923,12 +1901,12 @@ This way the &quot;notify&quot; signal will be emitted which bindings work as ex
 </span>// Trait shared by all buttons
 impl ButtonImpl for CustomButton {
     fn clicked(&amp;self) {
-        let incremented_number = self.number.get() + 1;
-        self.obj().set_property(&quot;number&quot;, &amp;incremented_number);
+        let incremented_number = self.obj().number() + 1;
+        self.obj().set_number(incremented_number);
     }
 }</code></pre>
 <p>Let's see what we can do with this by creating two custom buttons.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/main.rs">listings/g_object_properties/4/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
@@ -1972,9 +1950,8 @@ impl ButtonImpl for CustomButton {
 </span><span class="boring">
 </span><span class="boring">    // The closure will be called
 </span><span class="boring">    // whenever the property &quot;number&quot; of `button_1` gets changed
-</span><span class="boring">    button_1.connect_notify_local(Some(&quot;number&quot;), move |button, _| {
-</span><span class="boring">        let number = button.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, number);
+</span><span class="boring">    button_1.connect_number_notify(|button| {
+</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, button.number());
 </span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    // Set up box
@@ -2003,7 +1980,7 @@ impl ButtonImpl for CustomButton {
 </span><span class="boring">}</span></code></pre>
 <p>We have already seen that bound properties don't necessarily have to be of the same type.
 By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/struct.BindingBuilder.html#method.transform_to"><code>transform_to</code></a> and <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/struct.BindingBuilder.html#method.transform_from"><code>transform_from</code></a>, we can assure that <code>button_2</code> always displays a number which is 1 higher than the number of <code>button_1</code>.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/main.rs">listings/g_object_properties/4/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
@@ -2047,9 +2024,8 @@ By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/ob
 <span class="boring">
 </span><span class="boring">    // The closure will be called
 </span><span class="boring">    // whenever the property &quot;number&quot; of `button_1` gets changed
-</span><span class="boring">    button_1.connect_notify_local(Some(&quot;number&quot;), move |button, _| {
-</span><span class="boring">        let number = button.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, number);
+</span><span class="boring">    button_1.connect_number_notify(|button| {
+</span><span class="boring">        println!(&quot;The current number of `button_1` is {}.&quot;, button.number());
 </span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    // Set up box
@@ -2083,9 +2059,9 @@ By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/ob
     <p>A video which shows that pressing on one button also changes the number on the other one</p>
  </video>
 </div>
-<p>The final nice feature of properties is, that you can connect a callback to the event when a property gets changed.
+<p>Another nice feature of properties is, that you can connect a callback to the event, when a property gets changed.
 For example like this:</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/4/main.rs">listings/g_object_properties/4/main.rs</a></p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
@@ -2129,9 +2105,8 @@ For example like this:</p>
 </span><span class="boring">
 </span>    // The closure will be called
     // whenever the property &quot;number&quot; of `button_1` gets changed
-    button_1.connect_notify_local(Some(&quot;number&quot;), move |button, _| {
-        let number = button.property::&lt;i32&gt;(&quot;number&quot;);
-        println!(&quot;The current number of `button_1` is {}.&quot;, number);
+    button_1.connect_number_notify(|button| {
+        println!(&quot;The current number of `button_1` is {}.&quot;, button.number());
     });
 <span class="boring">
 </span><span class="boring">    // Set up box
@@ -2264,7 +2239,7 @@ In our &quot;Hello World&quot; example we <a href="../docs/gtk4/prelude/trait.Bu
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
-<p>Similar to the generic way of accessing properties, the advantage of <code>connect_closure</code> is that it also works with custom signals.</p>
+<p>The advantage of <code>connect_closure</code> is that it also works with custom signals.</p>
 <blockquote>
 <p>If you need to clone reference counted objects into your closure you don't have to wrap it within another <code>clone!</code> macro.
 <code>closure_local!</code> accepts the same syntax for creating strong/weak references, plus a <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.closure.html#object-watching">watch</a> feature that automatically disconnects the closure once the watched object is dropped. </p>
@@ -2277,15 +2252,17 @@ First we override the necessary methods in <code>ObjectImpl</code>.</p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::Signal;
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -2309,27 +2286,15 @@ impl ObjectImpl for CustomButton {
     }
 <span class="boring">
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-</span><span class="boring">            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; {
-</span><span class="boring">                let input_number =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-</span><span class="boring">                self.number.replace(input_number);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; self.number.get().to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
@@ -2352,15 +2317,15 @@ impl ObjectImpl for CustomButton {
 </span><span class="boring">// Trait shared by all buttons
 </span><span class="boring">impl ButtonImpl for CustomButton {
 </span><span class="boring">    fn clicked(&amp;self) {
-</span><span class="boring">        let incremented_number = self.number.get() + 1;
+</span><span class="boring">        let incremented_number = self.obj().number() + 1;
 </span><span class="boring">        let obj = self.obj();
 </span><span class="boring">        // If `number` reached `MAX_NUMBER`,
 </span><span class="boring">        // emit &quot;max-number-reached&quot; signal and set `number` back to 0
 </span><span class="boring">        if incremented_number == MAX_NUMBER {
 </span><span class="boring">            obj.emit_by_name::&lt;()&gt;(&quot;max-number-reached&quot;, &amp;[&amp;incremented_number]);
-</span><span class="boring">            obj.set_property(&quot;number&quot;, &amp;0);
+</span><span class="boring">            obj.set_number(0);
 </span><span class="boring">        } else {
-</span><span class="boring">            obj.set_property(&quot;number&quot;, &amp;incremented_number);
+</span><span class="boring">            obj.set_number(incremented_number);
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
@@ -2375,15 +2340,17 @@ After we did that, we set <code>number</code> back to 0.</p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::Signal;
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -2407,27 +2374,15 @@ After we did that, we set <code>number</code> back to 0.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-</span><span class="boring">            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; {
-</span><span class="boring">                let input_number =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-</span><span class="boring">                self.number.replace(input_number);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; self.number.get().to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
@@ -2450,15 +2405,15 @@ After we did that, we set <code>number</code> back to 0.</p>
 // Trait shared by all buttons
 impl ButtonImpl for CustomButton {
     fn clicked(&amp;self) {
-        let incremented_number = self.number.get() + 1;
+        let incremented_number = self.obj().number() + 1;
         let obj = self.obj();
         // If `number` reached `MAX_NUMBER`,
         // emit &quot;max-number-reached&quot; signal and set `number` back to 0
         if incremented_number == MAX_NUMBER {
             obj.emit_by_name::&lt;()&gt;(&quot;max-number-reached&quot;, &amp;[&amp;incremented_number]);
-            obj.set_property(&quot;number&quot;, &amp;0);
+            obj.set_number(0);
         } else {
-            obj.set_property(&quot;number&quot;, &amp;incremented_number);
+            obj.set_number(incremented_number);
         }
     }
 }</code></pre>
@@ -3336,7 +3291,13 @@ You can even set multiple properties that way.
 When creating new GObjects, this is nicer than calling the setter methods manually.</p>
 </blockquote>
 <p>The implementation struct holds the <code>settings</code>.
-We also override the <code>constructed</code> and <code>close_request</code> methods, where we load or save the window state. </p>
+You can see that we embed <code>Settings</code> in <a href="https://docs.rs/once_cell/latest/once_cell/sync/struct.OnceCell.html"><code>once_cell::sync::OnceCell</code></a>.
+This is a nice alternative to <code>RefCell&lt;Option&lt;T&gt;&gt;</code> when you know that you will only write to it once. 
+<code>once_cell</code> is already part of Rust nightly.
+Until it hits stable, we will add it as external dependency.</p>
+<pre><code>cargo add once_cell
+</code></pre>
+<p>We also override the <code>constructed</code> and <code>close_request</code> methods, where we load or save the window state. </p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/saving_window_state/1/custom_window/imp.rs">listings/saving_window_state/1/custom_window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::signal::Inhibit;
@@ -3521,15 +3482,16 @@ impl IntegerObject {
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/integer_object/imp.rs">listings/list_widgets/2/integer_object/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span>// Object holding the state
-#[derive(Default)]
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::IntegerObject)]
 pub struct IntegerObject {
+    #[property(get, set)]
     number: Cell&lt;i32&gt;,
 }
 <span class="boring">
@@ -3543,27 +3505,15 @@ pub struct IntegerObject {
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for IntegerObject {
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-</span><span class="boring">            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; {
-</span><span class="boring">                let input_number =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-</span><span class="boring">                self.number.replace(input_number);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; self.number.get().to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring"></span></code></pre>
@@ -3595,8 +3545,7 @@ Neither <code>Label</code> nor any other widget is mentioned here.</p>
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span>    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-    let vector: Vec&lt;IntegerObject&gt; =
-        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 
     // Create new model
     let model = gio::ListStore::new(IntegerObject::static_type());
@@ -3622,9 +3571,6 @@ Neither <code>Label</code> nor any other widget is mentioned here.</p>
 </span><span class="boring">            .and_downcast::&lt;IntegerObject&gt;()
 </span><span class="boring">            .expect(&quot;The item has to be an `IntegerObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Get `i32` from `IntegerObject`
-</span><span class="boring">        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">
 </span><span class="boring">        // Get `Label` from `ListItem`
 </span><span class="boring">        let label = list_item
 </span><span class="boring">            .downcast_ref::&lt;ListItem&gt;()
@@ -3634,7 +3580,7 @@ Neither <code>Label</code> nor any other widget is mentioned here.</p>
 </span><span class="boring">            .expect(&quot;The child has to be a `Label`.&quot;);
 </span><span class="boring">
 </span><span class="boring">        // Set &quot;label&quot; to &quot;number&quot;
-</span><span class="boring">        label.set_label(&amp;number.to_string());
+</span><span class="boring">        label.set_label(&amp;integer_object.number().to_string());
 </span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    let selection_model = SingleSelection::new(Some(model));
@@ -3687,8 +3633,7 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -3714,9 +3659,6 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
 </span><span class="boring">            .and_downcast::&lt;IntegerObject&gt;()
 </span><span class="boring">            .expect(&quot;The item has to be an `IntegerObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Get `i32` from `IntegerObject`
-</span><span class="boring">        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">
 </span><span class="boring">        // Get `Label` from `ListItem`
 </span><span class="boring">        let label = list_item
 </span><span class="boring">            .downcast_ref::&lt;ListItem&gt;()
@@ -3726,7 +3668,7 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
 </span><span class="boring">            .expect(&quot;The child has to be a `Label`.&quot;);
 </span><span class="boring">
 </span><span class="boring">        // Set &quot;label&quot; to &quot;number&quot;
-</span><span class="boring">        label.set_label(&amp;number.to_string());
+</span><span class="boring">        label.set_label(&amp;integer_object.number().to_string());
 </span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    let selection_model = SingleSelection::new(Some(model));
@@ -3776,8 +3718,7 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -3803,9 +3744,6 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
             .and_downcast::&lt;IntegerObject&gt;()
             .expect(&quot;The item has to be an `IntegerObject`.&quot;);
 
-        // Get `i32` from `IntegerObject`
-        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-
         // Get `Label` from `ListItem`
         let label = list_item
             .downcast_ref::&lt;ListItem&gt;()
@@ -3815,7 +3753,7 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
             .expect(&quot;The child has to be a `Label`.&quot;);
 
         // Set &quot;label&quot; to &quot;number&quot;
-        label.set_label(&amp;number.to_string());
+        label.set_label(&amp;integer_object.number().to_string());
     });
 <span class="boring">
 </span><span class="boring">    let selection_model = SingleSelection::new(Some(model));
@@ -3867,8 +3805,7 @@ Then we pass the model and the factory to the <a href="../docs/gtk4/struct.ListV
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -3894,9 +3831,6 @@ Then we pass the model and the factory to the <a href="../docs/gtk4/struct.ListV
 </span><span class="boring">            .and_downcast::&lt;IntegerObject&gt;()
 </span><span class="boring">            .expect(&quot;The item has to be an `IntegerObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Get `i32` from `IntegerObject`
-</span><span class="boring">        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">
 </span><span class="boring">        // Get `Label` from `ListItem`
 </span><span class="boring">        let label = list_item
 </span><span class="boring">            .downcast_ref::&lt;ListItem&gt;()
@@ -3906,7 +3840,7 @@ Then we pass the model and the factory to the <a href="../docs/gtk4/struct.ListV
 </span><span class="boring">            .expect(&quot;The child has to be a `Label`.&quot;);
 </span><span class="boring">
 </span><span class="boring">        // Set &quot;label&quot; to &quot;number&quot;
-</span><span class="boring">        label.set_label(&amp;number.to_string());
+</span><span class="boring">        label.set_label(&amp;integer_object.number().to_string());
 </span><span class="boring">    });
 </span><span class="boring">
 </span>    let selection_model = SingleSelection::new(Some(model));
@@ -3956,8 +3890,7 @@ Then we pass the model and the factory to the <a href="../docs/gtk4/struct.ListV
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -3983,9 +3916,6 @@ Then we pass the model and the factory to the <a href="../docs/gtk4/struct.ListV
 </span><span class="boring">            .and_downcast::&lt;IntegerObject&gt;()
 </span><span class="boring">            .expect(&quot;The item has to be an `IntegerObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Get `i32` from `IntegerObject`
-</span><span class="boring">        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">
 </span><span class="boring">        // Get `Label` from `ListItem`
 </span><span class="boring">        let label = list_item
 </span><span class="boring">            .downcast_ref::&lt;ListItem&gt;()
@@ -3995,7 +3925,7 @@ Then we pass the model and the factory to the <a href="../docs/gtk4/struct.ListV
 </span><span class="boring">            .expect(&quot;The child has to be a `Label`.&quot;);
 </span><span class="boring">
 </span><span class="boring">        // Set &quot;label&quot; to &quot;number&quot;
-</span><span class="boring">        label.set_label(&amp;number.to_string());
+</span><span class="boring">        label.set_label(&amp;integer_object.number().to_string());
 </span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    let selection_model = SingleSelection::new(Some(model));
@@ -4029,7 +3959,6 @@ For that we first add the method <code>increase_number</code> to our <code>Integ
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::glib;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">
 </span><span class="boring">glib::wrapper! {
 </span><span class="boring">    pub struct IntegerObject(ObjectSubclass&lt;imp::IntegerObject&gt;);
@@ -4041,8 +3970,7 @@ For that we first add the method <code>increase_number</code> to our <code>Integ
     }
 
     pub fn increase_number(self) {
-        let old_number = self.property::&lt;i32&gt;(&quot;number&quot;);
-        self.set_property(&quot;number&quot;, old_number + 1);
+        self.set_number(self.number() + 1);
     }
 }</code></pre>
 <p>In order to interact with our <code>ListView</code>, we connect to its &quot;activate&quot; signal.</p>
@@ -4072,8 +4000,7 @@ For that we first add the method <code>increase_number</code> to our <code>Integ
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -4177,8 +4104,7 @@ One naive approach would be to bind the properties in the &quot;bind&quot; step 
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -4287,8 +4213,7 @@ Let's see how the &quot;setup&quot; step now works.</p>
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -4383,8 +4308,7 @@ We do that by passing it to a <a href="../docs/gtk4/struct.FilterListModel.html"
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -4414,11 +4338,8 @@ We do that by passing it to a <a href="../docs/gtk4/struct.FilterListModel.html"
             .downcast_ref::&lt;IntegerObject&gt;()
             .expect(&quot;The object needs to be of type `IntegerObject`.&quot;);
 
-        // Get property &quot;number&quot; from `IntegerObject`
-        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-
         // Only allow even numbers
-        number % 2 == 0
+        integer_object.number() % 2 == 0
     });
     let filter_model = FilterListModel::new(Some(model), Some(filter.clone()));
 <span class="boring">
@@ -4432,8 +4353,8 @@ We do that by passing it to a <a href="../docs/gtk4/struct.FilterListModel.html"
 </span><span class="boring">            .expect(&quot;The object needs to be of type `IntegerObject`.&quot;);
 </span><span class="boring">
 </span><span class="boring">        // Get property &quot;number&quot; from `IntegerObject`
-</span><span class="boring">        let number_1 = integer_object_1.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">        let number_2 = integer_object_2.property::&lt;i32&gt;(&quot;number&quot;);
+</span><span class="boring">        let number_1 = integer_object_1.number();
+</span><span class="boring">        let number_2 = integer_object_2.number();
 </span><span class="boring">
 </span><span class="boring">        // Reverse sorting order -&gt; large numbers come first
 </span><span class="boring">        number_2.cmp(&amp;number_1).into()
@@ -4505,8 +4426,7 @@ Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.htm
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -4536,11 +4456,8 @@ Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.htm
 </span><span class="boring">            .downcast_ref::&lt;IntegerObject&gt;()
 </span><span class="boring">            .expect(&quot;The object needs to be of type `IntegerObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Get property &quot;number&quot; from `IntegerObject`
-</span><span class="boring">        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">
 </span><span class="boring">        // Only allow even numbers
-</span><span class="boring">        number % 2 == 0
+</span><span class="boring">        integer_object.number() % 2 == 0
 </span><span class="boring">    });
 </span><span class="boring">    let filter_model = FilterListModel::new(Some(model), Some(filter.clone()));
 </span><span class="boring">
@@ -4554,8 +4471,8 @@ Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.htm
             .expect(&quot;The object needs to be of type `IntegerObject`.&quot;);
 
         // Get property &quot;number&quot; from `IntegerObject`
-        let number_1 = integer_object_1.property::&lt;i32&gt;(&quot;number&quot;);
-        let number_2 = integer_object_2.property::&lt;i32&gt;(&quot;number&quot;);
+        let number_1 = integer_object_1.number();
+        let number_2 = integer_object_2.number();
 
         // Reverse sorting order -&gt; large numbers come first
         number_2.cmp(&amp;number_1).into()
@@ -4626,8 +4543,7 @@ Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.htm
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    // Create a `Vec&lt;IntegerObject&gt;` with numbers from 0 to 100_000
-</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; =
-</span><span class="boring">        (0..=100_000).into_iter().map(IntegerObject::new).collect();
+</span><span class="boring">    let vector: Vec&lt;IntegerObject&gt; = (0..=100_000).map(IntegerObject::new).collect();
 </span><span class="boring">
 </span><span class="boring">    // Create new model
 </span><span class="boring">    let model = gio::ListStore::new(IntegerObject::static_type());
@@ -4657,11 +4573,8 @@ Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.htm
 </span><span class="boring">            .downcast_ref::&lt;IntegerObject&gt;()
 </span><span class="boring">            .expect(&quot;The object needs to be of type `IntegerObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Get property &quot;number&quot; from `IntegerObject`
-</span><span class="boring">        let number = integer_object.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">
 </span><span class="boring">        // Only allow even numbers
-</span><span class="boring">        number % 2 == 0
+</span><span class="boring">        integer_object.number() % 2 == 0
 </span><span class="boring">    });
 </span><span class="boring">    let filter_model = FilterListModel::new(Some(model), Some(filter.clone()));
 </span><span class="boring">
@@ -4675,8 +4588,8 @@ Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.htm
 </span><span class="boring">            .expect(&quot;The object needs to be of type `IntegerObject`.&quot;);
 </span><span class="boring">
 </span><span class="boring">        // Get property &quot;number&quot; from `IntegerObject`
-</span><span class="boring">        let number_1 = integer_object_1.property::&lt;i32&gt;(&quot;number&quot;);
-</span><span class="boring">        let number_2 = integer_object_2.property::&lt;i32&gt;(&quot;number&quot;);
+</span><span class="boring">        let number_1 = integer_object_1.number();
+</span><span class="boring">        let number_2 = integer_object_2.number();
 </span><span class="boring">
 </span><span class="boring">        // Reverse sorting order -&gt; large numbers come first
 </span><span class="boring">        number_2.cmp(&amp;number_1).into()
@@ -5405,7 +5318,8 @@ impl Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
 </span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
-<p>Then we have to bind the template callbacks with <a href="../docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.</p>
+<p>Then we have to bind the template callbacks with <a href="../docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.
+We also need to remove the <code>button.connect_clicked</code> callback implemented in <code>window/imp.rs</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/3/window/imp.rs">listings/composite_templates/3/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
@@ -6024,7 +5938,7 @@ Here, they already include <code>task_row.ui</code> which we will handle later i
   &lt;/gresource&gt;
 &lt;/gresources&gt;
 </code></pre>
-<h2 id="to-do-object"><a class="header" href="#to-do-object">To-Do Object</a></h2>
+<h2 id="task-object"><a class="header" href="#task-object">Task Object</a></h2>
 <p>So far so good.
 The main user interface is done, but the entry does not react to input yet.
 Also, where would the input go?
@@ -6088,24 +6002,26 @@ pub struct TaskData {
     pub completed: bool,
     pub content: String,
 }</code></pre>
-<p>Exposing <code>completed</code> and <code>content</code> as properties does not become much different that way, so we will not discuss it further.
-If you are curious, you can press on the small eye symbol on the top right of the code snippet to read the implementation.</p>
+<p>We are going to expose <code>completed</code> and <code>content</code> as properties.
+Since the data is now inside a struct rather than individual member variables we have to add more annotations.
+For each property we additionally specify the name, the type and which member variable of <code>TaskData</code> we want to access.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_object/imp.rs">listings/todo/1/task_object/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
-</span><span class="boring">use std::rc::Rc;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, ParamSpecBoolean, ParamSpecString, Value};
+</span><span class="boring">use glib::{ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">use super::TaskData;
 </span><span class="boring">
 </span>// Object holding the state
-#[derive(Default)]
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::TaskObject)]
 pub struct TaskObject {
-    pub data: Rc&lt;RefCell&lt;TaskData&gt;&gt;,
+    #[property(name = &quot;completed&quot;, get, set, type = bool, member = completed)]
+    #[property(name = &quot;content&quot;, get, set, type = String, member = content)]
+    pub data: RefCell&lt;TaskData&gt;,
 }
 
 // The central trait for subclassing a GObject
@@ -6114,45 +6030,22 @@ impl ObjectSubclass for TaskObject {
     const NAME: &amp;'static str = &quot;TodoTaskObject&quot;;
     type Type = super::TaskObject;
 }
-<span class="boring">
-</span><span class="boring">// Trait shared by all GObjects
-</span><span class="boring">impl ObjectImpl for TaskObject {
-</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; = Lazy::new(|| {
-</span><span class="boring">            vec![
-</span><span class="boring">                ParamSpecBoolean::builder(&quot;completed&quot;).build(),
-</span><span class="boring">                ParamSpecString::builder(&quot;content&quot;).build(),
-</span><span class="boring">            ]
-</span><span class="boring">        });
-</span><span class="boring">        PROPERTIES.as_ref()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;completed&quot; =&gt; {
-</span><span class="boring">                let input_value =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `bool`.&quot;);
-</span><span class="boring">                self.data.borrow_mut().completed = input_value;
-</span><span class="boring">            }
-</span><span class="boring">            &quot;content&quot; =&gt; {
-</span><span class="boring">                let input_value = value
-</span><span class="boring">                    .get()
-</span><span class="boring">                    .expect(&quot;The value needs to be of type `String`.&quot;);
-</span><span class="boring">                self.data.borrow_mut().content = input_value;
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;completed&quot; =&gt; self.data.borrow().completed.to_value(),
-</span><span class="boring">            &quot;content&quot; =&gt; self.data.borrow().content.to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">}</span></code></pre>
-<h2 id="to-do-row"><a class="header" href="#to-do-row">To-Do Row</a></h2>
+
+// Trait shared by all GObjects
+impl ObjectImpl for TaskObject {
+    fn properties() -&gt; &amp;'static [ParamSpec] {
+        Self::derived_properties()
+    }
+
+    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+        self.derived_set_property(id, value, pspec)
+    }
+
+    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+        self.derived_property(id, pspec)
+    }
+}</code></pre>
+<h2 id="task-row"><a class="header" href="#task-row">Task Row</a></h2>
 <p>Let's move on to the individual tasks.
 The row of a task should look like this:</p>
 <div style="text-align:center"><img src="img/task_row.png" alt="A single task widget"/></div>
@@ -8295,7 +8188,7 @@ Again, the &quot;filter&quot; setting correspond to the stateful actions called 
 &lt;/schemalist&gt;
 </code></pre>
 <p>We install the schema as described in the settings <a href="./settings.html">chapter</a>
-Then we add a reference to <code>settings</code> and a reference to <code>clear_button</code> to <code>imp::Window</code>.</p>
+Then we add a reference to <code>settings</code> to <code>imp::Window</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/2/window/imp.rs">listings/todo/2/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::fs::File;
@@ -10120,7 +10013,7 @@ fn build_ui(app: &amp;Application) {
         .title(&quot;My GTK App&quot;)
         .child(&amp;button)
         .build();
-    window.show();
+    window.present();
 }</code></pre>
 <p>When we now run the app, we notice that our button <em>and</em> the &quot;close&quot; button are magenta.
 Probably not what we wanted, but that is what our CSS snippet does.
@@ -10194,7 +10087,7 @@ Which is why we add the style class <code>button-1</code> to the first one.</p>
     let button_1 = Button::with_label(&quot;Press me!&quot;);
     let button_2 = Button::with_label(&quot;Press me!&quot;);
 
-    button_1.add_css_class(&quot;button_1&quot;);
+    button_1.add_css_class(&quot;button-1&quot;);
 <span class="boring">
 </span><span class="boring">    // Create `gtk_box` and add buttons
 </span><span class="boring">    let gtk_box = gtk::Box::builder()
@@ -10213,7 +10106,7 @@ Which is why we add the style class <code>button-1</code> to the first one.</p>
 </span><span class="boring">        .title(&quot;My GTK App&quot;)
 </span><span class="boring">        .child(&amp;gtk_box)
 </span><span class="boring">        .build();
-</span><span class="boring">    window.show();
+</span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
 <p>Then, we create a CSS rule that applies to <code>button</code> nodes with the style class <code>button-1</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/3/style.css">listings/css/3/style.css</a></p>
@@ -10287,7 +10180,7 @@ We set the name of the first one with <a href="../docs/gtk4/prelude/trait.Widget
 </span><span class="boring">        .title(&quot;My GTK App&quot;)
 </span><span class="boring">        .child(&amp;gtk_box)
 </span><span class="boring">        .build();
-</span><span class="boring">    window.show();
+</span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
 <p>Then, create a CSS rule that applies to <code>button</code> nodes with the name <code>button-1</code>.
 The name is specified after the <code>#</code> symbol.</p>
@@ -10346,7 +10239,7 @@ Most widgets will document these rules in their documentation under <a href="../
 </span><span class="boring">        .title(&quot;My GTK App&quot;)
 </span><span class="boring">        .child(&amp;gtk_box)
 </span><span class="boring">        .build();
-</span><span class="boring">    window.show();
+</span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
 <div style="text-align:center"><img src="img/css_5.png" alt="The left button is red, the right one is blue"/></div>
 <h2 id="interface-builder"><a class="header" href="#interface-builder">Interface Builder</a></h2>
@@ -10528,8 +10421,132 @@ We are going to use the named color <code>success_color</code>.</p>
 <p>The <code>Default</code> stylesheet of GTK provides pre-defined colors for various use-cases.
 As of this writing, these exported colors can only be found in its <a href="https://gitlab.gnome.org/GNOME/gtk/-/blob/b2c227e9c57839a2a4e24462a71ae0bad9a95264/gtk/theme/Default/_colors-public.scss">source code</a>.</p>
 <p>There we find the color <code>success_color</code>, which in real scenarios should be used to indicate success.
-We can then access the pre-defined color by adding an <code>@</code> in front of its name.
-And that is how the task rows look like after the change.
+We can then access the pre-defined color by adding an <code>@</code> in front of its name.</p>
+<p>We also have to add <code>style.css</code> to <code>resources.gresource.xml</code>.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/3/resources/resources.gresource.xml">listings/todo/3/resources/resources.gresource.xml</a></p>
+<pre><code class="language-diff"> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+ &lt;gresources&gt;
+   &lt;gresource prefix=&quot;/org/gtk_rs/Todo3/&quot;&gt;
+     &lt;file compressed=&quot;true&quot; preprocess=&quot;xml-stripblanks&quot; alias=&quot;gtk/help-overlay.ui&quot;&gt;shortcuts.ui&lt;/file&gt;
+     &lt;file compressed=&quot;true&quot; preprocess=&quot;xml-stripblanks&quot;&gt;task_row.ui&lt;/file&gt;
+     &lt;file compressed=&quot;true&quot; preprocess=&quot;xml-stripblanks&quot;&gt;window.ui&lt;/file&gt;
++    &lt;file compressed=&quot;true&quot;&gt;style.css&lt;/file&gt;
+   &lt;/gresource&gt;
+ &lt;/gresources&gt;
+</code></pre>
+<p>Additionally, we call <code>load_css()</code> in <code>connect_startup</code>.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/3/main.rs">listings/todo/3/main.rs</a></p>
+<pre><code class="language-rust  no_run noplayground"><span class="boring">mod task_object;
+</span><span class="boring">mod task_row;
+</span><span class="boring">mod utils;
+</span><span class="boring">mod window;
+</span><span class="boring">
+</span><span class="boring">use gdk::Display;
+</span><span class="boring">use gtk::prelude::*;
+</span><span class="boring">use gtk::{gdk, gio, glib, Application, CssProvider, StyleContext};
+</span><span class="boring">use window::Window;
+</span><span class="boring">
+</span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Todo3&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
+</span><span class="boring">    gio::resources_register_include!(&quot;todo_3.gresource&quot;)
+</span><span class="boring">        .expect(&quot;Failed to register resources.&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Create a new application
+</span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
+</span><span class="boring">
+</span>    // Connect to signals
+    app.connect_startup(|app| {
+        setup_shortcuts(app);
+        load_css()
+    });
+<span class="boring">    app.connect_activate(build_ui);
+</span><span class="boring">
+</span><span class="boring">    // Run the application
+</span><span class="boring">    app.run()
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn setup_shortcuts(app: &amp;Application) {
+</span><span class="boring">    app.set_accels_for_action(&quot;win.filter('All')&quot;, &amp;[&quot;&lt;Ctrl&gt;a&quot;]);
+</span><span class="boring">    app.set_accels_for_action(&quot;win.filter('Open')&quot;, &amp;[&quot;&lt;Ctrl&gt;o&quot;]);
+</span><span class="boring">    app.set_accels_for_action(&quot;win.filter('Done')&quot;, &amp;[&quot;&lt;Ctrl&gt;d&quot;]);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn load_css() {
+</span><span class="boring">    // Load the CSS file and add it to the provider
+</span><span class="boring">    let provider = CssProvider::new();
+</span><span class="boring">    provider.load_from_resource(&quot;/org/gtk_rs/Todo3/style.css&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Add the provider to the default screen
+</span><span class="boring">    StyleContext::add_provider_for_display(
+</span><span class="boring">        &amp;Display::default().expect(&quot;Could not connect to a display.&quot;),
+</span><span class="boring">        &amp;provider,
+</span><span class="boring">        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+</span><span class="boring">    );
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn build_ui(app: &amp;Application) {
+</span><span class="boring">    // Create a new custom window and show it
+</span><span class="boring">    let window = Window::new(app);
+</span><span class="boring">    window.present();
+</span><span class="boring">}</span></code></pre>
+<p><code>load_css()</code> is very similar to the one shown at the beginning of the chapter.
+However, this time we load styles using <code>load_from_resource()</code>.</p>
+<pre><code class="language-rust  no_run noplayground"><span class="boring">mod task_object;
+</span><span class="boring">mod task_row;
+</span><span class="boring">mod utils;
+</span><span class="boring">mod window;
+</span><span class="boring">
+</span><span class="boring">use gdk::Display;
+</span><span class="boring">use gtk::prelude::*;
+</span><span class="boring">use gtk::{gdk, gio, glib, Application, CssProvider, StyleContext};
+</span><span class="boring">use window::Window;
+</span><span class="boring">
+</span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Todo3&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
+</span><span class="boring">    gio::resources_register_include!(&quot;todo_3.gresource&quot;)
+</span><span class="boring">        .expect(&quot;Failed to register resources.&quot;);
+</span><span class="boring">
+</span><span class="boring">    // Create a new application
+</span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
+</span><span class="boring">
+</span><span class="boring">    // Connect to signals
+</span><span class="boring">    app.connect_startup(|app| {
+</span><span class="boring">        setup_shortcuts(app);
+</span><span class="boring">        load_css()
+</span><span class="boring">    });
+</span><span class="boring">    app.connect_activate(build_ui);
+</span><span class="boring">
+</span><span class="boring">    // Run the application
+</span><span class="boring">    app.run()
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn setup_shortcuts(app: &amp;Application) {
+</span><span class="boring">    app.set_accels_for_action(&quot;win.filter('All')&quot;, &amp;[&quot;&lt;Ctrl&gt;a&quot;]);
+</span><span class="boring">    app.set_accels_for_action(&quot;win.filter('Open')&quot;, &amp;[&quot;&lt;Ctrl&gt;o&quot;]);
+</span><span class="boring">    app.set_accels_for_action(&quot;win.filter('Done')&quot;, &amp;[&quot;&lt;Ctrl&gt;d&quot;]);
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn load_css() {
+    // Load the CSS file and add it to the provider
+    let provider = CssProvider::new();
+    provider.load_from_resource(&quot;/org/gtk_rs/Todo3/style.css&quot;);
+
+    // Add the provider to the default screen
+    StyleContext::add_provider_for_display(
+        &amp;Display::default().expect(&quot;Could not connect to a display.&quot;),
+        &amp;provider,
+        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+    );
+}
+<span class="boring">
+</span><span class="boring">fn build_ui(app: &amp;Application) {
+</span><span class="boring">    // Create a new custom window and show it
+</span><span class="boring">    let window = Window::new(app);
+</span><span class="boring">    window.present();
+</span><span class="boring">}</span></code></pre>
+<p>And that is how the task rows look like after the change.
 Probably better to revert this immediately again.</p>
 <div style="text-align:center"><img src="img/todo_3.png" alt="To-Do app with green background for its task widget"/></div>
 <h2 id="adapt-todo-app"><a class="header" href="#adapt-todo-app">Adapt Todo App</a></h2>
@@ -10537,13 +10554,13 @@ Probably better to revert this immediately again.</p>
 Until now the different tasks weren't nicely separated.
 We can change that by adding the <code>frame</code> and the <code>separators</code> style class to our <code>tasks_list</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/4/resources/task_row.ui">listings/todo/4/resources/window.ui</a></p>
-<pre><code class="language-xml">&lt;object class=&quot;GtkListView&quot; id=&quot;tasks_list&quot;&gt;
-  &lt;property name=&quot;valign&quot;&gt;start&lt;/property&gt;
-  &lt;style&gt;
-    &lt;class name=&quot;frame&quot;/&gt;
-    &lt;class name=&quot;separators&quot;/&gt;
-  &lt;/style&gt;
-&lt;/object&gt;
+<pre><code class="language-diff"> &lt;object class=&quot;GtkListView&quot; id=&quot;tasks_list&quot;&gt;
+   &lt;property name=&quot;valign&quot;&gt;start&lt;/property&gt;
++  &lt;style&gt;
++    &lt;class name=&quot;frame&quot;/&gt;
++    &lt;class name=&quot;separators&quot;/&gt;
++  &lt;/style&gt;
+ &lt;/object&gt;
 </code></pre>
 <div style="text-align:center"><img src="img/todo_4.png" alt="To-Do app with borders for its task widget"/></div>
 <h2 id="conclusion-2"><a class="header" href="#conclusion-2">Conclusion</a></h2>
@@ -10570,7 +10587,7 @@ In this chapter we will discuss how to follow GNOME's <a href="https://developer
 <li>adds <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.StyleManager.html">API</a> to support the cross-desktop dark style preference</li>
 </ul>
 <p>In order to use the Rust bindings, add the <a href="https://crates.io/crates/libadwaita">libadwaita crate</a> as dependency by executing:</p>
-<pre><code>cargo add libadwaita --rename adw
+<pre><code>cargo add libadwaita --rename adw --features v1_2
 </code></pre>
 <p>The versions of the <code>gtk4</code> and <code>libadwaita</code> crates need to be synced.
 Just remember that when you update one of them to the newest version to update the other one as well. </p>
@@ -10599,7 +10616,7 @@ Just follow the installation instruction that is suitable for your distribution.
 That will open a terminal configured to use MSVC x64 tools.
 From there, run the following commands:</p>
 <pre><code>cd /
-git clone https://gitlab.gnome.org/GNOME/libadwaita.git --depth 1
+git clone --branch libadwaita-1-3 https://gitlab.gnome.org/GNOME/libadwaita.git --depth 1
 cd libadwaita
 meson setup builddir -Dprefix=C:/gnome -Dintrospection=disabled -Dvapi=false
 meson install -C builddir
@@ -12648,15 +12665,17 @@ As usual, the full implementation can be seen by clicking at the eye symbol at t
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use glib::{ParamSpec, ParamSpecString, Value};
-</span><span class="boring">use gtk::glib::ParamSpecObject;
+</span><span class="boring">use glib::{ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::{gio, glib};
-</span><span class="boring">use once_cell::sync::{Lazy, OnceCell};
+</span><span class="boring">use once_cell::sync::OnceCell;
 </span><span class="boring">
 </span>// Object holding the state
-#[derive(Default)]
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::CollectionObject)]
 pub struct CollectionObject {
+    #[property(get, set)]
     pub title: RefCell&lt;String&gt;,
+    #[property(get, set)]
     pub tasks: OnceCell&lt;gio::ListStore&gt;,
 }
 
@@ -12670,39 +12689,15 @@ impl ObjectSubclass for CollectionObject {
 </span><span class="boring">// Trait shared by all GObjects
 </span><span class="boring">impl ObjectImpl for CollectionObject {
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; = Lazy::new(|| {
-</span><span class="boring">            vec![
-</span><span class="boring">                ParamSpecString::builder(&quot;title&quot;).build(),
-</span><span class="boring">                ParamSpecObject::builder::&lt;gio::ListStore&gt;(&quot;tasks&quot;).build(),
-</span><span class="boring">            ]
-</span><span class="boring">        });
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;title&quot; =&gt; {
-</span><span class="boring">                let input_value = value
-</span><span class="boring">                    .get()
-</span><span class="boring">                    .expect(&quot;The value needs to be of type `String`.&quot;);
-</span><span class="boring">                self.title.replace(input_value);
-</span><span class="boring">            }
-</span><span class="boring">            &quot;tasks&quot; =&gt; {
-</span><span class="boring">                let input_value = value
-</span><span class="boring">                    .get()
-</span><span class="boring">                    .expect(&quot;The value needs to be of type `gio::ListStore`.&quot;);
-</span><span class="boring">                self.tasks.set(input_value).expect(&quot;Could not set task&quot;);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;title&quot; =&gt; self.title.borrow().to_value(),
-</span><span class="boring">            &quot;tasks&quot; =&gt; self.tasks.get().expect(&quot;Could not get tasks.&quot;).to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>We also add the struct <code>CollectionData</code> to aid in serialization and deserialization.</p>
@@ -12727,14 +12722,6 @@ impl ObjectSubclass for CollectionObject {
 </span><span class="boring">            .property(&quot;title&quot;, title)
 </span><span class="boring">            .property(&quot;tasks&quot;, tasks)
 </span><span class="boring">            .build()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn tasks(&amp;self) -&gt; gio::ListStore {
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .tasks
-</span><span class="boring">            .get()
-</span><span class="boring">            .expect(&quot;Could not get tasks.&quot;)
-</span><span class="boring">            .clone()
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    pub fn to_collection_data(&amp;self) -&gt; CollectionData {
@@ -12797,14 +12784,6 @@ pub struct CollectionData {
             .property(&quot;title&quot;, title)
             .property(&quot;tasks&quot;, tasks)
             .build()
-    }
-
-    pub fn tasks(&amp;self) -&gt; gio::ListStore {
-        self.imp()
-            .tasks
-            .get()
-            .expect(&quot;Could not get tasks.&quot;)
-            .clone()
     }
 
     pub fn to_collection_data(&amp;self) -&gt; CollectionData {
@@ -12961,13 +12940,13 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -13333,46 +13312,37 @@ pub struct Window {
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -13383,12 +13353,13 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -13637,13 +13608,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -14009,46 +13980,37 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -14059,12 +14021,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -14094,13 +14057,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -14466,46 +14429,37 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -14516,12 +14470,13 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -14554,13 +14509,13 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -14926,46 +14881,37 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -14976,12 +14922,13 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -15017,13 +14964,13 @@ Finally, we select the collection row.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -15389,46 +15336,37 @@ Finally, we select the collection row.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -15439,12 +15377,13 @@ Finally, we select the collection row.</p>
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -15475,13 +15414,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -15847,46 +15786,37 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -15897,12 +15827,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -15932,13 +15863,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -16304,46 +16235,37 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -16354,12 +16276,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -16406,13 +16329,13 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -16778,46 +16701,37 @@ This action will be activated by a click on the <code>+</code> button as well as
 <span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -16828,12 +16742,13 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -16856,7 +16771,7 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>As soon as the &quot;new-collection&quot; action is activated, the <code>new_collection</code> method is called.
-Here, we create the dialog, set up the buttons as well as add the entry to it.
+Here, we create the <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.MessageDialog.html"><code>adw::MessageDialog</code></a>, set up the buttons as well as add the entry to it.
 We add a callback to the entry to ensure that when the content changes, an empty content sets <code>dialog_button</code> as insensitive and adds an &quot;error&quot; CSS class to the entry.
 We also add a callback to the dialog itself.
 If we click &quot;Cancel&quot;, the dialog should just be destroyed without any further actions.
@@ -16869,13 +16784,13 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -17241,46 +17156,37 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    fn new_collection(&amp;self) {
-        // Create new Dialog
-        let dialog = Dialog::with_buttons(
-            Some(&quot;New Collection&quot;),
-            Some(self),
-            DialogFlags::MODAL
-                | DialogFlags::DESTROY_WITH_PARENT
-                | DialogFlags::USE_HEADER_BAR,
-            &amp;[
-                (&quot;Cancel&quot;, ResponseType::Cancel),
-                (&quot;Create&quot;, ResponseType::Accept),
-            ],
-        );
-        dialog.set_default_response(ResponseType::Accept);
-
-        // Make the dialog button insensitive initially
-        let dialog_button = dialog
-            .widget_for_response(ResponseType::Accept)
-            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-        dialog_button.set_sensitive(false);
-
-        // Create entry and add it to the dialog
+        // Create entry
         let entry = Entry::builder()
-            .margin_top(12)
-            .margin_bottom(12)
-            .margin_start(12)
-            .margin_end(12)
             .placeholder_text(&quot;Name&quot;)
             .activates_default(true)
             .build();
-        dialog.content_area().append(&amp;entry);
 
-        // Set entry's css class to &quot;error&quot;, when there is not text in it
+        let cancel_response = &quot;cancel&quot;;
+        let create_response = &quot;create&quot;;
+
+        // Create new dialog
+        let dialog = MessageDialog::builder()
+            .heading(&quot;New Collection&quot;)
+            .transient_for(self)
+            .modal(true)
+            .destroy_with_parent(true)
+            .close_response(cancel_response)
+            .default_response(create_response)
+            .extra_child(&amp;entry)
+            .build();
+        dialog
+            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+        // Make the dialog button insensitive initially
+        dialog.set_response_enabled(create_response, false);
+        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+
+        // Set entry's css class to &quot;error&quot;, when there is no text in it
         entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
             let text = entry.text();
-            let dialog_button = dialog.
-                widget_for_response(ResponseType::Accept).
-                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
             let empty = text.is_empty();
 
-            dialog_button.set_sensitive(!empty);
+            dialog.set_response_enabled(create_response, !empty);
 
             if empty {
                 entry.add_css_class(&quot;error&quot;);
@@ -17291,12 +17197,13 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 
         // Connect response to dialog
         dialog.connect_response(
+            None,
             clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
                 // Destroy dialog
                 dialog.destroy();
 
-                // Return if the user chose a response different than `Accept`
-                if response != ResponseType::Accept {
+                // Return if the user chose a response different than `create_response`
+                if response != create_response {
                     return;
                 }
 
@@ -17332,13 +17239,13 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -17704,46 +17611,37 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -17754,12 +17652,13 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">
@@ -17790,13 +17689,13 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, NavigationDirection};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Dialog, DialogFlags, Entry,
-</span><span class="boring">    FilterListModel, Label, ListBoxRow, NoSelection, ResponseType, SelectionMode,
+</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
+</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -18162,46 +18061,37 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create new Dialog
-</span><span class="boring">        let dialog = Dialog::with_buttons(
-</span><span class="boring">            Some(&quot;New Collection&quot;),
-</span><span class="boring">            Some(self),
-</span><span class="boring">            DialogFlags::MODAL
-</span><span class="boring">                | DialogFlags::DESTROY_WITH_PARENT
-</span><span class="boring">                | DialogFlags::USE_HEADER_BAR,
-</span><span class="boring">            &amp;[
-</span><span class="boring">                (&quot;Cancel&quot;, ResponseType::Cancel),
-</span><span class="boring">                (&quot;Create&quot;, ResponseType::Accept),
-</span><span class="boring">            ],
-</span><span class="boring">        );
-</span><span class="boring">        dialog.set_default_response(ResponseType::Accept);
-</span><span class="boring">
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        let dialog_button = dialog
-</span><span class="boring">            .widget_for_response(ResponseType::Accept)
-</span><span class="boring">            .expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
-</span><span class="boring">        dialog_button.set_sensitive(false);
-</span><span class="boring">
-</span><span class="boring">        // Create entry and add it to the dialog
+</span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .margin_top(12)
-</span><span class="boring">            .margin_bottom(12)
-</span><span class="boring">            .margin_start(12)
-</span><span class="boring">            .margin_end(12)
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
 </span><span class="boring">            .activates_default(true)
 </span><span class="boring">            .build();
-</span><span class="boring">        dialog.content_area().append(&amp;entry);
 </span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is not text in it
+</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
+</span><span class="boring">        let create_response = &quot;create&quot;;
+</span><span class="boring">
+</span><span class="boring">        // Create new dialog
+</span><span class="boring">        let dialog = MessageDialog::builder()
+</span><span class="boring">            .heading(&quot;New Collection&quot;)
+</span><span class="boring">            .transient_for(self)
+</span><span class="boring">            .modal(true)
+</span><span class="boring">            .destroy_with_parent(true)
+</span><span class="boring">            .close_response(cancel_response)
+</span><span class="boring">            .default_response(create_response)
+</span><span class="boring">            .extra_child(&amp;entry)
+</span><span class="boring">            .build();
+</span><span class="boring">        dialog
+</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
+</span><span class="boring">        // Make the dialog button insensitive initially
+</span><span class="boring">        dialog.set_response_enabled(create_response, false);
+</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
+</span><span class="boring">
+</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
 </span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
 </span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let dialog_button = dialog.
-</span><span class="boring">                widget_for_response(ResponseType::Accept).
-</span><span class="boring">                expect(&quot;The dialog needs to have a widget for response type `Accept`.&quot;);
 </span><span class="boring">            let empty = text.is_empty();
 </span><span class="boring">
-</span><span class="boring">            dialog_button.set_sensitive(!empty);
+</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
 </span><span class="boring">
 </span><span class="boring">            if empty {
 </span><span class="boring">                entry.add_css_class(&quot;error&quot;);
@@ -18212,12 +18102,13 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">
 </span><span class="boring">        // Connect response to dialog
 </span><span class="boring">        dialog.connect_response(
+</span><span class="boring">            None,
 </span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
 </span><span class="boring">                // Destroy dialog
 </span><span class="boring">                dialog.destroy();
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `Accept`
-</span><span class="boring">                if response != ResponseType::Accept {
+</span><span class="boring">                // Return if the user chose a response different than `create_response`
+</span><span class="boring">                if response != create_response {
 </span><span class="boring">                    return;
 </span><span class="boring">                }
 </span><span class="boring">

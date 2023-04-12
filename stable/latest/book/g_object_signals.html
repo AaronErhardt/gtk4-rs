@@ -71,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -244,7 +246,7 @@ In our &quot;Hello World&quot; example we <a href="../docs/gtk4/prelude/trait.Bu
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
-<p>Similar to the generic way of accessing properties, the advantage of <code>connect_closure</code> is that it also works with custom signals.</p>
+<p>The advantage of <code>connect_closure</code> is that it also works with custom signals.</p>
 <blockquote>
 <p>If you need to clone reference counted objects into your closure you don't have to wrap it within another <code>clone!</code> macro.
 <code>closure_local!</code> accepts the same syntax for creating strong/weak references, plus a <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.closure.html#object-watching">watch</a> feature that automatically disconnects the closure once the watched object is dropped. </p>
@@ -257,15 +259,17 @@ First we override the necessary methods in <code>ObjectImpl</code>.</p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::Signal;
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -289,27 +293,15 @@ impl ObjectImpl for CustomButton {
     }
 <span class="boring">
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-</span><span class="boring">            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; {
-</span><span class="boring">                let input_number =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-</span><span class="boring">                self.number.replace(input_number);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; self.number.get().to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
@@ -332,15 +324,15 @@ impl ObjectImpl for CustomButton {
 </span><span class="boring">// Trait shared by all buttons
 </span><span class="boring">impl ButtonImpl for CustomButton {
 </span><span class="boring">    fn clicked(&amp;self) {
-</span><span class="boring">        let incremented_number = self.number.get() + 1;
+</span><span class="boring">        let incremented_number = self.obj().number() + 1;
 </span><span class="boring">        let obj = self.obj();
 </span><span class="boring">        // If `number` reached `MAX_NUMBER`,
 </span><span class="boring">        // emit &quot;max-number-reached&quot; signal and set `number` back to 0
 </span><span class="boring">        if incremented_number == MAX_NUMBER {
 </span><span class="boring">            obj.emit_by_name::&lt;()&gt;(&quot;max-number-reached&quot;, &amp;[&amp;incremented_number]);
-</span><span class="boring">            obj.set_property(&quot;number&quot;, &amp;0);
+</span><span class="boring">            obj.set_number(0);
 </span><span class="boring">        } else {
-</span><span class="boring">            obj.set_property(&quot;number&quot;, &amp;incremented_number);
+</span><span class="boring">            obj.set_number(incremented_number);
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
@@ -355,15 +347,17 @@ After we did that, we set <code>number</code> back to 0.</p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::Signal;
-</span><span class="boring">use glib::{BindingFlags, ParamSpec, ParamSpecInt, Value};
+</span><span class="boring">use glib::{BindingFlags, ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
-</span><span class="boring">#[derive(Default)]
+</span><span class="boring">#[derive(Properties, Default)]
+</span><span class="boring">#[properties(wrapper_type = super::CustomButton)]
 </span><span class="boring">pub struct CustomButton {
+</span><span class="boring">    #[property(get, set)]
 </span><span class="boring">    number: Cell&lt;i32&gt;,
 </span><span class="boring">}
 </span><span class="boring">
@@ -387,27 +381,15 @@ After we did that, we set <code>number</code> back to 0.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; =
-</span><span class="boring">            Lazy::new(|| vec![ParamSpecInt::builder(&quot;number&quot;).build()]);
-</span><span class="boring">        PROPERTIES.as_ref()
+</span><span class="boring">        Self::derived_properties()
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; {
-</span><span class="boring">                let input_number =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `i32`.&quot;);
-</span><span class="boring">                self.number.replace(input_number);
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+</span><span class="boring">        self.derived_set_property(id, value, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;number&quot; =&gt; self.number.get().to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
+</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+</span><span class="boring">        self.derived_property(id, pspec)
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
@@ -430,15 +412,15 @@ After we did that, we set <code>number</code> back to 0.</p>
 // Trait shared by all buttons
 impl ButtonImpl for CustomButton {
     fn clicked(&amp;self) {
-        let incremented_number = self.number.get() + 1;
+        let incremented_number = self.obj().number() + 1;
         let obj = self.obj();
         // If `number` reached `MAX_NUMBER`,
         // emit &quot;max-number-reached&quot; signal and set `number` back to 0
         if incremented_number == MAX_NUMBER {
             obj.emit_by_name::&lt;()&gt;(&quot;max-number-reached&quot;, &amp;[&amp;incremented_number]);
-            obj.set_property(&quot;number&quot;, &amp;0);
+            obj.set_number(0);
         } else {
-            obj.set_property(&quot;number&quot;, &amp;incremented_number);
+            obj.set_number(incremented_number);
         }
     }
 }</code></pre>
